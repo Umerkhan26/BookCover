@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { NavLink } from "react-router-dom";
+
+interface NavNBtnProps {
+  isMenuOpen: boolean;
+}
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -13,7 +17,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 15px;
+  padding: 20px 20px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -21,7 +25,7 @@ const Nav = styled.nav`
   left: 0;
   width: 100%;
   z-index: 1000;
-  height: 65px;
+  height: 45px;
 `;
 
 const Logo = styled.img`
@@ -53,7 +57,8 @@ const NavButton = styled(NavLink)`
   background-color: #1a8797;
   font-weight: 600;
   font-size: 14px;
-  padding: 6px 25px;
+  padding: 9px 25px;
+  border-radius: 4px;
   text-align: left;
   text-decoration: none;
   margin-right: 15px;
@@ -88,7 +93,7 @@ const HeaderContainer = styled.div`
   margin: 0 auto; /* Center the header content */
 `;
 
-const NavNBtn = styled.nav`
+const NavNBtn = styled.nav<NavNBtnProps>`
   display: flex;
   align-items: center;
   flex-grow: 1;
