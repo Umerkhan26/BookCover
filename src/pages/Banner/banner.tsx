@@ -18,7 +18,7 @@ const Section = styled.section`
   box-sizing: border-box;
   display: block;
   min-height: 310px;
-  padding-top: 80px;
+  padding-top: 75px;
   padding-bottom: 40px;
   background: unset !important;
 `;

@@ -25,7 +25,7 @@ const Nav = styled.nav`
   left: 0;
   width: 100%;
   z-index: 1000;
-  height: 45px;
+  height: 75px;
 `;
 
 const Logo = styled.img`
@@ -198,7 +198,7 @@ function Header() {
             <DropdownContainer>
               <NavLinkButton to="/find-obituary">Services</NavLinkButton>
               <DropdownMenu>
-                <DropdownItem to="/portfolio-1">
+                <DropdownItem to="/fictonCover">
                   Fiction Cover Design
                 </DropdownItem>
                 <DropdownItem to="/portfolio-2">
