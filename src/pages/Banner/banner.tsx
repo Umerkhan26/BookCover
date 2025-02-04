@@ -52,7 +52,7 @@ const BannerContent = styled.div`
 const Title = styled.h1`
   font-family: "Proxima Nova ExtraBold";
   font-weight: 800;
-  color: #fff;
+  color: #e2f3f4;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0px 15px;
   font-size: 52px;
@@ -65,7 +65,7 @@ const Title = styled.h1`
   white-space: unset;
 
   span {
-    color: #1a8797;
+    color: #00bcd4;
   }
 `;
 
@@ -97,8 +97,8 @@ const Button = styled.a`
   margin-top: -10px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: #d4a759;
-  border: 2px solid #d4a759;
+  color: #00bcd4;
+  border: 2px solid #00bcd4;
   background: rgba(0, 0, 0, 0.3);
   text-align: center;
   position: relative;
