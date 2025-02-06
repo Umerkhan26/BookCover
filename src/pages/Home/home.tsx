@@ -15,7 +15,7 @@ import ShareIdeasSection from "../IdeaSection/ideaSection";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <>
       <TopBanner />
       <BenefitsSection
         title={
@@ -25,7 +25,6 @@ const Home: React.FC = () => {
         }
         benefits={benefitsData}
       />
-
       <Carousal />
       <DesignProcess />
       <Testimonials />
@@ -37,12 +36,16 @@ const Home: React.FC = () => {
         awards={awardsData}
       />
       <ShareIdeasSection
-        title="Get a free cover <span>design idea</span>"
+        title={
+          <>
+            Get a free cover <span>design idea</span>
+          </>
+        }
         subtitle="We'll help you come up with ideas that work"
         buttonText="Get a free cover design idea"
         buttonLink="https://miblart.com/cover-idea/"
       />
-    </div>
+    </>
   );
 };
 

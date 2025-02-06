@@ -198,13 +198,13 @@ function Header() {
             <DropdownContainer>
               <NavLinkButton to="/find-obituary">Services</NavLinkButton>
               <DropdownMenu>
-                <DropdownItem to="/fictonCover">
+                <DropdownItem to="/fictionCover">
                   Fiction Cover Design
                 </DropdownItem>
-                <DropdownItem to="/portfolio-2">
+                <DropdownItem to="/illustrated">
                   Illustrated Cover Design
                 </DropdownItem>
-                <DropdownItem to="/portfolio-3">
+                <DropdownItem to="/bookCoverRedesign">
                   Book Covers Redesign
                 </DropdownItem>
                 <DropdownItem to="/portfolio-2">
@@ -222,7 +222,7 @@ function Header() {
                 <DropdownItem to="/portfolio-2">
                   Audiobook Cover Design
                 </DropdownItem>
-                <DropdownItem to="/portfolio-2">Logo & Branding</DropdownItem>
+                <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
                 <DropdownItem to="/portfolio-2">
                   Author Swag Design
                 </DropdownItem>

@@ -167,3 +167,23 @@ export const BookCoversText = styled.div`
     margin-left: 100px;
   }
 `;
+
+
+
+export const BenifitsComponent = styled.div`
+  font-family: 'Busset-City';
+  font-weight: 200;
+  font-size: 57px;
+  width: 100%;
+  margin-top:70px;
+
+  @media (max-width: 1024px) {
+    font-size: 45px;
+    margin-left: 30px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 35px;
+    margin-left: 100px;
+  }
+`;

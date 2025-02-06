@@ -6,6 +6,8 @@ export default {
       colors: {
         "custom-bg": "#CD9E6A",
         "custom-white": "#FFFFFf",
+        "custom-teal": "#6dc7d1"  // Add this
+
       },
       fontFamily: {
         aston: ["Aston Script", "sans-serif"],
