@@ -52,7 +52,7 @@ const BenefitItem = styled.div`
   background: #fff;
   padding: 40px 25px;
   border-radius: 10px;
-  border: 2px solid #1ecb63; /* Green border */
+border: 2px solid rgba(0, 188, 212, 0.3); /* Lightens the border using opacity */
   text-align: left;
   height: 100%;
   min-height: 150px;
@@ -64,10 +64,11 @@ const BenefitItems = styled.div`
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  border: 2px solid #1ecb63; /* Green border */
+border: 2px solid rgba(0, 188, 212, 0.3); /* Lightens the border using opacity */
+; /* Green border */
   text-align: left;
   height: 100%;
-  min-height: 150px;
+  min-height: 170px;
   display: flex;
   flex-direction: column;
 `;
@@ -113,7 +114,7 @@ const SectionTitle = styled.h2`
   line-height: 1.3;
 
   span {
-    color: #1ecb63;
+    color: #00bcd4;
   }
 `;
 

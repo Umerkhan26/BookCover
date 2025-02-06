@@ -16,11 +16,7 @@ const Home: React.FC = () => {
         benefits={benefitsData}
       />
 
-      <div>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore quos,
-        eos quidem vero est odit? Minus quibusdam sed, dolorem eaque, provident
-        assumenda quae obcaecati ipsum illum officiis veritatis quidem amet.
-      </div>
+      
     </div>
   );
 };
