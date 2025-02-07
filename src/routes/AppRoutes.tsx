@@ -16,6 +16,7 @@ import LogoBranding from "../pages/logo&branding/logo&branding";
 import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
 import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
 import CoverPortfolio from "../pages/Portfolio/portfolio";
+import ContactUs from "../components/ContactUs/ContactUs";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -56,6 +57,8 @@ const AppRoutes: React.FC = () => {
         <Route path="/logoBrand" element={<LogoBranding />} />
         <Route path="/nonFiction" element={<NonFictonalCover />} />
         <Route path="/audioBookCover" element={<AudioBookCover />} />
+        <Route path="/contactUs" element={<ContactUs />} />
+
 
         <Route path="/portfolio" element={<CoverPortfolio />} />
       </Route>

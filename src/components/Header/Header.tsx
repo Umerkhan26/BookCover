@@ -243,7 +243,7 @@ function Header() {
             <NavLinkButton to="/pricing">About Us</NavLinkButton>
             <NavLinkButton to="/pricing">Blog</NavLinkButton>
             <NavLinkButton to="/pricing">FAQ</NavLinkButton>
-            <NavLinkButton to="/contact-us">Contact Us</NavLinkButton>
+            <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
             <NavLinkButton to="/pricing">Partner With Us</NavLinkButton>
 
             <NavText to="/pricing">Client Portal</NavText>
