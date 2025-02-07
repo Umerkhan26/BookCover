@@ -24,7 +24,7 @@ const TopBanner: React.FC = () => {
             CUSTOM BOOK <span>COVER DESIGN</span>
           </Title>
           <Subtitle>
-            <p style={{ position: "relative", top: "-16px", right: "-16px" }}>
+            <p style={{ position: "relative", top: "-5px", right: "-30px" }}>
               Get a book cover that turns into{" "}
               <span>your #1 marketing tool</span>
             </p>

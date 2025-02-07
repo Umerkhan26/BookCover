@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 // Styled Components
@@ -74,19 +74,19 @@ const Button = styled.a`
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background-color: #4caf50;
+  background-color: #6dc7d1;
   border-radius: 4px;
   text-decoration: none;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #45a049;
+    background-color: #4fa3a2;
   }
 `;
 
 // TypeScript Props
 interface ShareIdeasSectionProps {
-  title: string;
+  title: ReactNode;
   subtitle: string;
   buttonText: string;
   buttonLink: string;
@@ -127,15 +127,7 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
           />
         </svg>
       </SvgBlock>
-      {/* <SvgBlock className="bottom-left">
-        <svg width="69" height="222" viewBox="0 0 69 222" fill="none">
-          <path
-            d="M69 0.999997C77.9306 0.997268 86.7742 2.86953 95.0255 6.50981C103.277 10.1501 110.774 15.4871 117.089 22.2157C123.404 28.9444 128.413 36.933 131.829 45.725C135.245 54.517 137.003 63.94 137 73.4559L137 359L0.999996 359L1.00002 73.4558C1.00002 54.2394 8.16431 35.8099 20.9168 22.2218C33.6692 8.63372 50.9653 0.999995 69 0.999997V0.999997Z"
-            stroke="#38555F"
-            strokeMiterlimit="10"
-          />
-        </svg>
-      </SvgBlock> */}
+
       <SvgBlock className="top-right">
         <svg width="99" height="97" viewBox="0 0 99 97" fill="none">
           <circle cx="1.40276" cy="32.7859" r="31.8231" stroke="#38555F" />

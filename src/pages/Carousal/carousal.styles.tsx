@@ -24,7 +24,7 @@ export const Title = styled.h1`
   font-size: 2.5rem;
   color: #333;
   margin: 0;
-  margin-left: 30px;
+  margin-left: 24px;
 
   span {
     color: #6dc7d1;

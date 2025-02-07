@@ -15,7 +15,7 @@ export const Container = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Add spacing between items */
+  justify-content: space-between;
   gap: 20px;
 `;
 

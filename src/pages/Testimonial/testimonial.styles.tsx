@@ -99,7 +99,6 @@ export const TestimonialDescription = styled.p`
 export const SocialNetwork = styled.div`
   display: flex;
   gap: 0.5rem;
-  margin-top: 1rem;
 `;
 
 export const IconSocNet = styled.a`

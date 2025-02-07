@@ -17,7 +17,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 20px;
+  padding: 20px 60px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -54,7 +54,7 @@ const NavLinkButton = styled(NavLink)`
 const NavButton = styled(NavLink)`
   display: inline-block;
   color: white;
-  background-color: #1a8797;
+  background-color: #6dc7d1;
   font-weight: 600;
   font-size: 14px;
   padding: 9px 25px;
@@ -65,13 +65,13 @@ const NavButton = styled(NavLink)`
 
   &:hover {
     color: #ffffff;
-    background-color: #155d67;
+    background-color: #4fa3a2;
   }
 `;
 
 const NavText = styled(NavLink)`
   display: inline-block;
-  color: #1a8797;
+  color: #6dc7d1;
   font-weight: bold;
   font-size: 14px;
   padding: 6px 25px;
@@ -80,7 +80,7 @@ const NavText = styled(NavLink)`
   margin-right: 15px;
 
   &:hover {
-    color: #155d67;
+    color: #4fa3a2;
   }
 `;
 
