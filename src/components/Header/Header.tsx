@@ -207,28 +207,28 @@ function Header() {
                 <DropdownItem to="/bookCoverRedesign">
                   Book Covers Redesign
                 </DropdownItem>
-                <DropdownItem to="/portfolio-2">
+                {/* <DropdownItem to="/portfolio-2">
                   Kindle Vella Cover Design
-                </DropdownItem>
-                <DropdownItem to="/portfolio-2">
+                </DropdownItem> */}
+                {/* <DropdownItem to="/portfolio-2">
                   Formatting and Layout
-                </DropdownItem>
-                <DropdownItem to="/portfolio-2">
+                </DropdownItem> */}
+                <DropdownItem to="/nonFiction">
                   Non-Fiction Cover Design
                 </DropdownItem>
                 <DropdownItem to="/portfolio-2">
                   Premium Cover Design
                 </DropdownItem>
-                <DropdownItem to="/portfolio-2">
+                <DropdownItem to="/audioBookCover">
                   Audiobook Cover Design
                 </DropdownItem>
                 <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
-                <DropdownItem to="/portfolio-2">
+                {/* <DropdownItem to="/portfolio-2">
                   Author Swag Design
-                </DropdownItem>
-                <DropdownItem to="/portfolio-2">
+                </DropdownItem> */}
+                {/* <DropdownItem to="/portfolio-2">
                   Marketing Materials
-                </DropdownItem>
+                </DropdownItem> */}
               </DropdownMenu>
             </DropdownContainer>
 

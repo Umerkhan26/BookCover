@@ -6,7 +6,7 @@ export const examples = [
       after: package1,
       points: [
         "You will get an illustrated author logo design that communicates your genre and writing style.",
-        " Relevant text, a well-balanced color palette, and engaging graphic elements – this is what will make your logo look great!",
+        " Relevant text, a well-balanced color palette, and engaging graphic elements – this is what will make your logo look great!.",
         "Made the colors more vibrant but avoided sharp contrasts to maintain a dreamlike feel.",
         "Changed typography to improve its readability.",
       ],
