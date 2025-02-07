@@ -3,18 +3,19 @@ import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import FictionCover from "../pages/FictionCover/FictionCover";
 import Illustrated from "../pages/Services/coverpages/illustrated";
-import fictonCoverImg from '../assets/fictionCover.png'
+import fictonCoverImg from "../assets/fictionCover.png";
 import BenefitsSection from "../pages/Benefits/benefits";
 import { benefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";
 import DesignProcess from "../pages/DesignProcess/designProcess";
 import Packages from "../pages/ourPackages/packages";
 import SpecialEditionAddOns from "../pages/SpecialEditionAddOns/SpecialEditionAddOns";
-import { myPackagesData } from '../pages/ourPackages/packagesData'
+import { myPackagesData } from "../pages/ourPackages/packagesData";
 import BookCoverRedesign from "../pages/BookCoverRedesign/BookCoverRedesign";
 import LogoBranding from "../pages/logo&branding/logo&branding";
 import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
 import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
+import CoverPortfolio from "../pages/Portfolio/portfolio";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -56,9 +57,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/nonFiction" element={<NonFictonalCover />} />
         <Route path="/audioBookCover" element={<AudioBookCover />} />
 
-        
-        
-
+        <Route path="/portfolio" element={<CoverPortfolio />} />
       </Route>
     </Routes>
   );

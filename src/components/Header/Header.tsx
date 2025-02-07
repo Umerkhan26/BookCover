@@ -118,39 +118,43 @@ const DropdownMenu = styled.div`
   position: absolute;
   top: 100%;
   left: 0;
+  height: 170px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px 5rem;
+  padding: 7px 5rem;
   z-index: 1000;
   border-radius: 0;
+  display: flex;
+  flex-wrap: wrap;
   width: 100vw;
-  margin-left: -20vw;
+  margin-left: -13vw;
   transition: opacity 0.3s ease;
   opacity: 0;
   pointer-events: none;
 
   &.active {
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     opacity: 1;
     pointer-events: auto;
-    gap: 15px; /* Add gap between items */
+    gap: 12px;
   }
 `;
 
 const DropdownItem = styled(NavLink)`
   color: #212121;
   text-decoration: none;
-  padding: 8px 20px;
-  font-size: 14px;
+  padding: 13px 20px;
+  font-size: 15px;
   display: flex;
   align-item: center;
+  justify-content: center;
 
-  width: 18%; /* Adjust width for 5 items per row */
+  width: calc(25% - 10px);
   box-sizing: border-box;
 
   &:hover {
-    color: #1a8797;
+    color: #6dc7d1;
   }
 `;
 
@@ -233,7 +237,7 @@ function Header() {
             </DropdownContainer>
 
             <DropdownContainer>
-              <NavLinkButton to="/community">Portfolio</NavLinkButton>
+              <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
             </DropdownContainer>
 
             <NavLinkButton to="/pricing">About Us</NavLinkButton>

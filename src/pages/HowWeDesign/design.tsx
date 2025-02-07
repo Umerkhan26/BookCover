@@ -34,7 +34,7 @@ const SectionTitle = styled.h2`
 `;
 
 const Highlight = styled.span`
-  color: #4fa3a2;
+  color: #6dc7d1;
   display: inline-block;
   border-bottom: 2px solid #4fa3a2;
 `;
