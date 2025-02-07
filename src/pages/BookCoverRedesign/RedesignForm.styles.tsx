@@ -6,6 +6,7 @@ export const FullWidthContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom:60px;
   background-color: #f8f8f8; /* Light background to match the theme */
 `;
 

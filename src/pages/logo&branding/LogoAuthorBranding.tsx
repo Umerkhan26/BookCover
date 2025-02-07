@@ -3,7 +3,6 @@ import {
   MainContainer,
   TitleContainer,
   Title,
-  Subtitle,
   SliderContainer,
   SliderWrapper,
   Slide,
@@ -18,7 +17,7 @@ import {
   CloseButton,
   PrevPreviewButton,
   NextPreviewButton,
-} from "./carousal.styles";
+} from "./LogoAuthorBranding.styles";
 
 import img1 from "../../assets/Slider/img1.jpg";
 import img2 from "../../assets/Slider/img2.jpg";
@@ -31,39 +30,45 @@ import img8 from "../../assets/Slider/img8.jpg";
 import img9 from "../../assets/Slider/img9.jpg";
 import img10 from "../../assets/Slider/img10.jpg";
 
-const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
-const imagesPerRow = 5;
-const imageWidth = 220;
-const gap = 15;
-const slideWidth = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
+// Define an array of images
+const images: string[] = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
 
-const   Carousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [previewIndex, setPreviewIndex] = useState(null);
-  const totalSlides = Math.ceil(images.length / imagesPerRow);
-  const translateX = -currentIndex * slideWidth;
+// Constants
+const imagesPerRow: number = 5;
+const imageWidth: number = 220;
+const gap: number = 15;
+const slideWidth: number = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
 
-  const handleNext = () => {
+const LogoAuthorBranding: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+  const totalSlides: number = Math.ceil(images.length / imagesPerRow);
+  const translateX: number = -currentIndex * slideWidth;
+
+  // Handlers
+  const handleNext = (): void => {
     setCurrentIndex((prev) => Math.min(prev + 1, totalSlides - 1));
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  const handleImageClick = (index)  => {
+  const handleImageClick = (index: number): void => {
     setPreviewIndex(index);
   };
 
-  const handlePreviewNext = () => {
-    setPreviewIndex((prev) => (prev + 1) % images.length);
+  const handlePreviewNext = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.stopPropagation();
+    setPreviewIndex((prev) => (prev !== null ? (prev + 1) % images.length : 0));
   };
 
-  const handlePreviewPrev = () => {
-    setPreviewIndex((prev) => (prev - 1 + images.length) % images.length);
+  const handlePreviewPrev = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.stopPropagation();
+    setPreviewIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : 0));
   };
 
-  const closePreview = () => {
+  const closePreview = (): void => {
     setPreviewIndex(null);
   };
 
@@ -71,9 +76,9 @@ const   Carousel = () => {
     <MainContainer>
       <TitleContainer>
         <Title>
-          Our <span>Portfolio</span>
+        Examples of Author <span>Branding Design</span>
         </Title>
-        <Subtitle>Enjoy the examples of our book cover portfolio</Subtitle>
+        {/* <Subtitle>Enjoy the examples of our book cover portfolio</Subtitle> */}
       </TitleContainer>
 
       <SliderContainer>
@@ -81,10 +86,7 @@ const   Carousel = () => {
           {Array.from({ length: totalSlides }).map((_, slideIndex) => (
             <Slide key={slideIndex}>
               {images
-                .slice(
-                  slideIndex * imagesPerRow,
-                  (slideIndex + 1) * imagesPerRow
-                )
+                .slice(slideIndex * imagesPerRow, (slideIndex + 1) * imagesPerRow)
                 .map((image, index) => {
                   const globalIndex = slideIndex * imagesPerRow + index;
                   return (
@@ -104,16 +106,13 @@ const   Carousel = () => {
         <PrevButton onClick={handlePrev} disabled={currentIndex === 0}>
           ❮
         </PrevButton>
-        <NextButton
-          onClick={handleNext}
-          disabled={currentIndex === totalSlides - 1}
-        >
+        <NextButton onClick={handleNext} disabled={currentIndex === totalSlides - 1}>
           ❯
         </NextButton>
       </SliderContainer>
 
       <ButtonContainer>
-        <PortfolioButton>See Portfolio</PortfolioButton>
+        <PortfolioButton>More Examples</PortfolioButton>
       </ButtonContainer>
 
       {previewIndex !== null && (
@@ -130,4 +129,4 @@ const   Carousel = () => {
   );
 };
 
-export default Carousel;
+export default LogoAuthorBranding;

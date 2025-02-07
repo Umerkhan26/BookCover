@@ -2,7 +2,7 @@ import { Button, CardsWrapper, ReviewCard, ReviewsWrapper } from "./reviews.styl
 
 const Reviews = () => {
     return (
-        <div className="text-gray-600 dark:text-gray-300 pt-8 dark:bg-gray-900" id="reviews">
+        <div className="text-gray-600 dark:text-gray-300 pt-8 dark:bg-gray-900 mb-24" id="reviews">
             <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
                 <div className="mb-10 space-y-4 px-6 md:px-0">
                     <h2 className="text-center text-2xl font-bold text-gray-800 dark:text-white md:text-4xl">

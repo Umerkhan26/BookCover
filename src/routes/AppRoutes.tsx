@@ -13,6 +13,8 @@ import SpecialEditionAddOns from "../pages/SpecialEditionAddOns/SpecialEditionAd
 import { myPackagesData } from '../pages/ourPackages/packagesData'
 import BookCoverRedesign from "../pages/BookCoverRedesign/BookCoverRedesign";
 import LogoBranding from "../pages/logo&branding/logo&branding";
+import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
+import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -51,8 +53,11 @@ const AppRoutes: React.FC = () => {
         <Route path="/illustrated" element={<Illustrated />} />
         <Route path="/bookCoverRedesign" element={<BookCoverRedesign />} />
         <Route path="/logoBrand" element={<LogoBranding />} />
+        <Route path="/nonFiction" element={<NonFictonalCover />} />
+        <Route path="/audioBookCover" element={<AudioBookCover />} />
 
-
+        
+        
 
       </Route>
     </Routes>

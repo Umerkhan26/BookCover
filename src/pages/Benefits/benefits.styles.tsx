@@ -38,7 +38,7 @@ export const BenefitItem = styled.div`
   background: #fff;
   padding: 40px 25px;
   border-radius: 10px;
-  border: 2px solid #1ecb63; /* Green border */
+  border: 2px solid #6dc7d1; /* Green border */
   text-align: left;
   height: 100%;
   min-height: 150px;
@@ -50,7 +50,7 @@ export const BenefitItems = styled.div`
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  border: 2px solid #1ecb63; /* Green border */
+  border: 2px solid #6dc7d1; /* Green border */
   text-align: left;
   height: 100%;
   min-height: 190px;
@@ -99,7 +99,7 @@ export const SectionTitle = styled.h2`
   line-height: 1.3;
 
   span {
-    color: #1ecb63;
+    color:  #6dc7d1;
   }
 `;
 
