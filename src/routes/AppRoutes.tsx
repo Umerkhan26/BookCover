@@ -17,6 +17,7 @@ import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
 import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
 import CoverPortfolio from "../pages/Portfolio/portfolio";
 import ContactUs from "../components/ContactUs/ContactUs";
+import AboutUs from "../components/AboutUs/AboutUs";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -61,6 +62,8 @@ const AppRoutes: React.FC = () => {
 
 
         <Route path="/portfolio" element={<CoverPortfolio />} />
+        <Route path="/aboutUs" element={<AboutUs />} />
+
       </Route>
     </Routes>
   );

@@ -240,8 +240,8 @@ function Header() {
               <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
             </DropdownContainer>
 
-            <NavLinkButton to="/pricing">About Us</NavLinkButton>
-            <NavLinkButton to="/pricing">Blog</NavLinkButton>
+            <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
+            {/* <NavLinkButton to="/pricing">Blog</NavLinkButton> */}
             <NavLinkButton to="/pricing">FAQ</NavLinkButton>
             <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
             <NavLinkButton to="/pricing">Partner With Us</NavLinkButton>
