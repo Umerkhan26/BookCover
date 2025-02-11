@@ -24,13 +24,13 @@ const SvgBlock = styled.div`
   }
 
   &.top-right {
-    top: 187px;
+    top: 167px;
     right: 1170px;
   }
 
   &.bottom-right {
     bottom: 0px;
-    right: 916px;
+    right: 945px;
   }
 `;
 
@@ -59,7 +59,7 @@ const Title = styled.h2`
 `;
 
 const Subtitle = styled.p`
-  font-size: 34px;
+  font-size: 20px;
   color: #666;
 `;
 

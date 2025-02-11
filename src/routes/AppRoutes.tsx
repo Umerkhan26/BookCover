@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import FictionCover from "../pages/FictionCover/FictionCover";
@@ -15,8 +15,11 @@ import BookCoverRedesign from "../pages/BookCoverRedesign/BookCoverRedesign";
 import LogoBranding from "../pages/logo&branding/logo&branding";
 import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
 import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
-import CoverPortfolio from "../pages/Portfolio/portfolio";
 import ContactUs from "../components/ContactUs/ContactUs";
+// import PortFolio from "../pages/Portfolio/Portfolio";
+import PremiumCovers from "../components/PremiumCover/premiumcovers";
+import CustomBookCovers from "../components/CustomBookCovers/custombookcover";
+import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -59,8 +62,34 @@ const AppRoutes: React.FC = () => {
         <Route path="/audioBookCover" element={<AudioBookCover />} />
         <Route path="/contactUs" element={<ContactUs />} />
 
+        <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
+          {/* Redirect /portfolio to /portfolio/custom-book-covers */}
+          <Route index element={<Navigate to="custom-book-covers" replace />} />
 
-        <Route path="/portfolio" element={<CoverPortfolio />} />
+          {/* CustomBookCovers and its subcategories */}
+          <Route path="custom-book-covers" element={<CustomBookCovers />}>
+            {/* <Route index element={<Fantasy />} /> Default subcategory */}
+            {/* <Route path="fantasy" element={<Fantasy />} /> */}
+            {/* <Route path="romance" element={<Romance />} /> */}
+            {/* <Route path="urban-fantasy" element={<UrbanFantasy />} /> */}
+            {/* <Route path="young-adult" element={<YoungAdult />} /> */}
+            {/* <Route path="cozy-mystery" element={<CozyMystery />} /> */}
+            {/* <Route path="paranormal" element={<Paranormal />} /> */}
+            {/* <Route path="mystery-thriller-suspense" element={<MysteryThrillerSuspense />} /> */}
+            {/* <Route path="horror" element={<Horror />} /> */}
+            {/* <Route path="sci-fi" element={<SciFi />} /> */}
+            {/* <Route path="non-fiction" element={<NonFiction />} /> */}
+            {/* <Route path="fiction" element={<Fiction />} /> */}
+          </Route>
+
+          {/* Other main category routes */}
+          <Route path="premium-covers" element={<PremiumCovers />} />
+          {/* <Route path="kindle-vella-covers" element={<KindleVellaCovers />} /> */}
+          {/* <Route path="illustrated-covers" element={<IllustratedCovers />} /> */}
+          {/* <Route path="formatting-layout" element={<FormattingLayout />} /> */}
+          {/* <Route path="logo-design" element={<LogoDesign />} /> */}
+          {/* <Route path="marketing-materials" element={<MarketingMaterials />} /> */}
+        </Route>
       </Route>
     </Routes>
   );
