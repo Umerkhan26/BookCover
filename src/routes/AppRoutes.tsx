@@ -20,6 +20,7 @@ import ContactUs from "../components/ContactUs/ContactUs";
 import PremiumCovers from "../components/PremiumCover/premiumcovers";
 import CustomBookCovers from "../components/CustomBookCovers/custombookcover";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
+import AboutUs from "../components/AboutUs/AboutUs";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -90,6 +91,7 @@ const AppRoutes: React.FC = () => {
           {/* <Route path="logo-design" element={<LogoDesign />} /> */}
           {/* <Route path="marketing-materials" element={<MarketingMaterials />} /> */}
         </Route>
+        <Route path="/aboutUs" element={<AboutUs />} />
       </Route>
     </Routes>
   );
