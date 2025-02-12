@@ -200,7 +200,7 @@ function Header() {
           <HamburgerMenu onClick={toggleMenu}>☰</HamburgerMenu>
           <NavNBtn isMenuOpen={isMenuOpen}>
             <DropdownContainer>
-              <NavLinkButton to="/find-obituary">Services</NavLinkButton>
+              <NavLinkButton to="/services">Services</NavLinkButton>
               <DropdownMenu>
                 <DropdownItem to="/fictionCover">
                   Fiction Cover Design
@@ -242,12 +242,12 @@ function Header() {
 
             <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
             {/* <NavLinkButton to="/pricing">Blog</NavLinkButton> */}
-            <NavLinkButton to="/pricing">FAQ</NavLinkButton>
+            <NavLinkButton to="/FAQs">FAQ</NavLinkButton>
             <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
-            <NavLinkButton to="/pricing">Partner With Us</NavLinkButton>
+            <NavLinkButton to="/partner">Partner With Us</NavLinkButton>
 
             <NavText to="/pricing">Client Portal</NavText>
-            <NavButton to="/services">Get a Cover</NavButton>
+            <NavButton to="/GetACover">Get a Cover</NavButton>
           </NavNBtn>
         </HeaderContainer>
       </Nav>

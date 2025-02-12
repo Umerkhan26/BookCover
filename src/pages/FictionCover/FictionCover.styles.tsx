@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #e0e0e0; /* A slightly darker gray */
+  background-color: #e0e0e0;
   padding: 50px 20px;
-  margin-top: 70px; /* Adds space at the top */
+  margin-top: 70px;
+
+  @media (max-width: 1024px) {
+    padding: 40px 15px;
+    margin-top: 60px;
+  }
 
   @media (max-width: 768px) {
-    padding: 30px 15px; /* Reduce padding for smaller screens */
-    margin-top: 50px; /* Adjust space above */
+    padding: 30px 10px;
+    margin-top: 50px;
   }
 `;
 
@@ -19,11 +24,9 @@ export const SectionFiction = styled.section`
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  font-family: Museo Sans Cyrl;
+  font-family: Museo Sans Cyrl, sans-serif;
   font-style: normal;
   font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,67 +35,80 @@ export const SectionFiction = styled.section`
   background: unset !important;
 
   @media (max-width: 1024px) {
-    flex-direction: column; /* Stack elements on smaller screens */
+    flex-direction: column;
     align-items: center;
     text-align: center;
+    padding-bottom: 30px;
   }
 
   @media (max-width: 768px) {
-    padding: 20px 0; /* Reduce padding */
+    padding: 20px 0;
   }
 `;
 
 export const TextForFiction = styled.div`
-  width: 33%;
-  height: 450px;
+  width: 30%;
+  height: auto;
   position: relative;
   overflow: hidden;
   display: flex;
   justify-content: flex-end;
-  margin-right: 220px;
+  margin-right: 200px;
   margin-top: 20px;
 
   img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
   }
 
-  @media (max-width: 1024px) {
-    width: 50%; /* Increase width for tablets */
-    margin-right: 0; /* Center align */
-  }
-
-  @media (max-width: 768px) {
-    width: 80%;
-    height: 350px; /* Adjust height */
-  }
-`;
-
-export const FictionCoverImage = styled.div`
-  width: 33%;
-  height: 450px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 220px;
-  margin-top: 20px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  @media (max-width: 1200px) {
+    width: 40%;
+    margin-right: 100px;
   }
 
   @media (max-width: 1024px) {
     width: 50%;
     margin-right: 0;
+    justify-content: center;
   }
 
   @media (max-width: 768px) {
     width: 80%;
-    height: 350px;
+    height: auto;
+  }
+`;
+
+export const FictionCoverImage = styled.div`
+  width: 30%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 200px;
+  margin-top: 20px;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1200px) {
+    width: 40%;
+    margin-right: 100px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 50%;
+    margin-right: 0;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+    height: auto;
   }
 `;
 
@@ -104,16 +120,22 @@ export const Wrapper = styled.div`
   align-items: flex-start;
   padding-left: 160px;
 
+  @media (max-width: 1200px) {
+    width: 50%;
+    padding-left: 80px;
+  }
+
   @media (max-width: 1024px) {
-    width: 60%; /* Adjust width for tablets */
-    padding-left: 50px;
+    width: 70%;
+    padding-left: 40px;
+    text-align: center;
+    align-items: center;
   }
 
   @media (max-width: 768px) {
     width: 90%;
     padding-left: 20px;
-    text-align: center; /* Center align text */
-    align-items: center;
+    text-align: center;
   }
 `;
 
@@ -121,13 +143,23 @@ export const Title = styled.h1`
   font-size: 3rem;
   font-weight: bold;
   color: #212529;
+  text-align: left;
+
+  @media (max-width: 1200px) {
+    font-size: 2.7rem;
+  }
 
   @media (max-width: 1024px) {
     font-size: 2.5rem;
+    text-align: center;
   }
 
   @media (max-width: 768px) {
     font-size: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
   }
 `;
 
@@ -136,19 +168,29 @@ export const Subtitle = styled.p`
   color: #555;
   margin-top: 10px;
   margin-right: 5px;
+  text-align: left;
+
+  @media (max-width: 1024px) {
+    font-size: 0.95rem;
+    text-align: center;
+  }
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
     margin-right: 0;
   }
+
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+  }
 `;
 
 export const BookCoversText = styled.div`
-  font-family: 'Busset-City';
+  font-family: 'Busset-City', sans-serif;
   font-weight: 200;
   font-size: 57px;
-  line-height: 118.9%;
-  color: #25293F;
+  line-height: 1.2;
+  color: #25293f;
   opacity: 0.1;
   text-align: right;
   margin-left: 320px;
@@ -157,33 +199,52 @@ export const BookCoversText = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
+  @media (max-width: 1200px) {
+    font-size: 50px;
+    margin-left: 250px;
+  }
+
   @media (max-width: 1024px) {
     font-size: 45px;
-    margin-left: 200px;
+    margin-left: 150px;
   }
 
   @media (max-width: 768px) {
     font-size: 35px;
-    margin-left: 100px;
+    margin-left: 50px;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 28px;
+    margin-left: 20px;
   }
 `;
 
-
-
 export const BenifitsComponent = styled.div`
-  font-family: 'Busset-City';
+  font-family: 'Busset-City', sans-serif;
   font-weight: 200;
   font-size: 57px;
   width: 100%;
-  margin-top:70px;
+  margin-top: 70px;
+  text-align: center;
+
+  @media (max-width: 1200px) {
+    font-size: 50px;
+    margin-left: 20px;
+  }
 
   @media (max-width: 1024px) {
     font-size: 45px;
-    margin-left: 30px;
+    margin-left: 10px;
   }
 
   @media (max-width: 768px) {
     font-size: 35px;
-    margin-left: 100px;
+    margin-left: 0;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 28px;
   }
 `;

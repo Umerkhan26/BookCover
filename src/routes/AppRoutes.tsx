@@ -21,6 +21,10 @@ import PremiumCovers from "../components/PremiumCover/premiumcovers";
 import CustomBookCovers from "../components/CustomBookCovers/custombookcover";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 import AboutUs from "../components/AboutUs/AboutUs";
+import Partner from "../components/Partner/Partner";
+import FAQ from "../components/FAQs/FAQs";
+import GetACover from "../components/GetACover/GetACover";
+import Services from "../components/ServicesComponent/Services";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -62,6 +66,13 @@ const AppRoutes: React.FC = () => {
         <Route path="/nonFiction" element={<NonFictonalCover />} />
         <Route path="/audioBookCover" element={<AudioBookCover />} />
         <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/partner" element={<Partner />} />
+        <Route path="/FAQs" element={<FAQ />} />
+        <Route path="/GetACover" element={<GetACover />} />
+        <Route path="/services" element={<Services />} />
+
+
+        
 
         <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
           {/* Redirect /portfolio to /portfolio/custom-book-covers */}

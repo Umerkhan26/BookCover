@@ -1,12 +1,11 @@
 import {
-  SectionFiction,
-  FictionCoverImage,
+
   Title,
   Subtitle,
-  Wrapper,
+
   Container,
-  BenifitsComponent,
-} from './FictionCover.styles';
+  Section,
+} from './PartnerCover.styles';
 
 interface BookCoversTextProps {
   text: string;
@@ -16,7 +15,7 @@ const BookCoversText = ({ text }: BookCoversTextProps) => {
   return <h2>{text}</h2>;
 };
 
-interface FictionCoverProps {
+interface PartnerCoverProps {
   title: string;
   subtitle: string;
   bookCoversText: string;
@@ -29,37 +28,29 @@ interface FictionCoverProps {
   specialEditionAddOnsComponent?: JSX.Element;
 }
 
-const FictionCover = ({
+const PartnerCover = ({
   title,
   subtitle,
-  image,
   bookCoversText,
-  benefitsComponent,
   designProcessComponent,
   packagesComponent,
   reviewsComponent,
   specialEditionAddOnsComponent,
-}: FictionCoverProps) => {
+}: PartnerCoverProps) => {
   return (
     <div>
       <Container>
-        <SectionFiction>
-          <Wrapper>
+        <Section>
+        
             <Title>{title}</Title>
             <Subtitle>{subtitle}</Subtitle>
-          </Wrapper>
-          {image && (
-            <FictionCoverImage>
-              <img src={image} alt="Fiction Cover" />
-            </FictionCoverImage>
-          )}
+      
+    
           <BookCoversText text={bookCoversText} />
-        </SectionFiction>
+        </Section>
       </Container>
 
-      {benefitsComponent && (
-        <BenifitsComponent>{benefitsComponent}</BenifitsComponent>
-      )}
+ 
       {reviewsComponent}
       {designProcessComponent}
       {packagesComponent}
@@ -68,4 +59,4 @@ const FictionCover = ({
   );
 };
 
-export default FictionCover;
+export default PartnerCover;

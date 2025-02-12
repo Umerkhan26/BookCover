@@ -1,0 +1,53 @@
+function initTiny(){$(document).on('click','.review__editor-first',function(){$(this).hide();let editor=$(this).closest('.review__editor').find('.review__textarea');let block=$(this).closest('.review__form').find('.review__show');editor.addClass('active');editor.show();block.slideDown(300);tinymce.init({selector:'.review__textarea.active',height:150,menubar:!1,style_formats:[{title:'Headers',items:[{title:'Heading 2',block:'h2'},{title:'Heading 3',block:'h3'},{title:'Heading 4',block:'h4'},{title:'Heading 5',block:'h5'},{title:'Heading 6',block:'h6'}]},{title:'Blocks',items:[{title:'Paragraph',block:'p'},{title:'Blockquote',block:'blockquote'},]}]})})}
+function submitFormComment(){$(document).on('submit','.review__form',function(e){e.preventDefault();let form=$(this);let formData=new FormData(form[0]);let reply=form.closest('.review__comment-item');let replyText=reply.find('.review__editor-first.active').val();let post_id=$('body').attr('class').match(/postid-(\d+)/)[1];let tinymceEditorId=form.find('textarea.tinymce-editor').attr('id');let recaptchaResponse=form.find('.g-recaptcha-response').val();let name=form.find('.review__input-name').val();let email=form.find('.review__input-email').val();let user_id=$('#review').data('user_id');formData.append('post_id',post_id);formData.append('user_id',user_id);formData.append('name',name);formData.append('email',email);if(!recaptchaResponse){form.find('.g-recaptcha').append(`<p class="recaptcha__error">Please fill the recaptcha</p>`);setTimeout(function(){$('.recaptcha__error').remove()},3000);return}
+if(reply.length>0){formData.append('reply_comment_id',reply.data('id'));formData.append('reply_content',replyText)}else{let tinyMCEContent=tinymce.get('mce_0').getContent();formData.append('editor_content',tinyMCEContent)}
+formData.forEach(function(value,key){if(key==='file[]'&&!value){formData.delete(key)}});uploadedFiles.forEach(function(file,index){formData.append('file[]',file)});$.ajax({url:'/wp-admin/admin-ajax.php',data:formData,method:'POST',contentType:!1,processData:!1,cache:!1,success:function(res){$('.form__file-list > *').remove();uploadedFiles=[];form.find('input').val("");form.find('textarea').val("");$('#primary').append('<p class="custom__message success ">Thank you for your comment</p>')
+setTimeout(function(){$('.custom__message').remove()},2000)
+$('.g-recaptcha').each(function(){grecaptcha.reset()})
+form.find('.review__editor-first').show()
+form.find('.review__show').hide()
+$('.tox-tinymce').remove()
+console.log(1111,form.closest('.reply__hide'))
+form.closest('.reply__hide').removeClass('active')
+tinyMCE.activeEditor.setContent('')},error:function(error){console.log('Error during ajax submission:',error)},})})}
+let uploadedFiles=[];let currentInput=null;function uploadAndDeleteFiles(){let list;$('.file__input').on('change',function(){if(currentInput!==this){uploadedFiles=[];if(list){list.empty()}}
+currentInput=this;let files=$(this)[0].files;list=$(this).closest('.review__file').find('.file__list');for(let i=0;i<files.length;i++){uploadFile(files[i])}});$(document).on('click','.delete__file',function(){let index=$(this).data('index');uploadedFiles.splice(index,1);updateFileList()});function uploadFile(file){let progress=0;let progressBar=$('<div class="progressBar"></div>');let listItem=$(`<li class="form__file-item"> <img src=""></li>`).append(progressBar);list.append(listItem);let reader=new FileReader();reader.onload=function(e){listItem.find('img').attr('src',e.target.result)};reader.readAsDataURL(file);let uploadInterval=setInterval(function(){progress+=Math.random()*10;if(progress>=100){clearInterval(uploadInterval);progressBar.css('display','none');listItem.append(`<button type="button" class="delete__file" data-index="${uploadedFiles.length}"><img src="${url}delete.svg" alt=""></button>`);uploadedFiles.push(file)}else{progressBar.css('width',progress+'%')}},20)}
+function updateFileList(){list.empty();uploadedFiles.forEach((file,index)=>{let listItem=$('<li class="form__file-item"></li>');let img=$('<img src="">');let deleteButton=$(`<button type="button" class="delete__file" data-index="${index}"><img src="${url}delete.svg" alt=""></button>`);listItem.append(img).append(deleteButton);list.append(listItem);let reader=new FileReader();reader.onload=function(e){img.attr('src',e.target.result)};reader.readAsDataURL(file)})}}
+function activeStar(){$('.rating').each(function(){$(this).find('label').on('mouseleave',function(){$(this).closest('.rating').find('label').removeClass('active__star')});let user_id=$('#review').data('user_id');$(this).find('label').on('click',function(){let post_id=$('body').attr('class').match(/postid-(\d+)/)[1];let star=$(this).prev().val()
+let label=$(this)
+const obj={action:'rating',post_id,user_id,star};$.ajax({url:'/wp-admin/admin-ajax.php',data:obj,method:'POST',success:function(res){$('.wpdrv').text(star)
+console.log(res.data)
+let average=res.data.average
+if(label.hasClass('active__star-click')){label.removeClass('active__star-click');label.removeClass('active__star');label.prevAll('label').addClass('active__star-click');label.nextAll('label').removeClass('active__star-click');label.prev('input').removeAttr('checked');label.nextAll('input').removeAttr('checked')}else{label.closest('.rating').find('label').removeClass('active__star-click');label.prevAll('label').addClass('active__star-click');label.prevAll('input').removeAttr('checked');label.nextAll('input').removeAttr('checked');label.prev('input').attr('checked',!0);label.addClass('active__star-click')}},error:function(error){console.log('error',error);console.log(121212,error.responseJSON.data)
+if(error.responseJSON.data=="already_voted"){$('#primary').append('<p class="custom__message">Sorry, you already voted</p>')}
+setTimeout(function(){$('.custom__message').remove()},2000)}})})})}
+function counterReview(){$('.review__counter-wrap').each(function(){let counterWrap=$(this);let minusButton=counterWrap.find('.review__minus');let plusButton=counterWrap.find('.review__plus');let counterButton=counterWrap.find('.review__counter');let valueElement=counterWrap.find('span');let comment_id=$(this).closest('.review__comment-item').attr('data-id');let min=+valueElement.text()-1;let max=+valueElement.text()+1;let currentValue=parseInt(valueElement.text());let user_id=$('#review').data('user_id');counterButton.on('click',function(){let newValue
+let currentButton=$(this)
+console.log(1111,currentValue)
+if(currentButton.hasClass('review__plus')){newValue=currentValue+1}
+if(currentButton.hasClass('review__minus')){newValue=currentValue-1}
+let post_id=$('body').attr('class').match(/postid-(\d+)/)[1];const obj={action:'review_counter',comment_id,post_id,user_id,counter:newValue};function successCounter(){if(currentButton.hasClass('review__plus')){if(currentValue==max)return;counterWrap.removeClass('minus')
+counterWrap.removeClass('plus')
+currentValue++;if(currentValue==max){counterWrap.addClass('plus')}
+valueElement.text(currentValue)}
+if(currentButton.hasClass('review__minus')){if(currentValue==min)return;counterWrap.removeClass('minus')
+counterWrap.removeClass('plus')
+currentValue--;if(currentValue==min){counterWrap.addClass('minus')}
+valueElement.text(currentValue)}}
+$.ajax({url:'/wp-admin/admin-ajax.php',data:obj,method:'POST',success:function(res){successCounter()},error:function(error){console.log('error',error)
+if(error.responseJSON.data=="already_voted"){$('#primary').append('<p class="custom__message">Sorry, you already voted</p>')}
+setTimeout(function(){$('.custom__message').remove()},2000)}})})})}
+function reply(){$(document).on('click','.review__reply',function(){let replyBlock=$(this).closest('.review__comment-item').find('.reply__hide').first()
+replyBlock.addClass('active')})
+$(document).on('click','.review__flex-close',function(){let replyBlock=$(this).closest('.review__comment-item').find('.reply__hide').first()
+replyBlock.removeClass('active')})}
+function timerBanner(){console.log("Timer initialized");let timer;let compareDate=new Date("2024-12-01T06:00:00Z");timer=setInterval(function(){timeBetweenDates(compareDate)},1000);function timeBetweenDates(toDate){let now=new Date();let difference=toDate.getTime()-now.getTime();if(difference<=0){clearInterval(timer);console.log("Timer completed")}else{let seconds=Math.floor(difference/1000);let minutes=Math.floor(seconds/60);let hours=Math.floor(minutes/60);let days=Math.floor(hours/24);hours%=24;minutes%=60;seconds%=60;days=days.toString().padStart(2,'0');hours=hours.toString().padStart(2,'0');minutes=minutes.toString().padStart(2,'0');seconds=seconds.toString().padStart(2,'0');$("#days").text(days);$("#hours").text(hours);$("#minutes").text(minutes);$("#seconds").text(seconds)}}}
+$(document).ready(function(){initTiny()
+submitFormComment()
+activeStar()
+uploadAndDeleteFiles()
+reply()
+counterReview()
+timerBanner()
+$('.banner__black-btn.reserve').on('click',function(e){console.log(343433)
+$.fancybox.open({src:'#black__popup',type:'inline'})})})
