@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 // Import images directly
@@ -18,11 +18,10 @@ import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 type PortfolioItem = {
   id: number;
   title: string;
+  subtitle?: string;
   imageUrl: string;
-  subtitle?: string; // Optional subtitle for additional text
 };
 
-// Use the imported images in the portfolioItems array
 const portfolioItems: PortfolioItem[] = [
   { id: 1, title: "HUNTER'S", subtitle: "BILLMCCURRY", imageUrl: img1 },
   { id: 2, title: "CAM SINCLAIR", subtitle: "FULLY", imageUrl: img2 },
@@ -37,26 +36,22 @@ const portfolioItems: PortfolioItem[] = [
   { id: 11, title: "Book Eleven", imageUrl: img11 },
 ];
 
+// Styled Components
 const PortfolioContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr); // 4 images per row
-  gap: 30px; // Increased gap between images
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   padding: 20px;
   justify-items: center;
 
   @media (max-width: 1200px) {
-    grid-template-columns: repeat(
-      3,
-      1fr
-    ); // 3 images per row for medium screens
+    grid-template-columns: repeat(3, 1fr);
   }
-
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr); // 2 images per row for tablets
+    grid-template-columns: repeat(2, 1fr);
   }
-
   @media (max-width: 480px) {
-    grid-template-columns: repeat(1, 1fr); // 1 image per row for mobile
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -64,18 +59,17 @@ const PortfolioItemCard = styled.div`
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
   width: 100%;
-  max-width: 300px; // Increased width for each card
+  max-width: 250px; // Fixed width for grid items
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 400px;
+  height: 350px;
   object-fit: cover;
   border-radius: 10px;
   transition: transform 0.3s ease-in-out;
-
   &:hover {
     transform: scale(1.05);
   }
@@ -90,24 +84,132 @@ const TextOverlay = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   margin: 0;
   text-transform: uppercase;
 `;
 
 const Subtitle = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   margin: 5px 0 0;
   text-transform: uppercase;
 `;
 
-const PortfolioGrid: React.FC = () => {
+// Modal Styles
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const ModalImage = styled.img`
+  width: 100%;
+  min-width: 380px;
+  height: 450px;
+  border-radius: 10px;
+
+  // Reduce image size in preview mode
+  @media (max-width: 768px) {
+    width: 80%;
+    height: auto;
+  }
+  @media (max-width: 480px) {
+    width: 70%;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: -10px;
+  right: -70px;
+  border: none;
+  padding: 5px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+`;
+
+export const PreviewNavButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  z-index: 1001;
+  transition: background 0.3s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+`;
+
+export const PrevPreviewButton = styled(PreviewNavButton)`
+  left: -120px;
+`;
+
+export const NextPreviewButton = styled(PreviewNavButton)`
+  right: -120px;
+`;
+
+const PremiumCover: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openModal = (index: number) => {
+    setCurrentIndex(index);
+    setSelectedImage(portfolioItems[index].imageUrl);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  // const showNext = () => {
+  //   const newIndex = (currentIndex + 1) % portfolioItems.length;
+  //   setCurrentIndex(newIndex);
+  //   setSelectedImage(portfolioItems[newIndex].imageUrl);
+  // };
+
+  const handlePreviewNext = () => {
+    const newIndex = (currentIndex + 1) % portfolioItems.length;
+    setCurrentIndex(newIndex);
+    setSelectedImage(portfolioItems[newIndex].imageUrl);
+  };
+
+  const handlePreviewPrev = () => {
+    const newIndex = (currentIndex - 1) % portfolioItems.length;
+    setCurrentIndex(newIndex);
+    setSelectedImage(portfolioItems[newIndex].imageUrl);
+  };
+
   return (
     <>
       <PortfolioContainer>
-        {portfolioItems.map((item) => (
-          <PortfolioItemCard key={item.id}>
+        {portfolioItems.map((item, index) => (
+          <PortfolioItemCard key={item.id} onClick={() => openModal(index)}>
             <Image src={item.imageUrl} alt={item.title} loading="lazy" />
             <TextOverlay>
               <Title>{item.title}</Title>
@@ -125,8 +227,19 @@ const PortfolioGrid: React.FC = () => {
           buttonLink="https://miblart.com/cover-idea/"
         />
       </div>
+
+      {selectedImage && (
+        <ModalOverlay>
+          <ModalContent>
+            <CloseButton onClick={closeModal}>✖</CloseButton>
+            <ModalImage src={selectedImage} alt="Preview" />
+            <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>
+            <NextPreviewButton onClick={handlePreviewNext}>❯</NextPreviewButton>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </>
   );
 };
 
-export default PortfolioGrid;
+export default PremiumCover;

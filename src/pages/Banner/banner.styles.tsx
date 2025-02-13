@@ -16,7 +16,7 @@ export const Section = styled.section`
   box-sizing: border-box;
   display: block;
   min-height: 310px;
-  padding-top: 75px;
+  padding-top: 72px;
   padding-bottom: 40px;
   background: unset !important;
 `;
@@ -45,6 +45,11 @@ export const BannerContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+
+  @media (max-width: 768px) {
+    width: 80%;
+    padding: 15px;
+  }
 `;
 
 export const Title = styled.h1`
@@ -66,6 +71,10 @@ export const Title = styled.h1`
   span {
     color: #00bcd4;
   }
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 export const Subtitle = styled.div`
@@ -83,6 +92,10 @@ export const Subtitle = styled.div`
       font-family: "Proxima Nova Bold";
       color: #fff;
     }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
   }
 `;
 
@@ -105,6 +118,11 @@ export const Button = styled.a`
   background-color: transparent;
   cursor: pointer;
   text-decoration: none;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -132,26 +150,49 @@ export const TopBannerR = styled.div`
 `;
 
 export const CardSection = styled.div`
-  flex: 0 0 80%;
-  max-width: 80%;
   display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
   gap: 10px;
+  justify-content: center; /* Center align when wrapped */
+  width: 100%;
+  max-width: 80%;
+
+  @media (max-width: 1024px) {
+    max-width: 90%; /* Adjust max width for tablets */
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 export const Card = styled.a`
-  flex: 0 0 auto;
-  width: 16%;
+  flex: 1 1 calc(20% - 10px);
   max-width: 150px;
+  margin-top: 20px;
   transition: transform 0.3s ease-in-out;
 
   img {
     width: 100%;
     height: auto;
+    min-height: 250px;
     border-radius: 8px;
     display: block;
   }
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: 1024px) {
+    flex: 1 1 calc(25% - 10px); /* Adjust width on tablets */
+  }
+
+  @media (max-width: 768px) {
+    flex: 1 1 calc(33.33% - 10px); /* Adjust for mobile */
+  }
+
+  @media (max-width: 480px) {
+    flex: 1 1 calc(50% - 10px); /* Show two cards per row on small screens */
   }
 `;

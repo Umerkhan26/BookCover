@@ -25,18 +25,19 @@ const SubCategoryTabs = () => {
         {subcategories.map(({ name, path }) => (
           <SubCategory
             key={path}
-            active={location.pathname.includes(path)}
-            onClick={() => navigate(`/portfolio/custom-book-covers/${path}`)}
+            active={location.pathname.endsWith(path)}
+            onClick={() => navigate(`/portfolio/${path}`)}
           >
             {name}
           </SubCategory>
         ))}
       </SubCategoryContainer>
-
-      {/* Outlet ensures content changes without a full-page reload */}
-      <ContentContainer>{/* <Outlet /> */}</ContentContainer>
     </Container>
   );
+};
+
+type Active = {
+  active: boolean;
 };
 
 // Styled Components
@@ -69,23 +70,14 @@ const SubCategoryContainer = styled.div`
   }
 `;
 
-type Active = {
-  active: boolean;
-};
-
 const SubCategory = styled.button<Active>`
   padding: 8px 12px;
-  //   background-color: ${({ active }) => (active ? "#ff9800" : "#eee")};
   border: none;
   border-radius: 5px;
   color: black;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease;
-`;
-
-const ContentContainer = styled.div`
-  margin-top: 20px;
 `;
 
 export default SubCategoryTabs;

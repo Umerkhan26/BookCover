@@ -13,18 +13,32 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const LeftColumn = styled.div`
   flex: 1;
   max-width: 40%;
   padding: 0 20px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    text-align: center;
+  }
 `;
 
 const RightColumn = styled.div`
   flex: 1;
   max-width: 60%;
   padding: 0 20px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const SectionTitle = styled.h2`
@@ -55,6 +69,12 @@ const Step = styled.div`
   align-items: flex-start;
   margin-bottom: 20px;
   position: relative;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const StepNumber = styled.div`
@@ -77,6 +97,10 @@ const StepNumber = styled.div`
     font-weight: 400;
     color: #c4c4c4;
     text-transform: uppercase;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 10px;
   }
 `;
 
@@ -111,6 +135,11 @@ const Button = styled.a`
 
   &:hover {
     background-color: #218838;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 14px 0;
   }
 `;
 

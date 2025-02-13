@@ -30,11 +30,21 @@ const Title = styled.h2`
   font-weight: 700;
   color: #00bcd4;
   margin-bottom: 0;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-left: 0;
+  }
 `;
 
 const Subtitle = styled.p`
   font-size: 18px;
   color: #666;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    text-align: center;
+  }
 `;
 
 const AwardsCarouselItem = styled.div`

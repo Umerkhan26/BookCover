@@ -36,18 +36,20 @@ const Logo = styled.img`
 
 const NavLinkButton = styled(NavLink)`
   display: inline-block;
-  color: #212121;
+  color: #6d6d6d;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 200;
   text-transform: capitalize;
-  padding: 5px 12px;
+  padding: 5px 20px;
   text-align: left;
   text-decoration: none;
   border-radius: 5px;
   margin-right: 15px;
+  background: rgba(255, 255, 255, 0.4);
 
   &:hover {
-    color: #1a8797;
+    color: #14b8b8;
+    background: rgba(255, 255, 255, 0.6);
   }
 `;
 
@@ -91,27 +93,32 @@ const HeaderContainer = styled.div`
   width: 100%;
   max-width: 1200px; /* Adjust based on your design */
   margin: 0 auto; /* Center the header content */
-`;
-
-const NavNBtn = styled.nav<NavNBtnProps>`
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  padding: 0;
-  justify-content: flex-start;
 
   @media (max-width: 768px) {
-    display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
-    flex-direction: column;
-    position: absolute;
-    top: 65px;
-    left: 0;
+    justify-content: space-between;
     width: 100%;
-    background-color: #fff;
-    z-index: 1000;
-    padding: 10px;
   }
 `;
+
+// const NavNBtn = styled.nav<NavNBtnProps>`
+//   display: flex;
+//   align-items: center;
+//   flex-grow: 1;
+//   padding: 0;
+//   justify-content: flex-start;
+
+//   @media (max-width: 768px) {
+//     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
+//     flex-direction: column;
+//     position: absolute;
+//     top: 65px;
+//     left: 0;
+//     width: 100%;
+//     background-color: #fff;
+//     z-index: 1000;
+//     padding: 10px;
+//   }
+// `;
 
 const DropdownMenu = styled.div`
   display: none;
@@ -142,19 +149,23 @@ const DropdownMenu = styled.div`
 `;
 
 const DropdownItem = styled(NavLink)`
-  color: #212121;
+  color: #6d6d6d;
   text-decoration: none;
-  padding: 13px 20px;
+  padding: 18px 10px;
   font-size: 15px;
   display: flex;
-  align-item: center;
+  margin-top: 20px;
+  align-items: center;
   justify-content: center;
 
-  width: calc(25% - 10px);
+  width: calc(30% - 10px);
   box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
 
   &:hover {
-    color: #6dc7d1;
+    color: #14b8b8;
+    background: rgba(255, 255, 255, 0.6);
   }
 `;
 
@@ -172,10 +183,77 @@ const DropdownContainer = styled.div`
 const HamburgerMenu = styled.div`
   display: none;
   cursor: pointer;
-
+  color: black;
   @media (max-width: 768px) {
     display: block;
-    font-size: 24px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+  }
+`;
+
+const ContactUsWrapper = styled.div`
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+`;
+
+// const NavNBtn = styled.nav<NavNBtnProps>`
+//   display: flex;
+//   align-items: center;
+//   flex-grow: 1;
+//   padding: 0;
+//   justify-content: flex-start;
+
+//   @media (max-width: 768px) {
+//     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
+//     flex-direction: column;
+//     position: absolute;
+//     top: 65px;
+//     left: 0;
+//     width: 100%;
+//     background-color: #fff;
+//     z-index: 1000;
+//     padding: 10px;
+
+//     ${NavButton} {
+//       display: none; /* Hide "Get a Cover" button inside menu */
+//     }
+//   }
+// `;
+
+const NavNBtn = styled.nav<NavNBtnProps>`
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0;
+  justify-content: flex-start;
+
+  @media (max-width: 768px) {
+    display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+    align-items: flex-start; /* Align text to the left */
+    gap: 15px; /* Add spacing between items */
+  }
+`;
+
+const MobileContactButton = styled(NavButton)`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: inline-block; /* Show only on mobile */
   }
 `;
 
@@ -197,7 +275,21 @@ function Header() {
               alt="Logo"
             />
           </NavLink>
-          <HamburgerMenu onClick={toggleMenu}>☰</HamburgerMenu>
+          <ContactUsWrapper>
+            <MobileContactButton to="/contactUs">
+              Contact Us
+            </MobileContactButton>
+          </ContactUsWrapper>
+          {/* <HamburgerMenu onClick={toggleMenu}>☰</HamburgerMenu> */}
+
+          <HamburgerMenu onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? (
+              <span style={{ color: "black" }}>✖</span>
+            ) : (
+              <span style={{ color: "black" }}>☰</span>
+            )}
+          </HamburgerMenu>
+
           <NavNBtn isMenuOpen={isMenuOpen}>
             <DropdownContainer>
               <NavLinkButton to="/find-obituary">Services</NavLinkButton>
@@ -236,9 +328,7 @@ function Header() {
               </DropdownMenu>
             </DropdownContainer>
 
-            <DropdownContainer>
-              <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
-            </DropdownContainer>
+            <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
 
             <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
             {/* <NavLinkButton to="/pricing">Blog</NavLinkButton> */}
@@ -246,7 +336,7 @@ function Header() {
             <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
             <NavLinkButton to="/pricing">Partner With Us</NavLinkButton>
 
-            <NavText to="/pricing">Client Portal</NavText>
+            <NavText to="/portal">Client Portal</NavText>
             <NavButton to="/services">Get a Cover</NavButton>
           </NavNBtn>
         </HeaderContainer>

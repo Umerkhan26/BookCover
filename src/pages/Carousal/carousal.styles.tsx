@@ -29,6 +29,11 @@ export const Title = styled.h1`
   span {
     color: #6dc7d1;
   }
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-left: 0;
+  }
 `;
 
 export const Subtitle = styled.p`
@@ -37,6 +42,11 @@ export const Subtitle = styled.p`
   color: #455a64;
   margin: 0;
   margin-right: 35px;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    text-align: center;
+  }
 `;
 
 export const SliderContainer = styled.div`
@@ -112,10 +122,22 @@ export const NavButton = styled.button`
 
 export const PrevButton = styled(NavButton)`
   left: 10px;
+
+  @media (max-width: 768px) {
+    left: 50px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+  }
 `;
 
 export const NextButton = styled(NavButton)`
   right: 10px;
+
+  @media (max-width: 768px) {
+    right: 5px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+  }
 `;
 
 export const ImagePreviewOverlay = styled.div`
@@ -149,8 +171,8 @@ export const PreviewImage = styled.img`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: -30px;
-  left: 232%;
+  top: -10px;
+  left: 132%;
   transform: translateX(-50%);
   color: white;
   border: none;

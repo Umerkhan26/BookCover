@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import FictionCover from "../pages/FictionCover/FictionCover";
@@ -17,16 +17,30 @@ import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
 import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
 import ContactUs from "../components/ContactUs/ContactUs";
 // import PortFolio from "../pages/Portfolio/Portfolio";
-import PremiumCovers from "../components/PremiumCover/premiumcovers";
-import CustomBookCovers from "../components/CustomBookCovers/custombookcover";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 import AboutUs from "../components/AboutUs/AboutUs";
+import PremiumCover from "../components/PremiumCover/premiumcovers";
+import KindleVellaCover from "../components/KindleVellaCover/kindleVellacover";
+import IllustratedCover from "../components/IllustratedCovers/illustratedcover";
+import LogoDesign from "../components/LogoDesign/logodesign";
+import CustomCover from "../components/CustomBookCovers/custombookcover";
+import Romance from "../components/CustomBookCovers/SubCatagories/romance";
+import Fantasy from "../components/CustomBookCovers/SubCatagories/fantasy";
+import UrbanFantasy from "../components/CustomBookCovers/SubCatagories/urbanfantasy";
+import Fiction from "../components/CustomBookCovers/SubCatagories/fiction";
+import Horror from "../components/CustomBookCovers/SubCatagories/horror";
+import MysteryThrillerSuspense from "../components/CustomBookCovers/SubCatagories/mysterythrillersuspense";
+import NonFiction from "../components/CustomBookCovers/SubCatagories/nonfiction";
+import Paranormal from "../components/CustomBookCovers/SubCatagories/paranormal";
+import SciFi from "../components/CustomBookCovers/SubCatagories/sciFi";
+import YoungAdult from "../components/CustomBookCovers/SubCatagories/youngadult";
+import CozyMystery from "../components/CustomBookCovers/SubCatagories/cozymystery";
+import UserDashboard from "../pages/UserDashboard/userdashboard";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-
         {/* Wrap FictionCover inside Route and pass its props */}
         <Route
           path="/fictionCover"
@@ -54,7 +68,6 @@ const AppRoutes: React.FC = () => {
             />
           }
         />
-
         {/* Other Routes */}
         <Route path="/illustrated" element={<Illustrated />} />
         <Route path="/bookCoverRedesign" element={<BookCoverRedesign />} />
@@ -62,37 +75,35 @@ const AppRoutes: React.FC = () => {
         <Route path="/nonFiction" element={<NonFictonalCover />} />
         <Route path="/audioBookCover" element={<AudioBookCover />} />
         <Route path="/contactUs" element={<ContactUs />} />
-
         <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
-          {/* Redirect /portfolio to /portfolio/custom-book-covers */}
-          <Route index element={<Navigate to="custom-book-covers" replace />} />
+          {/* Default Route: When visiting /portfolio/, show CustomCover */}
+          <Route index element={<CustomCover />} />
 
-          {/* CustomBookCovers and its subcategories */}
-          <Route path="custom-book-covers" element={<CustomBookCovers />}>
-            {/* <Route index element={<Fantasy />} /> Default subcategory */}
-            {/* <Route path="fantasy" element={<Fantasy />} /> */}
-            {/* <Route path="romance" element={<Romance />} /> */}
-            {/* <Route path="urban-fantasy" element={<UrbanFantasy />} /> */}
-            {/* <Route path="young-adult" element={<YoungAdult />} /> */}
-            {/* <Route path="cozy-mystery" element={<CozyMystery />} /> */}
-            {/* <Route path="paranormal" element={<Paranormal />} /> */}
-            {/* <Route path="mystery-thriller-suspense" element={<MysteryThrillerSuspense />} /> */}
-            {/* <Route path="horror" element={<Horror />} /> */}
-            {/* <Route path="sci-fi" element={<SciFi />} /> */}
-            {/* <Route path="non-fiction" element={<NonFiction />} /> */}
-            {/* <Route path="fiction" element={<Fiction />} /> */}
-          </Route>
+          {/* Subcategories directly under /portfolio/ */}
+          <Route path="fantasy" element={<Fantasy />} />
+          <Route path="romance" element={<Romance />} />
+          <Route path="urban-fantasy" element={<UrbanFantasy />} />
+          <Route path="young-adult" element={<YoungAdult />} />
+          <Route path="cozy-mystery" element={<CozyMystery />} />
+          <Route path="paranormal" element={<Paranormal />} />
+          <Route
+            path="mystery-thriller-suspense"
+            element={<MysteryThrillerSuspense />}
+          />
+          <Route path="horror" element={<Horror />} />
+          <Route path="sci-fi" element={<SciFi />} />
+          <Route path="non-fiction" element={<NonFiction />} />
+          <Route path="fiction" element={<Fiction />} />
 
-          {/* Other main category routes */}
-          <Route path="premium-covers" element={<PremiumCovers />} />
-          {/* <Route path="kindle-vella-covers" element={<KindleVellaCovers />} /> */}
-          {/* <Route path="illustrated-covers" element={<IllustratedCovers />} /> */}
-          {/* <Route path="formatting-layout" element={<FormattingLayout />} /> */}
-          {/* <Route path="logo-design" element={<LogoDesign />} /> */}
-          {/* <Route path="marketing-materials" element={<MarketingMaterials />} /> */}
+          <Route path="premium-covers" element={<PremiumCover />} />
+          <Route path="kindle-vella-covers" element={<KindleVellaCover />} />
+          <Route path="illustrated-covers" element={<IllustratedCover />} />
+          <Route path="logo-design" element={<LogoDesign />} />
         </Route>
+        ;
         <Route path="/aboutUs" element={<AboutUs />} />
       </Route>
+      <Route path="/portal" element={<UserDashboard />} />
     </Routes>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   MainContainer,
   TitleContainer,
@@ -37,9 +37,9 @@ const imageWidth = 220;
 const gap = 15;
 const slideWidth = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
 
-const   Carousel = () => {
+const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [previewIndex, setPreviewIndex] = useState(null);
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const totalSlides = Math.ceil(images.length / imagesPerRow);
   const translateX = -currentIndex * slideWidth;
 
@@ -51,16 +51,20 @@ const   Carousel = () => {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  const handleImageClick = (index)  => {
+  const handleImageClick = (index: number) => {
     setPreviewIndex(index);
   };
 
   const handlePreviewNext = () => {
-    setPreviewIndex((prev) => (prev + 1) % images.length);
+    setPreviewIndex((prev) => (prev !== null ? (prev + 1) % images.length : 0));
   };
 
   const handlePreviewPrev = () => {
-    setPreviewIndex((prev) => (prev - 1 + images.length) % images.length);
+    setPreviewIndex((prev) =>
+      prev !== null
+        ? (prev - 1 + images.length) % images.length
+        : images.length - 1
+    );
   };
 
   const closePreview = () => {

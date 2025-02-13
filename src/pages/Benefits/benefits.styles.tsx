@@ -32,6 +32,11 @@ export const BenefitItemWrap = styled.div`
     flex: 1 1 30%;
     max-width: 30%;
   }
+
+  @media (max-width: 600px) {
+    flex: 1 1 100%;
+    max-width: 100%; /* Full width for small screens */
+  }
 `;
 
 export const BenefitItem = styled.div`
@@ -44,6 +49,10 @@ export const BenefitItem = styled.div`
   min-height: 150px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 600px) {
+    padding: 30px 20px; /* Adjust padding for smaller screens */
+  }
 `;
 
 export const BenefitItems = styled.div`
@@ -56,6 +65,10 @@ export const BenefitItems = styled.div`
   min-height: 190px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 600px) {
+    padding: 15px; /* Reduce padding slightly on mobile */
+  }
 `;
 
 export const BenefitHeader = styled.div`
@@ -70,6 +83,11 @@ export const BenefitImage = styled.div`
   img {
     width: 50px;
     height: 50px;
+
+    @media (max-width: 600px) {
+      width: 40px; /* Adjust image size for small screens */
+      height: 40px;
+    }
   }
 `;
 
@@ -80,11 +98,18 @@ export const BenefitTitle = styled.span`
   font-style: normal;
   font-weight: 400;
   webkit-font-smoothing: antialiased;
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 export const BenefitSubtitle = styled.div`
   font-size: 14px;
   color: #666;
+
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 
 export const SectionTitle = styled.h2`
@@ -99,7 +124,12 @@ export const SectionTitle = styled.h2`
   line-height: 1.3;
 
   span {
-    color:  #6dc7d1;
+    color: #6dc7d1;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 28px;
+    text-align: center;
   }
 `;
 
@@ -109,9 +139,18 @@ export const FirstRow = styled.div`
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 15px;
+  }
 `;
 
 export const TextContainer = styled.div`
   flex: 1;
   max-width: 50%;
+
+   @media (max-width: 600px) {
+    max-width: 100%;
+    text-align: center;
 `;
