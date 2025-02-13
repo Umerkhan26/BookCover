@@ -78,7 +78,6 @@ const Step = styled.div`
 `;
 
 const StepNumber = styled.div`
-  content: "0" counter(process-counter);
   font-size: 33px;
   line-height: 1;
   font-weight: 700;
@@ -143,68 +142,62 @@ const Button = styled.a`
   }
 `;
 
-const DesignProcess = () => {
+const DesignProcess = ({
+  title = "How We Design",
+  highlight = "Book Cover",
+  subtitle = "Here are the steps we make to create a design that piques curiosity.",
+  steps = [
+    {
+      number: "01",
+      title: "Dig deeper into your book concept",
+      description:
+        "We ask you to fill in the creative brief to grasp your requirements, catch the hook of your story, and reflect it on the book cover.",
+    },
+    {
+      number: "02",
+      title: "Analyze your genre",
+      description:
+        "We research typography, layouts, and color themes common to your genre to make sure that your book cover design will fit the market.",
+    },
+    {
+      number: "03",
+      title: "Provide you with the first sketch",
+      description:
+        "You get the first concept in just 9 business days for a photo-manipulated cover and 14 business days for an illustrated one.",
+    },
+    {
+      number: "04",
+      title: "Implement your revisions",
+      description:
+        "We understand how much time you’ve spent mastering your work and want to do the same for the cover. That’s why we don’t limit the number of revisions.",
+    },
+  ],
+  buttonText = "Order Design",
+  buttonLink = "/services",
+}) => {
   return (
     <Section>
       <Container>
         <LeftColumn>
           <SectionTitle>
-            How We Design <br />
-            <Highlight>Book Cover</Highlight>
+            {title} <br />
+            <Highlight>{highlight}</Highlight>
           </SectionTitle>
-          <Subtitle>
-            Here are the steps we make <br></br>to create a design that piques
-            curiosity.
-          </Subtitle>
+          <Subtitle>{subtitle}</Subtitle>
         </LeftColumn>
         <RightColumn>
           <StepsContainer>
-            <Step>
-              <StepNumber>01</StepNumber>
-              <StepContent>
-                <StepTitle>Dig deeper into your book concept</StepTitle>
-                <StepDescription>
-                  We ask you to fill in the creative brief to grasp your
-                  requirements, catch the hook of your{" "}
-                  <strong>story, and reflect</strong> it on the book cover.
-                </StepDescription>
-              </StepContent>
-            </Step>
-            <Step>
-              <StepNumber>02</StepNumber>
-              <StepContent>
-                <StepTitle>Analyze your genre</StepTitle>
-                <StepDescription>
-                  We research typography, layouts, and color themes common to
-                  your genre to make sure that your book cover design will{" "}
-                  <strong>fit the market</strong>.
-                </StepDescription>
-              </StepContent>
-            </Step>
-            <Step>
-              <StepNumber>03</StepNumber>
-              <StepContent>
-                <StepTitle>Provide you with the first sketch</StepTitle>
-                <StepDescription>
-                  You get the first concept in just 9{" "}
-                  <strong>business days</strong> for a photo-manipulated cover
-                  and 14 business days for an illustrated one.
-                </StepDescription>
-              </StepContent>
-            </Step>
-            <Step>
-              <StepNumber>04</StepNumber>
-              <StepContent>
-                <StepTitle>Implement your revisions</StepTitle>
-                <StepDescription>
-                  We understand how much time you’ve spent mastering your work
-                  and want to do the same for the cover. That’s why we{" "}
-                  <strong>don’t limit the number of revisions</strong>.
-                </StepDescription>
-              </StepContent>
-            </Step>
+            {steps.map((step, index) => (
+              <Step key={index}>
+                <StepNumber>{step.number}</StepNumber>
+                <StepContent>
+                  <StepTitle>{step.title}</StepTitle>
+                  <StepDescription>{step.description}</StepDescription>
+                </StepContent>
+              </Step>
+            ))}
           </StepsContainer>
-          <Button href="/services">Order Design</Button>
+          <Button href={buttonLink}>{buttonText}</Button>
         </RightColumn>
       </Container>
     </Section>

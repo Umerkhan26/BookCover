@@ -36,6 +36,10 @@ import SciFi from "../components/CustomBookCovers/SubCatagories/sciFi";
 import YoungAdult from "../components/CustomBookCovers/SubCatagories/youngadult";
 import CozyMystery from "../components/CustomBookCovers/SubCatagories/cozymystery";
 import UserDashboard from "../pages/UserDashboard/userdashboard";
+import Partner from "../components/Partner/Partner";
+import FAQ from "../components/FAQs/FAQs";
+import GetACover from "../components/GetACover/GetACover";
+import Services from "../components/ServicesComponent/Services";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -75,6 +79,10 @@ const AppRoutes: React.FC = () => {
         <Route path="/nonFiction" element={<NonFictonalCover />} />
         <Route path="/audioBookCover" element={<AudioBookCover />} />
         <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/partner" element={<Partner />} />
+        <Route path="/FAQs" element={<FAQ />} />
+        <Route path="/GetACover" element={<GetACover />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
           {/* Default Route: When visiting /portfolio/, show CustomCover */}
           <Route index element={<CustomCover />} />
