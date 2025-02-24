@@ -5,10 +5,11 @@ import {
   AddOnCard,
   OrderButton,
 } from "./SpecialEditionAddOns.styles";
-import specialadd1 from '../../assets/specialadd1.png'
-import specialadd2 from '../../assets/specialadd2.png'
-import specialadd3 from '../../assets/specialadd3.png'
-import specialadd4 from '../../assets/specialadd4.png'
+import specialadd1 from "../../assets/specialadd1.png";
+import specialadd2 from "../../assets/specialadd2.png";
+import specialadd3 from "../../assets/specialadd3.png";
+import specialadd4 from "../../assets/specialadd4.png";
+import { useNavigate } from "react-router-dom";
 
 const addOns = [
   {
@@ -30,6 +31,13 @@ const addOns = [
 ];
 
 const SpecialEditionAddOns = () => {
+  const navigate = useNavigate();
+
+  const handleOrderNow = () => {
+    // Navigate to the form section
+    navigate("/order");
+  };
+
   return (
     <AddOnsContainer>
       <Title>
@@ -41,7 +49,7 @@ const SpecialEditionAddOns = () => {
           <AddOnCard key={index}>
             <img src={item.image} alt={item.title} />
             <p>{item.title}</p>
-            <OrderButton>Order now</OrderButton>
+            <OrderButton onClick={handleOrderNow}>Order now</OrderButton>
           </AddOnCard>
         ))}
       </AddOnsGrid>

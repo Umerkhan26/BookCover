@@ -35,11 +35,21 @@ import Paranormal from "../components/CustomBookCovers/SubCatagories/paranormal"
 import SciFi from "../components/CustomBookCovers/SubCatagories/sciFi";
 import YoungAdult from "../components/CustomBookCovers/SubCatagories/youngadult";
 import CozyMystery from "../components/CustomBookCovers/SubCatagories/cozymystery";
-import UserDashboard from "../pages/UserDashboard/userdashboard";
+import UserDashboard from "../pages/UserDashboard/sidebar";
 import Partner from "../components/Partner/Partner";
 import FAQ from "../components/FAQs/FAQs";
 import GetACover from "../components/GetACover/GetACover";
 import Services from "../components/ServicesComponent/Services";
+import OrderForm from "../pages/OrderForm/orderform";
+import OrdersTable from "../pages/UserDashboard/myorder";
+import DashboardContent from "../pages/UserDashboard/dashboard";
+import ProfilePage from "../pages/UserDashboard/Profile/profile";
+import InvoiceTable from "../pages/UserDashboard/Invoices/invoices";
+import FormOrder from "../pages/UserDashboard/Form/form";
+import PreviewPage from "../pages/UserDashboard/Form/preview";
+import OrderSubmittedPage from "../pages/UserDashboard/Form/ordersubmitted";
+import IllustrationOrderForm from "../pages/OrderForm/illustratedorder";
+import ProtectedRoute from "./ProtectedRoute";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -111,7 +121,21 @@ const AppRoutes: React.FC = () => {
         ;
         <Route path="/aboutUs" element={<AboutUs />} />
       </Route>
-      <Route path="/portal" element={<UserDashboard />} />
+      <Route path="/login" element={<Login />} />
+      <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+        <Route path="/portal" element={<UserDashboard />}>
+          <Route index element={<DashboardContent />} />
+          <Route path="orders" element={<OrdersTable />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="invoices" element={<InvoiceTable />} />
+          <Route path="orders/form" element={<FormOrder />} />
+
+          <Route path="orders/preview" element={<PreviewPage />} />
+          <Route path="orders/submitted" element={<OrderSubmittedPage />} />
+        </Route>
+      </Route>
+      <Route path="/order" element={<OrderForm />} />
+      <Route path="/order/illustration" element={<IllustrationOrderForm />} />
     </Routes>
   );
 };

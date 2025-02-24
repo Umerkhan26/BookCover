@@ -3,19 +3,13 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faListAlt,
-  faEnvelopeOpen,
-  faGift,
-  faTags,
   faReplyAll,
   faStar,
-  faUserFriends,
   faUser,
   faFileAlt,
-  faMoneyCheck,
-  faCreditCard,
-  faHandshake,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link, Outlet } from "react-router-dom";
 
 interface CollapsibleProps {
   collapsed: boolean;
@@ -27,12 +21,12 @@ const DashboardContainer = styled.div`
 `;
 
 const SidebarContainer = styled.aside<CollapsibleProps>`
-  width: ${(props) => (props.collapsed ? "80px" : "250px")};
-  background-color: #2c3e50;
+  width: ${(props) => (props.collapsed ? "80px" : "210px")};
+  background-color: green;
   color: white;
   padding: 20px;
   height: 100vh;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 5px rgba(50, 180, 33, 0.1);
   transition: width 0.3s ease;
   position: fixed;
   overflow-y: auto;
@@ -131,58 +125,11 @@ const LinkText = styled.span<CollapsibleProps>`
 const MainContent = styled.div<CollapsibleProps>`
   flex: 1;
   padding: 20px;
-  background-color: #f4f6f8;
   margin-left: ${(props) =>
     props.collapsed
       ? "80px"
-      : "250px"}; /* Adjust margin based on sidebar width */
+      : "235px"}; /* Adjust margin based on sidebar width */
   transition: margin-left 0.3s ease;
-`;
-
-const WelcomeMessage = styled.h1`
-  font-size: 24px;
-  color: black;
-  margin-bottom: 20px;
-`;
-
-const StatsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-`;
-
-const StatBox = styled.div`
-  background-color: #34495e;
-  padding: 15px;
-  border-radius: 5px;
-  text-align: center;
-  flex: 1;
-  margin: 0 10px;
-  color: white;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-`;
-
-const TableHeader = styled.th`
-  background-color: #34495e;
-  color: white;
-  padding: 10px;
-  text-align: left;
-`;
-
-const TableRow = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-`;
-
-const TableCell = styled.td`
-  padding: 10px;
-  border: 1px solid #ddd;
 `;
 
 const UserDashboard: React.FC = () => {
@@ -210,27 +157,9 @@ const UserDashboard: React.FC = () => {
         <NavList>
           <NavTitle collapsed={collapsed}>Activity</NavTitle>
           <NavItem>
-            <NavLink href="https://client.miblart.com/portal/orders">
+            <NavLink as={Link} to="/portal/orders" aria-label="My Orders">
               <Icon icon={faListAlt} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>My orders</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="https://client.miblart.com/portal/tickets?status=1">
-              <Icon icon={faEnvelopeOpen} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>My tickets</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="https://client.miblart.com/portal/services?folder=13">
-              <Icon icon={faGift} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>My points</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="https://client.miblart.com/portal/page/special-offers">
-              <Icon icon={faTags} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>Special offers</LinkText>
+              <LinkText collapsed={collapsed}>My Orders</LinkText>
             </NavLink>
           </NavItem>
           <NavItem>
@@ -247,96 +176,30 @@ const UserDashboard: React.FC = () => {
               <LinkText collapsed={collapsed}>Post a review</LinkText>
             </NavLink>
           </NavItem>
-          <NavItem>
+          {/* <NavItem>
             <NavLink href="https://client.miblart.com/portal/services?folder=2">
               <Icon icon={faUserFriends} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>Tips for designer</LinkText>
             </NavLink>
-          </NavItem>
+          </NavItem> */}
 
           <NavTitle collapsed={collapsed}>Account and billing</NavTitle>
           <NavItem>
-            <NavLink href="https://client.miblart.com/portal/profile">
+            <NavLink as={Link} to="/portal/profile" aria-label="My Orders">
               <Icon icon={faUser} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>My profile</LinkText>
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://client.miblart.com/portal/invoices">
+            <NavLink as={Link} to="/portal/invoices" aria-label="My Invoices">
               <Icon icon={faFileAlt} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>Invoices</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="https://client.miblart.com/portal/subscriptions">
-              <Icon icon={faMoneyCheck} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>Installment payments</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="https://client.miblart.com/stripe/manage">
-              <Icon icon={faCreditCard} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>Payment method</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="https://client.miblart.com/affiliate">
-              <Icon icon={faHandshake} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>Commissions</LinkText>
             </NavLink>
           </NavItem>
         </NavList>
       </SidebarContainer>
       <MainContent collapsed={collapsed}>
-        <WelcomeMessage>Welcome, Umar!</WelcomeMessage>
-        <StatsContainer>
-          <StatBox>
-            <div>Open Orders</div>
-            <div>1</div>
-          </StatBox>
-          <StatBox>
-            <div>Completed Orders</div>
-            <div>0</div>
-          </StatBox>
-          <StatBox>
-            <div>Active Subscriptions</div>
-            <div>0</div>
-          </StatBox>
-        </StatsContainer>
-
-        <h2>Open Tickets</h2>
-        <Table>
-          <thead>
-            <TableRow>
-              <TableHeader>Subject</TableHeader>
-              <TableHeader>Date</TableHeader>
-              <TableHeader>Status</TableHeader>
-            </TableRow>
-          </thead>
-          <tbody>
-            <TableRow>
-              <TableCell colSpan={3}>No tickets...</TableCell>
-            </TableRow>
-          </tbody>
-        </Table>
-
-        <h2>Recent Orders</h2>
-        <Table>
-          <thead>
-            <TableRow>
-              <TableHeader>ID</TableHeader>
-              <TableHeader>Title</TableHeader>
-              <TableHeader>Created</TableHeader>
-              <TableHeader>Completed</TableHeader>
-              <TableHeader>Status</TableHeader>
-            </TableRow>
-          </thead>
-          <tbody>
-            <TableRow>
-              <TableCell colSpan={5}>No recent orders...</TableCell>
-            </TableRow>
-          </tbody>
-        </Table>
+        <Outlet />
       </MainContent>
     </DashboardContainer>
   );

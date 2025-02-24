@@ -3,7 +3,7 @@
 // import package2 from '../../assets/package2.png'
 
 // const images = [
-//   package1, 
+//   package1,
 //   package2,
 // ];
 
@@ -37,19 +37,35 @@
 
 // export default AudioBookCoverAnimationSection;
 
-
-import { Container, LeftSection, ImageSlider, RightSection, Price, FeatureList, FeatureItem, Button, BorderWrapper, TitleSection, Title } from "./AudioBookCoverAnimationSection.styles";
-import package1 from '../../assets/pacakge1.jpeg'
-import package2 from '../../assets/package2.png'
+import {
+  Container,
+  LeftSection,
+  ImageSlider,
+  RightSection,
+  Price,
+  FeatureList,
+  FeatureItem,
+  Button,
+  BorderWrapper,
+  TitleSection,
+  Title,
+} from "./AudioBookCoverAnimationSection.styles";
+import package1 from "../../assets/pacakge1.jpeg";
+import package2 from "../../assets/package2.png";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const images = [
-  package1, 
-  package2,
-];
+const images = [package1, package2];
 
 const RedesignUI = () => {
   const [currentImage, setCurrentImage] = useState(0);
+
+  const navigate = useNavigate();
+
+  const handleOrderNow = () => {
+    // Navigate to the form section
+    navigate("/order");
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -81,7 +97,7 @@ const RedesignUI = () => {
             <FeatureItem>Unlimited free revisions</FeatureItem>
             <FeatureItem>Flattened source file</FeatureItem>
           </FeatureList>
-          <Button>Order Now</Button>
+          <Button onClick={handleOrderNow}>Order Now</Button>
         </BorderWrapper>
       </RightSection>
     </Container>

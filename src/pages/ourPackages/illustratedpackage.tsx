@@ -22,11 +22,11 @@ interface PackagesProps {
   packagesData: Package[];
 }
 
-const Packages: React.FC<PackagesProps> = ({ packagesData }) => {
+const IllustratedPackages: React.FC<PackagesProps> = ({ packagesData }) => {
   const navigate = useNavigate();
   const handleOrderNow = () => {
     // Navigate to the form section
-    navigate("/order");
+    navigate("/order/illustration");
   };
   return (
     <PackageContainer>
@@ -93,4 +93,4 @@ const Packages: React.FC<PackagesProps> = ({ packagesData }) => {
   );
 };
 
-export default Packages;
+export default IllustratedPackages;

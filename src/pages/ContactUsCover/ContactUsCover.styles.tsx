@@ -103,4 +103,4 @@ export const Subtitle = styled.p`
   font-size: 18px;  
   margin-top: 20px;  
   line-height: 1.5;  
-`; 
+                                                                                                                                                                                            `; 

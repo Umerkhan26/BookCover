@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/logo/Cover Logo SVG-02.svg";
 
 interface NavNBtnProps {
   isMenuOpen: boolean;
@@ -10,6 +11,17 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollable-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollable-menu {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 `;
 
@@ -29,7 +41,7 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.img`
-  height: 22px;
+  height: 26px;
   width: auto;
   display: block;
 `;
@@ -37,7 +49,7 @@ const Logo = styled.img`
 const NavLinkButton = styled(NavLink)`
   display: inline-block;
   color: #6d6d6d;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 200;
   text-transform: capitalize;
   padding: 5px 20px;
@@ -91,8 +103,8 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px; /* Adjust based on your design */
-  margin: 0 auto; /* Center the header content */
+  max-width: 1200px;
+  margin: 0 auto;
 
   @media (max-width: 768px) {
     justify-content: space-between;
@@ -100,35 +112,17 @@ const HeaderContainer = styled.div`
   }
 `;
 
-// const NavNBtn = styled.nav<NavNBtnProps>`
-//   display: flex;
-//   align-items: center;
-//   flex-grow: 1;
-//   padding: 0;
-//   justify-content: flex-start;
-
-//   @media (max-width: 768px) {
-//     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
-//     flex-direction: column;
-//     position: absolute;
-//     top: 65px;
-//     left: 0;
-//     width: 100%;
-//     background-color: #fff;
-//     z-index: 1000;
-//     padding: 10px;
-//   }
-// `;
-
 const DropdownMenu = styled.div`
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  height: 170px;
+  height: auto;
+  max-height: 200px; /* Set max height for dropdown */
+  overflow-y: auto; /* Enable vertical scroll */
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 7px 5rem;
+  padding: 15px;
   z-index: 1000;
   border-radius: 0;
   display: flex;
@@ -138,13 +132,12 @@ const DropdownMenu = styled.div`
   transition: opacity 0.3s ease;
   opacity: 0;
   pointer-events: none;
+  gap: 6px;
 
   &.active {
     display: flex;
-    // flex-wrap: wrap;
     opacity: 1;
     pointer-events: auto;
-    gap: 12px;
   }
 `;
 
@@ -154,10 +147,8 @@ const DropdownItem = styled(NavLink)`
   padding: 18px 10px;
   font-size: 15px;
   display: flex;
-  margin-top: 20px;
   align-items: center;
   justify-content: center;
-
   width: calc(30% - 10px);
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.4);
@@ -167,16 +158,9 @@ const DropdownItem = styled(NavLink)`
     color: #14b8b8;
     background: rgba(255, 255, 255, 0.6);
   }
-`;
 
-const DropdownContainer = styled.div`
-  position: relative;
-  display: inline-block;
-
-  &:hover ${DropdownMenu} {
-    display: flex;
-    opacity: 1;
-    pointer-events: auto;
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -202,30 +186,6 @@ const ContactUsWrapper = styled.div`
   }
 `;
 
-// const NavNBtn = styled.nav<NavNBtnProps>`
-//   display: flex;
-//   align-items: center;
-//   flex-grow: 1;
-//   padding: 0;
-//   justify-content: flex-start;
-
-//   @media (max-width: 768px) {
-//     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
-//     flex-direction: column;
-//     position: absolute;
-//     top: 65px;
-//     left: 0;
-//     width: 100%;
-//     background-color: #fff;
-//     z-index: 1000;
-//     padding: 10px;
-
-//     ${NavButton} {
-//       display: none; /* Hide "Get a Cover" button inside menu */
-//     }
-//   }
-// `;
-
 const NavNBtn = styled.nav<NavNBtnProps>`
   display: flex;
   align-items: center;
@@ -239,13 +199,15 @@ const NavNBtn = styled.nav<NavNBtnProps>`
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw; /* Full width */
-    height: 100vh; /* Full height */
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
     background-color: white;
     z-index: 1000;
     padding: 20px;
-    align-items: flex-start; /* Align text to the left */
-    gap: 15px; /* Add spacing between items */
+    align-items: flex-start;
+    gap: 15px;
   }
 `;
 
@@ -253,16 +215,70 @@ const MobileContactButton = styled(NavButton)`
   display: none;
 
   @media (max-width: 768px) {
-    display: inline-block; /* Show only on mobile */
+    display: inline-block;
+  }
+`;
+
+const ServicesLink = styled(NavLinkButton)`
+  position: relative;
+  padding-right: 30px;
+
+  &::after {
+    content: "▼";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    transition: transform 0.3s ease;
+
+    @media (min-width: 769px) {
+      display: none;
+    }
+  }
+
+  &.active::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
+`;
+
+const DropdownContainer = styled.div`
+  position: relative;
+  display: inline-block;
+
+  &:hover ${DropdownMenu} {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
   }
 `;
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
+  const toggleServices = () => {
+    setIsServicesOpen((prev) => !prev);
+  };
+
+  // Close the menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -270,19 +286,15 @@ function Header() {
       <Nav>
         <HeaderContainer>
           <NavLink to="/">
-            <Logo
-              src="https://miblart.com/wp-content/uploads/2023/11/Group-3673.png"
-              alt="Logo"
-            />
+            <Logo src={logo} alt="Logo" />
           </NavLink>
           <ContactUsWrapper>
             <MobileContactButton to="/contactUs">
               Contact Us
             </MobileContactButton>
           </ContactUsWrapper>
-          {/* <HamburgerMenu onClick={toggleMenu}>☰</HamburgerMenu> */}
 
-          <HamburgerMenu onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <HamburgerMenu onClick={toggleMenu}>
             {isMenuOpen ? (
               <span style={{ color: "black" }}>✖</span>
             ) : (
@@ -290,10 +302,20 @@ function Header() {
             )}
           </HamburgerMenu>
 
-          <NavNBtn isMenuOpen={isMenuOpen}>
+          <NavNBtn
+            isMenuOpen={isMenuOpen}
+            className="scrollable-menu"
+            ref={menuRef}
+          >
             <DropdownContainer>
-              <NavLinkButton to="/services">Services</NavLinkButton>
-              <DropdownMenu>
+              <ServicesLink
+                to="/services"
+                onClick={toggleServices}
+                className={isServicesOpen ? "active" : ""}
+              >
+                Services
+              </ServicesLink>
+              <DropdownMenu className={isServicesOpen ? "active" : ""}>
                 <DropdownItem to="/fictionCover">
                   Fiction Cover Design
                 </DropdownItem>
@@ -303,12 +325,6 @@ function Header() {
                 <DropdownItem to="/bookCoverRedesign">
                   Book Covers Redesign
                 </DropdownItem>
-                {/* <DropdownItem to="/portfolio-2">
-                  Kindle Vella Cover Design
-                </DropdownItem> */}
-                {/* <DropdownItem to="/portfolio-2">
-                  Formatting and Layout
-                </DropdownItem> */}
                 <DropdownItem to="/nonFiction">
                   Non-Fiction Cover Design
                 </DropdownItem>
@@ -319,25 +335,22 @@ function Header() {
                   Audiobook Cover Design
                 </DropdownItem>
                 <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
-                {/* <DropdownItem to="/portfolio-2">
-                  Author Swag Design
-                </DropdownItem> */}
-                {/* <DropdownItem to="/portfolio-2">
-                  Marketing Materials
-                </DropdownItem> */}
               </DropdownMenu>
             </DropdownContainer>
 
             <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
-
             <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
-            {/* <NavLinkButton to="/pricing">Blog</NavLinkButton> */}
             <NavLinkButton to="/FAQs">FAQ</NavLinkButton>
             <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
             <NavLinkButton to="/partner">Partner With Us</NavLinkButton>
 
-            <NavText to="/portal">Client Portal</NavText>
-            <NavButton to="/GetACover">Get a Cover</NavButton>
+            {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
+            {!isMenuOpen && (
+              <>
+                <NavText to="/portal">Client Portal</NavText>
+                <NavButton to="/GetACover">Get a Cover</NavButton>
+              </>
+            )}
           </NavNBtn>
         </HeaderContainer>
       </Nav>

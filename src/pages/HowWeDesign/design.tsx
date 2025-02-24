@@ -85,7 +85,7 @@ const StepNumber = styled.div`
   margin-right: 40px;
   position: absolute;
   top: 0;
-  left: -73px;
+  left: -60px;
 
   &:after {
     content: "step";
