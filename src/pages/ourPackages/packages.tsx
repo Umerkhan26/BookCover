@@ -148,7 +148,7 @@ const Packages: React.FC = () => {
       {loading ? (
         <p>Loading packages...</p>
       ) : packagesData.length > 0 ? (
-        <div className="packages-wrapper">
+        <div className="packages-wrappe r">
           {packagesData.map((pkg, index) => (
             <PackageCard key={index}>
               <h3 className="font-bold text-3xl text-black">{pkg.name}</h3>
