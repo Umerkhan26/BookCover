@@ -50,6 +50,8 @@ import PreviewPage from "../pages/UserDashboard/Form/preview";
 import OrderSubmittedPage from "../pages/UserDashboard/Form/ordersubmitted";
 import IllustrationOrderForm from "../pages/OrderForm/illustratedorder";
 import ProtectedRoute from "./ProtectedRoute";
+import Login from "../components/Login/login";
+import Register from "../components/register/register";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -122,7 +124,9 @@ const AppRoutes: React.FC = () => {
         <Route path="/aboutUs" element={<AboutUs />} />
       </Route>
       <Route path="/login" element={<Login />} />
-      <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+      <Route path="/register" element={<Register />} />
+
+      <Route element={""}>
         <Route path="/portal" element={<UserDashboard />}>
           <Route index element={<DashboardContent />} />
           <Route path="orders" element={<OrdersTable />} />
