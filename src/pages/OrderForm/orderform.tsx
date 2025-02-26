@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import OrderProcessing from "../../components/OrderProcessing/order";
-import OrderDetails from "../../components/OrderProcessing/orderdetails";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { fetchAddOnsByPackageId } from "../../apis/apis"; // Ensure correct import
+import { useNavigate } from "react-router-dom";
+
 import {
   Container,
   Row,
@@ -10,7 +13,6 @@ import {
   NavbarBrand,
   Intro,
   FormGroup,
-  ItemCard,
   ItemCards,
   ItemTitle,
   ItemPrice,
@@ -24,145 +26,103 @@ import {
   TotalSection,
   TotalText,
   TotalAmount,
-  Label,
-  Input,
-  EmailHelpText
+  // Label,
+  // Input,
+  // EmailHelpText,
 } from "./orderform.styles";
 
 const OrderForm: React.FC = () => {
-  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
-    {}
-  );
-  const [selectedServices, setSelectedServices] = useState<
-    { id: string; title: string; price: string; quantity: number }[]
-  >([
-    {
-      id: "default_1",
-      title: "Cover formatting for an audiobook $30",
-      price: "$0.00",
-      quantity: 1,
-    },
-  ]);
+  const { packageId } = useParams<{ packageId: string }>(); // Extract packageId from URL
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+  const [selectedServices, setSelectedServices] = useState<{ id: string; name: string; price: number; qty: number }[]>([]);
+  const [availableServices, setAvailableServices] = useState<{ _id: string; name: string; price: number; qty: number }[]>([]);
+  // const [orderStatus, setOrderStatus] = useState<"form" | "processing" | "completed">("form");
+  // const [orderId, setOrderId] = useState<string>("");
+const navigate = useNavigate()
+  useEffect(() => {
+    if (!packageId) {
+      console.log("No ID found");
+      return;
+    }
 
-  const [orderStatus, setOrderStatus] = useState<
-    "form" | "processing" | "completed"
-  >("form");
-  const [orderId, setOrderId] = useState<string>("");
+    const fetchAddOns = async () => {
+      try {
+        const addOns = await fetchAddOnsByPackageId(packageId);
+        setAvailableServices(addOns);
+        console.log("Fetched Add-Ons:", addOns);
+      } catch (error) {
+        console.error("Failed to fetch add-ons:", error);
+      }
+    };
+
+    fetchAddOns();
+  }, [packageId]);
 
   const handleOrderNow = () => {
-    setOrderStatus("processing");
-    setTimeout(() => {
-      setOrderId("B4344D22");
-      setOrderStatus("completed");
-    }, 3000); // Simulate processing time
+    // setOrderStatus("processing");
+    // setTimeout(() => {
+    //   setOrderId("B4344D22");
+    //   setOrderStatus("completed");
+    // }, 3000); // Simulate processing
+
+    navigate("/portal/orders/form");
+
   };
 
-  const toggleItem = (id: string, title: string, price: string) => {
+  const toggleItem = (id: string, name: string, price: number) => {
     setSelectedServices((prev) => {
       const existingItem = prev.find((item) => item.id === id);
       if (existingItem) {
         return prev.filter((item) => item.id !== id);
       } else {
-        return [...prev, { id, title, price, quantity: 1 }];
+        return [...prev, { id, name, price, qty: 1 }];
       }
     });
 
-    setExpandedItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const services = [
-    {
-      id: "field_5_0",
-      title: "Social media banner or cover $35",
-      price: "$0.00",
-    },
-    { id: "field_5_1", title: "Bookmark $40", price: "$0.00" },
-    {
-      id: "field_5_2",
-      title: "Animated book cover design $50",
-      price: "$0.00",
-    },
-    { id: "field_5_3", title: "Dust jacket design $40", price: "$0.00" },
-    { id: "field_5_4", title: "Website banner or ad $40", price: "$0.00" },
-    { id: "field_5_5", title: "Business card design $40", price: "$0.00" },
-    { id: "field_5_6", title: "Marketing materials $100", price: "$0.00" },
-  ];
+  const handleQuantityChange = (id: string, newQty: number) => {
+    setSelectedServices((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, qty: newQty } : item))
+    );
+  };
 
   const calculateTotal = () => {
-    return selectedServices
-      .reduce((total, item) => {
-        const price = parseFloat(item.price.replace("$", ""));
-        return total + price * item.quantity;
-      }, 0)
-      .toFixed(2);
+    return selectedServices.reduce((total, item) => total + item.price * item.qty, 0).toFixed(2);
   };
 
-  if (orderStatus === "processing") {
-    return <OrderProcessing />;
-  }
-
-  if (orderStatus === "completed") {
-    return <OrderDetails orderId={orderId} email="umerkhattax@gmail.com" />;
-  }
+  // if (orderStatus === "processing") return <OrderProcessing />;
+  // if (orderStatus === "completed") return <OrderDetails orderId={orderId} email="umerkhattax@gmail.com" />;
 
   return (
     <Container>
       <form id="payment-form">
         <Row>
+          {/* Left Checkout Section */}
           <CheckoutLeft>
             <Navbar>
               <NavbarBrand href="https://client.miblart.com">Mibl</NavbarBrand>
             </Navbar>
 
             <Intro>
-              Seeing $0 at checkout indicates that no prepayment is needed. You
-              only pay once you are satisfied with the design concept.
+              Seeing $0 at checkout indicates that no prepayment is needed. You only pay once you are satisfied with the design concept.
             </Intro>
 
-            <FormGroup>
-              <ItemCard>
-                <ItemTitle>Cover formatting for an audiobook $30</ItemTitle>
-                <ItemQuantity>
-                  <input
-                    type="number"
-                    name="quantity_3"
-                    style={{
-                      border: "2px solid black",
-                      borderRadius: "5px",
-                      width: "60px",
-                      textAlign: "center",
-                    }}
-                    defaultValue="1"
-                    min="1"
-                    max="10"
-                  />
-                </ItemQuantity>
-                <ItemPrice>$0.00</ItemPrice>
-              </ItemCard>
-            </FormGroup>
-
+            {/* Add-Ons Selection */}
             <FormGroup>
               <label style={{ color: "#00254d", fontWeight: "500" }}>
                 Add extra services to your order
                 <span className="multiple ml-8">multiple</span>
               </label>
               <Row>
-                {services.map((item) => (
+                {availableServices.map((item) => (
                   <ItemCards
-                    key={item.id}
-                    onClick={() => toggleItem(item.id, item.title, item.price)}
-                    style={{
-                      position: "relative",
-                      padding: "15px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      paddingTop: "10px",
-                    }}
+                    key={item._id}
+                    onClick={() => toggleItem(item._id, item.name, item.price)}
+                    style={{ position: "relative", padding: "15px", borderRadius: "8px", cursor: "pointer", paddingTop: "10px" }}
                   >
-                    {expandedItems[item.id] && (
+                    {expandedItems[item._id] && (
                       <span
                         style={{
                           position: "absolute",
@@ -184,82 +144,53 @@ const OrderForm: React.FC = () => {
                       </span>
                     )}
 
-                    <ItemTitle style={{ marginBottom: "10px" }}>
-                      {item.title}
-                    </ItemTitle>
+                    <ItemTitle style={{ marginBottom: "10px" }}>{item.name}</ItemTitle>
 
-                    {expandedItems[item.id] ? (
+                    {expandedItems[item._id] ? (
                       <>
-                        <ItemQuantity
-                          style={{ marginBottom: "5px" }}
-                          onClick={(e) => e.stopPropagation()}
-                        >
+                        <ItemQuantity>
                           <input
                             type="number"
-                            name={`quantity_${item.id}`}
-                            style={{
-                              border: "2px solid black",
-                              borderRadius: "5px",
-                              width: "60px",
-                              textAlign: "center",
-                            }}
-                            defaultValue="1"
+                            style={{ border: "2px solid black", borderRadius: "5px", width: "60px", textAlign: "center" }}
+                            value={selectedServices.find((s) => s.id === item._id)?.qty || 1}
                             min="1"
                             max="10"
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={(e) => e.stopPropagation()}
+                            onChange={(e) => handleQuantityChange(item._id, parseInt(e.target.value, 10))}
                           />
                         </ItemQuantity>
-                        <ItemPrice>{item.price}</ItemPrice>
+                        <ItemPrice>${item.price * (selectedServices.find((s) => s.id === item._id)?.qty || 1)}</ItemPrice>
                       </>
                     ) : (
-                      <ItemPrice>{item.price}</ItemPrice>
+                      <ItemPrice>${item.price}</ItemPrice>
                     )}
                   </ItemCards>
                 ))}
               </Row>
             </FormGroup>
 
-            <FormGroup>
+            Coupon Input
+            {/* <FormGroup>
               <Label htmlFor="coupon">Coupon</Label>
-              <Input
-                type="text"
-                id="coupon"
-                name="coupon"
-                placeholder="Enter coupon code"
-              />
-            </FormGroup>
+              <Input type="text" id="coupon" name="coupon" placeholder="Enter coupon code" />
+            </FormGroup> */}
 
-            <FormGroup>
+            {/* Email Field */}
+            {/* <FormGroup>
               <Label htmlFor="email">Email</Label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                value="umerkhattax@gmail.com"
-                readOnly
-              />
+              <Input type="email" id="email" name="email" value=""  />
               <EmailHelpText>
                 To change your email, go to{" "}
-                <a href="https://client.miblart.com/portal/profile">
-                  your profile
-                </a>
-                .
+                <a href="https://client.miblart.com/portal/profile">your profile</a>.
               </EmailHelpText>
-            </FormGroup>
+            </FormGroup> */}
 
-            <FormGroup>
-              <div
-                className="g-recaptcha"
-                data-sitekey="6LdePgsaAAAAAKe7WUNTkvXyiCH7kX69eG2kQTSj"
-              ></div>
-            </FormGroup>
-
+            {/* Order Button */}
             <OrderButton type="submit" onClick={handleOrderNow}>
               Complete Purchase
             </OrderButton>
           </CheckoutLeft>
 
+          {/* Right Summary Section */}
           <CheckoutRight>
             <InvoiceItems>
               <SummaryTitle>Summary</SummaryTitle>
@@ -267,14 +198,13 @@ const OrderForm: React.FC = () => {
                 {selectedServices.length > 0 ? (
                   selectedServices.map((item) => (
                     <div key={item.id} style={{ marginBottom: "10px" }}>
-                      <Title>{item.title}</Title>
-                      <Price>{item.price}</Price>
+                      <Title>{item.name}</Title>
+                      <Price>${item.price * item.qty}</Price>
                     </div>
                   ))
                 ) : (
                   <div>
-                    <Title>Cover formatting for an audiobook $30</Title>
-                    <Price>$0.00</Price>
+                    <Title>No add-ons selected</Title>
                   </div>
                 )}
               </CartContents>
