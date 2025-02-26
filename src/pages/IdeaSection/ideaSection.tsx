@@ -84,12 +84,29 @@ const Button = styled.a`
   }
 `;
 
+const LinkButton = styled.a`
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #6dc7d1;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #4fa3a2;
+  }
+`;
+
 // TypeScript Props
 interface ShareIdeasSectionProps {
   title: ReactNode;
   subtitle: string;
   buttonText: string;
-  buttonLink: string;
+  buttonLink?: string;
+  onButtonClick: () => void;
 }
 
 // Component
@@ -97,7 +114,7 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
   title,
   subtitle,
   buttonText,
-  buttonLink,
+  onButtonClick,
 }) => {
   return (
     <Section className="section-share-ideas">
@@ -161,9 +178,9 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
           <Subtitle>{subtitle}</Subtitle>
         </SectionTitle>
         <div className="text-center">
-          <Button href={buttonLink} target="_blank" className="btn btn-green">
+          <LinkButton href="#" onClick={onButtonClick}>
             {buttonText}
-          </Button>
+          </LinkButton>
         </div>
       </Container>
     </Section>

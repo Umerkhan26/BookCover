@@ -1,5 +1,5 @@
 import React from "react";
-import bannerImg from "../../assets/Website Cover 2569 × 949 px.jpg";
+import bannerImg from "../../assets/logo/Website Cover 1263 × 651 px (2).jpg";
 import {
   Section,
   BannerImage,

@@ -49,14 +49,19 @@ import FormOrder from "../pages/UserDashboard/Form/form";
 import PreviewPage from "../pages/UserDashboard/Form/preview";
 import OrderSubmittedPage from "../pages/UserDashboard/Form/ordersubmitted";
 import IllustrationOrderForm from "../pages/OrderForm/illustratedorder";
-import ProtectedRoute from "./ProtectedRoute";
 import Login from "../components/Login/login";
 import Register from "../components/register/register";
+import BookCoverForm from "../pages/GetACover/cover";
+import ProtectedRoute from "./ProtectedRoute";
+import Admin from "../pages/Admin/admin";
+import User from "../components/AdminDashboard/user";
+import Order from "../components/AdminDashboard/Order/order";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/book-cover-form" element={<BookCoverForm />} />
         {/* Wrap FictionCover inside Route and pass its props */}
         <Route
           path="/fictionCover"
@@ -124,9 +129,10 @@ const AppRoutes: React.FC = () => {
         <Route path="/aboutUs" element={<AboutUs />} />
       </Route>
       <Route path="/login" element={<Login />} />
+
       <Route path="/register" element={<Register />} />
 
-      <Route element={""}>
+      <Route element={<ProtectedRoute />}>
         <Route path="/portal" element={<UserDashboard />}>
           <Route index element={<DashboardContent />} />
           <Route path="orders" element={<OrdersTable />} />
@@ -140,6 +146,12 @@ const AppRoutes: React.FC = () => {
       </Route>
       <Route path="/order" element={<OrderForm />} />
       <Route path="/order/illustration" element={<IllustrationOrderForm />} />
+
+      <Route path="/Admin" element={<Admin />}>
+        {/* Use relative path for nested routes */}
+        <Route path="users" element={<User />} />
+        <Route path="orders" element={<Order />} />
+      </Route>
     </Routes>
   );
 };

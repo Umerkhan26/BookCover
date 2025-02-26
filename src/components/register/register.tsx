@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { registerUser, verifyEmailAPI } from "../../apis/apis"; // Import API functions
-import { 
-  Container, 
-  Form, 
-  Title, 
-  Input, 
-  Select, 
-  Button, 
-  LoginText, 
-  StyledLink, 
-  Label 
-} from "./register.styles"; 
+import {
+  Container,
+  Form,
+  Title,
+  Input,
+  Select,
+  Button,
+  LoginText,
+  StyledLink,
+  Label,
+} from "./register.styles";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [verificationMessage, setVerificationMessage] = useState(""); 
+  const [verificationMessage, setVerificationMessage] = useState("");
 
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
@@ -38,7 +38,9 @@ const Register = () => {
   }, [token]);
 
   // Handle Input Changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -49,10 +51,20 @@ const Register = () => {
     setMessage("");
 
     try {
-      const response = await registerUser(formData);
-      setMessage("✅ Registration successful! Please check your email for verification.");
+      console.log("Form data being sent:", formData); // Log form data
+      await registerUser(formData);
+      setMessage(
+        "✅ Registration successful! Please check your email for verification."
+      );
     } catch (error) {
-      setMessage(`❌ ${error}`);
+      console.error("Registration error:", error); // Log the error
+      if (error instanceof Error) {
+        setMessage(
+          `❌ ${error.message || "Registration failed. Please try again."}`
+        );
+      } else {
+        setMessage("❌ Registration failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -61,9 +73,11 @@ const Register = () => {
   // Handle Email Verification
   const handleEmailVerification = async (token: string) => {
     try {
-      const response = await verifyEmailAPI(token);
-      setVerificationMessage("✅ Email verified successfully! Redirecting to login...");
-      
+      await verifyEmailAPI(token);
+      setVerificationMessage(
+        "✅ Email verified successfully! Redirecting to login..."
+      );
+
       // Redirect to login after 3 seconds
       setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
@@ -80,7 +94,7 @@ const Register = () => {
       ) : (
         <Form onSubmit={handleRegister}>
           <Title>Register</Title>
-          
+
           <Label>First Name</Label>
           <Input
             type="text"
@@ -122,9 +136,15 @@ const Register = () => {
           />
 
           <Label>Role</Label>
-          <Select name="role" value={formData.role} onChange={handleChange} required>
+          <Select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+          >
             <option value="">Select Role</option>
-            <option value="user">User</option>
+            <option value="designer">Designer</option>
+            <option value="client">User</option>
             <option value="admin">Admin</option>
           </Select>
 

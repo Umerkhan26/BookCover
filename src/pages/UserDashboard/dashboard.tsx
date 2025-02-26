@@ -35,7 +35,7 @@ const DashboardContent = () => {
         </tbody>
       </Table>
 
-      <h2>Recent Orders</h2>
+      <h2 className="text-black">Recent Orders</h2>
       <Table>
         <thead>
           <TableRow>
@@ -71,7 +71,7 @@ const StatsContainer = styled.div`
 `;
 
 const StatBox = styled.div`
-  background-color: #34495e;
+  background-color: rgba(0, 148, 10, 0.93);
   padding: 15px;
   border-radius: 5px;
   text-align: center;
@@ -87,7 +87,7 @@ const Table = styled.table`
 `;
 
 const TableHeader = styled.th`
-  background-color: #34495e;
+  background-color: rgba(0, 148, 10, 0.93);
   color: white;
   padding: 10px;
   text-align: left;
