@@ -144,7 +144,9 @@ const AppRoutes: React.FC = () => {
           <Route path="orders/submitted" element={<OrderSubmittedPage />} />
         </Route>
       </Route>
-      <Route path="/order" element={<OrderForm />} />
+      {/* <Route path="/order" element={<OrderForm />} /> */}
+      <Route path="/order/:packageId" element={<OrderForm />} />
+
       <Route path="/order/illustration" element={<IllustrationOrderForm />} />
 
       <Route path="/Admin" element={<Admin />}>

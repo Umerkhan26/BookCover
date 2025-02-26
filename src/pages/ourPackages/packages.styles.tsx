@@ -7,22 +7,27 @@ export const PackageContainer = styled.div`
   .packages-wrapper {
     display: flex;
     justify-content: center;
-    gap: 3rem;
+    gap: 2rem;
     margin-top: 3rem;
     flex-wrap: wrap;
   }
 
   .packages-wrapper > div {
-    flex: 0 1 calc(50% - 1.5rem); /* Each card takes 50% width minus the gap */
+    flex: 0 1 calc(33.33% - 2rem); /* 3 cards per row on large screens */
+  }
+
+  @media (max-width: 1024px) {
+    .packages-wrapper > div {
+      flex: 0 1 calc(50% - 1rem); /* 2 cards per row on medium screens */
+    }
   }
 
   @media (max-width: 768px) {
     .packages-wrapper > div {
-      flex: 0 1 100%; /* Full width on smaller screens */
+      flex: 0 1 100%; /* Full width on small screens */
     }
   }
 `;
-
 
 export const PackageTitle = styled.h2`
   font-size: 2.5rem;
@@ -40,7 +45,7 @@ export const PackageCard = styled.div`
   padding: 2rem;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   text-align: left;
   margin-bottom: 2rem;
 
@@ -109,9 +114,9 @@ export const Price = styled.h3`
 export const AddOns = styled.div`
   margin-top: 2rem;
   padding: 1.5rem;
-  border: 2px solid #6dc7d1; /* Border with theme color */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #f0f9fa; /* Light background for better visibility */
+  border: 2px solid #6dc7d1;
+  border-radius: 8px;
+  background-color: #f0f9fa;
 
   .addons-options {
     display: flex;
@@ -129,7 +134,6 @@ export const AddOns = styled.div`
     }
   }
 `;
-
 
 export const OrderButton = styled.button`
   background-color: #6dc7d1;

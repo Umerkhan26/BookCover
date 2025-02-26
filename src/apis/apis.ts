@@ -113,3 +113,15 @@ export const deleteUser = async (userId: string) => {
     throw error.response?.data?.message || "Failed to delete user";
   }
 };
+
+export const fetchAddOnsByPackageId = async (packageId: string) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/getaddOnsByPackageId${packageId}`
+    );
+    return response.data.data; // Return only the data array
+  } catch (error) {
+    console.error("Error fetching add-ons:", error);
+    throw new Error("Failed to fetch add-ons. Please try again.");
+  }
+};

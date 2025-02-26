@@ -94,8 +94,6 @@
 // };
 
 // export default Packages;
-
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPackagesByPageAPI } from "../../apis/apis";
@@ -109,6 +107,8 @@ import {
 } from "./packages.styles";
 
 interface Package {
+  id?: string;  // Ensure ID is optional for debugging
+  _id?: string; // Some APIs use `_id`
   name: string;
   price: number;
   features: string[];
@@ -119,14 +119,34 @@ const Packages: React.FC = () => {
   const navigate = useNavigate();
   const [packagesData, setPackagesData] = useState<Package[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const data = await getPackagesByPageAPI(); // Fetching hardcoded "fictionCover" packages
-        setPackagesData(data);
+        console.log("Fetching packages...");
+        const response = await getPackagesByPageAPI();
+
+        if (!response || !Array.isArray(response)) {
+          throw new Error("Invalid API response: Expected an array");
+        }
+
+        // Log the response to verify its structure
+        console.log("Fetched packages:", response);
+
+        // Ensure all packages have an ID
+        const mappedPackages = response.map((pkg, index) => {
+          const packageId = pkg.id || pkg._id; // Use `_id` if `id` is missing
+          if (!packageId) {
+            console.warn(`Warning: Package at index ${index} is missing an ID`, pkg);
+          }
+          return { ...pkg, id: packageId }; // Normalize ID field
+        });
+
+        setPackagesData(mappedPackages);
       } catch (error) {
         console.error("Error fetching packages:", error);
+        setError("Failed to load packages. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -135,8 +155,14 @@ const Packages: React.FC = () => {
     fetchPackages();
   }, []);
 
-  const handleOrderNow = () => {
-    navigate("/order");
+  const handleOrderNow = (packageId: string | undefined) => {
+    if (!packageId) {
+      console.error("🚨 Package ID is undefined! Cannot navigate.");
+      return;
+    }
+
+    console.log(`✅ Navigating to /order/${packageId}`);
+    navigate(`/order/${packageId}`);
   };
 
   return (
@@ -147,10 +173,12 @@ const Packages: React.FC = () => {
 
       {loading ? (
         <p>Loading packages...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
       ) : packagesData.length > 0 ? (
         <div className="packages-wrapper">
           {packagesData.map((pkg, index) => (
-            <PackageCard key={index}>
+            <PackageCard key={pkg.id || index}> 
               <h3 className="font-bold text-3xl text-black">{pkg.name}</h3>
               <Price>${pkg.price}</Price>
 
@@ -184,7 +212,10 @@ const Packages: React.FC = () => {
                 </div>
               </AddOns>
 
-              <OrderButton onClick={handleOrderNow}>Order Now</OrderButton>
+              {/* Debugging Log for ID */}
+              <p>Debug: Package ID: {pkg.id}</p>
+
+              <OrderButton onClick={() => handleOrderNow(pkg.id)}>Order Now</OrderButton>
             </PackageCard>
           ))}
         </div>
