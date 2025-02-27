@@ -134,3 +134,38 @@ export const submitContactFormAPI = async (contactData: {
     throw error.response?.data?.message || "Failed to submit contact form";
   }
 };
+
+
+
+// Function to create an order
+export const createOrderAPI = async (orderData: {
+  userId: string;
+  packageId: string;
+  addOnIds: string[];
+  bookTitle: string;
+  bookSubtitle: string;
+  authorName: string;
+  genre: string;
+  seriesContinuation: string;
+  summary: string;
+  coverStyle: string;
+  coverMood: string;
+  colorPalette: string;
+  examples: string;
+  file: string;
+  firstOrder: boolean;
+  shareOnPortfolio: boolean;
+  paymentMethod: string;
+}) => {
+  try {
+    // Sending a POST request to create an order
+    const response = await axios.post(`${API_BASE_URL}/orders/create`, orderData);
+
+    // Returning the response from the API
+    return response.data;
+  } catch (error: any) {
+    // Handle errors
+    console.error("Error creating order:", error);
+    throw error.response?.data?.message || "Failed to create order";
+  }
+};
