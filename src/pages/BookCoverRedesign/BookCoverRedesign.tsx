@@ -17,7 +17,7 @@ const BookCoverRedesign = () => {
         // packagesComponent={<Packages />}
         // reviewsComponent={<Reviews />}
       />
-      <Packages packagesData={myPackagesData} />
+      <Packages />
       <SpecialEditionAddOns />
       <RedesignExamples
         heading="Our Book Cover Redesign Examples"

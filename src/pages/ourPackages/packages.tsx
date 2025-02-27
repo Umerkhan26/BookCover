@@ -1,101 +1,5 @@
-// import { useNavigate } from "react-router-dom";
-// import {
-//   PackageCard,
-//   PackageContainer,
-//   PackageTitle,
-//   Price,
-//   AddOns,
-//   OrderButton,
-// } from "./packages.styles";
-
-// // Define the structure for each package object
-// interface Package {
-//   title: string;
-//   image: string;
-//   price: string;
-//   features: string[];
-//   freeAddons: string[];
-// }
-
-// // Define the type for the props passed to the Packages component
-// interface PackagesProps {
-//   packagesData: Package[];
-// }
-
-// const Packages: React.FC<PackagesProps> = ({ packagesData }) => {
-//   const navigate = useNavigate();
-//   const handleOrderNow = () => {
-//     // Navigate to the form section
-//     navigate("/order");
-//   };
-//   return (
-//     <PackageContainer>
-//       <PackageTitle>
-//         Our <span className="text-[#6dc7d1]">Packages</span>
-//       </PackageTitle>
-
-//       <div className="packages-wrapper">
-//         {packagesData.map((pkg, index) => (
-//           <PackageCard key={index}>
-//             <img src={pkg.image} alt={pkg.title} />
-
-//             {/* Title and Price in the Same Row */}
-//             <div className="title-price">
-//               <h3 className="font-bold text-3xl text-black">{pkg.title}</h3>
-//               <Price>{pkg.price}</Price>
-//             </div>
-
-//             {/* Features and Free Add-ons in Side-by-Side Layout */}
-//             <div className="content-wrapper">
-//               <ul className="features-list">
-//                 {pkg.features.map((feature, idx) => (
-//                   <li key={idx}>
-//                     <span className="checkmark">✔</span> {feature}
-//                   </li>
-//                 ))}
-//               </ul>
-
-//               <div className="free-addons">
-//                 <p className="free-title">FREE OF CHARGE</p>
-//                 <ul>
-//                   {pkg.freeAddons.map((addon, idx) => (
-//                     <li key={idx}>
-//                       <span className="checkmark">✔</span> {addon}
-//                     </li>
-//                   ))}
-//                 </ul>
-//               </div>
-//             </div>
-
-//             {/* Addon Options */}
-//             <AddOns>
-//               <div className="addons-options">
-//                 <input
-//                   type="radio"
-//                   name={`concept-${index}`}
-//                   id={`concept1-${index}`}
-//                 />
-//                 <label htmlFor={`concept1-${index}`}>1 concept</label>
-//                 <input
-//                   type="radio"
-//                   name={`concept-${index}`}
-//                   id={`concept2-${index}`}
-//                 />
-//                 <label htmlFor={`concept2-${index}`}>2 concepts (+$150)</label>
-//               </div>
-//             </AddOns>
-
-//             <OrderButton onClick={handleOrderNow}>Order Now</OrderButton>
-//           </PackageCard>
-//         ))}
-//       </div>
-//     </PackageContainer>
-//   );
-// };
-
-// export default Packages;
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getPackagesByPageAPI } from "../../apis/apis";
 import {
   PackageCard,
@@ -107,41 +11,53 @@ import {
 } from "./packages.styles";
 
 interface Package {
-  id?: string;  // Ensure ID is optional for debugging
-  _id?: string; // Some APIs use `_id`
+  id?: string;
+  _id?: string;
   name: string;
   price: number;
   features: string[];
   freeFeatures: string[];
+  conceptPricing: { conceptCount: number; additionalPrice: number }[];
+  page: string;
 }
 
 const Packages: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [packagesData, setPackagesData] = useState<Package[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Extract the page name from the URL path (e.g., "/fictionCover" -> "fictionCover")
+  const pageName = location.pathname.split("/").pop() || "";
+
   useEffect(() => {
     const fetchPackages = async () => {
+      if (!pageName) {
+        setError("Page name is missing from the URL");
+        setLoading(false);
+        return;
+      }
+
       try {
-        console.log("Fetching packages...");
-        const response = await getPackagesByPageAPI();
+        console.log("Fetching packages for page:", pageName);
+        const response = await getPackagesByPageAPI(pageName);
 
         if (!response || !Array.isArray(response)) {
           throw new Error("Invalid API response: Expected an array");
         }
 
-        // Log the response to verify its structure
         console.log("Fetched packages:", response);
 
-        // Ensure all packages have an ID
-        const mappedPackages = response.map((pkg, index) => {
-          const packageId = pkg.id || pkg._id; // Use `_id` if `id` is missing
-          if (!packageId) {
-            console.warn(`Warning: Package at index ${index} is missing an ID`, pkg);
-          }
-          return { ...pkg, id: packageId }; // Normalize ID field
-        });
+        const mappedPackages = response
+          .filter(pkg => pkg.page === pageName) // Filter based on page name
+          .map((pkg, index) => {
+            const packageId = pkg.id || pkg._id;
+            if (!packageId) {
+              console.warn(`Warning: Package at index ${index} is missing an ID`, pkg);
+            }
+            return { ...pkg, id: packageId };
+          });
 
         setPackagesData(mappedPackages);
       } catch (error) {
@@ -153,7 +69,7 @@ const Packages: React.FC = () => {
     };
 
     fetchPackages();
-  }, []);
+  }, [pageName]);
 
   const handleOrderNow = (packageId: string | undefined) => {
     if (!packageId) {
@@ -164,6 +80,13 @@ const Packages: React.FC = () => {
     console.log(`✅ Navigating to /order/${packageId}`);
     navigate(`/order/${packageId}`);
   };
+
+  // Debugging the data before rendering it
+  useEffect(() => {
+    if (packagesData.length > 0) {
+      console.log("Mapped Packages Data:", packagesData);
+    }
+  }, [packagesData]);
 
   return (
     <PackageContainer>
@@ -178,42 +101,63 @@ const Packages: React.FC = () => {
       ) : packagesData.length > 0 ? (
         <div className="packages-wrapper">
           {packagesData.map((pkg, index) => (
-            <PackageCard key={pkg.id || index}> 
+            <PackageCard key={pkg.id || index}>
               <h3 className="font-bold text-3xl text-black">{pkg.name}</h3>
               <Price>${pkg.price}</Price>
 
               <div className="content-wrapper">
+                {/* Debug: Check Features Data */}
                 <ul className="features-list">
-                  {pkg.features.map((feature, idx) => (
-                    <li key={idx}>
-                      <span className="checkmark">✔</span> {feature}
-                    </li>
-                  ))}
+                  {pkg.features.length > 0 ? (
+                    pkg.features.map((feature, idx) => (
+                      <li key={idx}>
+                        <span className="checkmark">✔</span> {feature}
+                      </li>
+                    ))
+                  ) : (
+                    <li>No features available.</li>
+                  )}
                 </ul>
 
+                {/* Debug: Check Free Features Data */}
                 <div className="free-addons">
                   <p className="free-title">FREE OF CHARGE</p>
                   <ul>
-                    {pkg.freeFeatures.map((addon, idx) => (
-                      <li key={idx}>
-                        <span className="checkmark">✔</span> {addon}
-                      </li>
-                    ))}
+                    {pkg.freeFeatures.length > 0 ? (
+                      pkg.freeFeatures.map((addon, idx) => (
+                        <li key={idx}>
+                          <span className="checkmark">✔</span> {addon}
+                        </li>
+                      ))
+                    ) : (
+                      <li>No free features available.</li>
+                    )}
                   </ul>
                 </div>
               </div>
 
+              {/* Debug: Check Concept Pricing Data */}
               <AddOns>
                 <div className="addons-options">
-                  <input type="radio" name={`concept-${index}`} id={`concept1-${index}`} />
-                  <label htmlFor={`concept1-${index}`}>1 concept</label>
-                  <input type="radio" name={`concept-${index}`} id={`concept2-${index}`} />
-                  <label htmlFor={`concept2-${index}`}>2 concepts (+$150)</label>
+                  {pkg.conceptPricing.length > 0 ? (
+                    pkg.conceptPricing.map((concept, conceptIdx) => (
+                      <div key={conceptIdx}>
+                        <input 
+                          type="radio" 
+                          name={`concept-${index}`} 
+                          id={`concept${conceptIdx}-${index}`} 
+                        />
+                        <label htmlFor={`concept${conceptIdx}-${index}`}>
+                          {concept.conceptCount} concept{concept.conceptCount > 1 ? 's' : ''}
+                          {concept.additionalPrice > 0 && ` (+$${concept.additionalPrice})`}
+                        </label>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No concept pricing available.</p>
+                  )}
                 </div>
               </AddOns>
-
-              {/* Debugging Log for ID */}
-              <p>Debug: Package ID: {pkg.id}</p>
 
               <OrderButton onClick={() => handleOrderNow(pkg.id)}>Order Now</OrderButton>
             </PackageCard>

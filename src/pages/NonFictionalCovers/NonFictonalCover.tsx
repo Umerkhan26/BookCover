@@ -28,7 +28,7 @@ const NonFictonalCover = () => {
         benefits={benefitsData}
       />
 
-<Packages packagesData={myPackagesData} />   
+<Packages />   
 
 <SpecialEditionAddOns/>
 <DesignProcess/>

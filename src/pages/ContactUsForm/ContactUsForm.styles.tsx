@@ -41,6 +41,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  color:black;
 `;
 
 export const Textarea = styled.textarea`
@@ -51,6 +52,7 @@ export const Textarea = styled.textarea`
   font-size: 16px;
   resize: none;
   height: 120px;
+  color:black;
 `;
 
 export const CheckboxWrapper = styled.div`

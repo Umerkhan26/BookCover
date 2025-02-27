@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3000/api"; // Adjust the base URL if needed
+const API_BASE_URL = "http://localhost:3000/api"; 
 
 export const registerUser = async (userData: {
   firstName: string;
@@ -40,20 +40,9 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
-// export const getPackagesByPageAPI = async (page: string) => {
-//   try {
-//     const response = await axios.get(`${API_BASE_URL}/getPackagesByPage?page=${page}`);
-//     return response.data;
-//   } catch (error: any) {
-//     throw error.response?.data?.message || "Error fetching packages";
-//   }
-// };
-
-export const getPackagesByPageAPI = async () => {
+export const getPackagesByPageAPI = async (page:string) => {
   try {
-    const response = await axios.get(
-      `${API_BASE_URL}/getPackagesByPage?page=fictionCover`
-    );
+    const response = await axios.get(`${API_BASE_URL}/getPackagesByPage/${page}`);  // Updated URL format
     return response.data;
   } catch (error) {
     console.error("Error fetching packages:", error);
@@ -123,5 +112,25 @@ export const fetchAddOnsByPackageId = async (packageId: string) => {
   } catch (error) {
     console.error("Error fetching add-ons:", error);
     throw new Error("Failed to fetch add-ons. Please try again.");
+  }
+};
+
+
+export const submitContactFormAPI = async (contactData: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  referral: string;
+  message: string;
+}) => {
+  try {
+    // Sending a POST request to submit the contact form data
+    const response = await axios.post(`${API_BASE_URL}/submit`, contactData);
+
+    // Returning the response from the API
+    return response.data;
+  } catch (error: any) {
+    // Handle errors
+    throw error.response?.data?.message || "Failed to submit contact form";
   }
 };
