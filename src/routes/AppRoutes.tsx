@@ -78,7 +78,7 @@ const AppRoutes: React.FC = () => {
               }
               designProcessComponent={<DesignProcess />}
               // Pass the 'myPackagesData' as a prop to 'Packages' component
-              packagesComponent={<Packages packagesData={myPackagesData} />}
+              packagesComponent={<Packages  />}
               reviewsComponent={<Reviews />}
               specialEditionAddOnsComponent={<SpecialEditionAddOns />}
             />

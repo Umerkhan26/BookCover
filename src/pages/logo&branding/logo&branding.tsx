@@ -24,7 +24,7 @@ const LogoBranding = () => {
       // packagesComponent={<Packages />}
       // reviewsComponent={<Reviews />}
     />
-        <Packages packagesData={myPackagesData} />   
+        <Packages  />   
         <RedesignExamples 
       heading="Custom Logo Design and Branding"
       examples={examples} 
