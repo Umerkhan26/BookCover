@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDashboard,
   faUsers,
   faArrowLeft,
   faHSquare,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   DashboardContainer,
@@ -29,6 +30,15 @@ const Admin: React.FC = () => {
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -66,6 +76,13 @@ const Admin: React.FC = () => {
             <NavLink as={Link} to="/admin/orders">
               <Icon icon={faHSquare} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>Orders</LinkText>
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink as="button" onClick={handleLogout}>
+              <Icon icon={faSignOutAlt} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Sign Out</LinkText>
             </NavLink>
           </NavItem>
         </NavList>

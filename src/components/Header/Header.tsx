@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo/Cover Logo SVG-02.svg";
+import { useAuth } from "../../context/authContext";
 
 interface NavNBtnProps {
   isMenuOpen: boolean;
@@ -258,6 +259,18 @@ function Header() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    if (!isAuthenticated) {
+      localStorage.setItem("redirectAfterLogin", "/portal");
+      navigate("/login");
+    } else {
+      navigate("/portal");
+    }
+  };
+
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
@@ -348,7 +361,9 @@ function Header() {
             {!isMenuOpen && (
               <>
                 <NavText to="/portal">Client Portal</NavText>
-                <NavButton to="/GetACover">Get a Cover</NavButton>
+                <NavButton to="/GetACover" onClick={handleNavigation}>
+                  Get a Cover
+                </NavButton>
               </>
             )}
           </NavNBtn>

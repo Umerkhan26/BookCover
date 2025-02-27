@@ -1,44 +1,65 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 // Define the shape of the context
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (token: string) => void;
+  user: any;
+  login: (token: string, user: any) => void;
   logout: () => void;
 }
 
 // Create the context with a default value
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Create a provider component
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token") // Check if a token exists in localStorage
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // Function to log in the user
-  const login = (token: string) => {
-    localStorage.setItem("token", token); // Store the token in localStorage
-    setIsAuthenticated(true); // Update the authentication state
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (token && storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error("Invalid user data:", error);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+      }
+    }
+  }, []); // ✅ Runs only ONCE
+
+  const login = (token: string, user: any) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
+    setIsAuthenticated(true);
   };
 
-  // Function to log out the user
   const logout = () => {
-    localStorage.removeItem("token"); // Remove the token from localStorage
-    setIsAuthenticated(false); // Update the authentication state
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    setIsAuthenticated(false);
   };
 
-  // Provide the context value to children
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook to use the AuthContext
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

@@ -8,8 +8,10 @@ import {
   faUser,
   faFileAlt,
   faArrowLeft,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
 
 interface CollapsibleProps {
   collapsed: boolean;
@@ -134,9 +136,17 @@ const MainContent = styled.div<CollapsibleProps>`
 
 const UserDashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -194,6 +204,13 @@ const UserDashboard: React.FC = () => {
             <NavLink as={Link} to="/portal/invoices" aria-label="My Invoices">
               <Icon icon={faFileAlt} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>Invoices</LinkText>
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink as="button" onClick={handleLogout}>
+              <Icon icon={faSignOutAlt} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Sign Out</LinkText>
             </NavLink>
           </NavItem>
         </NavList>

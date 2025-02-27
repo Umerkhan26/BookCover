@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginAPI } from "../../apis/apis";
+import { useAuth } from "../../context/authContext";
 import {
   Button,
   Container,
@@ -20,7 +21,27 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
+  // Function to handle role-based navigation
+  const navigateUser = (role: string) => {
+    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+    localStorage.removeItem("redirectAfterLogin");
+
+    switch (role) {
+      case "admin":
+        navigate("/Admin");
+        break;
+      case "client":
+      case "designer":
+        navigate("/portal");
+        break;
+      default:
+        navigate(redirectPath);
+    }
+  };
+
+  // Handle user login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -30,21 +51,15 @@ const Login = () => {
       const data = await loginAPI(email, password);
       console.log("Login successful:", data);
 
-      localStorage.setItem("token", data.token);
-
-      switch (data.user.role) {
-        case "admin":
-          navigate("/admin");
-          break;
-        case "client":
-          navigate("/portal");
-          break;
-        case "designer":
-          navigate("/portal");
-          break;
-        default:
-          navigate("/");
+      if (!data.user || !data.user.role) {
+        throw new Error("Invalid user data received.");
       }
+
+      // Store token & user info
+      login(data.token, data.user);
+
+      // Navigate based on role
+      navigateUser(data.user.role);
     } catch (err: any) {
       setError(err.message || "An error occurred during login.");
     } finally {
