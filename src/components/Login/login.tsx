@@ -1,33 +1,54 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginAPI } from "../../apis/apis"; // Import login API function
-import { Button, Container, Form, Input, RegisterText, StyledLink, Title } from "./login.styles";
+import { loginAPI } from "../../apis/apis";
+import {
+  Button,
+  Container,
+  Form,
+  Input,
+  RegisterText,
+  StyledLink,
+  Title,
+  ErrorText,
+  ForgotPasswordLink,
+  LoadingSpinner,
+} from "./login.styles";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     try {
       const data = await loginAPI(email, password);
       console.log("Login successful:", data);
 
-      // Store token in localStorage (optional)
       localStorage.setItem("token", data.token);
 
-      // Redirect based on user role
-      if (data.user.role === "admin") {
-        navigate("/");
-      } else {
-        navigate("/dashboard");
+      switch (data.user.role) {
+        case "admin":
+          navigate("/admin");
+          break;
+        case "client":
+          navigate("/portal");
+          break;
+        case "designer":
+          navigate("/portal");
+          break;
+        default:
+          navigate("/");
       }
-    } catch (err:any) {
-      setError(err);
+    } catch (err: any) {
+      setError(err.message || "An error occurred during login.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -35,13 +56,14 @@ const Login = () => {
     <Container>
       <Form onSubmit={handleLogin}>
         <Title>Login</Title>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <ErrorText>{error}</ErrorText>}
         <Input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          aria-label="Email"
         />
         <Input
           type="password"
@@ -49,10 +71,17 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          aria-label="Password"
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <LoadingSpinner /> : "Login"}
+        </Button>
+        <ForgotPasswordLink to="/forgot-password">
+          Forgot Password?
+        </ForgotPasswordLink>
         <RegisterText>
-          Don't have an account? <StyledLink to="/register">Register</StyledLink>
+          Don't have an account?{" "}
+          <StyledLink to="/register">Register</StyledLink>
         </RegisterText>
       </Form>
     </Container>

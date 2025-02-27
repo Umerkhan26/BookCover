@@ -12,8 +12,15 @@ import { featuredItems } from "../../services/featured";
 import AwardsCarousel from "../AwardsCarousel/awardscarousel";
 import { awardsData } from "../../services/awardcarousel";
 import ShareIdeasSection from "../IdeaSection/ideaSection";
+import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleButtonClick = () => {
+    navigate("/book-cover-form"); // Navigate to the form route
+  };
+
   return (
     <>
       <TopBanner />
@@ -35,12 +42,15 @@ const Home: React.FC = () => {
         subtitle="Proud to be connected with and recognized by the best in business."
         awards={awardsData}
       />
-      <ShareIdeasSection
-        title="Get a free cover <span>design idea</span>"
-        subtitle="We'll help you come up with ideas that work"
-        buttonText="Get a free cover design idea"
-        buttonLink="https://miblart.com/cover-idea/"
-      />
+      <div>
+        <ShareIdeasSection
+          title="Get a free cover <span>design idea</span>"
+          subtitle="We'll help you come up with ideas that work"
+          buttonText="Get a free cover design idea"
+          onButtonClick={handleButtonClick}
+        />
+        {/* Conditionally render the form */}
+      </div>
     </>
   );
 };
