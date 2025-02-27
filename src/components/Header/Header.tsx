@@ -360,10 +360,10 @@ function Header() {
             {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
             {!isMenuOpen && (
               <>
-                <NavText to="/portal">Client Portal</NavText>
-                <NavButton to="/GetACover" onClick={handleNavigation}>
-                  Get a Cover
-                </NavButton>
+                <NavText to="/portal" onClick={handleNavigation}>
+                  Client Portal
+                </NavText>
+                <NavButton to="/GetACover">Get a Cover</NavButton>
               </>
             )}
           </NavNBtn>

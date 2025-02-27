@@ -8,13 +8,29 @@ const FormOrder: React.FC = () => {
   const [payment, setPayment] = useState("one");
   const [narratorName, setNarratorName] = useState("");
   const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubTitle] = useState("");
+  const [genre, setGenre] = useState("");
+  const [series, setSeries] = useState("");
+  const [summary, setSummary] = useState("");
+  const [see, setSee] = useState("");
+  const [cover, setCover] = useState("");
+  const [order, setOrder] = useState("");
 
   console.log("Form component rendered");
 
   const handleReview = () => {
     const formData = {
       name,
+      title,
+      subtitle,
       narratorName,
+      genre,
+      series,
+      summary,
+      see,
+      order,
+      cover,
       preferences,
       payment,
     };
@@ -50,6 +66,23 @@ const FormOrder: React.FC = () => {
           />
         </FormGroup>
         <FormGroup>
+          <Label>Book Title</Label>
+          <Input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Book Subtitle</Label>
+          <Input
+            type="text"
+            value={subtitle}
+            onChange={(e) => setSubTitle(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
           <Label>Narrator's name</Label>
           <Input
             type="text"
@@ -57,20 +90,61 @@ const FormOrder: React.FC = () => {
             onChange={(e) => setNarratorName(e.target.value)}
           />
         </FormGroup>
+
         <FormGroup>
-          <Label>Let us know your preferences</Label>
-          <TextArea
-            placeholder="Provide your preferences..."
-            value={preferences}
-            onChange={(e) => setPreferences(e.target.value)}
+          <Label>Genre</Label>
+          <Input
+            type="text"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
           />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Will this book continue as a series?</Label>
+          <Select value={series} onChange={(e) => setSeries(e.target.value)}>
+            <option value="">Please select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unknown">I don’t know</option>
+          </Select>
         </FormGroup>
         <FormGroup>
           <Label>
-            Please provide the file sizes you would like to receive (optional)
+            Brief summary of your book, including major characters, important
+            objects, setting, key elements or themes (optional)
           </Label>
-          <Input type="text" placeholder="File sizes..." />
+          <TextArea
+            placeholder="Provide your preferences..."
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+          />
         </FormGroup>
+
+        <FormGroup>
+          <Label>What is the preferred cover style?</Label>
+          <Select value={series} onChange={(e) => setSeries(e.target.value)}>
+            <option value="">Please select...</option>
+            <option value="yes">With detailed characters</option>
+            <option value="no">Only with sellhouettes</option>
+            <option value="no">Object-base covers</option>
+            <option value="no">Typographic covers</option>
+            <option value="unknown">I don’t know</option>
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>
+            What would you like to see on the cover? If you have any references
+            or comparable covers, attach them below{" "}
+          </Label>
+          <TextArea
+            placeholder="Provide your cover..."
+            value={see}
+            onChange={(e) => setSee(e.target.value)}
+          />
+        </FormGroup>
+
         <FormGroup>
           <Label>Upload your Files (optional)</Label>
           <FileInputContainer>
@@ -79,6 +153,48 @@ const FormOrder: React.FC = () => {
             <FileInputHint>Max file size: 300 MB</FileInputHint>
           </FileInputContainer>
         </FormGroup>
+
+        <FormGroup>
+          <Label>
+            Let us know if you have copyrights for the files you have attached
+            and want to use them for this design{" "}
+          </Label>
+          <TextArea
+            placeholder="Provide your preferences..."
+            value={preferences}
+            onChange={(e) => setPreferences(e.target.value)}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>
+            Please let us know if we can share your book cover on our social
+            media and website?
+          </Label>
+          <Select value={cover} onChange={(e) => setCover(e.target.value)}>
+            <option value="">Please select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unknown">Yes , but only after the book</option>
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Is this your first order with Miblart? </Label>
+          <Select value={order} onChange={(e) => setOrder(e.target.value)}>
+            <option value="">Please select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>
+            Please provide the file sizes you would like to receive (optional)
+          </Label>
+          <Input type="text" placeholder="File sizes..." />
+        </FormGroup>
+
         <FormGroup>
           <Label>
             Please let us know if the final design can be displayed in our
@@ -157,6 +273,14 @@ const HeaderSubtitle = styled.div`
 const HeaderActions = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 `;
 
 const HeaderButton = styled.button`

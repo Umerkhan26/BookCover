@@ -137,6 +137,7 @@ const MainContent = styled.div<CollapsibleProps>`
 const UserDashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -146,7 +147,7 @@ const UserDashboard: React.FC = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/");
-    window.location.reload();
+    logout();
   };
 
   return (
