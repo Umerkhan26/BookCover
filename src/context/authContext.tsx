@@ -5,6 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Define the shape of the context
 interface AuthContextType {
@@ -20,8 +21,9 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // Start as `null`
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,15 +31,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
     if (token && storedUser) {
       try {
-        setUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
         setIsAuthenticated(true);
       } catch (error) {
-        console.error("Invalid user data:", error);
+        console.error("Invalid user data, clearing storage:", error);
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        setIsAuthenticated(false);
       }
+    } else {
+      setIsAuthenticated(false); // Only set to `false` once we are sure the user is logged out
     }
-  }, []); // ✅ Runs only ONCE
+  }, []);
 
   const login = (token: string, user: any) => {
     localStorage.setItem("token", token);
@@ -49,9 +55,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    navigate("/");
     setUser(null);
     setIsAuthenticated(false);
   };
+
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
