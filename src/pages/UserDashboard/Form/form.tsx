@@ -1,40 +1,61 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
+import { createOrderAPI } from "../../../apis/apis";
+import styled from "styled-components"; // Ensure correct import for your API function
 
 const FormOrder: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // Use to get passed data from previous component
+
+  // Retrieve the passed order data from the location state
+  const orderData = location.state;
+
+  // Destructure the orderData to pre-populate the form if needed
+  const { userId, packageId, addOnIds } = orderData;
+
   const [preferences, setPreferences] = useState("");
   const [payment, setPayment] = useState("one");
   const [narratorName, setNarratorName] = useState("");
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubTitle] = useState("");
+  const [authorName, setName] = useState("");
+  const [bookTitle, setTitle] = useState("");
+  const [bookSubtitle, setSubTitle] = useState("");
   const [genre, setGenre] = useState("");
-  const [series, setSeries] = useState("");
+  const [seriesContinuation, setSeries] = useState("");
   const [summary, setSummary] = useState("");
   const [see, setSee] = useState("");
-  const [cover, setCover] = useState("");
+  const [coverStyle, setCover] = useState("");
   const [order, setOrder] = useState("");
 
-  console.log("Form component rendered");
-
-  const handleReview = () => {
+  const handleReview = async () => {
     const formData = {
-      name,
-      title,
-      subtitle,
+      userId,
+      packageId,
+      addOnIds,
+      authorName,
+      bookTitle,
+      bookSubtitle,
       narratorName,
       genre,
-      series,
+      seriesContinuation,
       summary,
       see,
       order,
-      cover,
+      coverStyle,
       preferences,
       payment,
+      status: "Submitted",  // Adding the status as "submitted"
+
     };
-    navigate("/portal/orders/preview", { state: formData });
+
+    try {
+      const response = await createOrderAPI(formData);
+      console.log("Order created successfully:", response);
+
+      // Navigate to the review page after successful order creation
+      navigate("/portal/orders", { state: response });
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
   };
 
   return (
@@ -61,7 +82,7 @@ const FormOrder: React.FC = () => {
           <Label>Your name</Label>
           <Input
             type="text"
-            value={name}
+            value={authorName}
             onChange={(e) => setName(e.target.value)}
           />
         </FormGroup>
@@ -69,7 +90,7 @@ const FormOrder: React.FC = () => {
           <Label>Book Title</Label>
           <Input
             type="text"
-            value={title}
+            value={bookTitle}
             onChange={(e) => setTitle(e.target.value)}
           />
         </FormGroup>
@@ -78,7 +99,7 @@ const FormOrder: React.FC = () => {
           <Label>Book Subtitle</Label>
           <Input
             type="text"
-            value={subtitle}
+            value={bookSubtitle}
             onChange={(e) => setSubTitle(e.target.value)}
           />
         </FormGroup>
@@ -102,7 +123,7 @@ const FormOrder: React.FC = () => {
 
         <FormGroup>
           <Label>Will this book continue as a series?</Label>
-          <Select value={series} onChange={(e) => setSeries(e.target.value)}>
+          <Select value={seriesContinuation} onChange={(e) => setSeries(e.target.value)}>
             <option value="">Please select...</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
@@ -123,12 +144,12 @@ const FormOrder: React.FC = () => {
 
         <FormGroup>
           <Label>What is the preferred cover style?</Label>
-          <Select value={series} onChange={(e) => setSeries(e.target.value)}>
+          <Select value={coverStyle} onChange={(e) => setCover(e.target.value)}>
             <option value="">Please select...</option>
-            <option value="yes">With detailed characters</option>
-            <option value="no">Only with sellhouettes</option>
-            <option value="no">Object-base covers</option>
-            <option value="no">Typographic covers</option>
+            <option value="detailed">With detailed characters</option>
+            <option value="silhouettes">Only with silhouettes</option>
+            <option value="object">Object-based covers</option>
+            <option value="typographic">Typographic covers</option>
             <option value="unknown">I don’t know</option>
           </Select>
         </FormGroup>
@@ -139,7 +160,7 @@ const FormOrder: React.FC = () => {
             or comparable covers, attach them below{" "}
           </Label>
           <TextArea
-            placeholder="Provide your cover..."
+            placeholder="Provide your cover preferences..."
             value={see}
             onChange={(e) => setSee(e.target.value)}
           />
@@ -171,11 +192,11 @@ const FormOrder: React.FC = () => {
             Please let us know if we can share your book cover on our social
             media and website?
           </Label>
-          <Select value={cover} onChange={(e) => setCover(e.target.value)}>
+          <Select value={coverStyle} onChange={(e) => setCover(e.target.value)}>
             <option value="">Please select...</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
-            <option value="unknown">Yes , but only after the book</option>
+            <option value="unknown">Yes, but only after the book</option>
           </Select>
         </FormGroup>
 
@@ -188,29 +209,6 @@ const FormOrder: React.FC = () => {
           </Select>
         </FormGroup>
 
-        <FormGroup>
-          <Label>
-            Please provide the file sizes you would like to receive (optional)
-          </Label>
-          <Input type="text" placeholder="File sizes..." />
-        </FormGroup>
-
-        <FormGroup>
-          <Label>
-            Please let us know if the final design can be displayed in our
-            portfolio after the order is complete (optional)
-          </Label>
-          <CheckboxContainer>
-            <Checkbox type="checkbox" />
-            <CheckboxLabel>Allow display in portfolio</CheckboxLabel>
-          </CheckboxContainer>
-        </FormGroup>
-        <FormGroup>
-          <Label>
-            How did you hear about Miblart? If by referral, who referred you?
-          </Label>
-          <Input type="text" placeholder="Referral details..." />
-        </FormGroup>
         <FormGroup>
           <Label>
             When the design is completed, how would you like to pay?
@@ -238,13 +236,14 @@ const FormOrder: React.FC = () => {
             </RadioLabel>
           </RadioContainer>
         </FormGroup>
-        <SubmitButton onClick={handleReview}>Review</SubmitButton>
+        <SubmitButton onClick={handleReview}>Submit</SubmitButton>
       </FormContainer>
     </div>
   );
 };
 
 export default FormOrder;
+
 
 // Styled Components
 const HeaderContainer = styled.div`

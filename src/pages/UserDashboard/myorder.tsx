@@ -1,22 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons"; // Import the search icon
-import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar/navabar";
+import { fetchOrdersByUserId } from "../../apis/apis"; // Assuming you have the function
 
 const OrdersTable: React.FC = () => {
-  const navigate = useNavigate();
-  const handleStartOrder = () => {
-    navigate(`/portal/orders/form`);
-  };
+  // State to store orders
+  const [orders, setOrders] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Fetch orders using useEffect
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const fetchedOrders = await fetchOrdersByUserId();
+        setOrders(fetchedOrders);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
+    getOrders();
+  }, []);
+
+  // Filter orders based on search query
+  const filteredOrders = orders.filter((order) =>
+    order.package.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <Container>
       <Navbar />
       <HeaderContainer>
         <h1 className="text-black font-bold text-3xl pb-8 pt-6">Orders</h1>
         <SearchContainer>
-          <SearchInput type="text" placeholder="Find something..." />
+          <SearchInput
+            type="text"
+            placeholder="Find something..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <SearchIcon>
             <FontAwesomeIcon icon={faSearch} />
           </SearchIcon>
@@ -28,88 +52,26 @@ const OrdersTable: React.FC = () => {
             <TableHeader>ID</TableHeader>
             <TableHeader>Title</TableHeader>
             <TableHeader>Created</TableHeader>
-            <TableHeader>Completed</TableHeader>
+            {/* <TableHeader>Completed</TableHeader> */}
             <TableHeader>Status</TableHeader>
           </TableHeaderRow>
         </thead>
         <tbody>
-          <TableRow>
-            <TableLink>3ADBICIE_4</TableLink>
-            <TableCell>Website banner or ad $40</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>
-              <StatusButton onClick={() => handleStartOrder()}>
-                Start order
-              </StatusButton>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableLink>3ADBICIE_3</TableLink>
-            <TableCell>Bookmark $40</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>
-              <StatusButton onClick={() => handleStartOrder()}>
-                Start order
-              </StatusButton>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableLink>3ADBICIE_2</TableLink>
-            <TableCell>Social media banner or cover $35</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>
-              <StatusButton onClick={() => handleStartOrder()}>
-                Start order
-              </StatusButton>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableLink>3ADBICIE_1</TableLink>
-            <TableCell>Cover formatting for an audiobook $30</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>
-              <StatusButton onClick={() => handleStartOrder()}>
-                Start order
-              </StatusButton>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableLink>B4344D22_4</TableLink>
-            <TableCell>Website banner or ad $40</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>
-              <StatusButton onClick={() => handleStartOrder()}>
-                Start order
-              </StatusButton>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableLink>B4344D22_3</TableLink>
-            <TableCell>Bookmark $40</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>
-              <StatusButton onClick={() => handleStartOrder()}>
-                Start order
-              </StatusButton>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableLink>B4344D22_2</TableLink>
-            <TableCell>Social media banner or cover $35</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>Feb 18</TableCell>
-            <TableCell>
-              <StatusButton onClick={() => handleStartOrder()}>
-                Start order
-              </StatusButton>
-            </TableCell>
-          </TableRow>
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map((order) => (
+              <TableRow key={order._id}>
+                <TableLink>{order._id}</TableLink>
+                <TableCell>{order.package.name}</TableCell>
+                <TableCell>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                {/* <TableCell>{order.status === "Completed" ? new Date(order.completedAt).toLocaleDateString() : "N/A"}</TableCell> */}
+                <TableCell>{order.status} </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={5}>No orders found</TableCell>
+            </TableRow>
+          )}
         </tbody>
       </Table>
     </Container>
@@ -117,6 +79,8 @@ const OrdersTable: React.FC = () => {
 };
 
 export default OrdersTable;
+
+
 
 // Styled Components
 const Container = styled.div`
@@ -195,17 +159,3 @@ const TableLink = styled.td`
   text-decoration: none;
 `;
 
-const StatusButton = styled.button`
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  background-color: green;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #004080;
-  }
-`;
