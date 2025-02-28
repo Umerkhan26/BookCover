@@ -156,10 +156,11 @@ export const createOrderAPI = async (orderData: {
   firstOrder: boolean;
   shareOnPortfolio: boolean;
   paymentMethod: string;
+  status: string;
 }) => {
   try {
     // Sending a POST request to create an order
-    const response = await axios.post(`${API_BASE_URL}/orders/create`, orderData);
+    const response = await axios.post(`${API_BASE_URL}/create`, orderData);
 
     // Returning the response from the API
     return response.data;
@@ -167,5 +168,48 @@ export const createOrderAPI = async (orderData: {
     // Handle errors
     console.error("Error creating order:", error);
     throw error.response?.data?.message || "Failed to create order";
+  }
+};
+
+
+
+export const fetchOrdersByUserId = async (): Promise<any> => {
+  try {
+    // Retrieve the entire user object from localStorage
+    const user = localStorage.getItem("user");
+
+    if (!user) {
+      throw new Error("User not logged in");
+    }
+
+    // Parse the user object
+    const userObject = JSON.parse(user);
+
+    // Extract the userId from the parsed object
+    const userId = userObject.userId;
+
+    if (!userId) {
+      throw new Error("User ID not found in localStorage");
+    }
+
+    // Make the GET request to the API to fetch orders by userId
+    const response = await axios.get(`${API_BASE_URL}/getOrderByUserId/${userId}`);
+    return response.data.orders;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw new Error("Failed to fetch orders");
+  }
+};
+
+
+export const fetchAllOrders = async (): Promise<any> => {
+  try {
+    // Make the GET request to the API to fetch all orders
+    const response = await axios.get(`${API_BASE_URL}/orders`); // Endpoint to fetch all orders
+
+    return response.data.orders; // Return the fetched orders
+  } catch (error) {
+    console.error("Error fetching all orders:", error);
+    throw new Error("Failed to fetch orders");
   }
 };
