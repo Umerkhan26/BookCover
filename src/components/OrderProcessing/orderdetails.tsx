@@ -49,7 +49,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
 `;
 
 const Logo = styled.h2`

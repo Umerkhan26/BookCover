@@ -19,7 +19,7 @@ interface CollapsibleProps {
 
 const DashboardContainer = styled.div`
   display: flex;
-  font-family: Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
 `;
 
 const SidebarContainer = styled.aside<CollapsibleProps>`

@@ -4,6 +4,7 @@ import styled from "styled-components";
 // Styled components
 const Section = styled.section`
   padding: 60px 0;
+  font-family: "Manrope", sans-serif;
 `;
 
 const Container = styled.div`
@@ -133,7 +134,7 @@ const Button = styled.a`
   font-weight: bold;
 
   &:hover {
-    background-color: #218838;
+    background-color: rgb(74, 164, 174);
   }
 
   @media (max-width: 480px) {

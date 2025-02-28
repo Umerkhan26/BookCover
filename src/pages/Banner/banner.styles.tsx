@@ -9,7 +9,7 @@ export const Section = styled.section`
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  font-family: Museo Sans Cyrl;
+  font-family: "Manrope", sans-serif;
   font-style: normal;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -23,7 +23,7 @@ export const Section = styled.section`
 
 export const BannerImage = styled.div`
   width: 100%;
-  height: 460px;
+  height: 575px;
   position: relative;
   overflow: hidden;
 
@@ -53,12 +53,11 @@ export const BannerContent = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-family: "Proxima Nova ExtraBold";
   font-weight: 800;
   color: #e2f3f4;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0px 29px;
-  font-size: 52px;
+  font-size: 47px;
   font-style: normal;
   line-height: 56px;
   font-style: normal;
@@ -80,8 +79,7 @@ export const Title = styled.h1`
 export const Subtitle = styled.div`
   max-width: unset;
   color: #fff;
-  font-family: "Proxima Nova Rg";
-  font-size: 20px;
+  font-size: 17.5px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -89,7 +87,7 @@ export const Subtitle = styled.div`
   p {
     span {
       font-weight: 800;
-      font-family: "Proxima Nova Bold";
+      font-family: "Manrope", sans-serif;
       color: #fff;
     }
   }
@@ -107,7 +105,6 @@ export const Button = styled.a`
   font-weight: bold;
   margin-left: 30px;
   margin-top: 28px;
-  font-family: "Proxima Nova ExtraBold";
   letter-spacing: 0.8px;
   color: #00bcd4;
   border: 1px solid #00bcd4;
@@ -143,7 +140,7 @@ export const TopBannerR = styled.div`
   flex: 0 0 20%;
   max-width: 20%;
   font-size: 18px;
-  font-family: "Proxima Nova Rg";
+  font-family: "Manrope", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;

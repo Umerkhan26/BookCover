@@ -32,7 +32,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
   height: 100vh; /* Make container take full viewport height */
 `;
 

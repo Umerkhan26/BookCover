@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const SectionTestimonials = styled.section`
   background-color: #f9f9f9;
+  font-family: "Manrope", sans-serif;
 `;
 
 export const WrapTestimonials = styled.div`

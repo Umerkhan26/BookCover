@@ -21,7 +21,10 @@ const TopBanner: React.FC = () => {
         <img src={bannerImg} alt="Banner Image" />
         <BannerContent>
           <Title>
-            CUSTOM BOOK <span>COVER DESIGN</span>
+            CUSTOM BOOK{" "}
+            <span>
+              COVER <br /> DESIGN
+            </span>
           </Title>
           <Subtitle>
             <p style={{ position: "relative", top: "-5px", right: "-30px" }}>

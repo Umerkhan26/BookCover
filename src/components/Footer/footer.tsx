@@ -7,6 +7,7 @@ import {
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/logo/Lumestudio-1.png";
 
 // Interfaces
 interface IFooterLink {
@@ -38,7 +39,7 @@ export interface FooterProps {
 // Styled Components
 
 const FooterPartnerLogo = styled.div`
-  font-family: Museo Sans Cyrl;
+  font-family: "Manrope", sans-serif;
   font-style: normal;
   font-weight: 400;
   position: relative;
@@ -46,7 +47,6 @@ const FooterPartnerLogo = styled.div`
 `;
 
 const FooterName = styled.div`
-  font-family: "Proxima Nova Rg";
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -153,7 +153,7 @@ const RowLogo = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 35px;
+  height: 55px;
   width: auto;
   display: block;
 
@@ -213,10 +213,7 @@ const Footer: React.FC<FooterProps> = ({
                 }}
               >
                 <NavLink to="/">
-                  <Logo
-                    src="https://miblart.com/wp-content/uploads/2023/11/Group-3673.png"
-                    alt="Logo"
-                  />
+                  <Logo src={logo} alt="Logo" />
                 </NavLink>
                 <div
                   style={{

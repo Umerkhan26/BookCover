@@ -12,6 +12,7 @@ import {
   StyledLink,
   Label,
 } from "./register.styles";
+import { toast, ToastContainer } from "react-toastify";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -56,14 +57,19 @@ const Register = () => {
       setMessage(
         "✅ Registration successful! Please check your email for verification."
       );
+      toast.success(
+        "Registration successful! Please check your email for verification."
+      );
     } catch (error) {
       console.error("Registration error:", error); // Log the error
       if (error instanceof Error) {
         setMessage(
           `❌ ${error.message || "Registration failed. Please try again."}`
         );
+        toast.error(error.message || "Registration failed. Please try again.");
       } else {
         setMessage("❌ Registration failed. Please try again.");
+        toast.error("Registration failed. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -77,16 +83,19 @@ const Register = () => {
       setVerificationMessage(
         "✅ Email verified successfully! Redirecting to login..."
       );
+      toast.success("Email verified successfully! Redirecting to login...");
 
       // Redirect to login after 3 seconds
       setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
       setVerificationMessage(`❌ Verification failed: ${error}`);
+      toast.error(`Verification failed: ${error}`);
     }
   };
 
   return (
     <Container>
+      <ToastContainer />
       {verificationMessage ? (
         <div style={{ textAlign: "center", padding: "20px" }}>
           <h2>{verificationMessage}</h2>

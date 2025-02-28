@@ -14,6 +14,7 @@ import {
   ForgotPasswordLink,
   LoadingSpinner,
 } from "./login.styles";
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -57,11 +58,13 @@ const Login = () => {
 
       // Store token & user info
       login(data.token, data.user);
+      toast.success("Login successful!");
 
       // Navigate based on role
       navigateUser(data.user.role);
     } catch (err: any) {
       setError(err.message || "An error occurred during login.");
+      toast.error(err.message || "An error occurred during login.");
     } finally {
       setIsLoading(false);
     }
@@ -69,6 +72,7 @@ const Login = () => {
 
   return (
     <Container>
+      <ToastContainer />
       <Form onSubmit={handleLogin}>
         <Title>Login</Title>
         {error && <ErrorText>{error}</ErrorText>}
