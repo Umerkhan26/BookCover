@@ -31,11 +31,11 @@ const Login = () => {
 
     switch (role) {
       case "admin":
-        navigate("/Admin");
+        navigate("/Admin/users");
         break;
       case "client":
       case "designer":
-        navigate("/portal");
+        navigate("/portal/orders");
         break;
       default:
         navigate(redirectPath);

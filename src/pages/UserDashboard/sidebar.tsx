@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
+import logo from "../../assets/logo/Lumestudio-1.png";
 
 interface CollapsibleProps {
   collapsed: boolean;
@@ -51,19 +52,20 @@ const SidebarHeader = styled.div`
 `;
 
 const Logo = styled.img<CollapsibleProps>`
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 4px;
   margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
   transition: margin-right 0.3s ease;
 `;
 
 const BrandName = styled.span<CollapsibleProps>`
-  font-size: 20px;
+  font-size: 13px;
   font-weight: bold;
   color: #ffffff;
   display: ${(props) => (props.collapsed ? "none" : "block")};
   transition: display 0.3s ease;
+  margin-right: 4px;
 `;
 
 const CollapseButton = styled.button`
@@ -154,12 +156,8 @@ const UserDashboard: React.FC = () => {
     <DashboardContainer>
       <SidebarContainer collapsed={collapsed}>
         <SidebarHeader>
-          <Logo
-            src="https://spp-clients.s3-accelerate.amazonaws.com/7c5bdcb3-724f-4fe1-8895-fd9f5226138c/ZnPki4Bg-4.jpg"
-            alt="Mibl"
-            collapsed={collapsed}
-          />
-          <BrandName collapsed={collapsed}>Mibl</BrandName>
+          <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />
+          <BrandName collapsed={collapsed}>Lumeart Studio</BrandName>
           <CollapseButton onClick={toggleCollapse}>
             <FontAwesomeIcon icon={faArrowLeft} />
           </CollapseButton>

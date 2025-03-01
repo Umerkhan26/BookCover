@@ -51,7 +51,7 @@ const footerData: FooterProps = {
     { href: "https://twitter.com/MIBLart", text: "Twitter" },
     { href: "https://www.pinterest.com/miblart", text: "Pinterest" },
   ],
-  copyrightText: "© 2024 Miblart. All rights Reserved.",
+  copyrightText: "© 2024 Lumeart Studio. All rights Reserved.",
   brandLogos: [
     {
       src: "https://miblart.com/wp-content/uploads/2022/09/image_2022-09-07_13-17-50.png",

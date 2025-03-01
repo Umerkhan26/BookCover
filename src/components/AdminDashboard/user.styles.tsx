@@ -37,7 +37,7 @@ export const AddUserButton = styled.button`
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
-  background-color: #1a8797;
+  background-color: green;
   color: white;
   cursor: pointer;
 `;

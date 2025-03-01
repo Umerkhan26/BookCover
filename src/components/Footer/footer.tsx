@@ -175,18 +175,9 @@ const Footer: React.FC<FooterProps> = ({
           <Row>
             {/* Partner Logo */}
             <FooterPartnerLogo>
-              <a
-                href={partnerLogo.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  loading="lazy"
-                  style={{ width: "75px", height: "125px", objectFit: "cover" }}
-                  src={partnerLogo.src}
-                  alt={partnerLogo.alt}
-                />
-              </a>
+              <NavLink to="/">
+                <Logo src={logo} alt="Logo" />
+              </NavLink>
             </FooterPartnerLogo>
 
             {/* Footer Navigation */}
@@ -212,9 +203,6 @@ const Footer: React.FC<FooterProps> = ({
                   flexDirection: "column",
                 }}
               >
-                <NavLink to="/">
-                  <Logo src={logo} alt="Logo" />
-                </NavLink>
                 <div
                   style={{
                     display: "flex",
@@ -273,7 +261,7 @@ const Footer: React.FC<FooterProps> = ({
               color: "#212121",
             }}
           >
-            Miblart is part of the Mibl Group family of brands
+            Lumeart Studio is part of the Lumeart Group family of brands
           </span>
 
           <RowLogo>
