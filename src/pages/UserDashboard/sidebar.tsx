@@ -174,7 +174,7 @@ const UserDashboard: React.FC = () => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink as={Link} to="/" target="_blank">
+            <NavLink as={Link} to="/" >
               <Icon icon={faReplyAll} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>Back to site</LinkText>
             </NavLink>

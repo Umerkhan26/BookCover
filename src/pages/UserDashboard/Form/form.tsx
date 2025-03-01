@@ -43,7 +43,7 @@ const FormOrder: React.FC = () => {
       coverStyle,
       preferences,
       payment,
-      status: "Submitted",  // Adding the status as "submitted"
+      status: "S  ubmitted",  // Adding the status as "submitted"
 
     };
 
