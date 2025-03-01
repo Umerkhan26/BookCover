@@ -5,6 +5,7 @@ import styled from "styled-components";
 const CounterSectionWrapper = styled.section`
   background: linear-gradient(90deg, #e4e7f9, #efe6ef);
   padding: 4rem 0;
+  font-family: "Manrope", sans-serif;
 `;
 
 const Container = styled.div`
@@ -43,7 +44,6 @@ const Num = styled.div`
   font-size: 110px;
   line-height: 122px;
   color: #6dc7d1;
-  font-family: Proxima Nova Bold;
 `;
 
 const PlusIcon = styled.img`

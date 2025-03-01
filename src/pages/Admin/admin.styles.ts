@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Styled Components
 export const DashboardContainer = styled.div`
   display: flex;
-  font-family: Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
 `;
 
 export const SidebarContainer = styled.aside<{ collapsed: boolean }>`

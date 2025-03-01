@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const BenefitsWrap = styled.section`
   padding: 60px 0;
   background-color: #ffffff; /* White background */
+  font-family: "Manrope", sans-serif;
 `;
 
 export const Container = styled.div`
@@ -94,7 +95,6 @@ export const BenefitImage = styled.div`
 export const BenefitTitle = styled.span`
   font-size: 18px;
   color: #25293f;
-  font-family: Museo Sans Cyrl;
   font-style: normal;
   font-weight: 400;
   webkit-font-smoothing: antialiased;

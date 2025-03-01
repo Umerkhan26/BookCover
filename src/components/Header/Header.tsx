@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo/Cover Logo SVG-02.svg";
+import logo from "../../assets/logo/Lumestudio-1.png";
 import { useAuth } from "../../context/authContext";
 
 interface NavNBtnProps {
@@ -33,6 +33,7 @@ const Nav = styled.nav`
   padding: 20px 60px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Manrope", sans-serif;
   position: fixed;
   top: 0;
   left: 0;
@@ -42,7 +43,7 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.img`
-  height: 26px;
+  height: 35px;
   width: auto;
   display: block;
 `;

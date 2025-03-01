@@ -7,6 +7,7 @@ import {
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/logo/Lumestudio-1.png";
 
 // Interfaces
 interface IFooterLink {
@@ -38,7 +39,7 @@ export interface FooterProps {
 // Styled Components
 
 const FooterPartnerLogo = styled.div`
-  font-family: Museo Sans Cyrl;
+  font-family: "Manrope", sans-serif;
   font-style: normal;
   font-weight: 400;
   position: relative;
@@ -46,7 +47,6 @@ const FooterPartnerLogo = styled.div`
 `;
 
 const FooterName = styled.div`
-  font-family: "Proxima Nova Rg";
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -153,7 +153,7 @@ const RowLogo = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 35px;
+  height: 55px;
   width: auto;
   display: block;
 
@@ -175,18 +175,9 @@ const Footer: React.FC<FooterProps> = ({
           <Row>
             {/* Partner Logo */}
             <FooterPartnerLogo>
-              <a
-                href={partnerLogo.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  loading="lazy"
-                  style={{ width: "75px", height: "125px", objectFit: "cover" }}
-                  src={partnerLogo.src}
-                  alt={partnerLogo.alt}
-                />
-              </a>
+              <NavLink to="/">
+                <Logo src={logo} alt="Logo" />
+              </NavLink>
             </FooterPartnerLogo>
 
             {/* Footer Navigation */}
@@ -212,12 +203,6 @@ const Footer: React.FC<FooterProps> = ({
                   flexDirection: "column",
                 }}
               >
-                <NavLink to="/">
-                  <Logo
-                    src="https://miblart.com/wp-content/uploads/2023/11/Group-3673.png"
-                    alt="Logo"
-                  />
-                </NavLink>
                 <div
                   style={{
                     display: "flex",
@@ -276,7 +261,7 @@ const Footer: React.FC<FooterProps> = ({
               color: "#212121",
             }}
           >
-            Miblart is part of the Mibl Group family of brands
+            Lumeart Studio is part of the Lumeart Group family of brands
           </span>
 
           <RowLogo>

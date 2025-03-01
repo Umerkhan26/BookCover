@@ -12,7 +12,7 @@ type Invoice = {
 
 // Styled components (unchanged)
 const Container = styled.div`
-  font-family: Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
   margin-bottom: 3rem;
 `;
 

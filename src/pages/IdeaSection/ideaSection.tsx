@@ -7,6 +7,7 @@ const Section = styled.section`
   background: linear-gradient(90deg, #e6eef1, #e1f4f0);
   padding: 4rem 0;
   overflow: hidden;
+  font-family: "Manrope", sans-serif;
 `;
 
 const SvgBlock = styled.div`

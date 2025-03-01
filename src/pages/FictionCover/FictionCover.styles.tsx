@@ -24,7 +24,7 @@ export const SectionFiction = styled.section`
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  font-family: Museo Sans Cyrl, sans-serif;
+  font-family: "Manrope", sans-serif;
   font-style: normal;
   font-weight: 400;
   display: flex;
@@ -186,7 +186,7 @@ export const Subtitle = styled.p`
 `;
 
 export const BookCoversText = styled.div`
-  font-family: 'Busset-City', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 200;
   font-size: 57px;
   line-height: 1.2;
@@ -222,7 +222,7 @@ export const BookCoversText = styled.div`
 `;
 
 export const BenifitsComponent = styled.div`
-  font-family: 'Busset-City', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 200;
   font-size: 57px;
   width: 100%;

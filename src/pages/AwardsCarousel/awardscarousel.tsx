@@ -9,6 +9,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 const AwardsSectionWrapper = styled.section`
   background-color: #fafafa;
   padding: 4rem 0;
+  font-family: "Manrope", sans-serif;
 `;
 
 const Container = styled.div`

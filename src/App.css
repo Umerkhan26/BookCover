@@ -4,6 +4,7 @@ body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
+  font-family: "Manrope", sans-serif;
 }
 
 @import "tailwindcss";

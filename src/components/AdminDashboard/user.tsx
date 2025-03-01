@@ -153,7 +153,7 @@ const User: React.FC = () => {
                       }
                       style={{
                         backgroundColor:
-                          user.status === "active" ? "#1a8797" : "#1a8797",
+                          user.status === "active" ? "green" : "green",
                         color: "white",
                         padding: "7px 15px",
                         border: "none",
@@ -169,7 +169,7 @@ const User: React.FC = () => {
                       }
                       style={{
                         backgroundColor:
-                          user.status === "inactive" ? "#dc3545" : "#1a8797",
+                          user.status === "inactive" ? "#dc3545" : "green",
                         color: "white",
                         padding: "7px 10px",
                         border: "none",
@@ -198,7 +198,7 @@ const User: React.FC = () => {
                       onClick={() => toggleStatusButtons(user.userId)}
                       style={{
                         backgroundColor:
-                          user.status === "active" ? "#1a8797" : "#dc3545",
+                          user.status === "active" ? "green" : "#dc3545",
                         color: "white",
                         padding: "7px 9px",
                         border: "none",

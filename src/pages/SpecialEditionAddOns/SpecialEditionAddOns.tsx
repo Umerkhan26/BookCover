@@ -33,9 +33,14 @@ const addOns = [
 const SpecialEditionAddOns = () => {
   const navigate = useNavigate();
 
-  const handleOrderNow = () => {
-    // Navigate to the form section
-    navigate("/order");
+  const handleOrderNow = (packageId: string | undefined) => {
+    if (!packageId) {
+      console.error("🚨 Package ID is undefined! Cannot navigate.");
+      return;
+    }
+
+    console.log(`✅ Navigating to /order/${packageId}`);
+    navigate(`/order/${packageId}`);
   };
 
   return (
@@ -49,7 +54,9 @@ const SpecialEditionAddOns = () => {
           <AddOnCard key={index}>
             <img src={item.image} alt={item.title} />
             <p>{item.title}</p>
-            <OrderButton onClick={handleOrderNow}>Order now</OrderButton>
+            <OrderButton onClick={() => handleOrderNow(pkg.id)}>
+              Order Now
+            </OrderButton>
           </AddOnCard>
         ))}
       </AddOnsGrid>

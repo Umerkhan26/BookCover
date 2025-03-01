@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createOrderAPI } from "../../../apis/apis";
 import styled from "styled-components"; // Ensure correct import for your API function
+import { toast, ToastContainer } from "react-toastify";
 
 const FormOrder: React.FC = () => {
   const navigate = useNavigate();
@@ -43,23 +44,26 @@ const FormOrder: React.FC = () => {
       coverStyle,
       preferences,
       payment,
-      status: "S  ubmitted",  // Adding the status as "submitted"
-
+      status: "Submitted", // Adding the status as "submitted"
     };
 
     try {
       const response = await createOrderAPI(formData);
       console.log("Order created successfully:", response);
 
+      toast.success("Order created successfully!");
+
       // Navigate to the review page after successful order creation
       navigate("/portal/orders", { state: response });
     } catch (error) {
       console.error("Error creating order:", error);
+      toast.error("Error creating order. Please try again.");
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       {/* Header Section */}
       <HeaderContainer>
         <HeaderContent>
@@ -123,7 +127,10 @@ const FormOrder: React.FC = () => {
 
         <FormGroup>
           <Label>Will this book continue as a series?</Label>
-          <Select value={seriesContinuation} onChange={(e) => setSeries(e.target.value)}>
+          <Select
+            value={seriesContinuation}
+            onChange={(e) => setSeries(e.target.value)}
+          >
             <option value="">Please select...</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
@@ -244,7 +251,6 @@ const FormOrder: React.FC = () => {
 
 export default FormOrder;
 
-
 // Styled Components
 const HeaderContainer = styled.div`
   display: flex;
@@ -354,20 +360,6 @@ const FileInputLabel = styled.div`
 const FileInputHint = styled.div`
   font-size: 12px;
   color: #999;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Checkbox = styled.input`
-  margin-right: 10px;
-`;
-
-const CheckboxLabel = styled.label`
-  font-size: 14px;
-  color: #333;
 `;
 
 const RadioContainer = styled.div`

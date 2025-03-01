@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 // Styled Components
 const FeaturedSectionWrapper = styled.section`
-  background-color: #fff; // Adjust as needed
+  background-color: #fff;
   padding: 4rem 0;
+  font-family: "Manrope", sans-serif;
 `;
 
 const Container = styled.div`
@@ -30,8 +31,8 @@ const Title = styled.h2`
 const FeaturedList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; // Space between items
-  gap: 1.5rem; // Consistent gap between items
+  justify-content: space-between;
+  gap: 1.5rem;
 
   @media (max-width: 768px) {
     justify-content: center; // Center items on mobile
@@ -45,11 +46,11 @@ const FeaturedItem = styled.a`
   justify-content: center;
   text-decoration: none;
   transition: transform 0.3s ease;
-  width: calc(25% - 1.5rem); // 4 items per row with gap
-  height: 80px; // Fixed height for each item
-  background-color: #f9f9f9; // Background color for the item container
-  border-radius: 8px; // Optional: Add rounded corners
-  padding: 10px; // Optional: Add padding inside the container
+  width: calc(25% - 1.5rem);
+  height: 80px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
 
   &:hover {
     transform: scale(1.05);
