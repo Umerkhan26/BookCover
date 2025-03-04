@@ -268,7 +268,7 @@ function Header() {
       localStorage.setItem("redirectAfterLogin", "/portal");
       navigate("/login");
     } else {
-      navigate("/portal");
+      navigate("/portal/orders");
     }
   };
 
@@ -342,9 +342,9 @@ function Header() {
                 <DropdownItem to="/nonFiction">
                   Non-Fiction Cover Design
                 </DropdownItem>
-                <DropdownItem to="/portfolio-2">
-                  Premium Cover Design
-                </DropdownItem>
+                  {/* <DropdownItem to="/portfolio-2">
+                    Premium Cover Design
+                  </DropdownItem> */}
                 <DropdownItem to="/audioBookCover">
                   Audiobook Cover Design
                 </DropdownItem>
@@ -361,7 +361,7 @@ function Header() {
             {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
             {!isMenuOpen && (
               <>
-                <NavText to="/portal" onClick={handleNavigation}>
+                <NavText to="/portal/orders" onClick={handleNavigation}>
                   Client Portal
                 </NavText>
                 <NavButton to="/GetACover">Get a Cover</NavButton>

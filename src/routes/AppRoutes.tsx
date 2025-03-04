@@ -10,14 +10,14 @@ import Reviews from "../pages/reviews/reviews";
 import DesignProcess from "../pages/DesignProcess/designProcess";
 import Packages from "../pages/ourPackages/packages";
 import SpecialEditionAddOns from "../pages/SpecialEditionAddOns/SpecialEditionAddOns";
-import { myPackagesData } from "../pages/ourPackages/packagesData";
+// import { myPackagesData } from "../pages/ourPackages/packagesData";
 import BookCoverRedesign from "../pages/BookCoverRedesign/BookCoverRedesign";
 import LogoBranding from "../pages/logo&branding/logo&branding";
 import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
 import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
 import ContactUs from "../components/ContactUs/ContactUs";
 // import PortFolio from "../pages/Portfolio/Portfolio";
-import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
+import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
 import AboutUs from "../components/AboutUs/AboutUs";
 import PremiumCover from "../components/PremiumCover/premiumcovers";
 import KindleVellaCover from "../components/KindleVellaCover/kindleVellacover";
@@ -48,7 +48,7 @@ import InvoiceTable from "../pages/UserDashboard/Invoices/invoices";
 import FormOrder from "../pages/UserDashboard/Form/form";
 import PreviewPage from "../pages/UserDashboard/Form/preview";
 import OrderSubmittedPage from "../pages/UserDashboard/Form/ordersubmitted";
-import IllustrationOrderForm from "../pages/OrderForm/illustratedorder";
+// import IllustrationOrderForm from "../pages/OrderForm/illustratedorder";
 import Login from "../components/Login/login";
 import Register from "../components/register/register";
 import BookCoverForm from "../pages/GetACover/cover";
@@ -147,7 +147,7 @@ const AppRoutes: React.FC = () => {
       {/* <Route path="/order" element={<OrderForm />} /> */}
       <Route path="/order/:packageId" element={<OrderForm />} />
 
-      <Route path="/order/illustration" element={<IllustrationOrderForm />} />
+      {/* <Route path="/order/illustration" element={<IllustrationOrderForm />} /> */}
 
       <Route path="/Admin" element={<Admin />}>
         {/* Use relative path for nested routes */}

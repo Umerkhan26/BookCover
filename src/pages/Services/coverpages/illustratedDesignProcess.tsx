@@ -12,8 +12,8 @@ import image1 from "../../../assets/pacakge1.jpeg"; // Replace with actual image
 import image2 from "../../../assets/package2.png";
 // import Packages from "../../ourPackages/packages";
 import Reviews from "../../reviews/reviews";
-import { myPackagesData } from "../../ourPackages/packagesData";
-import IllustratedPackages from "../../ourPackages/illustratedpackage";
+// import { myPackagesData } from "../../ourPackages/packagesData";
+// import IllustratedPackages from "../../ourPackages/illustratedpackage";
 import Packages from "../../ourPackages/packages";
 
 const DesignProcess = () => {

@@ -1,7 +1,7 @@
 import FictionCover from "../FictionCover/FictionCover";
 import BookCoverRedesaign from "../../assets/BookCoverRedesign.png";
 import Packages from "../ourPackages/packages";
-import { myPackagesData } from "../ourPackages/packagesData";
+// import { myPackagesData } from "../ourPackages/packagesData";
 import SpecialEditionAddOns from "../SpecialEditionAddOns/SpecialEditionAddOns";
 import RedesignExamples from "./RedesignExamples";
 import RedesignForm from "./RedesignForm";

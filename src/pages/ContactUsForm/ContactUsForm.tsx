@@ -47,6 +47,7 @@ const ContactUsForm: React.FC = () => {
 
     try {
       const response = await submitContactFormAPI(contactData);
+      console.log(response)
       setSuccess("Your message has been sent successfully.");
       setError(null);  // Clear any previous errors
       // Reset form after successful submission

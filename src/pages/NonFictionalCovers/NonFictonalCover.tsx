@@ -3,7 +3,7 @@ import NonFictional from '../../assets/NonFictional.png'
 import BenefitsSection from "../Benefits/benefits"
 import { benefitsData } from "../../services/benefits"
 import Packages from "../ourPackages/packages"
-import { myPackagesData } from "../ourPackages/packagesData"
+// import { myPackagesData } from "../ourPackages/packagesData"
 import SpecialEditionAddOns from "../SpecialEditionAddOns/SpecialEditionAddOns"
 import DesignProcess from "../HowWeDesign/design"
 import Carousel from "../Carousal/carousal"

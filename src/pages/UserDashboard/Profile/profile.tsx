@@ -32,7 +32,7 @@ const ProfilePage = () => {
     fetch("https://countriesnow.space/api/v0.1/countries")
       .then((res) => res.json())
       .then((data) => {
-        const countryList = data.data.map((country) => ({
+        const countryList = data.data.map((country:any) => ({
           value: country.country, // Country Name
           label: country.country,
         }));
@@ -41,7 +41,7 @@ const ProfilePage = () => {
       .catch((err) => console.error("Error fetching countries:", err));
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value, type, checked } = e.target;
     if (name.includes("billingAddress")) {
       const field = name.split(".")[1];

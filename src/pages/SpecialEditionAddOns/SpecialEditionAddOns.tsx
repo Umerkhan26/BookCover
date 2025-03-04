@@ -15,18 +15,26 @@ const addOns = [
   {
     title: "Sprayed edges design",
     image: specialadd1, // Placeholder image
+    packageId: "sprayed-edges", // Unique ID
+
   },
   {
     title: "Decorative pages design",
     image: specialadd2,
+    packageId: "sprayed-edges", // Unique ID
+
   },
   {
     title: "Foiled cover design",
     image: specialadd3,
+    packageId: "sprayed-edges", // Unique ID
+
   },
   {
     title: "Chapter header & breaker design",
     image: specialadd4,
+    packageId: "sprayed-edges", // Unique ID
+
   },
 ];
 
@@ -54,7 +62,7 @@ const SpecialEditionAddOns = () => {
           <AddOnCard key={index}>
             <img src={item.image} alt={item.title} />
             <p>{item.title}</p>
-            <OrderButton onClick={() => handleOrderNow(pkg.id)}>
+            <OrderButton onClick={() => handleOrderNow(item.packageId)}>
               Order Now
             </OrderButton>
           </AddOnCard>

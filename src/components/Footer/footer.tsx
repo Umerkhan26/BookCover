@@ -164,7 +164,7 @@ const Logo = styled.img`
 
 // Footer Component
 const Footer: React.FC<FooterProps> = ({
-  partnerLogo,
+  // partnerLogo,
   categories,
   copyrightText,
 }) => {

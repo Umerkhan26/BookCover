@@ -138,6 +138,8 @@ export const submitContactFormAPI = async (contactData: {
 
 
 // Function to create an order
+
+
 export const createOrderAPI = async (orderData: {
   userId: string;
   packageId: string;
@@ -157,6 +159,7 @@ export const createOrderAPI = async (orderData: {
   shareOnPortfolio: boolean;
   paymentMethod: string;
   status: string;
+  userContacts?: string[]; // New field added for contacts
 }) => {
   try {
     // Sending a POST request to create an order
@@ -170,6 +173,7 @@ export const createOrderAPI = async (orderData: {
     throw error.response?.data?.message || "Failed to create order";
   }
 };
+
 
 
 
@@ -211,5 +215,53 @@ export const fetchAllOrders = async (): Promise<any> => {
   } catch (error) {
     console.error("Error fetching all orders:", error);
     throw new Error("Failed to fetch orders");
+  }
+};
+
+
+
+export const createBookRequest = async (bookRequestData: {
+  name: string;
+  title: string;
+  genre?: string;
+  isSeries: boolean;
+  description: string;
+  coverPreference: string[]; // Array of selected cover types
+  mainCharacters?: string;
+  keyObjects?: string;
+  setting?: string;
+  comparableCovers: File[]; // Array of files to upload
+  email: string;
+}) => {
+  try {
+    // Create a FormData object to send the images as well as other form data
+    const formData = new FormData();
+
+    formData.append("name", bookRequestData.name);
+    formData.append("title", bookRequestData.title);
+    formData.append("genre", bookRequestData.genre || "");
+    formData.append("isSeries", bookRequestData.isSeries.toString());
+    formData.append("description", bookRequestData.description);
+    formData.append("coverPreference", JSON.stringify(bookRequestData.coverPreference));
+    formData.append("mainCharacters", bookRequestData.mainCharacters || "");
+    formData.append("keyObjects", bookRequestData.keyObjects || "");
+    formData.append("setting", bookRequestData.setting || "");
+    formData.append("email", bookRequestData.email);
+
+    // Append the files to FormData
+    bookRequestData.comparableCovers.forEach((file) => {
+      formData.append("comparableCovers", file);
+    });
+
+    // Send POST request with form data
+    const response = await axios.post(`${API_BASE_URL}/createCoverIdea`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Important for file uploads
+      },
+    });
+
+    return response.data; // Return the response from the backend
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to create book request";
   }
 };

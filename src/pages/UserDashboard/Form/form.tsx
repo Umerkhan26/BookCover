@@ -26,12 +26,51 @@ const FormOrder: React.FC = () => {
   const [see, setSee] = useState("");
   const [coverStyle, setCover] = useState("");
   const [order, setOrder] = useState("");
+  const [userContacts, setUserContacts] = useState("");
+
+
+  // const handleReview = async () => {
+  //   const formData = {
+  //     userId,
+  //     packageId,
+  //     addOnIds,
+  //     authorName,
+  //     bookTitle,
+  //     bookSubtitle,
+  //     narratorName,
+  //     genre,
+  //     seriesContinuation,
+  //     summary,
+  //     see,
+  //     order,
+  //     coverStyle,
+  //     preferences,
+  //     payment,
+  //     status: "Submitted", 
+  //     userContacts: userContacts, // Added userContacts field
+  //     // Adding the status as "submitted"
+  //   };
+
+  //   try {
+  //     const response = await createOrderAPI(formData);
+  //     console.log("Order created successfully:", response);
+
+  //     toast.success("Order created successfully!");
+
+  //     // Navigate to the review page after successful order creation
+  //     navigate("/portal/orders", { state: response });
+  //   } catch (error) {
+  //     console.error("Error creating order:", error);
+  //     toast.error("Error creating order. Please try again.");
+  //   }
+  // };
+
 
   const handleReview = async () => {
     const formData = {
-      userId,
-      packageId,
-      addOnIds,
+      userId: String(userId),  // Ensure userId is a string
+      packageId: String(packageId),  // Ensure packageId is a string
+      addOnIds: Array.isArray(addOnIds) ? addOnIds : [], // Ensure addOnIds is an array
       authorName,
       bookTitle,
       bookSubtitle,
@@ -39,28 +78,31 @@ const FormOrder: React.FC = () => {
       genre,
       seriesContinuation,
       summary,
-      see,
-      order,
       coverStyle,
       preferences,
       payment,
-      status: "Submitted", // Adding the status as "submitted"
+      status: "Submitted",
+      userContacts: userContacts ? userContacts.split(",") : [], // Convert to an array
+      coverMood: "", // Add missing fields with default values
+      colorPalette: "",
+      examples: "",
+      firstOrder: false, // ✅ Add this property  
+      shareOnPortfolio: false, // ✅ Add this property  
+      paymentMethod: "", // ✅ Add this property  
+      file: "",
     };
-
+  
     try {
       const response = await createOrderAPI(formData);
       console.log("Order created successfully:", response);
-
       toast.success("Order created successfully!");
-
-      // Navigate to the review page after successful order creation
       navigate("/portal/orders", { state: response });
     } catch (error) {
       console.error("Error creating order:", error);
       toast.error("Error creating order. Please try again.");
     }
   };
-
+  
   return (
     <div>
       <ToastContainer />
@@ -113,6 +155,13 @@ const FormOrder: React.FC = () => {
             type="text"
             value={narratorName}
             onChange={(e) => setNarratorName(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label>To make future communication easier, would you be willing to share your preferred contact information, such as an email address or LinkedIn profile?</Label>
+          <TextArea
+            value={userContacts}
+            onChange={(e) => setUserContacts(e.target.value)}
           />
         </FormGroup>
 
@@ -208,7 +257,7 @@ const FormOrder: React.FC = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label>Is this your first order with Miblart? </Label>
+          <Label>Is this your first order with Lumeart Studio? </Label>
           <Select value={order} onChange={(e) => setOrder(e.target.value)}>
             <option value="">Please select...</option>
             <option value="yes">Yes</option>
@@ -333,7 +382,7 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
   width: 100%;
-  padding: 8px;
+  padding: 18px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
