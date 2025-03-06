@@ -17,7 +17,7 @@ import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
 import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
 import ContactUs from "../components/ContactUs/ContactUs";
 // import PortFolio from "../pages/Portfolio/Portfolio";
-import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
+// import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
 import AboutUs from "../components/AboutUs/AboutUs";
 import PremiumCover from "../components/PremiumCover/premiumcovers";
 import KindleVellaCover from "../components/KindleVellaCover/kindleVellacover";
@@ -56,6 +56,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Admin from "../pages/Admin/admin";
 import User from "../components/AdminDashboard/user";
 import Order from "../components/AdminDashboard/Order/order";
+import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -83,7 +84,7 @@ const AppRoutes: React.FC = () => {
               }
               designProcessComponent={<DesignProcess />}
               // Pass the 'myPackagesData' as a prop to 'Packages' component
-              packagesComponent={<Packages  />}
+              packagesComponent={<Packages />}
               reviewsComponent={<Reviews />}
               specialEditionAddOnsComponent={<SpecialEditionAddOns />}
             />

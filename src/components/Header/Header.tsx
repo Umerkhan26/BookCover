@@ -316,7 +316,7 @@ function Header() {
                 <span style={{ color: "black" }}>☰</span>
               )}
             </HamburgerMenu>
-
+          </div>
           <NavNBtn
             isMenuOpen={isMenuOpen}
             className="scrollable-menu"
@@ -343,7 +343,7 @@ function Header() {
                 <DropdownItem to="/nonFiction">
                   Non-Fiction Cover Design
                 </DropdownItem>
-                  {/* <DropdownItem to="/portfolio-2">
+                {/* <DropdownItem to="/portfolio-2">
                     Premium Cover Design
                   </DropdownItem> */}
                 <DropdownItem to="/audioBookCover">
@@ -353,11 +353,11 @@ function Header() {
               </DropdownMenu>
             </DropdownContainer>
 
-              <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
-              <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
-              <NavLinkButton to="/FAQs">FAQ</NavLinkButton>
-              <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
-              <NavLinkButton to="/partner">Partner With Us</NavLinkButton>
+            <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
+            <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
+            <NavLinkButton to="/FAQs">FAQ</NavLinkButton>
+            <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
+            <NavLinkButton to="/partner">Partner With Us</NavLinkButton>
 
             {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
             {!isMenuOpen && (
