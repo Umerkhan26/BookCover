@@ -25,20 +25,26 @@ const Login = () => {
   const { login } = useAuth();
 
   // Function to handle role-based navigation
+  // Import the toast function
+
   const navigateUser = (role: string) => {
     const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
     localStorage.removeItem("redirectAfterLogin");
 
+    // Show a toast message based on the role before navigating
     switch (role) {
       case "admin":
-        navigate("/Admin/users");
+        toast.success("Redirecting to Admin Dashboard...");
+        setTimeout(() => navigate("/Admin/users"));
         break;
       case "client":
       case "designer":
-        navigate("/portal/orders");
+        toast.success("Redirecting to Portal...");
+        setTimeout(() => navigate("/portal/orders")); // Delay navigation to show toast
         break;
       default:
-        navigate(redirectPath);
+        toast.success("Redirecting to Home...");
+        setTimeout(() => navigate(redirectPath)); // Delay navigation to show toast
     }
   };
 
@@ -58,10 +64,12 @@ const Login = () => {
 
       // Store token & user info
       login(data.token, data.user);
-      toast.success("Login successful!");
 
-      // Navigate based on role
-      navigateUser(data.user.role);
+      // Show "Logged in successfully" toast
+      toast.success("Logged in successfully!");
+
+      // Navigate based on role with a delay to allow the user to read the toast
+      setTimeout(() => navigateUser(data.user.role), 1500); // Delay before navigating
     } catch (err: any) {
       setError(err.message || "An error occurred during login.");
       toast.error(err.message || "An error occurred during login.");

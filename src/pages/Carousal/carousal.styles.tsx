@@ -11,6 +11,10 @@ export const MainContainer = styled.div`
   align-items: center;
   text-align: center;
   padding: 40px 20px;
+
+  @media (max-width: 768px) {
+    padding: 20px 10px;
+  }
 `;
 
 export const TitleContainer = styled.div`
@@ -19,6 +23,12 @@ export const TitleContainer = styled.div`
   align-items: baseline;
   width: 100%;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 `;
 
 export const Title = styled.h1`
@@ -55,6 +65,22 @@ export const SliderContainer = styled.div`
   width: ${slideWidth}px;
   overflow: hidden;
   border-radius: 10px;
+
+  @media (max-width: 1200px) {
+    width: ${imageWidth * 4 + gap * 3}px;
+  }
+
+  @media (max-width: 992px) {
+    width: ${imageWidth * 3 + gap * 2}px;
+  }
+
+  @media (max-width: 768px) {
+    width: ${imageWidth * 2 + gap}px;
+  }
+
+  @media (max-width: 576px) {
+    width: ${imageWidth}px;
+  }
 `;
 
 export const SliderWrapper = styled.div`
@@ -73,6 +99,16 @@ export const Image = styled.img`
   height: 280px;
   object-fit: cover;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 200px;
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+    height: 150px;
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -82,6 +118,11 @@ export const ButtonContainer = styled.div`
   gap: 20px;
   margin-top: 30px;
   padding: 0 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 export const PortfolioButton = styled.button`
@@ -96,6 +137,11 @@ export const PortfolioButton = styled.button`
 
   &:hover {
     background: #4fa3a2;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px 20px;
+    font-size: 0.9rem;
   }
 `;
 
@@ -119,13 +165,18 @@ export const NavButton = styled.button`
     background: ${(props) =>
       props.disabled ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.8)"};
   }
+
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+    font-size: 1.2rem;
+  }
 `;
 
 export const PrevButton = styled(NavButton)`
   left: 10px;
 
   @media (max-width: 768px) {
-    left: 50px;
+    left: -10px;
     padding: 8px 12px;
     font-size: 1.2rem;
   }
@@ -135,7 +186,7 @@ export const NextButton = styled(NavButton)`
   right: 10px;
 
   @media (max-width: 768px) {
-    right: 5px;
+    right: 10px;
     padding: 8px 12px;
     font-size: 1.2rem;
   }
@@ -152,6 +203,12 @@ export const ImagePreviewOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    max-width: 95%;
+    max-height: 95%;
+    padding: 10px;
+  }
 `;
 
 export const ImagePreviewContainer = styled.div`
@@ -168,6 +225,10 @@ export const PreviewImage = styled.img`
   max-width: 100%;
   max-height: 80vh;
   border-radius: 10px;
+
+  @media (max-width: 768px) {
+    max-height: 60vh;
+  }
 `;
 
 export const CloseButton = styled.button`
@@ -183,6 +244,13 @@ export const CloseButton = styled.button`
   font-size: 1.5rem;
   z-index: 1001;
   transition: background 0.3s;
+
+  @media (max-width: 768px) {
+    top: -5px;
+    left: 120%;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+  }
 `;
 
 export const PreviewNavButton = styled.button`
@@ -202,12 +270,25 @@ export const PreviewNavButton = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.5);
   }
+
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+    font-size: 1.2rem;
+  }
 `;
 
 export const PrevPreviewButton = styled(PreviewNavButton)`
   left: -120px;
+
+  @media (max-width: 768px) {
+    left: -80px;
+  }
 `;
 
 export const NextPreviewButton = styled(PreviewNavButton)`
   right: -120px;
+
+  @media (max-width: 768px) {
+    right: -80px;
+  }
 `;

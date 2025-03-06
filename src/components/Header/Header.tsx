@@ -308,66 +308,68 @@ function Header() {
             </MobileContactButton>
           </ContactUsWrapper>
 
-          <HamburgerMenu onClick={toggleMenu}>
-            {isMenuOpen ? (
-              <span style={{ color: "black" }}>✖</span>
-            ) : (
-              <span style={{ color: "black" }}>☰</span>
-            )}
-          </HamburgerMenu>
+          <div ref={menuRef}>
+            <HamburgerMenu onClick={toggleMenu}>
+              {isMenuOpen ? (
+                <span style={{ color: "black" }}>✖</span>
+              ) : (
+                <span style={{ color: "black" }}>☰</span>
+              )}
+            </HamburgerMenu>
 
-          <NavNBtn
-            isMenuOpen={isMenuOpen}
-            className="scrollable-menu"
-            ref={menuRef}
-          >
-            <DropdownContainer>
-              <ServicesLink
-                to="/services"
-                onClick={toggleServices}
-                className={isServicesOpen ? "active" : ""}
-              >
-                Services
-              </ServicesLink>
-              <DropdownMenu className={isServicesOpen ? "active" : ""}>
-                <DropdownItem to="/fictionCover">
-                  Fiction Cover Design
-                </DropdownItem>
-                <DropdownItem to="/illustrated">
-                  Illustrated Cover Design
-                </DropdownItem>
-                <DropdownItem to="/bookCoverRedesign">
-                  Book Covers Redesign
-                </DropdownItem>
-                <DropdownItem to="/nonFiction">
-                  Non-Fiction Cover Design
-                </DropdownItem>
-                <DropdownItem to="/portfolio-2">
-                  Premium Cover Design
-                </DropdownItem>
-                <DropdownItem to="/audioBookCover">
-                  Audiobook Cover Design
-                </DropdownItem>
-                <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
-              </DropdownMenu>
-            </DropdownContainer>
+            <NavNBtn
+              isMenuOpen={isMenuOpen}
+              className="scrollable-menu"
+              ref={menuRef}
+            >
+              <DropdownContainer>
+                <ServicesLink
+                  to="/services"
+                  onClick={toggleServices}
+                  className={isServicesOpen ? "active" : ""}
+                >
+                  Services
+                </ServicesLink>
+                <DropdownMenu className={isServicesOpen ? "active" : ""}>
+                  <DropdownItem to="/fictionCover">
+                    Fiction Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/illustrated">
+                    Illustrated Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/bookCoverRedesign">
+                    Book Covers Redesign
+                  </DropdownItem>
+                  <DropdownItem to="/nonFiction">
+                    Non-Fiction Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/portfolio-2">
+                    Premium Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/audioBookCover">
+                    Audiobook Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
+                </DropdownMenu>
+              </DropdownContainer>
 
-            <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
-            <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
-            <NavLinkButton to="/FAQs">FAQ</NavLinkButton>
-            <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
-            <NavLinkButton to="/partner">Partner With Us</NavLinkButton>
+              <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
+              <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
+              <NavLinkButton to="/FAQs">FAQ</NavLinkButton>
+              <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
+              <NavLinkButton to="/partner">Partner With Us</NavLinkButton>
 
-            {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
-            {!isMenuOpen && (
-              <>
-                <NavText to="/portal" onClick={handleNavigation}>
-                  Client Portal
-                </NavText>
-                <NavButton to="/GetACover">Get a Cover</NavButton>
-              </>
-            )}
-          </NavNBtn>
+              {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
+              {!isMenuOpen && (
+                <>
+                  <NavText to="/portal" onClick={handleNavigation}>
+                    Client Portal
+                  </NavText>
+                  <NavButton to="/GetACover">Get a Cover</NavButton>
+                </>
+              )}
+            </NavNBtn>
+          </div>
         </HeaderContainer>
       </Nav>
     </>
