@@ -188,15 +188,16 @@ const AwardsCarousel: React.FC<AwardsCarouselProps> = ({
           ))}
         </Slider>
 
+        {/* Fixed Arrow Buttons */}
         <ArrowButton
           className="prev"
-          onClick={() => sliderRef.current.slickPrev()}
+          onClick={() => sliderRef.current?.slickPrev()} // Using optional chaining
         >
           <FaChevronLeft />
         </ArrowButton>
         <ArrowButton
           className="next"
-          onClick={() => sliderRef.current.slickNext()}
+          onClick={() => sliderRef.current?.slickNext()} // Using optional chaining
         >
           <FaChevronRight />
         </ArrowButton>

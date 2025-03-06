@@ -1,7 +1,7 @@
 import FictionCover from "../FictionCover/FictionCover"
 import logoBrand from '../../assets/logoBrand.png'
 import Packages from "../ourPackages/packages"
-import { myPackagesData } from "../ourPackages/packagesData"
+// import { myPackagesData } from "../ourPackages/packagesData"
 import RedesignExamples from "../BookCoverRedesign/RedesignExamples"
 import { examples } from "../BookCoverRedesign/RedesignExampleData"
 import DesignLogoBrandingSteps from "./DesignLogoBrandingSteps"

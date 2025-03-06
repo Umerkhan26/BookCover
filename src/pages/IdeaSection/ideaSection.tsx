@@ -69,22 +69,6 @@ const SvgSphere = styled.svg`
   display: block;
 `;
 
-const Button = styled.a`
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  background-color: #6dc7d1;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #4fa3a2;
-  }
-`;
-
 const LinkButton = styled.a`
   display: inline-block;
   padding: 0.75rem 2rem;
@@ -107,7 +91,7 @@ interface ShareIdeasSectionProps {
   subtitle: string;
   buttonText: string;
   buttonLink?: string;
-  onButtonClick: () => void;
+  onButtonClick?: () => void; // Made optional
 }
 
 // Component
@@ -166,7 +150,7 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
       {/* Content */}
       <Container className="container">
         <SectionTitle className="section-title">
-          <Title dangerouslySetInnerHTML={{ __html: title }} />{" "}
+          <Title dangerouslySetInnerHTML={{ __html: title as string }} />
           {/* Render HTML */}
           <SvgSphere width="40" height="10" viewBox="0 0 40 10" fill="none">
             <circle cx="4.85442" cy="4.85549" r="4.35549" stroke="#212121" />
@@ -179,7 +163,7 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
           <Subtitle>{subtitle}</Subtitle>
         </SectionTitle>
         <div className="text-center">
-          <LinkButton href="#" onClick={onButtonClick}>
+          <LinkButton href="#" onClick={onButtonClick ? onButtonClick : undefined}>
             {buttonText}
           </LinkButton>
         </div>

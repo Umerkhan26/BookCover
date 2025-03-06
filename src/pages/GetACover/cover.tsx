@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BannerSection from "../Banner/getcoverbaner";
 import HowItWorksSection from "../../components/HowItsWork/howitwork";
+import { createBookRequest } from "../../apis/apis"; // Adjust the path to your API function
 
 const FormContainer = styled.div`
   max-width: 600px;
@@ -102,6 +103,78 @@ const CheckboxContainer = styled.div`
 `;
 
 const BookCoverForm: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    title: "",
+    genre: "",
+    isSeries: false,
+    description: "",
+    coverPreference: [] as string[], // Explicitly define as an array of strings
+    mainCharacters: "",
+    keyObjects: "",
+    setting: "",
+    comparableCovers: [] as File[], // To hold selected images
+    email: "",
+    privacyPolicy: false,
+  });
+
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  //   const { name, value, type, checked } = e.target;
+  //   if (type === "checkbox") {
+  //     setFormData({ ...formData, [name]: checked });
+  //   } else {
+  //     setFormData({ ...formData, [name]: value });
+  //   }
+  // };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+  
+    if (type === "checkbox") {
+      setFormData({ 
+        ...formData, 
+        [name]: (e.target as HTMLInputElement).checked 
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      setFormData({ ...formData, comparableCovers: Array.from(files) });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Prepare the data for API call
+    const bookRequestData = {
+      name: formData.name,
+      title: formData.title,
+      genre: formData.genre,
+      isSeries: formData.isSeries,
+      description: formData.description,
+      coverPreference: formData.coverPreference,
+      mainCharacters: formData.mainCharacters,
+      keyObjects: formData.keyObjects,
+      setting: formData.setting,
+      comparableCovers: formData.comparableCovers,
+      email: formData.email,
+    };
+
+    try {
+      const response = await createBookRequest(bookRequestData);
+      console.log("submitted successfully",response)
+    alert("Book request created successfully!");
+      // Reset the form or show success message here
+    } catch (error) {
+      console.error("Error creating book request:", error);
+    }
+  };
+
   return (
     <>
       <BannerSection />
@@ -121,45 +194,100 @@ const BookCoverForm: React.FC = () => {
           </a>
           .
         </Disclaimer>
-        <StyledForm>
-          <StyledInput type="text" placeholder="Your name" />
-          <StyledInput type="text" placeholder="Title of your book" />
-          <StyledSelect>
+        <StyledForm onSubmit={handleSubmit}>
+          <StyledInput
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Your name"
+          />
+          <StyledInput
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Title of your book"
+          />
+          <StyledSelect
+            name="genre"
+            value={formData.genre}
+            onChange={handleChange}
+          >
             <option value="">Genre: optional</option>
             <option value="fiction">Fiction</option>
             <option value="non-fiction">Non-Fiction</option>
             <option value="fantasy">Fantasy</option>
             <option value="sci-fi">Science Fiction</option>
-            {/* Add more genres as needed */}
           </StyledSelect>
-          <StyledSelect>
-            <option value="">
-              Will the book continue as a series? optional
-            </option>
+          <StyledSelect
+            name="isSeries"
+            value={formData.isSeries ? "yes" : "no"}
+            onChange={handleChange}
+          >
+            <option value="no">Will the book continue as a series? optional</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </StyledSelect>
-          <StyledTextArea placeholder="Tell us briefly about your book's plot or description (optional)" />
-          <StyledSelect>
-            <option value="">
-              Please select what covers you prefer (optional)
-            </option>
-            <option value="detailed-characters">
-              With detailed characters
-            </option>
+          <StyledTextArea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Tell us briefly about your book's plot or description (optional)"
+          />
+          <StyledSelect
+            name="coverPreference"
+            value={formData.coverPreference}
+            onChange={(e) => {
+              const { options } = e.target as HTMLSelectElement;
+              const selectedOptions = Array.from(options)
+                .filter((option) => option.selected)
+                .map((option) => option.value);
+              setFormData({ ...formData, coverPreference: selectedOptions });
+            }}
+          >
+            <option value="">Please select what covers you prefer (optional)</option>
+            <option value="detailed-characters">With detailed characters</option>
             <option value="silhouettes">Only with silhouettes</option>
             <option value="object-based">Object-based covers</option>
             <option value="dont-know">I don't know</option>
           </StyledSelect>
-          <StyledTextArea placeholder="Please describe the main character(s) or key objects/themes (optional)" />
+          <StyledTextArea
+            name="mainCharacters"
+            value={formData.mainCharacters}
+            onChange={handleChange}
+            placeholder="Please describe the main character(s) or key objects/themes (optional)"
+          />
           <StyledInput
             type="text"
+            name="setting"
+            value={formData.setting}
+            onChange={handleChange}
             placeholder="What is the setting of your book? (optional)"
           />
-          <StyledInput type="file" accept="image/*" multiple />
-          <StyledInput type="email" placeholder="Email" required />
+          <StyledInput
+            type="file"
+            name="comparableCovers"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
+          />
+          <StyledInput
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+          />
           <CheckboxContainer>
-            <input type="checkbox" id="privacy-policy" required />
+            <input
+              type="checkbox"
+              name="privacyPolicy"
+              checked={formData.privacyPolicy}
+              onChange={handleChange}
+              required
+            />
             <label htmlFor="privacy-policy">
               Agree with personal data processing. For more info, please consult{" "}
               <a
