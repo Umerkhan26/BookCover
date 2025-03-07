@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3000/api"; 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 
 export const registerUser = async (userData: {
   firstName: string;
@@ -40,9 +41,11 @@ export const loginAPI = async (email: string, password: string) => {
   }
 };
 
-export const getPackagesByPageAPI = async (page:string) => {
+export const getPackagesByPageAPI = async (page: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/getPackagesByPage/${page}`);  // Updated URL format
+    const response = await axios.get(
+      `${API_BASE_URL}/getPackagesByPage/${page}`
+    ); // Updated URL format
     return response.data;
   } catch (error) {
     console.error("Error fetching packages:", error);
@@ -115,7 +118,6 @@ export const fetchAddOnsByPackageId = async (packageId: string) => {
   }
 };
 
-
 export const submitContactFormAPI = async (contactData: {
   firstName: string;
   lastName: string;
@@ -135,10 +137,7 @@ export const submitContactFormAPI = async (contactData: {
   }
 };
 
-
-
 // Function to create an order
-
 
 export const createOrderAPI = async (orderData: {
   userId: string;
@@ -174,9 +173,6 @@ export const createOrderAPI = async (orderData: {
   }
 };
 
-
-
-
 export const fetchOrdersByUserId = async (): Promise<any> => {
   try {
     // Retrieve the entire user object from localStorage
@@ -197,14 +193,15 @@ export const fetchOrdersByUserId = async (): Promise<any> => {
     }
 
     // Make the GET request to the API to fetch orders by userId
-    const response = await axios.get(`${API_BASE_URL}/getOrderByUserId/${userId}`);
+    const response = await axios.get(
+      `${API_BASE_URL}/getOrderByUserId/${userId}`
+    );
     return response.data.orders;
   } catch (error) {
     console.error("Error fetching orders:", error);
     throw new Error("Failed to fetch orders");
   }
 };
-
 
 export const fetchAllOrders = async (): Promise<any> => {
   try {
@@ -217,8 +214,6 @@ export const fetchAllOrders = async (): Promise<any> => {
     throw new Error("Failed to fetch orders");
   }
 };
-
-
 
 export const createBookRequest = async (bookRequestData: {
   name: string;
@@ -242,7 +237,10 @@ export const createBookRequest = async (bookRequestData: {
     formData.append("genre", bookRequestData.genre || "");
     formData.append("isSeries", bookRequestData.isSeries.toString());
     formData.append("description", bookRequestData.description);
-    formData.append("coverPreference", JSON.stringify(bookRequestData.coverPreference));
+    formData.append(
+      "coverPreference",
+      JSON.stringify(bookRequestData.coverPreference)
+    );
     formData.append("mainCharacters", bookRequestData.mainCharacters || "");
     formData.append("keyObjects", bookRequestData.keyObjects || "");
     formData.append("setting", bookRequestData.setting || "");
@@ -254,11 +252,15 @@ export const createBookRequest = async (bookRequestData: {
     });
 
     // Send POST request with form data
-    const response = await axios.post(`${API_BASE_URL}/createCoverIdea`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data", // Important for file uploads
-      },
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/createCoverIdea`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data", // Important for file uploads
+        },
+      }
+    );
 
     return response.data; // Return the response from the backend
   } catch (error: any) {
