@@ -56,7 +56,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import Admin from "../pages/Admin/admin";
 import User from "../components/AdminDashboard/user";
 import Order from "../components/AdminDashboard/Order/order";
-import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
+import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
+// import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
