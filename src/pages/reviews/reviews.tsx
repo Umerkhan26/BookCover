@@ -1,16 +1,8 @@
-import {
-  Button,
-  CardsWrapper,
-  ReviewCard,
-  ReviewsWrapper,
-} from "./reviews.styles";
+import { Button, CardsWrapper, ReviewCard, ReviewsWrapper } from "./reviews.styles";
 
 const Reviews = () => {
   return (
-    <div
-      className="text-gray-600 dark:text-gray-300 pt-8 dark: mb-24"
-      id="reviews"
-    >
+    <div className="text-gray-600 dark:text-gray-300 pt-8 dark: mb-24" id="reviews">
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
         <div className="mb-10 space-y-4 px-6 md:px-0">
           <h2 className="text-center text-2xl font-bold text-gray-800 dark: md:text-4xl">

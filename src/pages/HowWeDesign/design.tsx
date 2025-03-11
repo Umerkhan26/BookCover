@@ -34,7 +34,7 @@ const LeftColumn = styled.div`
 const RightColumn = styled.div`
   flex: 1;
   max-width: 60%;
-  padding: 0 20px;
+  padding: 0 60px;
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -81,7 +81,7 @@ const StepNumber = styled.div`
   font-size: 33px;
   line-height: 1;
   font-weight: 700;
-  color: #fbc02d;
+  color: #6dc7d1;
   margin-right: 40px;
   position: absolute;
   top: 0;

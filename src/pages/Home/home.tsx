@@ -9,8 +9,8 @@ import CounterSection from "../CounterSection/counter";
 import { counterData } from "../../services/counter";
 import FeaturedSection from "../FeaturedSection/featured";
 import { featuredItems } from "../../services/featured";
-import AwardsCarousel from "../AwardsCarousel/awardscarousel";
-import { awardsData } from "../../services/awardcarousel";
+// import AwardsCarousel from "../AwardsCarousel/awardscarousel";
+// import { awardsData } from "../../services/awardcarousel";
 import ShareIdeasSection from "../IdeaSection/ideaSection";
 import { useNavigate } from "react-router-dom";
 
@@ -37,11 +37,11 @@ const Home: React.FC = () => {
       <Testimonials />
       <CounterSection data={counterData} />
       <FeaturedSection title="As featured in" featuredItems={featuredItems} />
-      <AwardsCarousel
+      {/* <AwardsCarousel
         title="Our Awards"
         subtitle="Proud to be connected with and recognized by the best in business."
         awards={awardsData}
-      />
+      /> */}
       <div>
         <ShareIdeasSection
           title="Get a free cover <span>design idea</span>"

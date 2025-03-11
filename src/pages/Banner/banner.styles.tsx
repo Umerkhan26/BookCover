@@ -23,8 +23,8 @@ export const Section = styled.section`
 
 export const BannerImage = styled.div`
   width: 100%;
-  height: 575px;
-  position: relative;
+ max-height: 650px;
+   position: relative;
   overflow: hidden;
 
   img {
@@ -57,7 +57,7 @@ export const Title = styled.h1`
   color: #e2f3f4;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 0px 29px;
-  font-size: 47px;
+  font-size: 52px;
   font-style: normal;
   line-height: 56px;
   font-style: normal;
@@ -115,7 +115,14 @@ export const Button = styled.a`
   background-color: transparent;
   cursor: pointer;
   text-decoration: none;
-
+  
+  &:hover {
+    color: #fff; /* Text color on hover */
+    // background-color: #00bcd4; /* Background color on hover */
+    // border-color: #00bcd4; /* Border color on hover */
+    // transform: scale(1.05); /* Slightly enlarge the button on hover */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+  }
   @media (max-width: 768px) {
     font-size: 0.9rem;
     padding: 8px 15px;

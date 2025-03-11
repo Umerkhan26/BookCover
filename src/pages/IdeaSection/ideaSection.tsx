@@ -130,7 +130,7 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
         </svg>
       </SvgBlock>
 
-      <SvgBlock className="top-right">
+      {/* <SvgBlock className="top-right">
         <svg width="99" height="97" viewBox="0 0 99 97" fill="none">
           <circle cx="1.40276" cy="32.7859" r="31.8231" stroke="#38555F" />
           <circle cx="66.0446" cy="32.7859" r="31.8231" stroke="#38555F" />
@@ -145,7 +145,7 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
             strokeMiterlimit="10"
           />
         </svg>
-      </SvgBlock>
+      </SvgBlock> */}
 
       {/* Content */}
       <Container className="container">

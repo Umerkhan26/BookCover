@@ -29,7 +29,7 @@ const footerData: FooterProps = {
       name: "Learn",
       links: [
         { href: "https://miblart.com/blog/", text: "Blog" },
-        { href: "https://miblart.com/miblacademy/", text: "Mibl Academy" },
+        { href: "https://miblart.com/miblacademy/", text: "Lumert Studio Academy" },
         {
           href: "https://miblart.com/subscribe-to-updates/",
           text: "Our Community",
@@ -40,7 +40,7 @@ const footerData: FooterProps = {
       name: "Partners",
       links: [
         { href: "https://miblart.com/resources/", text: "Useful Resources" },
-        { href: "https://miblart.com/for-partners/", text: "Partner with Us" },
+        { href: "/partner", text: "Partner with Us" },
       ],
     },
   ],

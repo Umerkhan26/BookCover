@@ -15,7 +15,7 @@ const AboutContent: React.FC<AboutContentProps> = ({
   There are so many stories in this world worth telling. Let us make sure yours gets the attention it deserves.`,
 }) => {
   return (
-    <div className="text-center max-w-2xl mx-auto mt-[-260px]">
+    <div className="text-center max-w-2xl mx-auto mt-[-490px]">
       <h2 className="text-xl font-semibold text-black">
         {title} <span className="text-[#6dc7d1]">{highlightedText}</span>
       </h2>

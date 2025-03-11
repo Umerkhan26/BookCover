@@ -18,6 +18,11 @@ export const Row = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
+  margin-top: 20px; /* Add space above the row to separate from the first row */
+  
+  @media (max-width: 600px) {
+    gap: 15px; /* Reduce gap for smaller screens */
+  }
 `;
 
 export const BenefitItemWrap = styled.div`
@@ -46,13 +51,16 @@ export const BenefitItem = styled.div`
   border-radius: 10px;
   border: 2px solid #6dc7d1; /* Green border */
   text-align: left;
-  height: 100%;
-  min-height: 150px;
+  height: 100%; /* Take up full height */
+  min-height: 250px; /* Ensure the height is sufficient */
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Make sure content is evenly spaced */
+  box-sizing: border-box; /* Ensure padding doesn't mess with box size */
 
   @media (max-width: 600px) {
     padding: 30px 20px; /* Adjust padding for smaller screens */
+    min-height: 200px; /* Ensure min height is appropriate for small screens */
   }
 `;
 
@@ -150,7 +158,8 @@ export const TextContainer = styled.div`
   flex: 1;
   max-width: 50%;
 
-   @media (max-width: 600px) {
+  @media (max-width: 600px) {
     max-width: 100%;
     text-align: center;
+  }
 `;

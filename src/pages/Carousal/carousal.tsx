@@ -3,7 +3,7 @@ import {
   MainContainer,
   TitleContainer,
   Title,
-  Subtitle,
+  // Subtitle,
   SliderContainer,
   SliderWrapper,
   Slide,
@@ -77,7 +77,7 @@ const Carousel = () => {
         <Title>
           Our <span>Portfolio</span>
         </Title>
-        <Subtitle>Enjoy the examples of our book cover portfolio</Subtitle>
+        {/* <Subtitle>Enjoy the examples of our book cover portfolio</Subtitle> */}
       </TitleContainer>
 
       <SliderContainer>

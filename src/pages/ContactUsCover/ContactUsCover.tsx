@@ -1,12 +1,12 @@
 import React from "react";
 import {
   ContentWrapper,
-  InnerCircle,
-  OrbitAnimationWrapper,
-  OrbitBall,
-  randomBallStyles,
-  RandomCircle,
-  RotatingOuterCircle,
+  // InnerCircle,
+  // OrbitAnimationWrapper,
+  // OrbitBall,
+  // randomBallStyles,
+  // RandomCircle,
+  // RotatingOuterCircle,
   Subtitle,
   Title,
 } from "./ContactUsCover.styles";
@@ -21,12 +21,12 @@ interface ContactUsCoverProps {
 const ContactUsCover: React.FC<ContactUsCoverProps> = ({
   title = "Contact Us",
   subtitle = `If you have any questions or simply want to say “Hi,” just do it! You may fill out the form below or mail us at `,
-  email = "team@miblart.com",
+  email = "myeraxon@gmail.com",
 }) => {
   return (
-    <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+    <div style={{ position: "relative", height: "100vh", overflow: "hidden"  }}>
       {/* Orbit Animation */}
-      <OrbitAnimationWrapper>
+      {/* <OrbitAnimationWrapper>
         <InnerCircle />
         <RotatingOuterCircle>
           {randomBallStyles.map((style, index) => (
@@ -39,9 +39,9 @@ const ContactUsCover: React.FC<ContactUsCoverProps> = ({
             />
           ))}
           {/* Static filled circle inside the rotating outer circle */}
-          <RandomCircle />
+          {/* <RandomCircle />
         </RotatingOuterCircle>
-      </OrbitAnimationWrapper>
+      </OrbitAnimationWrapper>  */}
 
       {/* Content Section */}
       <ContentWrapper>
