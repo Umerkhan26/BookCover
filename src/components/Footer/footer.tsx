@@ -263,33 +263,6 @@ const Footer: React.FC<FooterProps> = ({
           >
             Lumeart Studio is part of the Lumeart Group family of brands
           </span>
-
-          <RowLogo>
-            <a
-              href="https://getcovers.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                loading="lazy"
-                src="https://miblart.com/wp-content/uploads/2022/09/image_2022-09-07_13-17-50.png"
-                alt="Get Covers"
-                style={{ maxWidth: "150px", height: "25px" }}
-              />
-            </a>
-            <a
-              href="https://getpremades.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                loading="lazy"
-                src="https://miblart.com/wp-content/uploads/2024/05/Group-2705.svg"
-                alt="Get Premades"
-                style={{ maxWidth: "170px", height: "25px" }}
-              />
-            </a>
-          </RowLogo>
         </Container>
       </BotFooter>
     </>
