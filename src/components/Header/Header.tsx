@@ -43,9 +43,8 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.img`
-  height: 40px;
+  height: 35px;
   width: auto;
-  margin-right:50px;
   display: block;
 `;
 
