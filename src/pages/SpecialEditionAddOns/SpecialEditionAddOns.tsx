@@ -41,16 +41,35 @@ const addOns = [
 const SpecialEditionAddOns = () => {
   const navigate = useNavigate();
 
+  // const handleOrderNow = (packageId: string | undefined) => {
+  //   if (!packageId) {
+  //     console.error("🚨 Package ID is undefined! Cannot navigate.");
+  //     return;
+  //   }
+
+  //   console.log(`✅ Navigating to /order/${packageId}`);
+  //   navigate(`/order/${packageId}`);
+  // };
+  
   const handleOrderNow = (packageId: string | undefined) => {
+    const token = localStorage.getItem("token"); // Check if token exists
+  
+    if (!token) {
+      console.warn("🚨 No token found! Redirecting to login...");
+      localStorage.setItem("redirectAfterLogin", `/order/${packageId}`); // Store intended URL
+      navigate("/login");
+      return;
+    }
+  
     if (!packageId) {
       console.error("🚨 Package ID is undefined! Cannot navigate.");
       return;
     }
-
+  
     console.log(`✅ Navigating to /order/${packageId}`);
     navigate(`/order/${packageId}`);
   };
-
+  
   return (
     <AddOnsContainer>
       <Title>

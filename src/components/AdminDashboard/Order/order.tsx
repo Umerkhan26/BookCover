@@ -13,10 +13,24 @@ interface IOrder {
   _id: string;
   user: any; // Full user object from API
   package: any; // Full package object from API
-  addOns: string[];
+  addOns: any[]; // Full addOns array from API
   totalPrice: number;
   status: "Pending" | "Completed" | "Cancelled";
   paymentStatus: "Unpaid" | "Paid";
+  bookTitle: string;
+  bookSubtitle?: string;
+  authorName?: string;
+  genre: string;
+  seriesContinuation?: string;
+  summary?: string;
+  coverStyle?: string;
+  coverMood?: string;
+  colorPalette?: string;
+  examples?: string;
+  file?: string;
+  firstOrder?: boolean;
+  shareOnPortfolio?: boolean;
+  paymentMethod: string;
 }
 
 const Order: React.FC = () => {
@@ -24,9 +38,10 @@ const Order: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Modal state
+  // Modal states
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
+  const [selectedOtherInfo, setSelectedOtherInfo] = useState<any | null>(null);
 
   // Fetch orders on component mount
   useEffect(() => {
@@ -44,18 +59,23 @@ const Order: React.FC = () => {
     loadOrders();
   }, []);
 
-  // Handle opening modals for user and package
+  // Handle opening modals for user, package, and other info
   const handleUserClick = (user: any) => {
     setSelectedUser(user);
   };
 
-  const handlePackageClick = (pkg: any) => {
-    setSelectedPackage(pkg);
+  const handlePackageClick = (pkg: any, addOns: any[]) => {
+    setSelectedPackage({ ...pkg, addOns }); // Pass both the package and addOns to the modal
+  };
+
+  const handleOtherInfoClick = (order: any) => {
+    setSelectedOtherInfo(order); // Pass the order to display remaining details in the modal
   };
 
   // Close modals
   const closeUserModal = () => setSelectedUser(null);
   const closePackageModal = () => setSelectedPackage(null);
+  const closeOtherInfoModal = () => setSelectedOtherInfo(null);
 
   if (loading) return <div>Loading orders...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -71,6 +91,7 @@ const Order: React.FC = () => {
             <TableHeader>Package</TableHeader>
             <TableHeader>Total Price</TableHeader>
             <TableHeader>Status</TableHeader>
+            <TableHeader>OtherInfo</TableHeader> {/* New column for OtherInfo */}
             <TableHeader>Actions</TableHeader>
           </tr>
         </thead>
@@ -82,19 +103,24 @@ const Order: React.FC = () => {
                 <TableData>{order._id}</TableData>
                 <TableData
                   style={{ cursor: "pointer", color: "blue" }}
-                
                   onClick={() => handleUserClick(order.user)} // Pass full user object
                 >
-                  {order.user ? order.user : "No User"} {/* Display user's first name */}
+                  {order.user ? `${order.user.firstName} ${order.user.lastName}` : "No User"} {/* Display user's first and last name */}
                 </TableData>
                 <TableData
                   style={{ cursor: "pointer", color: "blue" }}
-                  onClick={() => handlePackageClick(order.package)} // Pass full package object
+                  onClick={() => handlePackageClick(order.package, order.addOns)} // Pass both package and addOns to modal
                 >
                   {order.package ? order.package.name : "No Package"} {/* Display package name */}
                 </TableData>
                 <TableData>${order.totalPrice}</TableData>
                 <TableData>{order.status}</TableData>
+                <TableData
+                  style={{ cursor: "pointer", color: "blue" }}
+                  onClick={() => handleOtherInfoClick(order)} // Pass order to show all other details
+                >
+                  Info {/* Display "Info" link for other details */}
+                </TableData>
                 <TableData>
                   <button>Delete</button>
                 </TableData>
@@ -102,7 +128,7 @@ const Order: React.FC = () => {
             ))
           ) : (
             <tr>
-              <TableData colSpan={6}>No orders found</TableData>
+              <TableData colSpan={7}>No orders found</TableData>
             </tr>
           )}
         </tbody>
@@ -141,6 +167,49 @@ const Order: React.FC = () => {
                 <li key={idx}>{feature}</li>
               ))}
             </ul>
+            <p>Free Features:</p>
+            <ul>
+              {selectedPackage.freeFeatures?.map((freeFeature: string, idx: number) => (
+                <li key={idx}>{freeFeature}</li>
+              ))}
+            </ul>
+
+            {/* AddOns */}
+            <h3>AddOns</h3>
+            {selectedPackage.addOns?.length > 0 ? (
+              <ul>
+                {selectedPackage.addOns.map((addon: any, idx: number) => (
+                  <li key={idx}>{addon.name} - ${addon.price}</li> // Display addon name and price
+                ))}
+              </ul>
+            ) : (
+              <p>No AddOns</p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* OtherInfo Modal */}
+      {selectedOtherInfo && (
+        <div className="modal">
+          <div className="modal-content">
+            <button className="close" onClick={closeOtherInfoModal}>
+              ×
+            </button>
+            <h2>Other Info</h2>
+            <p>Book Title: {selectedOtherInfo.bookTitle}</p>
+            <p>Book Subtitle: {selectedOtherInfo.bookSubtitle}</p>
+            <p>Author Name: {selectedOtherInfo.authorName}</p>
+            <p>Genre: {selectedOtherInfo.genre}</p>
+            <p>Summary: {selectedOtherInfo.summary}</p>
+            <p>Cover Style: {selectedOtherInfo.coverStyle}</p>
+            <p>Cover Mood: {selectedOtherInfo.coverMood}</p>
+            <p>Color Palette: {selectedOtherInfo.colorPalette}</p>
+            <p>Examples: {selectedOtherInfo.examples}</p>
+            <p>File: {selectedOtherInfo.file}</p>
+            <p>First Order: {selectedOtherInfo.firstOrder ? "Yes" : "No"}</p>
+            <p>Share on Portfolio: {selectedOtherInfo.shareOnPortfolio ? "Yes" : "No"}</p>
+            <p>Payment Method: {selectedOtherInfo.paymentMethod}</p>
           </div>
         </div>
       )}
