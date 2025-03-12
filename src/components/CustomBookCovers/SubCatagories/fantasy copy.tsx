@@ -176,7 +176,7 @@ const Fantasy: React.FC = () => {
           title="Get a free cover <span>design idea</span>"
           subtitle="We'll help you come up with ideas that work"
           buttonText="Get a free cover design idea"
-          buttonLink="https://miblart.com/cover-idea/"
+          buttonLink=""
         />
       </div>
       {selectedImage && (

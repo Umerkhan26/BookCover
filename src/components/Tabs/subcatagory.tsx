@@ -55,7 +55,7 @@ const SubCategoryContainer = styled.div`
   padding-left: 10px;
 
   & :hover {
-    color: #6dc7d1;
+    color: #c4c4c4;
   }
 
   /* Bottom line with padding */
@@ -74,10 +74,14 @@ const SubCategory = styled.button<Active>`
   padding: 8px 12px;
   border: none;
   border-radius: 5px;
-  color: black;
+  color: #000000;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease;
+
+  & :hover {
+    color: #c4c4c4;
+  }
 `;
 
 export default SubCategoryTabs;

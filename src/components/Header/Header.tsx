@@ -44,6 +44,7 @@ const Nav = styled.nav`
 
 const Logo = styled.img`
   height: 35px;
+  height: 35px;
   width: auto;
   margin-right:25px;
   display: block;
@@ -275,6 +276,7 @@ function Header() {
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
+    setIsServicesOpen(false);
   };
 
   const toggleServices = () => {
@@ -286,6 +288,7 @@ function Header() {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
+        setIsServicesOpen(false);
       }
     };
 
