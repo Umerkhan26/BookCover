@@ -8,7 +8,7 @@ import Footer, { FooterProps } from "./components/Footer/footer";
 const footerData: FooterProps = {
   partnerLogo: {
     href: "https://selfpublishingadvice.org/best-self-publishing-services",
-    src: "https://miblart.com/wp-content/uploads/2023/05/partner.svg",
+    src: "",
     alt: "Partner Logo",
   },
   categories: [
@@ -16,22 +16,25 @@ const footerData: FooterProps = {
       name: "Company",
       links: [
         {
-          href: "https://miblart.com/terms-and-conditions/",
+          href: "",
           text: "Terms & Conditions",
         },
-        { href: "https://miblart.com/faq/", text: "FAQs" },
-        { href: "https://miblart.com/testimonials/", text: "Testimonials" },
-        { href: "https://miblart.com/career/", text: "Career" },
-        { href: "https://miblart.com/privacy-policy/", text: "Privacy Policy" },
+        { href: "", text: "FAQs" },
+        { href: "", text: "Testimonials" },
+        { href: "", text: "Career" },
+        { href: "", text: "Privacy Policy" },
       ],
     },
     {
       name: "Learn",
       links: [
-        { href: "https://miblart.com/blog/", text: "Blog" },
-        { href: "https://miblart.com/miblacademy/", text: "Lumert Studio Academy" },
+        { href: "", text: "Blog" },
         {
-          href: "https://miblart.com/subscribe-to-updates/",
+          href: "",
+          text: "Lumert Studio Academy",
+        },
+        {
+          href: "",
           text: "Our Community",
         },
       ],
@@ -39,27 +42,27 @@ const footerData: FooterProps = {
     {
       name: "Partners",
       links: [
-        { href: "https://miblart.com/resources/", text: "Useful Resources" },
+        { href: "", text: "Useful Resources" },
         { href: "/partner", text: "Partner with Us" },
       ],
     },
   ],
   socialLinks: [
-    { href: "https://www.instagram.com/miblart", text: "Instagram" },
-    { href: "https://www.behance.net/Miblart", text: "Behance" },
-    { href: "https://www.facebook.com/Miblart", text: "Facebook" },
-    { href: "https://twitter.com/MIBLart", text: "Twitter" },
-    { href: "https://www.pinterest.com/miblart", text: "Pinterest" },
+    { href: "", text: "Instagram" },
+    { href: "", text: "Behance" },
+    { href: "", text: "Facebook" },
+    { href: "", text: "Twitter" },
+    { href: "", text: "Pinterest" },
   ],
   copyrightText: "© 2024 Lumeart Studio. All rights Reserved.",
   brandLogos: [
     {
-      src: "https://miblart.com/wp-content/uploads/2022/09/image_2022-09-07_13-17-50.png",
+      src: "",
       alt: "Get Covers",
       href: "https://getcovers.com/",
     },
     {
-      src: "https://miblart.com/wp-content/uploads/2024/05/Group-2705.svg",
+      src: "",
       alt: "Get Premades",
       href: "https://getpremades.com/",
     },

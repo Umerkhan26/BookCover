@@ -190,7 +190,7 @@ type Active = {
 const StyledTab = styled.button<Active>`
   font-size: 16px;
   font-weight: 600;
-  color: ${({ active }) => (active ? "#6dc7d1" : "#333")};
+  color: ${({ active }) => (active ? "#6dc7d1" : "grey")};
   background: none;
   display: flex;
   flex-wrap: wrap;
@@ -198,13 +198,13 @@ const StyledTab = styled.button<Active>`
   padding: 12px 20px;
   margin: 0 10px;
   cursor: pointer;
-  border-bottom: 3px solid
-    ${({ active }) => (active ? "#6dc7d1" : "transparent")};
-  transition: all 0.3s ease-in-out;
+  // border-bottom: 3px solid
+  //   ${({ active }) => (active ? "#6dc7d1" : "transparent")};
+  // transition: all 0.3s ease-in-out;
 
   &:hover {
     color: #6dc7d1;
-    border-bottom: 3px solid #6dc7d1;
+    // border-bottom: 3px solid #6dc7d1;
   }
 `;
 

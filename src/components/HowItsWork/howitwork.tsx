@@ -84,10 +84,7 @@ const HowItWorksSection: React.FC = () => {
         <WorksStep>
           <StepNumber>1</StepNumber>
           <StepImage>
-            <img
-              src="https://miblart.com/wp-content/themes/miblart/assets/images/11111.webp"
-              alt="Step 1"
-            />
+            <img src="" alt="Step 1" />
           </StepImage>
           <StepText>Fill out a brief</StepText>
         </WorksStep>

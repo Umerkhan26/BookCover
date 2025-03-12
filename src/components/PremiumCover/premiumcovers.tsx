@@ -122,8 +122,8 @@ const ModalContent = styled.div`
 
 const ModalImage = styled.img`
   width: 100%;
-  min-width: 380px;
-  height: 450px;
+  min-width: 430px;
+  height: 525px;
   border-radius: 10px;
 
   // Reduce image size in preview mode
@@ -224,7 +224,7 @@ const PremiumCover: React.FC = () => {
           title="Get a free cover <span>design idea</span>"
           subtitle="We'll help you come up with ideas that work"
           buttonText="Get a free cover design idea"
-          buttonLink="https://miblart.com/cover-idea/"
+          buttonLink=""
         />
       </div>
 
