@@ -207,7 +207,7 @@ export const fetchAllOrders = async (): Promise<any> => {
   try {
     // Make the GET request to the API to fetch all orders
     const response = await axios.get(`${API_BASE_URL}/getAllorders`); // Endpoint to fetch all orders
-
+console.log("respomse from all orders api",response)
     return response.data.orders; // Return the fetched orders
   } catch (error) {
     console.error("Error fetching all orders:", error);

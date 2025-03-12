@@ -7,7 +7,7 @@ export const ContactFormWrapper = styled.div`
   background: #fff;
   border-radius: 8px;
   margin-right:230px;
-  margin-top: -390px;
+  margin-top: -180px;
   margin-bottom: 60px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;

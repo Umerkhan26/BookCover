@@ -30,7 +30,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 60px;
+  padding: 20px 40px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: "Manrope", sans-serif;
@@ -43,9 +43,9 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.img`
-  height: 40px;
+  height: 35px;
   width: auto;
-  margin-right:50px;
+  margin-right:25px;
   display: block;
 `;
 

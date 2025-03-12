@@ -10,7 +10,9 @@ const Reviews = () => {
           </h2>
         </div>
         <div>
-          <Button className="mb-4">Leave A Review</Button>
+          <a href="https://www.facebook.com/YourPageName/reviews" target="_blank" rel="noopener noreferrer">
+            <Button className="mb-4">Leave A Review</Button>
+          </a>
         </div>
         <ReviewsWrapper>
           <CardsWrapper>
