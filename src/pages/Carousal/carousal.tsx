@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MainContainer,
   TitleContainer,
   Title,
-  // Subtitle,
   SliderContainer,
   SliderWrapper,
   Slide,
@@ -32,15 +31,37 @@ import img9 from "../../assets/Slider/img9.jpg";
 import img10 from "../../assets/Slider/img10.jpg";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
-const imagesPerRow = 5;
 const imageWidth = 220;
 const gap = 15;
-const slideWidth = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+  const [imagesPerRow, setImagesPerRow] = useState(5);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 576) {
+        setImagesPerRow(1); // Only one image on small screens
+      } else if (window.innerWidth < 768) {
+        setImagesPerRow(2);
+      } else if (window.innerWidth < 992) {
+        setImagesPerRow(3);
+      } else if (window.innerWidth < 1200) {
+        setImagesPerRow(4);
+      } else {
+        setImagesPerRow(5); // Default for larger screens
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Set initial value
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const totalSlides = Math.ceil(images.length / imagesPerRow);
+  const slideWidth = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
   const translateX = -currentIndex * slideWidth;
 
   const handleNext = () => {
@@ -77,11 +98,13 @@ const Carousel = () => {
         <Title>
           Our <span>Portfolio</span>
         </Title>
-        {/* <Subtitle>Enjoy the examples of our book cover portfolio</Subtitle> */}
       </TitleContainer>
 
       <SliderContainer>
-        <SliderWrapper style={{ transform: `translateX(${translateX}px)` }}>
+        <SliderWrapper
+          imagesPerRow={imagesPerRow}
+          style={{ transform: `translateX(${translateX}px)` }}
+        >
           {Array.from({ length: totalSlides }).map((_, slideIndex) => (
             <Slide key={slideIndex}>
               {images

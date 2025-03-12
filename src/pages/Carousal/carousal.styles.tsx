@@ -1,8 +1,10 @@
 import styled from "styled-components";
-const imagesPerRow = 5;
+
 const imageWidth = 220;
 const gap = 15;
-const slideWidth = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
+// const imageWidth = 220;
+// const gap = 15;
+// const slideWidth = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
 
 export const MainContainer = styled.div`
   display: flex;
@@ -35,7 +37,7 @@ export const Title = styled.h1`
   font-size: 2.5rem;
   color: #333;
   margin: 0;
-  margin-left: 24px;
+  margin-left: 60px;
 
   span {
     color: #6dc7d1;
@@ -62,36 +64,44 @@ export const Subtitle = styled.p`
 
 export const SliderContainer = styled.div`
   position: relative;
-  width: ${slideWidth}px;
+  width: 100%;
+  max-width: ${imageWidth * 5 + gap * 4}px; // Default for larger screens
   overflow: hidden;
   border-radius: 10px;
+  margin: 0 auto;
 
   @media (max-width: 1200px) {
-    width: ${imageWidth * 4 + gap * 3}px;
+    max-width: ${imageWidth * 4 + gap * 3}px;
   }
 
   @media (max-width: 992px) {
-    width: ${imageWidth * 3 + gap * 2}px;
+    max-width: ${imageWidth * 3 + gap * 2}px;
   }
 
   @media (max-width: 768px) {
-    width: ${imageWidth * 2 + gap}px;
+    max-width: ${imageWidth * 2 + gap}px;
   }
 
   @media (max-width: 576px) {
-    width: ${imageWidth}px;
+    max-width: ${imageWidth}px; // Only one image on small screens
   }
-`;
-
-export const SliderWrapper = styled.div`
-  display: flex;
-  transition: transform 0.5s ease-in-out;
 `;
 
 export const Slide = styled.div`
   display: flex;
   gap: ${gap}px;
   flex-shrink: 0;
+`;
+
+interface SliderWrapperProps {
+  imagesPerRow: number;
+}
+
+export const SliderWrapper = styled.div<SliderWrapperProps>`
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: ${({ imagesPerRow }) =>
+    imagesPerRow * imageWidth + (imagesPerRow - 1) * gap}px;
 `;
 
 export const Image = styled.img`
@@ -106,11 +116,10 @@ export const Image = styled.img`
   }
 
   @media (max-width: 576px) {
-    width: 100%;
+    width: 100%; // Full width on small screens
     height: 150px;
   }
 `;
-
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;

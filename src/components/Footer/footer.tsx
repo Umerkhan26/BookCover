@@ -102,7 +102,7 @@ const FooterNav = styled.div`
 
 const FooterCategoryWrapper = styled.div`
   margin: 0 1rem;
-  text-align: center;
+  text-align: left;
 `;
 
 const FooterList = styled.ul`
@@ -139,18 +139,18 @@ const BotFooter = styled.div`
   text-align: center;
 `;
 
-// const RowLogo = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   flex-wrap: wrap;
-//   margin-top: 20px;
-//   gap: 60px;
-//   align-items: center;
+const RowLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 60px;
+  align-items: center;
 
-//   @media (max-width: 768px) {
-//     gap: 30px;
-//   }
-// `;
+  @media (max-width: 768px) {
+    gap: 30px;
+  }
+`;
 
 const Logo = styled.img`
   height: 55px;
@@ -196,17 +196,20 @@ const Footer: React.FC<FooterProps> = ({
                   </FooterList>
                 </FooterCategoryWrapper>
               ))}
-              {/* Social Links */}
+            </FooterNav>
+            <Row>
               <SocialNetwork
                 style={{
                   display: "flex",
                   flexDirection: "column",
+                  alignItems: "center",
+                  width: "100%",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "start",
+                    justifyContent: "center",
                     gap: "10px",
                     marginTop: "10px",
                   }}
@@ -243,8 +246,9 @@ const Footer: React.FC<FooterProps> = ({
                 {/* Copyright Text */}
                 <FooterNote>{copyrightText}</FooterNote>
               </SocialNetwork>
-            </FooterNav>
+            </Row>
           </Row>
+          {/* Social Links and Copyright Text */}
         </Container>
       </FooterContainer>
 
@@ -263,33 +267,6 @@ const Footer: React.FC<FooterProps> = ({
           >
             Lumeart Studio is part of the Lumeart Group family of brands
           </span>
-
-          {/* <RowLogo>
-            <a
-              href="https://getcovers.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                loading="lazy"
-                src="https://miblart.com/wp-content/uploads/2022/09/image_2022-09-07_13-17-50.png"
-                alt="Get Covers"
-                style={{ maxWidth: "150px", height: "25px" }}
-              />
-            </a>
-            <a
-              href="https://getpremades.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                loading="lazy"
-                src="https://miblart.com/wp-content/uploads/2024/05/Group-2705.svg"
-                alt="Get Premades"
-                style={{ maxWidth: "170px", height: "25px" }}
-              />
-            </a>
-          </RowLogo> */}
         </Container>
       </BotFooter>
     </>

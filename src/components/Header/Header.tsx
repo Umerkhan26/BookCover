@@ -274,6 +274,7 @@ function Header() {
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
+    setIsServicesOpen(false);
   };
 
   const toggleServices = () => {
@@ -285,6 +286,7 @@ function Header() {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
+        setIsServicesOpen(false);
       }
     };
 
