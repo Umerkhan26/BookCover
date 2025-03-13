@@ -57,6 +57,9 @@ import Admin from "../pages/Admin/admin";
 import User from "../components/AdminDashboard/user";
 import Order from "../components/AdminDashboard/Order/order";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
+import { TestimonialDescription } from "../pages/Testimonial/testimonial.styles";
+import Testimonials from "../pages/Testimonial/testimonial";
+import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
@@ -100,6 +103,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/contactUs" element={<ContactUs />} />
         <Route path="/partner" element={<Partner />} />
         <Route path="/FAQs" element={<FAQ />} />
+        <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
         <Route path="/GetACover" element={<GetACover />} />
         <Route path="/services" element={<Services />} />
         <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
