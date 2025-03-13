@@ -113,7 +113,7 @@ const Packages: React.FC = () => {
       <PackageTitle>
         Our <span className="text-[#6dc7d1]">Packages</span>
       </PackageTitle>
-
+  
       {loading ? (
         <p>Loading packages...</p>
       ) : error ? (
@@ -122,40 +122,51 @@ const Packages: React.FC = () => {
         <div className="packages-wrapper">
           {packagesData.map((pkg, index) => (
             <PackageCard key={pkg.id || index}>
-              <h3 className="font-bold text-3xl text-black">{pkg.name}</h3>
-              <Price>${pkg.price}</Price>
-
-              <div className="content-wrapper">
-                {/* Debug: Check Features Data */}
-                <ul className="features-list">
-                  {pkg.features.length > 0 ? (
-                    pkg.features.map((feature, idx) => (
-                      <li key={idx}>
-                        <span className="checkmark">✔</span> {feature}
-                      </li>
-                    ))
-                  ) : (
-                    <li>No features available.</li>
-                  )}
-                </ul>
-
-                {/* Debug: Check Free Features Data */}
-                <div className="free-addons">
-                  <p className="free-title">FREE OF CHARGE</p>
-                  <ul>
-                    {pkg.freeFeatures.length > 0 ? (
-                      pkg.freeFeatures.map((addon, idx) => (
-                        <li key={idx}>
-                          <span className="checkmark">✔</span> {addon}
-                        </li>
-                      ))
-                    ) : (
-                      <li>No free features available.</li>
-                    )}
-                  </ul>
-                </div>
+              {/* Title and Price in the same row */}
+              <div className="title-price">
+                <h3 style={{ fontSize: "15px" }} className="text-black">{pkg.name}</h3>
+                <Price style={{ fontSize: "18px" }}>${pkg.price}</Price> {/* Aligned price to the right of the title */}
               </div>
+  
+              <div className="content-wrapper" style={{ display: "flex", justifyContent: "flex-start" }}>
+  {/* Features List */}
+  <ul className="features-list" style={{ marginRight: "20px" }}>
+    {pkg.features.length > 0 ? (
+      pkg.features.map((feature, idx) => (
+        <li key={idx}>
+          <span className="checkmark">✔</span> {feature}
+        </li>
+      ))
+    ) : (
+      <li>No features available.</li>
+    )}
+  </ul>
 
+  {/* Free Features with Border */}
+  <div className="free-addons " style={{
+    // border: "2px solid #6dc7d1",  // Light blue border
+    borderRadius: "8px",          // Rounded corners
+    padding: "15px",              // Padding inside the box
+    marginTop: "0",               // Ensure there is no margin-top
+    marginLeft: "-19px",           // Optional: Add margin to separate from the features list
+    // backgroundColor: "#f9fafb"    // Light background color for contrast
+  }}>
+    <p className="free-title" style={{ fontWeight: "bold", marginBottom: "8px" }}>FREE OF CHARGE</p>
+    <ul>
+      {pkg.freeFeatures.length > 0 ? (
+        pkg.freeFeatures.map((addon, idx) => (
+          <li key={idx}>
+            <span className="checkmark">✔</span> {addon}
+          </li>
+        ))
+      ) : (
+        <li>No free features available.</li>
+      )}
+    </ul>
+  </div>
+</div>
+
+  
               {/* Debug: Check Concept Pricing Data */}
               <AddOns>
                 <div className="addons-options">
@@ -167,7 +178,7 @@ const Packages: React.FC = () => {
                           name={`concept-${index}`} 
                           id={`concept${conceptIdx}-${index}`} 
                         />
-                        <label htmlFor={`concept${conceptIdx}-${index}`}>
+                        <label className="ml-2" htmlFor={`concept${conceptIdx}-${index}`}>
                           {concept.conceptCount} concept{concept.conceptCount > 1 ? 's' : ''}
                           {concept.additionalPrice > 0 && ` (+$${concept.additionalPrice})`}
                         </label>
@@ -178,7 +189,7 @@ const Packages: React.FC = () => {
                   )}
                 </div>
               </AddOns>
-
+  
               <OrderButton onClick={() => handleOrderNow(pkg.id)}>Order Now</OrderButton>
             </PackageCard>
           ))}
@@ -188,6 +199,7 @@ const Packages: React.FC = () => {
       )}
     </PackageContainer>
   );
+  
 };
 
 export default Packages;

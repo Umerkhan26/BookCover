@@ -18,16 +18,17 @@ export const Row = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
+  min-height: 190px;
   margin-top: 20px; /* Add space above the row to separate from the first row */
-  
+padding: 40px 25px;
   @media (max-width: 600px) {
     gap: 15px; /* Reduce gap for smaller screens */
   }
 `;
 
 export const BenefitItemWrap = styled.div`
-  flex: 1 1 48%;
-  max-width: 48%;
+  flex: 1 1 48%; /* This allows for flexible items with equal widths */
+  max-width: 48%; /* Adjusts to 48% to have 2 cards per row */
 
   @media (min-width: 768px) {
     flex: 1 1 30%;
@@ -51,22 +52,27 @@ export const BenefitItem = styled.div`
   border-radius: 10px;
   border: 2px solid #6dc7d1; /* Green border */
   text-align: left;
-  height: 100%; /* Take up full height */
-  min-height: 250px; /* Ensure the height is sufficient */
+  height: 100%; /* Ensure the height is consistent */
+  min-height: 190px; /* Ensure minimum height for all cards */
   display: flex;
+  gap:10px;
   flex-direction: column;
   justify-content: space-between; /* Make sure content is evenly spaced */
   box-sizing: border-box; /* Ensure padding doesn't mess with box size */
+  /* Ensure equal height for all cards */
+  // flex-grow: 1;
+  margin-left:-16px;
 
   @media (max-width: 600px) {
     padding: 30px 20px; /* Adjust padding for smaller screens */
-    min-height: 200px; /* Ensure min height is appropriate for small screens */
+    min-height: 250px; /* Ensure min height is appropriate for small screens */
   }
 `;
 
 export const BenefitItems = styled.div`
   background: #fff;
   padding: 20px;
+  padding: 40px 25px;
   border-radius: 10px;
   border: 2px solid #6dc7d1; /* Green border */
   text-align: left;
@@ -121,7 +127,7 @@ export const BenefitSubtitle = styled.div`
 `;
 
 export const SectionTitle = styled.h2`
-  font-size: 34px;
+  font-size: 27px;
   font-weight: bold;
   color: #25293f;
   position: relative;
@@ -145,8 +151,10 @@ export const FirstRow = styled.div`
   display: flex;
   align-items: center; /* Center align items */
   justify-content: space-between;
-  gap: 20px;
+  gap: 60px;
   margin-bottom: 20px;
+  margin-left:29px;
+  padding: 10px 25px;
 
   @media (max-width: 600px) {
     flex-direction: column;
