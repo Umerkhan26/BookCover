@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Button, CheckboxWrapper, ContactFormWrapper, Form, Input, Label, Textarea, Title } from "./ContactUsForm.styles";
 import { submitContactFormAPI } from "../../apis/apis";  // Import the API function
+import { toast, ToastContainer } from "react-toastify"; // Import react-toastify
+
+// Import css for react-toastify
+import "react-toastify/dist/ReactToastify.css"; 
 
 const ContactUsForm: React.FC = () => {
   // State to handle form inputs
@@ -10,8 +14,6 @@ const ContactUsForm: React.FC = () => {
   const [referral, setReferral] = useState("");
   const [message, setMessage] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   // Handle form input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,7 +35,7 @@ const ContactUsForm: React.FC = () => {
     e.preventDefault();
 
     if (!firstName || !lastName || !email || !message || !isAgreed) {
-      setError("Please fill in all required fields and agree to the terms.");
+      toast.error("Please fill in all required fields and agree to the terms.");
       return;
     }
 
@@ -48,8 +50,7 @@ const ContactUsForm: React.FC = () => {
     try {
       const response = await submitContactFormAPI(contactData);
       console.log(response)
-      setSuccess("Your message has been sent successfully.");
-      setError(null);  // Clear any previous errors
+      toast.success("Your message has been sent successfully.");
       // Reset form after successful submission
       setFirstName("");
       setLastName("");
@@ -58,8 +59,7 @@ const ContactUsForm: React.FC = () => {
       setMessage("");
       setIsAgreed(false);
     } catch (err) {
-      setError("Failed to send message. Please try again later.");
-      setSuccess(null);  // Clear any previous success messages
+      toast.error("Failed to send message. Please try again later.");
     }
   };
 
@@ -127,13 +127,12 @@ const ContactUsForm: React.FC = () => {
               .
             </span>
           </CheckboxWrapper>
-          <Button type="submit">Send message</Button>
+          <Button type="submit">Submit</Button>
         </Form>
-        {/* Display Error Message */}
-        {error && <div style={{ color: "red" }}>{error}</div>}
-        {/* Display Success Message */}
-        {success && <div style={{ color: "green" }}>{success}</div>}
       </ContactFormWrapper>
+
+      {/* Toast container should be outside the form */}
+      <ToastContainer />
     </div>
   );
 };

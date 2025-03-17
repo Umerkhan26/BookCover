@@ -331,7 +331,7 @@ const OrderForm: React.FC = () => {
           {/* Left Checkout Section */}
           <CheckoutLeft>
             <Navbar>
-              <NavbarBrand href="https://client.miblart.com">Mibl</NavbarBrand>
+              <NavbarBrand href="">Lumeart Studio</NavbarBrand>
             </Navbar>
 
             <Intro>

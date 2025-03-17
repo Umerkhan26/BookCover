@@ -60,6 +60,8 @@ import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
 import { TestimonialDescription } from "../pages/Testimonial/testimonial.styles";
 import Testimonials from "../pages/Testimonial/testimonial";
 import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
+import AdminCoverIdeas from "../pages/adminCoverIdeas/AdminCoverIdea.styles";
+import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
@@ -159,6 +161,9 @@ const AppRoutes: React.FC = () => {
         {/* Use relative path for nested routes */}
         <Route path="users" element={<User />} />
         <Route path="orders" element={<Order />} />
+        <Route path="coverIdeas" element={<AdminCoverIdea />} />
+
+
       </Route>
     </Routes>
   );

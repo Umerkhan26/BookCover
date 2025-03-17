@@ -3,6 +3,8 @@ import styled from "styled-components";
 import BannerSection from "../Banner/getcoverbaner";
 import HowItWorksSection from "../../components/HowItsWork/howitwork";
 import { createBookRequest } from "../../apis/apis"; // Adjust the path to your API function
+import { toast, ToastContainer } from "react-toastify";  // Import react-toastify
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for Toast
 
 const FormContainer = styled.div`
   max-width: 600px;
@@ -69,7 +71,7 @@ const StyledTextArea = styled.textarea`
 
 const StyledButton = styled.button`
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #6dc7d1;
   color: white;
   border: none;
   border-radius: 4px;
@@ -77,7 +79,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #6dc7d1;
   }
 `;
 
@@ -96,7 +98,7 @@ const CheckboxContainer = styled.div`
     color: #666;
 
     a {
-      color: #007bff;
+      color:#6dc7d1;
       text-decoration: underline;
     }
   }
@@ -168,10 +170,10 @@ const BookCoverForm: React.FC = () => {
     try {
       const response = await createBookRequest(bookRequestData);
       console.log("submitted successfully",response)
-    alert("Book request created successfully!");
+      toast.success("Book cover request submitted successfully!");
       // Reset the form or show success message here
-    } catch (error) {
-      console.error("Error creating book request:", error);
+    } catch (err) {
+      toast.error("Failed to submit the book cover request. Please try again later.");
     }
   };
 
@@ -186,7 +188,7 @@ const BookCoverForm: React.FC = () => {
           * This is not an order form. If you want to order a cover design,
           choose your package{" "}
           <a
-            href="https://miblart.com/services/"
+            href="/book-cover-form"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -304,9 +306,10 @@ const BookCoverForm: React.FC = () => {
             className="g-recaptcha"
             data-sitekey="6LdePgsaAAAAAKe7WUNTkvXyiCH7kX69eG2kQTSj"
           ></div>
-          <StyledButton type="submit">Send message</StyledButton>
+          <StyledButton type="submit">Submit</StyledButton>
         </StyledForm>
       </FormContainer>
+      <ToastContainer />
     </>
   );
 };
