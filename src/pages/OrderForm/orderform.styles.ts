@@ -37,7 +37,7 @@ export const Navbar = styled.div`
 export const NavbarBrand = styled.a`
   font-size: 24px;
   font-weight: bold;
-  color: #007bff;
+  color: #6dc7d1;
   text-decoration: none;
 `;
 

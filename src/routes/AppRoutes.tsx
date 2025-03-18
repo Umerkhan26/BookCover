@@ -57,10 +57,8 @@ import Admin from "../pages/Admin/admin";
 import User from "../components/AdminDashboard/user";
 import Order from "../components/AdminDashboard/Order/order";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
-import { TestimonialDescription } from "../pages/Testimonial/testimonial.styles";
-import Testimonials from "../pages/Testimonial/testimonial";
+// import Testimonials from "../pages/Testimonial/testimonial";
 import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
-import AdminCoverIdeas from "../pages/adminCoverIdeas/AdminCoverIdea.styles";
 import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {

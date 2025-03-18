@@ -1,6 +1,252 @@
+// import { useEffect, useState } from "react";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import { getPackagesByPageAPI } from "../../apis/apis";
+// import {
+//   PackageCard,
+//   PackageContainer,
+//   PackageTitle,
+//   Price,
+//   AddOns,
+//   OrderButton,
+// } from "./packages.styles";
+
+// interface Package {
+//   id?: string;
+//   _id?: string;
+//   name: string;
+//   price: number;
+//   features: string[];
+//   freeFeatures: string[];
+//   conceptPricing: { conceptCount: number; additionalPrice: number }[];
+//   page: string;
+// }
+
+// const Packages: React.FC = () => {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const [packagesData, setPackagesData] = useState<Package[]>([]);
+//   const [loading, setLoading] = useState<boolean>(true);
+//   const [error, setError] = useState<string | null>(null);
+//   const [selectedConcepts, setSelectedConcepts] = useState<{ [key: string]: number[] }>({}); // Track selected concepts (packageId -> concept indexes)
+//   const [totalPrice, setTotalPrice] = useState<number>(0); // Total price with package + selected concepts
+
+//   // Extract the page name from the URL path (e.g., "/fictionCover" -> "fictionCover")
+//   const pageName = location.pathname.split("/").pop() || "";
+
+//   useEffect(() => {
+//     const fetchPackages = async () => {
+//       if (!pageName) {
+//         setError("Page name is missing from the URL");
+//         setLoading(false);
+//         return;
+//       }
+
+//       try {
+//         console.log("Fetching packages for page:", pageName);
+//         const response = await getPackagesByPageAPI(pageName);
+
+//         if (!response || !Array.isArray(response)) {
+//           throw new Error("Invalid API response: Expected an array");
+//         }
+
+//         console.log("Fetched packages:", response);
+
+//         const mappedPackages = response
+//           .filter(pkg => pkg.page === pageName) // Filter based on page name
+//           .map((pkg, index) => {
+//             const packageId = pkg.id || pkg._id;
+//             if (!packageId) {
+//               console.warn(`Warning: Package at index ${index} is missing an ID`, pkg);
+//             }
+//             return { ...pkg, id: packageId };
+//           });
+
+//         setPackagesData(mappedPackages);
+//       } catch (error) {
+//         console.error("Error fetching packages:", error);
+//         setError("Failed to load packages. Please try again later.");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchPackages();
+//   }, [pageName]);
+
+//   // Handle concept selection and update the total price
+//   const handleConceptChange = (packageId: string, conceptIdx: number, additionalPrice: number) => {
+//     const updatedConcepts = { ...selectedConcepts };
+
+//     // Initialize array for packageId if it doesn't exist
+//     if (!updatedConcepts[packageId]) {
+//       updatedConcepts[packageId] = [];
+//     }
+
+//     // Handle selecting and deselecting concepts
+//     if (updatedConcepts[packageId].includes(conceptIdx)) {
+//       updatedConcepts[packageId] = updatedConcepts[packageId].filter(idx => idx !== conceptIdx); // Remove the concept
+//     } else {
+//       updatedConcepts[packageId].push(conceptIdx); // Add the selected concept
+//     }
+
+//     // Calculate the total price based on selected concepts
+//     const selectedPackage = packagesData.find(pkg => pkg.id === packageId);
+//     let newTotalPrice = selectedPackage?.price || 0;
+
+//     // Loop through selected concepts for this package
+//     updatedConcepts[packageId].forEach(conceptIdx => {
+//       if (selectedPackage && selectedPackage.conceptPricing[conceptIdx]) {
+//         const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
+//         if (selectedConcept.additionalPrice > 0) {
+//           newTotalPrice += selectedConcept.additionalPrice; // Add the concept price if it's not free
+//         }
+//       }
+//     });
+
+//     setSelectedConcepts(updatedConcepts);
+//     setTotalPrice(newTotalPrice); // Update the total price
+//   };
+
+//   // Handle order now with updated price
+// // Handle order now with updated price
+// const handleOrderNow = (packageId: string | undefined) => {
+//   const token = localStorage.getItem("token"); // Check if token exists
+
+//   if (!token) {
+//     console.warn("🚨 No token found! Redirecting to login...");
+//     localStorage.setItem("redirectAfterLogin", `/order/${packageId}`); // Store intended URL
+//     navigate("/login");
+//     return;
+//   }
+
+//   if (!packageId) {
+//     console.error("🚨 Package ID is undefined! Cannot navigate.");
+//     return;
+//   }
+
+//   const selectedPackage = packagesData.find(pkg => pkg.id === packageId);
+
+//   if (!selectedPackage) {
+//     console.error("Package not found.");
+//     return;
+//   }
+
+//   let finalPrice = selectedPackage.price; // Start with the base package price
+
+//   // Loop through selected concepts for this package and add additional prices
+//   const selectedConceptsForPackage = selectedConcepts[packageId] || [];
+//   selectedConceptsForPackage.forEach(conceptIdx => {
+//     const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
+//     if (selectedConcept && selectedConcept.additionalPrice > 0) {
+//       finalPrice += selectedConcept.additionalPrice; // Add concept price if it's not free
+//     }
+//   });
+
+//   console.log(`✅ Navigating to /order/${packageId} with total price: $${finalPrice}`);
+  
+//   // Pass total price along with the package ID to the order page
+//   navigate(`/order/${packageId}`, { state: { totalPrice: finalPrice } });
+// };
+
+
+//   return (
+//     <PackageContainer>
+//       <PackageTitle>
+//         Our <span className="text-[#6dc7d1]">Packages</span>
+//       </PackageTitle>
+  
+//       {loading ? (
+//         <p>Loading packages...</p>
+//       ) : error ? (
+//         <p className="text-red-500">{error}</p>
+//       ) : packagesData.length > 0 ? (
+//         <div className="packages-wrapper">
+//           {packagesData.map((pkg, index) => (
+//             <PackageCard key={pkg.id || index}>
+//               {/* Title and Price in the same row */}
+//               <div className="title-price">
+//                 <h3 style={{ fontSize: "15px" }} className="text-black">{pkg.name}</h3>
+//                 <Price style={{ fontSize: "18px" }}>${pkg.price}</Price>
+//               </div>
+  
+//               <div className="content-wrapper" style={{ display: "flex", justifyContent: "flex-start" }}>
+//                 <ul className="features-list" style={{ marginRight: "20px" }}>
+//                   {pkg.features.length > 0 ? (
+//                     pkg.features.map((feature, idx) => (
+//                       <li key={idx}>
+//                         <span className="checkmark">✔</span> {feature}
+//                       </li>
+//                     ))
+//                   ) : (
+//                     <li>No features available.</li>
+//                   )}
+//                 </ul>
+  
+//                 <div className="free-addons " style={{
+//                   borderRadius: "8px",
+//                   padding: "15px",
+//                   marginTop: "0",
+//                   marginLeft: "-19px",
+//                 }}>
+//                   <p className="free-title" style={{ fontWeight: "bold", marginBottom: "8px" }}>FREE OF CHARGE</p>
+//                   <ul>
+//                     {pkg.freeFeatures.length > 0 ? (
+//                       pkg.freeFeatures.map((addon, idx) => (
+//                         <li key={idx}>
+//                           <span className="checkmark">✔</span> {addon}
+//                         </li>
+//                       ))
+//                     ) : (
+//                       <li>No free features available.</li>
+//                     )}
+//                   </ul>
+//                 </div>
+//               </div>
+  
+//               <AddOns>
+//                 <div className="addons-options">
+//                   {pkg.conceptPricing.length > 0 ? (
+//                     pkg.conceptPricing.map((concept, conceptIdx) => (
+//                       <div key={conceptIdx}>
+//                         <input 
+//                           type="checkbox"
+//                           checked={selectedConcepts[pkg.id || ""]?.includes(conceptIdx) || false}
+//                           onChange={() => handleConceptChange(pkg.id || "", conceptIdx, concept.additionalPrice)}
+//                           id={`concept${conceptIdx}-${index}`} 
+//                         />
+//                         <label className="ml-2" htmlFor={`concept${conceptIdx}-${index}`}>
+//                           {concept.conceptCount} concept{concept.conceptCount > 1 ? 's' : ''}
+//                           {concept.additionalPrice > 0 && ` (+$${concept.additionalPrice})`}
+//                         </label>
+//                       </div>
+//                     ))
+//                   ) : (
+//                     <p>No concept pricing available.</p>
+//                   )}
+//                 </div>
+//               </AddOns>
+  
+//               <OrderButton onClick={() => handleOrderNow(pkg.id)}>Order Now</OrderButton>
+//             </PackageCard>
+//           ))}
+//         </div>
+//       ) : (
+//         <p>No packages found for this category.</p>
+//       )}
+//     </PackageContainer>
+//   );
+// };
+
+// export default Packages;
+
+
+
+
+
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getPackagesByPageAPI } from "../../apis/apis";
+import LoginModal from "../../components/Login/LoginModel"; // Import the modal
 import {
   PackageCard,
   PackageContainer,
@@ -27,6 +273,9 @@ const Packages: React.FC = () => {
   const [packagesData, setPackagesData] = useState<Package[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedConcepts, setSelectedConcepts] = useState<{ [key: string]: number[] }>({}); // Track selected concepts (packageId -> concept indexes)
+  const [totalPrice, setTotalPrice] = useState<number>(0); // Total price with package + selected concepts
+  const [showLoginModal, setShowLoginModal] = useState(false); // State for showing login modal
 
   // Extract the page name from the URL path (e.g., "/fictionCover" -> "fictionCover")
   const pageName = location.pathname.split("/").pop() || "";
@@ -71,49 +320,93 @@ const Packages: React.FC = () => {
     fetchPackages();
   }, [pageName]);
 
-  // const handleOrderNow = (packageId: string | undefined) => {
-  //   if (!packageId) {
-  //     console.error("🚨 Package ID is undefined! Cannot navigate.");
-  //     return;
-  //   }
+  const handleLoginSuccess = (token: string) => {
+    localStorage.setItem("token", token);
+    setShowLoginModal(false);
+    // navigateToOrderPage(selectedPackageId as string); // Navigate to the order page with the selected package
+  };
 
-  //   console.log(`✅ Navigating to /order/${packageId}`);
-  //   navigate(`/order/${packageId}`);
-  // };
+  // Handle concept selection and update the total price
+  const handleConceptChange = (packageId: string, conceptIdx: number) => {
+    const updatedConcepts = { ...selectedConcepts };
 
+    // Initialize array for packageId if it doesn't exist
+    if (!updatedConcepts[packageId]) {
+      updatedConcepts[packageId] = [];
+    }
+
+    // Handle selecting and deselecting concepts
+    if (updatedConcepts[packageId].includes(conceptIdx)) {
+      updatedConcepts[packageId] = updatedConcepts[packageId].filter(idx => idx !== conceptIdx); // Remove the concept
+    } else {
+      updatedConcepts[packageId].push(conceptIdx); // Add the selected concept
+    }
+
+    // Calculate the total price based on selected concepts
+    const selectedPackage = packagesData.find(pkg => pkg.id === packageId);
+    let newTotalPrice = selectedPackage?.price || 0;
+
+    // Loop through selected concepts for this package
+    updatedConcepts[packageId].forEach(conceptIdx => {
+      if (selectedPackage && selectedPackage.conceptPricing[conceptIdx]) {
+        const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
+        if (selectedConcept.additionalPrice > 0) {
+          newTotalPrice += selectedConcept.additionalPrice; // Add the concept price if it's not free
+        }
+      }
+    });
+
+    setSelectedConcepts(updatedConcepts);
+    setTotalPrice(newTotalPrice); // Update the total price
+  };
+
+  // Handle order now with updated price
   const handleOrderNow = (packageId: string | undefined) => {
     const token = localStorage.getItem("token"); // Check if token exists
-  
+
     if (!token) {
       console.warn("🚨 No token found! Redirecting to login...");
       localStorage.setItem("redirectAfterLogin", `/order/${packageId}`); // Store intended URL
-      navigate("/login");
+      setShowLoginModal(true); // Show login modal
       return;
     }
-  
+
     if (!packageId) {
       console.error("🚨 Package ID is undefined! Cannot navigate.");
       return;
     }
-  
-    console.log(`✅ Navigating to /order/${packageId}`);
-    navigate(`/order/${packageId}`);
-  };
-  
 
-  // Debugging the data before rendering it
-  useEffect(() => {
-    if (packagesData.length > 0) {
-      console.log("Mapped Packages Data:", packagesData);
+    const selectedPackage = packagesData.find(pkg => pkg.id === packageId);
+
+    if (!selectedPackage) {
+      console.error("Package not found.");
+      return;
     }
-  }, [packagesData]);
+
+    let finalPrice = selectedPackage.price; // Start with the base package price
+
+    // Loop through selected concepts for this package and add additional prices
+    const selectedConceptsForPackage = selectedConcepts[packageId] || [];
+    selectedConceptsForPackage.forEach(conceptIdx => {
+      const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
+      if (selectedConcept && selectedConcept.additionalPrice > 0) {
+        finalPrice += selectedConcept.additionalPrice; // Add concept price if it's not free
+      }
+    });
+
+    console.log(`✅ Navigating to /order/${packageId} with total price: $${finalPrice}`);
+    
+    // Pass total price along with the package ID to the order page
+    navigate(`/order/${packageId}`, { state: { totalPrice: finalPrice } });
+  };
 
   return (
     <PackageContainer>
       <PackageTitle>
         Our <span className="text-[#6dc7d1]">Packages</span>
+        <span className="color-white"> ${totalPrice}</span>
       </PackageTitle>
-  
+
       {loading ? (
         <p>Loading packages...</p>
       ) : error ? (
@@ -125,58 +418,53 @@ const Packages: React.FC = () => {
               {/* Title and Price in the same row */}
               <div className="title-price">
                 <h3 style={{ fontSize: "15px" }} className="text-black">{pkg.name}</h3>
-                <Price style={{ fontSize: "18px" }}>${pkg.price}</Price> {/* Aligned price to the right of the title */}
+                <Price style={{ fontSize: "18px" }}>${pkg.price}</Price>
               </div>
-  
+
               <div className="content-wrapper" style={{ display: "flex", justifyContent: "flex-start" }}>
-  {/* Features List */}
-  <ul className="features-list" style={{ marginRight: "20px" }}>
-    {pkg.features.length > 0 ? (
-      pkg.features.map((feature, idx) => (
-        <li key={idx}>
-          <span className="checkmark">✔</span> {feature}
-        </li>
-      ))
-    ) : (
-      <li>No features available.</li>
-    )}
-  </ul>
+                <ul className="features-list" style={{ marginRight: "20px" }}>
+                  {pkg.features.length > 0 ? (
+                    pkg.features.map((feature, idx) => (
+                      <li key={idx}>
+                        <span className="checkmark">✔</span> {feature}
+                      </li>
+                    ))
+                  ) : (
+                    <li>No features available.</li>
+                  )}
+                </ul>
 
-  {/* Free Features with Border */}
-  <div className="free-addons " style={{
-    // border: "2px solid #6dc7d1",  // Light blue border
-    borderRadius: "8px",          // Rounded corners
-    padding: "15px",              // Padding inside the box
-    marginTop: "0",               // Ensure there is no margin-top
-    marginLeft: "-19px",           // Optional: Add margin to separate from the features list
-    // backgroundColor: "#f9fafb"    // Light background color for contrast
-  }}>
-    <p className="free-title" style={{ fontWeight: "bold", marginBottom: "8px" }}>FREE OF CHARGE</p>
-    <ul>
-      {pkg.freeFeatures.length > 0 ? (
-        pkg.freeFeatures.map((addon, idx) => (
-          <li key={idx}>
-            <span className="checkmark">✔</span> {addon}
-          </li>
-        ))
-      ) : (
-        <li>No free features available.</li>
-      )}
-    </ul>
-  </div>
-</div>
+                <div className="free-addons" style={{
+                  borderRadius: "8px",
+                  padding: "15px",
+                  marginTop: "0",
+                  marginLeft: "-19px",
+                }}>
+                  <p className="free-title" style={{ fontWeight: "bold", marginBottom: "8px" }}>FREE OF CHARGE</p>
+                  <ul>
+                    {pkg.freeFeatures.length > 0 ? (
+                      pkg.freeFeatures.map((addon, idx) => (
+                        <li key={idx}>
+                          <span className="checkmark">✔</span> {addon}
+                        </li>
+                      ))
+                    ) : (
+                      <li>No free features available.</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
 
-  
-              {/* Debug: Check Concept Pricing Data */}
               <AddOns>
                 <div className="addons-options">
                   {pkg.conceptPricing.length > 0 ? (
                     pkg.conceptPricing.map((concept, conceptIdx) => (
                       <div key={conceptIdx}>
-                        <input 
-                          type="radio" 
-                          name={`concept-${index}`} 
-                          id={`concept${conceptIdx}-${index}`} 
+                        <input
+                          type="checkbox"
+                          checked={selectedConcepts[pkg.id || ""]?.includes(conceptIdx) || false}
+                          onChange={() => handleConceptChange(pkg.id || "", conceptIdx)}
+                          id={`concept${conceptIdx}-${index}`}
                         />
                         <label className="ml-2" htmlFor={`concept${conceptIdx}-${index}`}>
                           {concept.conceptCount} concept{concept.conceptCount > 1 ? 's' : ''}
@@ -189,7 +477,7 @@ const Packages: React.FC = () => {
                   )}
                 </div>
               </AddOns>
-  
+
               <OrderButton onClick={() => handleOrderNow(pkg.id)}>Order Now</OrderButton>
             </PackageCard>
           ))}
@@ -197,9 +485,13 @@ const Packages: React.FC = () => {
       ) : (
         <p>No packages found for this category.</p>
       )}
+      <LoginModal
+        show={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </PackageContainer>
   );
-  
 };
 
 export default Packages;

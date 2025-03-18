@@ -30,6 +30,19 @@ const FormOrder: React.FC = () => {
   const [order, setOrder] = useState("");
   const [userContacts, setUserContacts] = useState("");
 
+  const genres = [
+    "Fantasy",
+    "Romance",
+    "Urban Fantasy",
+    "Young Adult",
+    "Cozy Mystery",
+    "Paranormal",
+    "Mystery, Thriller & Suspense",
+    "Horror",
+    "Sci-fi",
+    "Non-fiction",
+    "Fiction",
+  ];
 
   // const handleReview = async () => {
   //   const formData = {
@@ -48,7 +61,7 @@ const FormOrder: React.FC = () => {
   //     coverStyle,
   //     preferences,
   //     payment,
-  //     status: "Submitted", 
+  //     status: "Submitted",
   //     userContacts: userContacts, // Added userContacts field
   //     // Adding the status as "submitted"
   //   };
@@ -67,11 +80,10 @@ const FormOrder: React.FC = () => {
   //   }
   // };
 
-
   const handleReview = async () => {
     const formData = {
-      userId: String(userId),  // Ensure userId is a string
-      packageId: String(packageId),  // Ensure packageId is a string
+      userId: String(userId), // Ensure userId is a string
+      packageId: String(packageId), // Ensure packageId is a string
       addOnIds: Array.isArray(addOnIds) ? addOnIds : [], // Ensure addOnIds is an array
       name,
       bookTitle,
@@ -89,17 +101,17 @@ const FormOrder: React.FC = () => {
       // coverMood: "", // Add missing fields with default values
       // colorPalette: "",
       // examples: "",
-      firstOrder: false, // ✅ Add this property  
-      shareOnPortfolio: true, // ✅ Add this property  
-      // paymentMethod: "", // ✅ Add this property  
+      firstOrder: false, // ✅ Add this property
+      shareOnPortfolio: true, // ✅ Add this property
+      // paymentMethod: "", // ✅ Add this property
       // file: "",
     };
-  
+
     try {
       const response = await createOrderAPI(formData);
       console.log("Order created successfully:", response);
       toast.success("Order created successfully!");
-      
+
       // Delay navigation until after toast
       setTimeout(() => {
         navigate("/portal/orders", { state: response });
@@ -109,7 +121,7 @@ const FormOrder: React.FC = () => {
       toast.error("Error creating order. Please try again.");
     }
   };
-  
+
   return (
     <div>
       <ToastContainer />
@@ -165,7 +177,11 @@ const FormOrder: React.FC = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Label>To make future communication easier, would you be willing to share your preferred contact information, such as an email address or LinkedIn profile?</Label>
+          <Label>
+            To make future communication easier, would you be willing to share
+            your preferred contact information, such as an email address or
+            LinkedIn profile?
+          </Label>
           <TextArea
             value={userContacts}
             onChange={(e) => setUserContacts(e.target.value)}
@@ -173,12 +189,26 @@ const FormOrder: React.FC = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label>What Genre do you write in ?</Label>
-          <Input
-            type="text"
+          <Label htmlFor="genreSelect">What Genre do you write in?</Label>
+          <select
+            id="genreSelect"
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
-          />
+            style={{
+              width: "100%",
+              padding: "8px",
+              fontSize: "14px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+            }}
+          >
+            <option value="">Select a Genre</option>
+            {genres.map((g, index) => (
+              <option key={index} value={g}>
+                {g}
+              </option>
+            ))}
+          </select>
         </FormGroup>
 
         <FormGroup>
@@ -206,24 +236,24 @@ const FormOrder: React.FC = () => {
         </FormGroup>
 
         <FormGroup>
-  <Label>What is the preferred cover style?</Label>
-  <Select
-    value={prefferedCoverStyle}
-    onChange={(e) => {
-      // Get the visible text instead of the value
-      const selectedText = e.target.options[e.target.selectedIndex].text;
-      setPrefferedCoverStyle(selectedText);
-    }}
-  >
-    <option value="">Please select...</option>
-    <option value="detailed">With detailed characters</option>
-    <option value="silhouettes">Only with silhouettes</option>
-    <option value="object">Object-based covers</option>
-    <option value="typographic">Typographic covers</option>
-    <option value="unknown">I don’t know</option>
-  </Select>
-</FormGroup>
-
+          <Label>What is the preferred cover style?</Label>
+          <Select
+            value={prefferedCoverStyle}
+            onChange={(e) => {
+              // Get the visible text instead of the value
+              const selectedText =
+                e.target.options[e.target.selectedIndex].text;
+              setPrefferedCoverStyle(selectedText);
+            }}
+          >
+            <option value="">Please select...</option>
+            <option value="detailed">With detailed characters</option>
+            <option value="silhouettes">Only with silhouettes</option>
+            <option value="object">Object-based covers</option>
+            <option value="typographic">Typographic covers</option>
+            <option value="unknown">I don’t know</option>
+          </Select>
+        </FormGroup>
 
         <FormGroup>
           <Label>
@@ -263,7 +293,10 @@ const FormOrder: React.FC = () => {
             Please let us know if we can share your book cover on our social
             media and website?
           </Label>
-          <Select value={shareOnPortfolio} onChange={(e) => setShareOnPortfolio(e.target.value)}>
+          <Select
+            value={shareOnPortfolio}
+            onChange={(e) => setShareOnPortfolio(e.target.value)}
+          >
             <option value="">Please select...</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
@@ -310,7 +343,6 @@ const FormOrder: React.FC = () => {
         <SubmitButton onClick={handleReview}>Submit</SubmitButton>
       </FormContainer>
       <ToastContainer />
-
     </div>
   );
 };

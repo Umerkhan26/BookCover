@@ -139,18 +139,18 @@ const BotFooter = styled.div`
   text-align: center;
 `;
 
-const RowLogo = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 20px;
-  gap: 60px;
-  align-items: center;
+// const RowLogo = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   flex-wrap: wrap;
+//   margin-top: 20px;
+//   gap: 60px;
+//   align-items: center;
 
-  @media (max-width: 768px) {
-    gap: 30px;
-  }
-`;
+//   @media (max-width: 768px) {
+//     gap: 30px;
+//   }
+// `;
 
 const Logo = styled.img`
   height: 55px;
