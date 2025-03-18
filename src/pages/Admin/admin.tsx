@@ -78,6 +78,12 @@ const Admin: React.FC = () => {
               <LinkText collapsed={collapsed}>Orders</LinkText>
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink as={Link} to="/admin/coverIdeas">
+              <Icon icon={faHSquare} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Cover Ideas</LinkText>
+            </NavLink>
+          </NavItem>
 
           <NavItem>
             <NavLink as="button" onClick={handleLogout}>

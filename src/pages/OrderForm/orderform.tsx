@@ -222,11 +222,9 @@
 // };
 
 // export default OrderForm;
-
-
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Already imported
-import { fetchAddOnsByPackageId } from "../../apis/apis"; // Ensure correct import
+import { useParams, useNavigate, useLocation } from "react-router-dom"; 
+import { fetchAddOnsByPackageId } from "../../apis/apis"; 
 import {
   Container,
   Row,
@@ -250,13 +248,18 @@ import {
   TotalText,
   TotalAmount,
 } from "./orderform.styles";
+import { toast, ToastContainer } from "react-toastify";
+import styled from "styled-components";
 
 const OrderForm: React.FC = () => {
   const { packageId } = useParams<{ packageId: string }>(); // Extract packageId from URL
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
   const [selectedServices, setSelectedServices] = useState<{ id: string; name: string; price: number; qty: number }[]>([]);
   const [availableServices, setAvailableServices] = useState<{ _id: string; name: string; price: number; qty: number }[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0); 
+  const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!packageId) {
@@ -264,41 +267,58 @@ const OrderForm: React.FC = () => {
       return;
     }
 
+    const price = location.state?.totalPrice;
+    if (price) {
+      setTotalPrice(price); // Set the total price passed from Packages component
+    }
+
     const fetchAddOns = async () => {
       try {
         const addOns = await fetchAddOnsByPackageId(packageId);
         setAvailableServices(addOns);
-        console.log("Fetched Add-Ons:", addOns);
       } catch (error) {
         console.error("Failed to fetch add-ons:", error);
       }
     };
 
     fetchAddOns();
-  }, [packageId]);
+  }, [packageId, location.state?.totalPrice]);
 
   const handleOrderNow = (event: React.FormEvent) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
-    // Retrieve the user data from localStorage
-    const user = JSON.parse(localStorage.getItem("user") || "{}"); // If not found, fallback to an empty object
-    const userId = user?.userId; // Safely retrieve userId
+    // Show loader while processing
+    setIsLoading(true);
 
-    // Check if userId is available
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const userId = user?.userId;
+
     if (!userId) {
       console.error("User ID not found in localStorage.");
+      setIsLoading(false); // Hide loader if user is not found
       return;
     }
 
-    // Prepare order data to pass to the next page
     const orderData = {
-      userId, // Retrieve userId from localStorage
+      userId,
       packageId,
-      addOnIds: selectedServices.map(service => service.id), // Collect selected add-ons IDs
+      addOnIds: selectedServices.map((service) => service.id),
     };
 
-    // Navigate to the next page and pass the order data
-    navigate("/portal/orders/form", { state: orderData }); // Pass only userId, packageId, addOnIds
+    // First toast: Data saved successfully
+    toast.success("Step 1: Data saved successfully!");
+
+    // Show loader and delay the next steps
+    setTimeout(() => {
+      // Second toast: Continuing to the client portal
+      toast.success("Step 2: Continuing to client portal");
+
+      // Now navigate to the next page (client portal)
+      setTimeout(() => {
+        navigate("/portal/orders/form", { state: orderData }); 
+        setIsLoading(false); // Hide loader after navigation
+      }, 2000); 
+    }, 2000); 
   };
 
   const toggleItem = (id: string, name: string, price: number) => {
@@ -321,17 +341,19 @@ const OrderForm: React.FC = () => {
   };
 
   const calculateTotal = () => {
-    return selectedServices.reduce((total, item) => total + item.price * item.qty, 0).toFixed(2);
+    return selectedServices.reduce((total, item) => total + item.price * item.qty, totalPrice).toFixed(2);
   };
 
   return (
     <Container>
+      <ToastContainer position="top-right" style={{ marginTop: "20px", fontWeight:"bold" }} />
+
       <form id="payment-form">
         <Row>
           {/* Left Checkout Section */}
           <CheckoutLeft>
             <Navbar>
-              <NavbarBrand href="https://client.miblart.com">Mibl</NavbarBrand>
+              <NavbarBrand href="">Lumeart Studio</NavbarBrand>
             </Navbar>
 
             <Intro>
@@ -398,7 +420,7 @@ const OrderForm: React.FC = () => {
             </FormGroup>
 
             <OrderButton type="submit" onClick={handleOrderNow}>
-              Complete Purchase
+              {isLoading ? <LoadingSpinner /> : "Next"}
             </OrderButton>
           </CheckoutLeft>
 
@@ -432,5 +454,21 @@ const OrderForm: React.FC = () => {
     </Container>
   );
 };
+
+// Loader spinner inside button
+const LoadingSpinner = styled.div`
+  border: 3px solid #f3f3f3; 
+  border-top: 3px solid #45a049;
+  border-radius: 50%;
+  width: 30px;
+  margin-left:335px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
 
 export default OrderForm;

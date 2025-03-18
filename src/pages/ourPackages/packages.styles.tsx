@@ -30,7 +30,7 @@ export const PackageContainer = styled.div`
 `;
 
 export const PackageTitle = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #333;
 
@@ -116,9 +116,10 @@ export const PackageCard = styled.div`
   padding: 1rem;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 350px;
+  max-width: 600px;
   text-align: left;
   margin-bottom: 2rem;
+  
   display: flex;
   flex-direction: column; /* Align items vertically */
   justify-content: space-between;
@@ -134,11 +135,14 @@ export const PackageCard = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    
+    
 
     h3 {
-      font-size: 1.6rem;
+      font-size: 0.6rem;
       font-weight: bold;
       color: #222;
+      
     }
   }
 
@@ -148,14 +152,17 @@ export const PackageCard = styled.div`
     gap: 1rem;
     flex-wrap: wrap;
     margin-top: 1rem;
+    
   }
 
   .features-list, .free-addons {
-    width: 48%;
+    width: 68%;
+    // font-size:11px;
+
   }
 
   .free-title {
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: bold;
     color: #6dc7d1;
   }
@@ -175,7 +182,7 @@ export const PackageCard = styled.div`
 
   .checkmark {
     color: #6dc7d1;
-    margin-right: 0.5rem;
+    margin-right: 0.9rem;
   }
 
   .add-ons-wrapper {
@@ -210,7 +217,7 @@ export const AddOns = styled.div`
     }
 
     input[type='radio'] {
-      margin-left: 0.5rem;
+      margin-left: 0.9rem;
     }
   }
 `;

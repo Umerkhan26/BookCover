@@ -37,15 +37,15 @@ const OrderSubmittedPage: React.FC = () => {
             <DataTable>
               <DataRow>
                 <DataLabel>Your name</DataLabel>
-                <DataText>{formData?.name || "umar"}</DataText>
+                <DataText>{formData?.name || ""}</DataText>
               </DataRow>
               <DataRow>
                 <DataLabel>Narrator's name</DataLabel>
-                <DataText>{formData?.narratorName || "umar"}</DataText>
+                <DataText>{formData?.narratorName || ""}</DataText>
               </DataRow>
               <DataRow>
                 <DataLabel>Let us know your preferences</DataLabel>
-                <DataText>{formData?.preferences || "ddd"}</DataText>
+                <DataText>{formData?.preferences || ""}</DataText>
               </DataRow>
               <DataRow>
                 <DataLabel>

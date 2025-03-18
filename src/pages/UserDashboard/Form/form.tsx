@@ -14,20 +14,35 @@ const FormOrder: React.FC = () => {
   // Destructure the orderData to pre-populate the form if needed
   const { userId, packageId, addOnIds } = orderData;
 
-  const [preferences, setPreferences] = useState("");
-  const [payment, setPayment] = useState("one");
+  // const [preferences, setPreferences] = useState("");
+  // const [payment, setPayment] = useState("one");
   const [narratorName, setNarratorName] = useState("");
-  const [authorName, setName] = useState("");
+  const [name, setName] = useState("");
   const [bookTitle, setTitle] = useState("");
   const [bookSubtitle, setSubTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [seriesContinuation, setSeries] = useState("");
   const [summary, setSummary] = useState("");
-  const [see, setSee] = useState("");
-  const [coverStyle, setCover] = useState("");
+  const [shareOnPortfolio, setShareOnPortfolio] = useState("");
+
+  const [likeToSeeOnCover, setLikeToSeeOnCover] = useState("");
+  const [prefferedCoverStyle, setPrefferedCoverStyle] = useState("");
   const [order, setOrder] = useState("");
   const [userContacts, setUserContacts] = useState("");
 
+  const genres = [
+    "Fantasy",
+    "Romance",
+    "Urban Fantasy",
+    "Young Adult",
+    "Cozy Mystery",
+    "Paranormal",
+    "Mystery, Thriller & Suspense",
+    "Horror",
+    "Sci-fi",
+    "Non-fiction",
+    "Fiction",
+  ];
 
   // const handleReview = async () => {
   //   const formData = {
@@ -46,7 +61,7 @@ const FormOrder: React.FC = () => {
   //     coverStyle,
   //     preferences,
   //     payment,
-  //     status: "Submitted", 
+  //     status: "Submitted",
   //     userContacts: userContacts, // Added userContacts field
   //     // Adding the status as "submitted"
   //   };
@@ -65,52 +80,56 @@ const FormOrder: React.FC = () => {
   //   }
   // };
 
-
   const handleReview = async () => {
     const formData = {
-      userId: String(userId),  // Ensure userId is a string
-      packageId: String(packageId),  // Ensure packageId is a string
+      userId: String(userId), // Ensure userId is a string
+      packageId: String(packageId), // Ensure packageId is a string
       addOnIds: Array.isArray(addOnIds) ? addOnIds : [], // Ensure addOnIds is an array
-      authorName,
+      name,
       bookTitle,
       bookSubtitle,
       narratorName,
       genre,
       seriesContinuation,
       summary,
-      coverStyle,
-      preferences,
-      payment,
+      prefferedCoverStyle,
+      likeToSeeOnCover,
+      // preferences,
+      // payment,
       status: "Submitted",
       userContacts: userContacts ? userContacts.split(",") : [], // Convert to an array
-      coverMood: "", // Add missing fields with default values
-      colorPalette: "",
-      examples: "",
-      firstOrder: false, // ✅ Add this property  
-      shareOnPortfolio: false, // ✅ Add this property  
-      paymentMethod: "", // ✅ Add this property  
-      file: "",
+      // coverMood: "", // Add missing fields with default values
+      // colorPalette: "",
+      // examples: "",
+      firstOrder: false, // ✅ Add this property
+      shareOnPortfolio: true, // ✅ Add this property
+      // paymentMethod: "", // ✅ Add this property
+      // file: "",
     };
-  
+
     try {
       const response = await createOrderAPI(formData);
       console.log("Order created successfully:", response);
       toast.success("Order created successfully!");
-      navigate("/portal/orders", { state: response });
+
+      // Delay navigation until after toast
+      setTimeout(() => {
+        navigate("/portal/orders", { state: response });
+      }, 1500); // Delay navigation by 1500ms (1.5 seconds)
     } catch (error) {
       console.error("Error creating order:", error);
       toast.error("Error creating order. Please try again.");
     }
   };
-  
+
   return (
     <div>
       <ToastContainer />
       {/* Header Section */}
       <HeaderContainer>
         <HeaderContent>
-          <HeaderTitle>Your project information</HeaderTitle>
-          <HeaderSubtitle>Website banner or ad $40</HeaderSubtitle>
+          <HeaderTitle>Your order information</HeaderTitle>
+          <HeaderSubtitle></HeaderSubtitle>
         </HeaderContent>
         <HeaderActions>
           <HeaderButton onClick={() => console.log("Save draft clicked")}>
@@ -128,7 +147,7 @@ const FormOrder: React.FC = () => {
           <Label>Your name</Label>
           <Input
             type="text"
-            value={authorName}
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </FormGroup>
@@ -158,7 +177,11 @@ const FormOrder: React.FC = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Label>To make future communication easier, would you be willing to share your preferred contact information, such as an email address or LinkedIn profile?</Label>
+          <Label>
+            To make future communication easier, would you be willing to share
+            your preferred contact information, such as an email address or
+            LinkedIn profile?
+          </Label>
           <TextArea
             value={userContacts}
             onChange={(e) => setUserContacts(e.target.value)}
@@ -166,12 +189,26 @@ const FormOrder: React.FC = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label>Genre</Label>
-          <Input
-            type="text"
+          <Label htmlFor="genreSelect">What Genre do you write in?</Label>
+          <select
+            id="genreSelect"
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
-          />
+            style={{
+              width: "100%",
+              padding: "8px",
+              fontSize: "14px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+            }}
+          >
+            <option value="">Select a Genre</option>
+            {genres.map((g, index) => (
+              <option key={index} value={g}>
+                {g}
+              </option>
+            ))}
+          </select>
         </FormGroup>
 
         <FormGroup>
@@ -200,7 +237,15 @@ const FormOrder: React.FC = () => {
 
         <FormGroup>
           <Label>What is the preferred cover style?</Label>
-          <Select value={coverStyle} onChange={(e) => setCover(e.target.value)}>
+          <Select
+            value={prefferedCoverStyle}
+            onChange={(e) => {
+              // Get the visible text instead of the value
+              const selectedText =
+                e.target.options[e.target.selectedIndex].text;
+              setPrefferedCoverStyle(selectedText);
+            }}
+          >
             <option value="">Please select...</option>
             <option value="detailed">With detailed characters</option>
             <option value="silhouettes">Only with silhouettes</option>
@@ -217,21 +262,21 @@ const FormOrder: React.FC = () => {
           </Label>
           <TextArea
             placeholder="Provide your cover preferences..."
-            value={see}
-            onChange={(e) => setSee(e.target.value)}
+            value={likeToSeeOnCover}
+            onChange={(e) => setLikeToSeeOnCover(e.target.value)}
           />
         </FormGroup>
 
-        <FormGroup>
+        {/* <FormGroup>
           <Label>Upload your Files (optional)</Label>
           <FileInputContainer>
             <FileInput type="file" />
             <FileInputLabel>Upload a file or drag and drop</FileInputLabel>
             <FileInputHint>Max file size: 300 MB</FileInputHint>
           </FileInputContainer>
-        </FormGroup>
+        </FormGroup> */}
 
-        <FormGroup>
+        {/* <FormGroup>
           <Label>
             Let us know if you have copyrights for the files you have attached
             and want to use them for this design{" "}
@@ -241,14 +286,17 @@ const FormOrder: React.FC = () => {
             value={preferences}
             onChange={(e) => setPreferences(e.target.value)}
           />
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup>
           <Label>
             Please let us know if we can share your book cover on our social
             media and website?
           </Label>
-          <Select value={coverStyle} onChange={(e) => setCover(e.target.value)}>
+          <Select
+            value={shareOnPortfolio}
+            onChange={(e) => setShareOnPortfolio(e.target.value)}
+          >
             <option value="">Please select...</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
@@ -265,7 +313,7 @@ const FormOrder: React.FC = () => {
           </Select>
         </FormGroup>
 
-        <FormGroup>
+        {/* <FormGroup>
           <Label>
             When the design is completed, how would you like to pay?
           </Label>
@@ -291,9 +339,10 @@ const FormOrder: React.FC = () => {
               Split into two equal monthly installments
             </RadioLabel>
           </RadioContainer>
-        </FormGroup>
+        </FormGroup> */}
         <SubmitButton onClick={handleReview}>Submit</SubmitButton>
       </FormContainer>
+      <ToastContainer />
     </div>
   );
 };
@@ -389,42 +438,42 @@ const TextArea = styled.textarea`
   resize: vertical;
 `;
 
-const FileInputContainer = styled.div`
-  border: 2px dashed #ccc;
-  padding: 20px;
-  text-align: center;
-  border-radius: 4px;
-`;
+// const FileInputContainer = styled.div`
+//   border: 2px dashed #ccc;
+//   padding: 20px;
+//   text-align: center;
+//   border-radius: 4px;
+// `;
 
-const FileInput = styled.input`
-  display: none;
-`;
+// const FileInput = styled.input`
+//   display: none;
+// `;
 
-const FileInputLabel = styled.div`
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-`;
+// const FileInputLabel = styled.div`
+//   font-size: 14px;
+//   color: #666;
+//   margin-bottom: 10px;
+// `;
 
-const FileInputHint = styled.div`
-  font-size: 12px;
-  color: #999;
-`;
+// const FileInputHint = styled.div`
+//   font-size: 12px;
+//   color: #999;
+// `;
 
-const RadioContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+// const RadioContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 
-const RadioLabel = styled.label`
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 5px;
-`;
+// const RadioLabel = styled.label`
+//   font-size: 14px;
+//   color: #333;
+//   margin-bottom: 5px;
+// `;
 
-const RadioInput = styled.input`
-  margin-right: 10px;
-`;
+// const RadioInput = styled.input`
+//   margin-right: 10px;
+// `;
 
 const SubmitButton = styled.button`
   padding: 0.375rem 2.5rem;

@@ -83,6 +83,9 @@ export const ContactFormWrapper = styled.div`
   padding: 40px;
   background: #fff;
   border-radius: 8px;
+  margin-right: 230px;
+  margin-top: -380px;
+  margin-bottom: 60px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1;

@@ -145,18 +145,19 @@ export const createOrderAPI = async (orderData: {
   addOnIds: string[];
   bookTitle: string;
   bookSubtitle: string;
-  authorName: string;
+  name: string;
+  narratorName:string;
   genre: string;
   seriesContinuation: string;
   summary: string;
-  coverStyle: string;
-  coverMood: string;
-  colorPalette: string;
-  examples: string;
-  file: string;
+  prefferedCoverStyle: string;
+  likeToSeeOnCover: string;
+  // colorPalette: string;
+  // examples: string;
+  // file: string;
   firstOrder: boolean;
   shareOnPortfolio: boolean;
-  paymentMethod: string;
+  // paymentMethod: string;
   status: string;
   userContacts?: string[]; // New field added for contacts
 }) => {
@@ -265,5 +266,19 @@ export const createBookRequest = async (bookRequestData: {
     return response.data; // Return the response from the backend
   } catch (error: any) {
     throw error.response?.data?.message || "Failed to create book request";
+  }
+};
+
+
+export const fetchAllBookRequests = async (): Promise<any> => {
+  try {
+    // Make the GET request to the API to fetch all book requests
+    const response = await axios.get(`${API_BASE_URL}/getCoverIdeas`); // Endpoint to fetch all book requests
+    console.log("Response from all book requests API", response);
+    
+    return response.data; // Return the fetched book requests
+  } catch (error) {
+    console.error("Error fetching all book requests:", error);
+    throw new Error("Failed to fetch book requests");
   }
 };

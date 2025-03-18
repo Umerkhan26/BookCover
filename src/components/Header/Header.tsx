@@ -44,7 +44,7 @@ const Nav = styled.nav`
 
 const Logo = styled.img`
   height: 35px;
-  height: 35px;
+  // height: 35px;
   width: auto;
   margin-right: 25px;
   display: block;

@@ -75,8 +75,31 @@ const AnchorWrap = styled.div`
   }
 `;
 
+// Type for AnchorLink
+interface AnchorLink {
+  href: string;
+  label: string;
+}
+
 // Terms and Conditions Component
 const TermsAndConditions: React.FC = () => {
+  // Sample links for the AnchorWrap section (you can add more links based on content)
+  const anchorLinks: AnchorLink[] = [
+    { href: "#cover-design-services", label: "COVER DESIGN SERVICES" },
+    { href: "#interior-formatting-service", label: "INTERIOR FORMATTING SERVICE" },
+    { href: "#other-services", label: "OTHER SERVICES" },
+    { href: "#license-and-publishing-rights", label: "LICENSE AND PUBLISHING RIGHTS" },
+    { href: "#client-responsibilities", label: "CLIENT RESPONSIBILITIES" },
+    { href: "#liability", label: "LIABILITY" },
+    { href: "#payment", label: "PAYMENT" },
+    { href: "#bonus-points-system", label: "BONUS POINTS SYSTEM" },
+    { href: "#communication", label: "COMMUNICATION" },
+    { href: "#contract", label: "CONTRACT" },
+    { href: "#cancelation-policy", label: "CANCELATION POLICY" },
+    { href: "#modification-of-agreement", label: "MODIFICATION OF AGREEMENT" },
+    { href: "#severability", label: "SEVERABILITY" },
+  ];
+
   return (
     <PageContent className="page-content page-content-terms">
       <Container className="container">
@@ -99,40 +122,40 @@ const TermsAndConditions: React.FC = () => {
               </span>
             </p>
             <ul>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   Photo-manipulated ebook and print book cover designs
                 </span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Audiobook cover designs</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   Kindle Vella cover designs
                 </span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   Illustrated book cover designs
                 </span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   Children’s illustrated cover designs&nbsp;
                 </span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   Illustrated character designs
                 </span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   Vector illustration cover designs
                 </span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Typography designs</span>
               </li>
             </ul>
@@ -152,31 +175,31 @@ const TermsAndConditions: React.FC = () => {
               </span>
             </p>
             <ul>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Cover reveal images</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Social media covers</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Book release banners</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Ad images</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>A+ content</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Bookmark designs</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Box set images</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>Business card designs</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   Book cover animations, etc.
                 </span>
@@ -207,86 +230,30 @@ const TermsAndConditions: React.FC = () => {
               2. <b>No fee</b> is charged if the Client needs to change:
             </p>
             <ul>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>The size of the cover</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>The width of the spine</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>The number of pages</span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
+              <li style={{ fontWeight: 400 }}  aria-level={1}>
                 <span style={{ fontWeight: 400 }}>
                   The text on the back cover
                 </span>
               </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
-                <span style={{ fontWeight: 400 }}>
-                  The title or the subtitle
-                </span>
-              </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
-                <span style={{ fontWeight: 400 }}>The author’s name</span>
-              </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
-                <span style={{ fontWeight: 400 }}>
-                  The author’s photo on the back cover
-                </span>
-              </li>
-              <li style={{ fontWeight: 400 }} aria-level="1">
-                <span style={{ fontWeight: 400 }}>The barcode</span>
-              </li>
+              {/* Add more content here */}
             </ul>
-            {/* Add the rest of the content here */}
           </ContentTerm>
           <AnchorWrap className="anchor-wrap">
             <ul>
-              <li>
-                <a href="#cover-design-services">COVER DESIGN SERVICES</a>
-              </li>
-              <li>
-                <a href="#interior-formatting-service">
-                  INTERIOR FORMATTING SERVICE
-                </a>
-              </li>
-              <li>
-                <a href="#other-services">OTHER SERVICES</a>
-              </li>
-              <li>
-                <a href="#license-and-publishing-rights">
-                  LICENSE AND PUBLISHING RIGHTS
-                </a>
-              </li>
-              <li>
-                <a href="#client-responsibilities">CLIENT RESPONSIBILITIES</a>
-              </li>
-              <li>
-                <a href="#liability">LIABILITY</a>
-              </li>
-              <li>
-                <a href="#payment">PAYMENT</a>
-              </li>
-              <li>
-                <a href="#bonus-points-system">BONUS POINTS SYSTEM</a>
-              </li>
-              <li>
-                <a href="#communication">COMMUNICATION</a>
-              </li>
-              <li>
-                <a href="#contract">CONTRACT</a>
-              </li>
-              <li>
-                <a href="#cancelation-policy">CANCELATION POLICY</a>
-              </li>
-              <li>
-                <a href="#modification-of-agreement">
-                  MODIFICATION OF AGREEMENT
-                </a>
-              </li>
-              <li>
-                <a href="#severability">SEVERABILITY</a>
-              </li>
+              {anchorLinks.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
             </ul>
           </AnchorWrap>
         </RowContent>

@@ -91,8 +91,8 @@ const Order: React.FC = () => {
             <TableHeader>Package</TableHeader>
             <TableHeader>Total Price</TableHeader>
             <TableHeader>Status</TableHeader>
-            <TableHeader>OtherInfo</TableHeader> {/* New column for OtherInfo */}
-            <TableHeader>Actions</TableHeader>
+            <TableHeader>Form Data</TableHeader> {/* New column for OtherInfo */}
+            {/* <TableHeader>Actions</TableHeader> */}
           </tr>
         </thead>
         <tbody>
@@ -121,9 +121,9 @@ const Order: React.FC = () => {
                 >
                   Info {/* Display "Info" link for other details */}
                 </TableData>
-                <TableData>
+                {/* <TableData>
                   <button>Delete</button>
-                </TableData>
+                </TableData> */}
               </TableRow>
             ))
           ) : (
@@ -175,11 +175,11 @@ const Order: React.FC = () => {
             </ul>
 
             {/* AddOns */}
-            <h3>AddOns</h3>
+            <p>AddOns</p>
             {selectedPackage.addOns?.length > 0 ? (
               <ul>
                 {selectedPackage.addOns.map((addon: any, idx: number) => (
-                  <li key={idx}>{addon.name} - ${addon.price}</li> // Display addon name and price
+                  <li key={idx}>{addon.name} </li> // Display addon name and price
                 ))}
               </ul>
             ) : (
@@ -191,62 +191,98 @@ const Order: React.FC = () => {
 
       {/* OtherInfo Modal */}
       {selectedOtherInfo && (
-        <div className="modal">
-          <div className="modal-content">
-            <button className="close" onClick={closeOtherInfoModal}>
-              ×
-            </button>
-            <h2>Other Info</h2>
-            <p>Book Title: {selectedOtherInfo.bookTitle}</p>
-            <p>Book Subtitle: {selectedOtherInfo.bookSubtitle}</p>
-            <p>Author Name: {selectedOtherInfo.authorName}</p>
-            <p>Genre: {selectedOtherInfo.genre}</p>
-            <p>Summary: {selectedOtherInfo.summary}</p>
-            <p>Cover Style: {selectedOtherInfo.coverStyle}</p>
-            <p>Cover Mood: {selectedOtherInfo.coverMood}</p>
-            <p>Color Palette: {selectedOtherInfo.colorPalette}</p>
-            <p>Examples: {selectedOtherInfo.examples}</p>
-            <p>File: {selectedOtherInfo.file}</p>
-            <p>First Order: {selectedOtherInfo.firstOrder ? "Yes" : "No"}</p>
-            <p>Share on Portfolio: {selectedOtherInfo.shareOnPortfolio ? "Yes" : "No"}</p>
-            <p>Payment Method: {selectedOtherInfo.paymentMethod}</p>
-          </div>
-        </div>
-      )}
+  <div className="modal">
+    <div className="modal-content">
+      <button className="close" onClick={closeOtherInfoModal}>
+        ×
+      </button>
+      <h2 className="modal-heading">Data From Form</h2>
+
+      <div className="modal-body">
+        <p><strong>Book Title:</strong></p>
+        <p>{selectedOtherInfo.bookTitle}</p>
+
+        <p><strong>Book Subtitle:</strong></p>
+        <p>{selectedOtherInfo.bookSubtitle}</p>
+
+        <p><strong>Narrator Name:</strong></p>
+        <p>{selectedOtherInfo.narratorName}</p>
+
+        <p><strong>Genre:</strong></p>
+        <p>{selectedOtherInfo.genre}</p>
+
+        <p><strong>Summary:</strong></p>
+        <p>{selectedOtherInfo.summary}</p>
+
+        <p><strong>Cover Style:</strong></p>
+        <p>{selectedOtherInfo.prefferedCoverStyle}</p>
+
+        <p><strong>Like to see on cover:</strong></p>
+        <p>{selectedOtherInfo.likeToSeeOnCover}</p>
+
+        <p><strong>First Order:</strong></p>
+        <p>{selectedOtherInfo.firstOrder ? "Yes" : "No"}</p>
+
+        <p><strong>Share on Portfolio:</strong></p>
+        <p>{selectedOtherInfo.shareOnPortfolio ? "Yes" : "No"}</p>
+      </div>
+    </div>
+  </div>
+)}
 
       {/* Inline CSS for Modal */}
       <style>
         {`
           /* Modal styles */
-          .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color:black;
-            z-index: 9999;
-          }
+         .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  z-index: 9999;
+}
 
-          .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 400px;
-            z-index: 10000;
-          }
+.modal-content {
+  position: relative; /* Ensures close button is positioned correctly */
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px; /* Fixed width */
+  max-height: 60vh; /* Limits height to 60% of viewport */
+  overflow-y: auto; /* Enables scrolling if content is too long */
+  z-index: 10000;
+}
 
-          .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            cursor: pointer;
-          }
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.modal-heading {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.modal-body p {
+  margin: 5px 0;
+}
+
+.modal-body p:first-child {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
         `}
       </style>
     </Container>
