@@ -27,7 +27,7 @@ export const Section = styled.section`
 `;
 
 export const Title = styled.h1`
-  font-size: 3rem;
+  font-size: 52px;
   font-weight: bold;
   color: #212529;
   margin: 0 auto;
@@ -37,7 +37,7 @@ export const Title = styled.h1`
   }
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 40px;
   }
 `;
 

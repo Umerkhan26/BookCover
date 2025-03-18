@@ -47,12 +47,16 @@ const FooterPartnerLogo = styled.div`
 `;
 
 const FooterName = styled.div`
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 15px;
   line-height: 17px;
   text-transform: uppercase;
-  color: #8c8c8c;
+  color: black;
   margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const FooterContainer = styled.footer`
@@ -60,7 +64,7 @@ const FooterContainer = styled.footer`
   padding: 90px 0px 0px;
 
   @media (max-width: 768px) {
-    padding: 60px 0px 0px;
+    padding: 50px 20px;
   }
 `;
 
@@ -86,11 +90,13 @@ const Row = styled.div`
 const FooterNav = styled.div`
   display: flex;
   color: #212529;
+  justify-content: flex-start;
   justify-content: space-between;
+  // width: 100%;
   gap: 80px;
 
   @media (max-width: 1024px) {
-    gap: 40px;
+    gap: 30px;
   }
 
   @media (max-width: 768px) {
@@ -103,6 +109,12 @@ const FooterNav = styled.div`
 const FooterCategoryWrapper = styled.div`
   margin: 0 1rem;
   text-align: left;
+  padding-right: 3.5rem;
+
+  @media (max-width: 768px) {
+    padding-right: 0;
+    text-align: center;
+  }
 `;
 
 const FooterList = styled.ul`
@@ -117,11 +129,12 @@ const FooterItem = styled.li`
 `;
 
 const FooterAnchor = styled.a`
-  color: #212529;
+  color: #8c8c8c;
   text-decoration: none;
+  font-size: 14px;
 
-  &:hover {
-    text-decoration: underline;
+  @media (max-width: 768px) {
+    font-size: 16px;
   }
 `;
 
@@ -130,12 +143,14 @@ const FooterNote = styled.p`
   margin-top: 0.6rem;
   font-size: 14px;
   color: #455a64;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const BotFooter = styled.div`
-  margin-bottom: 6rem;
-  padding: 1rem 0;
-  padding-bottom: 4rem;
+  padding: 0.7rem 0;
   text-align: center;
 `;
 
@@ -152,13 +167,29 @@ const RowLogo = styled.div`
   }
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px; /* Add some spacing below */
+
+  @media (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+`;
+
 const Logo = styled.img`
   height: 55px;
   width: auto;
   display: block;
 
   @media (max-width: 768px) {
-    height: 30px;
+    height: 40px;
+  }
+
+  @media (max-width: 480px) {
+    height: 35px;
   }
 `;
 
@@ -175,9 +206,60 @@ const Footer: React.FC<FooterProps> = ({
           <Row>
             {/* Partner Logo */}
             <FooterPartnerLogo>
-              <NavLink to="/">
-                <Logo src={logo} alt="Logo" />
-              </NavLink>
+              <LogoContainer>
+                <NavLink to="/">
+                  <Logo src={logo} alt="Logo" />
+                </NavLink>
+              </LogoContainer>
+              <Row>
+                <SocialNetwork
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: "10px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <IconSocNet
+                      href="https://www.facebook.com/AuthorDavidBLyons"
+                      target="_blank"
+                      color="#3b5998"
+                    >
+                      <FaFacebook size={20} />
+                    </IconSocNet>
+                    <IconSocNet
+                      href="https://www.facebook.com/AuthorDavidBLyons"
+                      target="_blank"
+                      color="#3b5998"
+                    >
+                      <FaLinkedin size={20} />
+                    </IconSocNet>
+                    <IconSocNet
+                      href="https://twitter.com/theopenauthor"
+                      target="_blank"
+                      color="#1da1f3"
+                    >
+                      <FaTwitter size={20} />
+                    </IconSocNet>
+                    <IconSocNet
+                      href="https://www.instagram.com/theopenauthor/"
+                      target="_blank"
+                      color="#E4405F"
+                    >
+                      <FaInstagram size={20} />
+                    </IconSocNet>
+                  </div>
+                  {/* Copyright Text */}
+                </SocialNetwork>
+              </Row>
             </FooterPartnerLogo>
 
             {/* Footer Navigation */}
@@ -197,56 +279,6 @@ const Footer: React.FC<FooterProps> = ({
                 </FooterCategoryWrapper>
               ))}
             </FooterNav>
-            <Row>
-              <SocialNetwork
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "10px",
-                    marginTop: "10px",
-                  }}
-                >
-                  <IconSocNet
-                    href="https://www.facebook.com/AuthorDavidBLyons"
-                    target="_blank"
-                    color="#3b5998"
-                  >
-                    <FaFacebook size={20} />
-                  </IconSocNet>
-                  <IconSocNet
-                    href="https://www.facebook.com/AuthorDavidBLyons"
-                    target="_blank"
-                    color="#3b5998"
-                  >
-                    <FaLinkedin size={20} />
-                  </IconSocNet>
-                  <IconSocNet
-                    href="https://twitter.com/theopenauthor"
-                    target="_blank"
-                    color="#1da1f3"
-                  >
-                    <FaTwitter size={20} />
-                  </IconSocNet>
-                  <IconSocNet
-                    href="https://www.instagram.com/theopenauthor/"
-                    target="_blank"
-                    color="#E4405F"
-                  >
-                    <FaInstagram size={20} />
-                  </IconSocNet>
-                </div>
-                {/* Copyright Text */}
-                <FooterNote>{copyrightText}</FooterNote>
-              </SocialNetwork>
-            </Row>
           </Row>
           {/* Social Links and Copyright Text */}
         </Container>
@@ -265,7 +297,7 @@ const Footer: React.FC<FooterProps> = ({
               color: "#212121",
             }}
           >
-            Lumeart Studio is part of the Lumeart Group family of brands
+            <FooterNote>{copyrightText}</FooterNote>
           </span>
         </Container>
       </BotFooter>

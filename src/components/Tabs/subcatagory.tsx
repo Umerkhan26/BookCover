@@ -42,17 +42,25 @@ type Active = {
 
 // Styled Components
 const Container = styled.div`
-  padding: 20px;
+  width: 100%; // Ensure it spans the full width
+  padding: 20px 0; // Adjust padding to match the banner
+  max-width: 1200px; // Match the max-width of the banner
+  margin: 0 auto; // Center the container
+
+  @media (max-width: 768px) {
+    padding: 11px 0; // Adjusted padding for smaller screens
+  }
 `;
 
 const SubCategoryContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 10px;
   margin-bottom: 20px;
   position: relative;
   padding-bottom: 20px;
-  padding-left: 10px;
+  // padding-left: 10px;
+  width: 100%; // Ensure it spans the full width
 
   & :hover {
     color: #c4c4c4;
@@ -68,19 +76,36 @@ const SubCategoryContainer = styled.div`
     height: 2px;
     background-color: #ddd;
   }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
 `;
 
 const SubCategory = styled.button<Active>`
   padding: 8px 12px;
   border: none;
   border-radius: 5px;
-  color: #000000;
+  color: #000;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease;
+  text-align: center; // Center the text
 
-  & :hover {
+  &:hover {
     color: #c4c4c4;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
   }
 `;
 

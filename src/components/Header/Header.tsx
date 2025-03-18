@@ -46,8 +46,12 @@ const Logo = styled.img`
   height: 35px;
   height: 35px;
   width: auto;
-  margin-right:25px;
+  margin-right: 25px;
   display: block;
+
+  @media (max-width: 768px) {
+    height: 50px;
+  }
 `;
 
 const NavLinkButton = styled(NavLink)`
@@ -111,7 +115,7 @@ const HeaderContainer = styled.div`
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    justify-content: space-between;
+    // justify-content: space-between;
     width: 100%;
   }
 `;
@@ -171,25 +175,40 @@ const DropdownItem = styled(NavLink)`
 const HamburgerMenu = styled.div`
   display: none;
   cursor: pointer;
-  color: black;
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+
   @media (max-width: 768px) {
-    display: block;
+    display: flex;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 25px; /* Adjust this value */
+    right: 10px; /* Adjust this value */
     z-index: 1100;
   }
 `;
 
+const MenuIcon = styled.span`
+  font-size: 28px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+
 const ContactUsWrapper = styled.div`
+  display: flex;
+
   @media (max-width: 768px) {
-    display: flex;
-    justify-content: center;
     width: 100%;
+    justify-content: center; /* Center the contact button */
     margin-top: 10px;
   }
 `;
-
 const NavNBtn = styled.nav<NavNBtnProps>`
   display: flex;
   align-items: center;
@@ -217,6 +236,8 @@ const NavNBtn = styled.nav<NavNBtnProps>`
 
 const MobileContactButton = styled(NavButton)`
   display: none;
+  padding: 6px 16px;
+  margin-right: -3rem;
 
   @media (max-width: 768px) {
     display: inline-block;
@@ -276,6 +297,7 @@ function Header() {
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
+    console.log("Toggling menu, updated state:", !isMenuOpen);
     setIsServicesOpen(false);
   };
 
@@ -286,7 +308,11 @@ function Header() {
   // Close the menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        isMenuOpen
+      ) {
         setIsMenuOpen(false);
         setIsServicesOpen(false);
       }
@@ -296,7 +322,11 @@ function Header() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isMenuOpen]);
+  const handleCloseMenu = () => {
+    setIsMenuOpen(false);
+    setIsServicesOpen(false);
+  };
 
   return (
     <>
@@ -313,14 +343,16 @@ function Header() {
           </ContactUsWrapper>
 
           <div ref={menuRef}>
-            <HamburgerMenu onClick={toggleMenu}>
-              {isMenuOpen ? (
-                <span style={{ color: "black" }}>✖</span>
-              ) : (
-                <span style={{ color: "black" }}>☰</span>
-              )}
+            <HamburgerMenu
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleMenu();
+              }}
+            >
+              {isMenuOpen ? <MenuIcon>✖</MenuIcon> : <MenuIcon>☰</MenuIcon>}
             </HamburgerMenu>
           </div>
+
           <NavNBtn
             isMenuOpen={isMenuOpen}
             className="scrollable-menu"
@@ -357,11 +389,21 @@ function Header() {
               </DropdownMenu>
             </DropdownContainer>
 
-            <NavLinkButton to="/portfolio">Portfolio</NavLinkButton>
-            <NavLinkButton to="/aboutUs">About Us</NavLinkButton>
-            <NavLinkButton to="/FAQs">FAQ</NavLinkButton>
-            <NavLinkButton to="/contactUs">Contact Us</NavLinkButton>
-            <NavLinkButton to="/partner">Partner With Us</NavLinkButton>
+            <NavLinkButton to="/portfolio" onClick={handleCloseMenu}>
+              Portfolio
+            </NavLinkButton>
+            <NavLinkButton to="/aboutUs" onClick={handleCloseMenu}>
+              About Us
+            </NavLinkButton>
+            <NavLinkButton to="/FAQs" onClick={handleCloseMenu}>
+              FAQ
+            </NavLinkButton>
+            <NavLinkButton to="/contactUs" onClick={handleCloseMenu}>
+              Contact Us
+            </NavLinkButton>
+            <NavLinkButton to="/partner" onClick={handleCloseMenu}>
+              Partner With Us
+            </NavLinkButton>
 
             {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
             {!isMenuOpen && (

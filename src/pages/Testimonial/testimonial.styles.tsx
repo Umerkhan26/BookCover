@@ -10,6 +10,16 @@ export const WrapTestimonials = styled.div`
   padding-top: 114px;
   padding-bottom: 204px;
   position: relative;
+
+  @media (max-width: 768px) {
+    padding-top: 80px;
+    padding-bottom: 150px;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 60px;
+    padding-bottom: 120px;
+  }
 `;
 
 export const SvgContainer = styled.div`
@@ -25,6 +35,10 @@ export const SvgLeftTop = styled(SvgContainer)`
 export const SvgLeftBottom = styled(SvgContainer)`
   bottom: 0;
   left: 0;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 export const SvgRightTop = styled(SvgContainer)`
@@ -35,6 +49,10 @@ export const SvgRightTop = styled(SvgContainer)`
 export const SvgRightBottom = styled(SvgContainer)`
   bottom: 0;
   right: 0;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 export const Container = styled.div`
@@ -48,14 +66,42 @@ export const MainScreen = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 2rem;
+  font-size: 52px;
+  font-weight: 700;
   color: #25293f;
   margin-bottom: 1rem;
+  line-height: 63px;
+  text-transform: capitalize;
+
+  @media (max-width: 768px) {
+    max-width: 334px;
+    margin: 0 auto;
+    margin-top: 24px;
+    font-size: 40px;
+    line-height: 49px;
+  }
+
+  // @media (max-width: 480px) {
+  //   font-size: 1.5rem;
+  // }
 `;
 
 export const Subtitle = styled.p`
-  font-size: 1.2rem;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
   color: #25293f;
+
+  @media (max-width: 768px) {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    color: #25293f;
+    max-width: 675px;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 0;
+  }
 `;
 
 export const ListTestimonials = styled.div`
@@ -63,6 +109,24 @@ export const ListTestimonials = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+  }
+
+  @media (max-width: 390px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 75px;
+  }
 `;
 
 export const ColTestimonials = styled.div`
@@ -73,6 +137,21 @@ export const ColTestimonials = styled.div`
   max-width: 300px;
   text-align: center;
   margin-top: -165px;
+
+  @media (max-width: 768px) {
+    margin-top: -100px;
+    max-width: 80%;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: -50px;
+    max-width: 90%;
+  }
+
+  @media (max-width: 390px) {
+    margin-top: -60px;
+    max-width: 90%;
+  }
 `;
 
 export const TestimonialImage = styled.img`
@@ -82,6 +161,10 @@ export const TestimonialImage = styled.img`
 
 export const BoxDescription = styled.div`
   padding: 1rem;
+
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+  }
 `;
 
 export const TestimonialTitle = styled.h3`
@@ -90,17 +173,35 @@ export const TestimonialTitle = styled.h3`
   margin-top: -30px;
   color: #25293f;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    margin-top: -20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    margin-top: -15px;
+  }
 `;
 
 export const TestimonialDescription = styled.p`
   font-size: 0.875rem;
   color: #6c757d;
+
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+  }
 `;
 
 export const SocialNetwork = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-top: 1rem;
+
+  @media (max-width: 480px) {
+    justify-content: center;
+  }
 `;
 
 export const IconSocNet = styled.a`
@@ -120,12 +221,23 @@ export const IconSocNet = styled.a`
     fill: ${(props) => props.color || "#5476be"};
     transition: fill 0.3s ease;
   }
+
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+  }
 `;
+
 export const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically if needed */
+  justify-content: center;
+  align-items: center;
   margin-top: 2rem;
+
+  @media (max-width: 480px) {
+    margin-top: 1rem;
+  }
 `;
 
 export const ButtonGreen = styled.a`
@@ -139,8 +251,21 @@ export const ButtonGreen = styled.a`
   margin-bottom: 120px;
   text-decoration: none;
   margin-top: 2rem;
+
   &:hover {
     background-color: #4fa3a2;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px 40px;
+    font-size: 14px;
+    margin-bottom: 80px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px 30px;
+    font-size: 12px;
+    margin-bottom: 60px;
   }
 `;
 
@@ -157,6 +282,14 @@ export const YoutubeIconWrapper = styled.div`
   }
 
   &:hover svg path.ytp-large-play-button-bg {
-    fill: red; /* Change color on hover */
+    fill: red;
+  }
+
+  @media (max-width: 768px) {
+    top: -150px;
+  }
+
+  @media (max-width: 480px) {
+    top: -120px;
   }
 `;

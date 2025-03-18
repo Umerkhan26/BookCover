@@ -7,19 +7,19 @@ export const FAQContainer = styled.div`
 `;
 
 export const FAQTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 52px;
   font-weight: bold;
   text-align: center;
   position: relative;
   display: inline-block;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   color: black;
   &::after {
     content: "";
     display: block;
     width: 50%;
     height: 4px;
-    background-color:#6dc7d1;
+    background-color: #6dc7d1;
     position: absolute;
     left: 50%;
     bottom: -10px;
@@ -42,7 +42,7 @@ export const Question = styled.div`
   align-items: center;
   color: #333;
   &:hover {
-    color:black;
+    color: black;
   }
 `;
 
@@ -50,7 +50,7 @@ export const Answer = styled.div`
   font-size: 1rem;
   color: #555;
   padding: 15px;
-//   background:#6dc7d1;
+  //   background:#6dc7d1;
 `;
 
 export const Icon = styled.span`

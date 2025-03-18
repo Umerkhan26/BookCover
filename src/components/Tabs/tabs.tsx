@@ -1,105 +1,3 @@
-// import { useNavigate, useLocation } from "react-router-dom";
-// import styled from "styled-components";
-
-// const Tabs = () => {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-
-//   return (
-//     <TabContainer>
-//       <StyledTab
-//         active={location.pathname === "/portfolio"}
-//         onClick={() => navigate("/portfolio")}
-//       >
-//         Custom Book Covers
-//       </StyledTab>
-//       <StyledTab
-//         active={location.pathname === "/portfolio/premium-covers"}
-//         onClick={() => navigate("/portfolio/premium-covers")}
-//       >
-//         Premium Covers
-//       </StyledTab>
-//       <StyledTab
-//         active={location.pathname === "/portfolio/kindle-vella-covers"}
-//         onClick={() => navigate("/portfolio/kindle-vella-covers")}
-//       >
-//         Kindle Vella Covers
-//       </StyledTab>
-//       <StyledTab
-//         active={location.pathname === "/portfolio/illustrated-covers"}
-//         onClick={() => navigate("/portfolio/illustrated-covers")}
-//       >
-//         Illustrated Covers
-//       </StyledTab>
-//       <StyledTab
-//         active={location.pathname === "/portfolio/formatting-layout"}
-//         onClick={() => navigate("/portfolio/formatting-layout")}
-//       >
-//         Formatting and Layout
-//       </StyledTab>
-//       <StyledTab
-//         active={location.pathname === "/portfolio/logo-design"}
-//         onClick={() => navigate("/portfolio/logo-design")}
-//       >
-//         Logo Design
-//       </StyledTab>
-//       <StyledTab
-//         active={location.pathname === "/portfolio/marketing-materials"}
-//         onClick={() => navigate("/portfolio/marketing-materials")}
-//       >
-//         Marketing Materials
-//       </StyledTab>
-//     </TabContainer>
-//   );
-// };
-
-// // Styled Components
-// const TabContainer = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   margin-right: -15px;
-//   margin-left: -15px;
-//   padding: 0 15px;
-//   position: relative;
-//   padding-bottom: 10px;
-//   margin-top: 36px;
-
-//   &::after {
-//     content: "";
-//     position: absolute;
-//     bottom: 0;
-//     left: 35px;
-//     right: 35px;
-//     height: 1px;
-//     background-color: #ddd;
-//   }
-// `;
-// type Active = {
-//   active: boolean;
-// };
-// const StyledTab = styled.button<Active>`
-//   font-size: 16px;
-//   font-weight: 600;
-//   color: ${({ active }) => (active ? "#6dc7d1" : "#333")};
-//   background: none;
-//   display: flex;
-//   flex-wrap: wrap;
-//   border: none;
-//   padding: 12px 20px;
-//   margin: 0 10px;
-//   cursor: pointer;
-//   border-bottom: 3px solid
-//     ${({ active }) => (active ? "#6dc7d1" : "transparent")};
-//   transition: all 0.3s ease-in-out;
-
-//   &:hover {
-//     color: #6dc7d1;
-//     border-bottom: 3px solid #6dc7d1;
-//   }
-// `;
-
-// export default Tabs;
-
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -138,12 +36,12 @@ const Tabs = () => {
         >
           Illustrated Covers
         </StyledTab>
-        <StyledTab
+        {/* <StyledTab
           active={location.pathname === "/portfolio/formatting-layout"}
           onClick={() => navigate("/portfolio/formatting-layout")}
         >
           Formatting and Layout
-        </StyledTab>
+        </StyledTab> */}
         <StyledTab
           active={location.pathname === "/portfolio/logo-design"}
           onClick={() => navigate("/portfolio/logo-design")}
@@ -161,13 +59,18 @@ const Tabs = () => {
   );
 };
 
-// Styled Components
+type Active = {
+  active: boolean;
+};
+
 const TabContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-  padding: 0 15px;
+  justify-content: center; // Center the tabs
+  width: 100%; // Ensure it spans the full width
+  max-width: 1200px; // Match the max-width of the banner
+  margin: 0 auto; // Center the container
+  padding: 0 0px; // Add padding for spacing
   position: relative;
   padding-bottom: 10px;
   margin-top: 36px;
@@ -181,11 +84,17 @@ const TabContainer = styled.div`
     height: 1px;
     background-color: #ddd;
   }
-`;
 
-type Active = {
-  active: boolean;
-};
+  @media (max-width: 768px) {
+    justify-content: space-between; // Adjust for smaller screens
+    margin-top: 20px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 15px;
+    padding-bottom: 5px;
+  }
+`;
 
 const StyledTab = styled.button<Active>`
   font-size: 16px;
@@ -193,18 +102,25 @@ const StyledTab = styled.button<Active>`
   color: ${({ active }) => (active ? "#6dc7d1" : "grey")};
   background: none;
   display: flex;
-  flex-wrap: wrap;
   border: none;
   padding: 12px 20px;
   margin: 0 10px;
   cursor: pointer;
-  // border-bottom: 3px solid
-  //   ${({ active }) => (active ? "#6dc7d1" : "transparent")};
-  // transition: all 0.3s ease-in-out;
+  text-align: center; // Center the text
 
   &:hover {
     color: #6dc7d1;
-    // border-bottom: 3px solid #6dc7d1;
+  }
+
+  /* Reduce font size and gap on smaller screens */
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin: 0 5px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 13px;
+    margin: 0 3px;
   }
 `;
 

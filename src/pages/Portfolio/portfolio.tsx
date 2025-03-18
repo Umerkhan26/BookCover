@@ -36,7 +36,7 @@ const PortfolioWrapperWithTabs = () => {
 
 // Styled Components
 const PortfolioWrapper = styled.div`
-  padding: 40px 20px;
+  padding: 40px 36px;
   background-color: #f9f9f9;
 `;
 

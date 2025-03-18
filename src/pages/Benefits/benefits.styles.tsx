@@ -10,7 +10,7 @@ export const BenefitsWrap = styled.section`
 export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 6px;
 `;
 
 export const Row = styled.div`
@@ -19,7 +19,7 @@ export const Row = styled.div`
   justify-content: space-between;
   gap: 20px;
   margin-top: 20px; /* Add space above the row to separate from the first row */
-  
+
   @media (max-width: 600px) {
     gap: 15px; /* Reduce gap for smaller screens */
   }

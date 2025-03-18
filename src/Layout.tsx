@@ -21,22 +21,15 @@ const footerData: FooterProps = {
         },
         { href: "/FAQs", text: "FAQs" },
         { href: "/TermsAndConditions", text: "Testimonials" },
-        { href: "", text: "Career" },
-        { href: "", text: "Privacy Policy" },
+        { href: "", text: "Contact Us" },
       ],
     },
     {
       name: "Learn",
       links: [
         { href: "", text: "Blog" },
-        {
-          href: "",
-          text: "Lumert Studio Academy",
-        },
-        {
-          href: "",
-          text: "Our Community",
-        },
+        { href: "", text: "Career" },
+        { href: "", text: "Privacy Policy" },
       ],
     },
     {

@@ -23,11 +23,11 @@ const TopBanner: React.FC = () => {
           <Title>
             CUSTOM BOOK{" "}
             <span>
-              COVER <br /> DESIGN
+              COVER <br className="large-screen-break" /> DESIGN
             </span>
           </Title>
           <Subtitle>
-            <p style={{ position: "relative", top: "-5px", right: "-30px" }}>
+            <p style={{ position: "relative", top: "-5px" }}>
               Get a book cover that turns into{" "}
               <span>your #1 marketing tool</span>
             </p>

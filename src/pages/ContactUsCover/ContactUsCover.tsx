@@ -1,17 +1,6 @@
 import React from "react";
-import {
-  ContentWrapper,
-  // InnerCircle,
-  // OrbitAnimationWrapper,
-  // OrbitBall,
-  // randomBallStyles,
-  // RandomCircle,
-  // RotatingOuterCircle,
-  Subtitle,
-  Title,
-} from "./ContactUsCover.styles";
+import styled from "styled-components";
 
-// Define interface for props
 interface ContactUsCoverProps {
   title?: string;
   subtitle?: string;
@@ -21,38 +10,80 @@ interface ContactUsCoverProps {
 const ContactUsCover: React.FC<ContactUsCoverProps> = ({
   title = "Contact Us",
   subtitle = `If you have any questions or simply want to say “Hi,” just do it! You may fill out the form below or mail us at `,
-  email = "myeraxon@gmail.com",
+  email = "myLumeeartstudio@gmail.com",
 }) => {
   return (
-    <div style={{ position: "relative", height: "100vh", overflow: "hidden"  }}>
-      {/* Orbit Animation */}
-      {/* <OrbitAnimationWrapper>
-        <InnerCircle />
-        <RotatingOuterCircle>
-          {randomBallStyles.map((style, index) => (
-            <OrbitBall
-              key={index}
-              style={{
-                top: style.top,
-                left: style.left,
-              }}
-            />
-          ))}
-          {/* Static filled circle inside the rotating outer circle */}
-          {/* <RandomCircle />
-        </RotatingOuterCircle>
-      </OrbitAnimationWrapper>  */}
-
-      {/* Content Section */}
+    <Container>
       <ContentWrapper>
         <Title>{title}</Title>
         <Subtitle>
           {subtitle}
-          <a href={`mailto:${email}`}>{email}</a>
+          <EmailLink href={`mailto:${email}`}>{email}</EmailLink>
         </Subtitle>
       </ContentWrapper>
-    </div>
+    </Container>
   );
 };
 
 export default ContactUsCover;
+
+// Styled Components
+export const Container = styled.div`
+  position: relative;
+  height: auto;
+  overflow: hidden;
+  padding: 5vw;
+  background-color: #f9fafb; // Light background for better contrast
+`;
+
+export const ContentWrapper = styled.div`
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 5vw;
+  text-align: center;
+  z-index: 2;
+
+  @media (min-width: 1024px) {
+    max-width: 800px;
+    padding: 20px;
+  }
+`;
+
+export const Title = styled.h1`
+  color: #212121;
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 52px);
+  margin-bottom: 4vh;
+  margin-top: 10vh;
+
+  @media (max-width: 768px) {
+    margin-top: 6vh;
+    font-size: 40px;
+  }
+`;
+
+export const Subtitle = styled.p`
+  color: #455a64;
+  font-size: clamp(12px, 2.5vw, 18px);
+  margin-top: 2vh;
+  line-height: 1.6;
+  margin-bottom: 50px;
+  word-break: break-word;
+
+  @media (max-width: 480px) {
+    text-align: justify;
+  }
+`;
+
+export const EmailLink = styled.a`
+  color: rgba(71, 241, 119, 0.84);
+  font-weight: bold;
+  word-break: break-word;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: inherit;
+
+  @media (max-width: 480px) {
+    margin-top: 0px;
+  }
+`;

@@ -6,13 +6,28 @@ const CounterSectionWrapper = styled.section`
   background: linear-gradient(90deg, #e4e7f9, #efe6ef);
   padding: 4rem 0;
   font-family: "Manrope", sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 0;
+  }
 `;
 
 const Container = styled.div`
   max-width: 1200px;
-
   margin: 0 auto;
-  padding: 10px 80px;
+  padding: 0 80px;
+
+  @media (max-width: 768px) {
+    padding: 0 40px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 20px;
+  }
 `;
 
 const WrapCounter = styled.div`
@@ -24,6 +39,11 @@ const WrapCounter = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1rem;
   }
 `;
 
@@ -37,6 +57,14 @@ const Top = styled.div`
   justify-content: center;
   gap: 0.5rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const Num = styled.div`
@@ -44,17 +72,45 @@ const Num = styled.div`
   font-size: 110px;
   line-height: 122px;
   color: #6dc7d1;
+
+  @media (max-width: 768px) {
+    font-size: 80px;
+    line-height: 90px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 60px;
+    line-height: 70px;
+  }
 `;
 
 const PlusIcon = styled.img`
   width: 20px;
   height: 20px;
+
+  @media (max-width: 768px) {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 480px) {
+    width: 14px;
+    height: 14px;
+  }
 `;
 
 const Label = styled.span`
   font-weight: 600;
   font-size: 24px;
   color: #455a64;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+  }
 `;
 
 // Component Props

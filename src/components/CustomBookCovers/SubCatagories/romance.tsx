@@ -20,23 +20,6 @@ const selectedIndices = [4, 18, 20, 27, 43, 5, 36, 44];
 const filteredImages = images.filter((img) => selectedIndices.includes(img.id));
 
 // Styled Components
-const PortfolioContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (max-width: 480px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
-`;
 
 const PortfolioItemCard = styled.div`
   position: relative;
@@ -47,6 +30,33 @@ const PortfolioItemCard = styled.div`
   max-width: 250px;
 `;
 
+const PortfolioContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
 const Image = styled.img`
   width: 100%;
   height: 350px;
@@ -55,6 +65,15 @@ const Image = styled.img`
   transition: transform 0.3s ease-in-out;
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
   }
 `;
 
@@ -73,37 +92,51 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   position: relative;
-  max-width: 90%;
-  max-height: 90%;
+  width: 90%;
+  max-width: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 
 const ModalImage = styled.img`
   width: 100%;
-  min-width: 430px;
   height: 525px;
+  aspect-ratio: 2 / 3;
   border-radius: 10px;
 
   @media (max-width: 768px) {
-    width: 80%;
-    height: auto;
+    width: 85%;
   }
+
   @media (max-width: 480px) {
-    width: 70%;
+    width: 95%;
   }
 `;
 
-export const PreviewNavButton = styled.button`
+const CloseButton = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+`;
+
+const PreviewNavButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.3);
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 10px;
   cursor: pointer;
   border-radius: 50%;
   font-size: 1.5rem;
@@ -113,25 +146,19 @@ export const PreviewNavButton = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.5);
   }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    padding: 8px;
+  }
 `;
 
-export const PrevPreviewButton = styled(PreviewNavButton)`
-  left: -120px;
+const PrevPreviewButton = styled(PreviewNavButton)`
+  left: 10px; /* Adjust placement for small screens */
 `;
 
-export const NextPreviewButton = styled(PreviewNavButton)`
-  right: -120px;
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: -10px;
-  right: -70px;
-  border: none;
-  padding: 5px 10px;
-  font-size: 20px;
-  cursor: pointer;
-  border-radius: 50%;
+const NextPreviewButton = styled(PreviewNavButton)`
+  right: 10px;
 `;
 
 const Romance: React.FC = () => {

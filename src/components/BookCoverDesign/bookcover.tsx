@@ -32,8 +32,12 @@ const Column = styled.div`
 
 const Title = styled.h1`
   color: #212121;
-  font-weight: 800;
-  font-size: 45px;
+  font-weight: 700;
+  font-size: 52px;
+
+  @media (max-width: 600px) {
+    font-size: 40px;
+  }
 `;
 
 const Subtitle = styled.div`
@@ -43,22 +47,22 @@ const Subtitle = styled.div`
   margin-top: 30px;
 `;
 
-// const rotateOuterCircle = keyframes`  
-//   0% {  
-//     transform: rotate(0deg);  
-//   }  
-//   100% {  
-//     transform: rotate(360deg);  
-//   }  
+// const rotateOuterCircle = keyframes`
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
 // `;
 
-// const ballOrbitAnimation = keyframes`  
-//   0% {  
-//     transform: rotate(0deg) translateX(50%);  
-//   }  
-//   100% {  
-//     transform: rotate(360deg) translateX(50%);  
-//   }  
+// const ballOrbitAnimation = keyframes`
+//   0% {
+//     transform: rotate(0deg) translateX(50%);
+//   }
+//   100% {
+//     transform: rotate(360deg) translateX(50%);
+//   }
 // `;
 
 // const OrbitAnimationWrapper = styled.div`
@@ -130,9 +134,9 @@ const CoverPortfolio: React.FC = () => {
               />
             ))}
             {/* Static filled circle inside the rotating outer circle */}
-            {/* <RandomCircle /> */}
-          {/* </RotatingOuterCircle> */}
-        {/* </OrbitAnimationWrapper> */} 
+        {/* <RandomCircle /> */}
+        {/* </RotatingOuterCircle> */}
+        {/* </OrbitAnimationWrapper> */}
         <Container className="container">
           <Row className="row">
             <Column className="col-12 section-title centered">

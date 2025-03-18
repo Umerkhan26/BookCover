@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// Define styled-components
 export const Section = styled.section`
   position: relative;
   overflow: hidden;
@@ -23,8 +22,8 @@ export const Section = styled.section`
 
 export const BannerImage = styled.div`
   width: 100%;
- max-height: 650px;
-   position: relative;
+  max-height: 450px;
+  position: relative;
   overflow: hidden;
 
   img {
@@ -37,18 +36,27 @@ export const BannerImage = styled.div`
 export const BannerContent = styled.div`
   position: absolute;
   top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 100%;
-  padding: 0 20px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%; // Adjust this to control the overall width
+  max-width: 1200px; // Adjust based on your design needs
+  padding: 20px 4px; // Reduced left and right padding
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
 
+  border-radius: 10px; // Optional: Add rounded corners
+
   @media (max-width: 768px) {
-    width: 80%;
-    padding: 15px;
+    align-items: center;
+    text-align: center;
+    padding: 15px 10px; // Adjusted padding for smaller screens
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 5px; // Further reduced padding for mobile screens
+    width: 95%; // Adjust for smaller screens
   }
 `;
 
@@ -56,44 +64,67 @@ export const Title = styled.h1`
   font-weight: 800;
   color: #e2f3f4;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 0px 29px;
   font-size: 52px;
-  font-style: normal;
   line-height: 56px;
-  font-style: normal;
   text-transform: uppercase;
-  max-width: 800px;
-  width: 100%;
   margin-bottom: 16px;
-  white-space: unset;
+  white-space: pre-line; /* Allow line breaks for larger screens */
 
   span {
     color: #00bcd4;
   }
 
+  .large-screen-break {
+    display: inline; /* Show <br /> by default */
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 2.1rem;
+  }
+  @media (max-width: 820px) {
+    font-size: 1.9rem;
+    line-height: 1.2;
+  }
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    line-height: 0.9;
+    white-space: nowrap;
+
+    .large-screen-break {
+      display: none;
+    }
   }
 `;
 
 export const Subtitle = styled.div`
-  max-width: unset;
   color: #fff;
   font-size: 17.5px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  margin-bottom: 20px;
 
-  p {
-    span {
-      font-weight: 800;
-      font-family: "Manrope", sans-serif;
-      color: #fff;
-    }
+  span {
+    font-weight: 800;
+    font-family: "Manrope", sans-serif;
+    color: #fff;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
   }
 
   @media (max-width: 768px) {
     font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem; /* Adjusted for small screens */
+    margin-bottom: 6px;
+    line-height: 1.2;
   }
 `;
 
@@ -103,75 +134,97 @@ export const Button = styled.a`
   padding: 10px 30px;
   font-size: 16px;
   font-weight: bold;
-  margin-left: 30px;
-  margin-top: 28px;
-  letter-spacing: 0.8px;
   color: #00bcd4;
   border: 1px solid #00bcd4;
   background: rgba(0, 0, 0, 0.3);
   text-align: center;
-  position: relative;
   border-radius: 7px;
   background-color: transparent;
   cursor: pointer;
   text-decoration: none;
-  
+
   &:hover {
-    color: #fff; /* Text color on hover */
-    // background-color: #00bcd4; /* Background color on hover */
-    // border-color: #00bcd4; /* Border color on hover */
-    // transform: scale(1.05); /* Slightly enlarge the button on hover */
-    transition: all 0.3s ease; /* Smooth transition for all properties */
+    color: #fff;
+    transition: all 0.3s ease;
   }
+
   @media (max-width: 768px) {
     font-size: 0.9rem;
-    padding: 8px 15px;
+    padding: 10px 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+    min-width: 150px; /* Adjusted for small screens */
   }
 `;
 
+export const TopBannerR = styled.div`
+  flex: 0 0 auto; // Allow the width to adjust based on content
+  padding: 20px 6px; // Match the padding of the banner content
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; // Align text to the left
+  margin-left: 4px; // Match the left padding of the banner content
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 export const Wrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 10px;
-  padding: 20px 0;
+  padding: 20px 0px; // Match the left and right padding of BannerContent
   scrollbar-width: none;
   -ms-overflow-style: none;
+  margin: 0 auto; // Center the wrapper
+  max-width: 1200px; // Match the max-width of the banner content
 
   &::-webkit-scrollbar {
     display: none;
   }
-`;
 
-export const TopBannerR = styled.div`
-  flex: 0 0 20%;
-  max-width: 20%;
-  font-size: 18px;
-  font-family: "Manrope", sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+  @media (max-width: 768px) {
+    padding: 20px 10px; // Adjusted padding for smaller screens
+  }
 
+  @media (max-width: 480px) {
+    padding: 20px 5px; // Further reduced padding for mobile screens
+  }
+`;
 export const CardSection = styled.div`
   display: flex;
-  flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+  flex-wrap: nowrap;
   gap: 10px;
-  justify-content: center; /* Center align when wrapped */
+  justify-content: flex-start;
   width: 100%;
-  max-width: 80%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
-  @media (max-width: 1024px) {
-    max-width: 90%; /* Adjust max width for tablets */
+  padding: 0 4px; // Match the left and right padding of BannerContent
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    justify-content: flex-start;
+    padding: 0 10px; // Adjusted padding for smaller screens
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 5px; // Further reduced padding for mobile screens
   }
 `;
-
 export const Card = styled.a`
-  flex: 1 1 calc(20% - 10px);
+  flex: 0 0 calc(20% - 10px);
   max-width: 150px;
   margin-top: 20px;
   transition: transform 0.3s ease-in-out;
@@ -179,8 +232,7 @@ export const Card = styled.a`
   img {
     width: 100%;
     height: auto;
-    min-height: 250px;
-    border-radius: 8px;
+    min-height: 260px;
     display: block;
   }
 
@@ -188,15 +240,14 @@ export const Card = styled.a`
     transform: scale(1.05);
   }
 
-  @media (max-width: 1024px) {
-    flex: 1 1 calc(25% - 10px); /* Adjust width on tablets */
-  }
-
   @media (max-width: 768px) {
-    flex: 1 1 calc(33.33% - 10px); /* Adjust for mobile */
+    flex: 0 0 calc(33.333% - 10px);
+    max-width: calc(33.333% - 10px);
   }
 
   @media (max-width: 480px) {
-    flex: 1 1 calc(50% - 10px); /* Show two cards per row on small screens */
+    flex: 0 0 calc(33.333% - 10px);
+    max-width: calc(33.333% - 10px);
+    min-height: 220px;
   }
 `;
