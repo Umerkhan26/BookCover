@@ -57,8 +57,6 @@ import Admin from "../pages/Admin/admin";
 import User from "../components/AdminDashboard/user";
 import Order from "../components/AdminDashboard/Order/order";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
-import { TestimonialDescription } from "../pages/Testimonial/testimonial.styles";
-import Testimonials from "../pages/Testimonial/testimonial";
 import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
 import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";

@@ -12,9 +12,11 @@ import {
   CardSection,
   Card,
 } from "./banner.styles";
+import { useNavigate } from "react-router-dom";
 
 // React functional component
 const TopBanner: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <Section>
       <BannerImage>
@@ -32,7 +34,7 @@ const TopBanner: React.FC = () => {
               <span>your #1 marketing tool</span>
             </p>
           </Subtitle>
-          <Button href="https://miblart.com/cover-idea/">
+          <Button onClick={() => navigate("/GetACover")}>
             Get A Free Cover Design Idea
           </Button>
         </BannerContent>

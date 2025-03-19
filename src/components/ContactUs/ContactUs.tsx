@@ -1,4 +1,3 @@
-import React from "react";
 import ContactUsCover from "../../pages/ContactUsCover/ContactUsCover";
 import ContactUsForm from "../../pages/ContactUsForm/ContactUsForm";
 

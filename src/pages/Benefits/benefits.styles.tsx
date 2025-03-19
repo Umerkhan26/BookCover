@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 // Styled Components
 export const BenefitsWrap = styled.section`
-  padding: 60px 0;
+  padding: 60px;
   background-color: #ffffff; /* White background */
   font-family: "Manrope", sans-serif;
 `;
@@ -20,9 +20,11 @@ export const Row = styled.div`
   gap: 20px;
   min-height: 190px;
   margin-top: 20px; /* Add space above the row to separate from the first row */
-  padding: 40px 25px;
+  padding: 10px 25px;
+
   @media (max-width: 600px) {
-    gap: 15px; /* Reduce gap for smaller screens */
+    gap: 15px;
+    padding: 40px 0px;
   }
 `;
 
@@ -64,8 +66,8 @@ export const BenefitItem = styled.div`
   margin-left: -16px;
 
   @media (max-width: 600px) {
-    padding: 30px 20px; /* Adjust padding for smaller screens */
-    min-height: 250px; /* Ensure min height is appropriate for small screens */
+    padding: 30px 20px;
+    min-height: 250px;
   }
 `;
 
@@ -159,6 +161,8 @@ export const FirstRow = styled.div`
   @media (max-width: 600px) {
     flex-direction: column;
     gap: 15px;
+    margin-left: 10px;
+    padding: 10px 5px;
   }
 `;
 
