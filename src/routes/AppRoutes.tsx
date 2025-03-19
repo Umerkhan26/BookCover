@@ -57,15 +57,18 @@ import Admin from "../pages/Admin/admin";
 import User from "../components/AdminDashboard/user";
 import Order from "../components/AdminDashboard/Order/order";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
-import { TestimonialDescription } from "../pages/Testimonial/testimonial.styles";
-import Testimonials from "../pages/Testimonial/testimonial";
+// import { TestimonialDescription } from "../pages/Testimonial/testimonial.styles";
+// import Testimonials from "../pages/Testimonial/testimonial";
 import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
 import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
+// import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
+
       <Route path="/" element={<Layout />}>
+      
         <Route index element={<Home />} />
         <Route path="/book-cover-form" element={<BookCoverForm />} />
         {/* Wrap FictionCover inside Route and pass its props */}
