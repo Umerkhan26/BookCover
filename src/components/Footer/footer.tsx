@@ -150,7 +150,7 @@ const FooterNote = styled.p`
 `;
 
 const BotFooter = styled.div`
-  padding: 0.7rem 0;
+  padding: 0.2rem 0;
   text-align: center;
 `;
 

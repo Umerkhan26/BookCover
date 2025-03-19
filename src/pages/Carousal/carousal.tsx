@@ -163,7 +163,6 @@ import { useState, useEffect } from "react";
 import {
   MainContainer,
   TitleContainer,
-  // Title,
   SliderContainer,
   SliderWrapper,
   Slide,
