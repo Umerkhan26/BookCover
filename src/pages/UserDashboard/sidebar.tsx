@@ -1,230 +1,260 @@
-  import React, { useState } from "react";
-  import styled from "styled-components";
-  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-  import {
-    faListAlt,
-    faReplyAll,
-    faStar,
-    faUser,
-    faFileAlt,
-    faArrowLeft,
-    faSignOutAlt,
-  } from "@fortawesome/free-solid-svg-icons";
-  import { Link, Outlet, useNavigate } from "react-router-dom";
-  import { useAuth } from "../../context/authContext";
-  import logo from "../../assets/logo/Lumestudio-1.png";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faListAlt,
+  faReplyAll,
+  faStar,
+  faArrowLeft,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
+import logo from "../../assets/logo/Lumestudio-1.png";
 
-  interface CollapsibleProps {
-    collapsed: boolean;
+interface CollapsibleProps {
+  collapsed: boolean;
+}
+
+const DashboardContainer = styled.div`
+  display: flex;
+  font-family: "Manrope", sans-serif;
+  height: 100vh;
+  @media (max-width: 768px) {
+    height: 100vh; /* Adjust for mobile screens */
+  }
+`;
+
+const SidebarContainer = styled.aside<CollapsibleProps>`
+  width: ${(props) => (props.collapsed ? "80px" : "210px")};
+  background-color: green;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  box-shadow: 2px 0 5px rgba(50, 180, 33, 0.1);
+  transition: width 0.3s ease;
+  position: fixed;
+  overflow-y: auto;
+  z-index: 999;
+
+  @media (max-width: 768px) {
+    width: ${(props) => (props.collapsed ? "68px" : "100%")}; /* Full width on mobile */
+  }
+`;
+
+const MainContent = styled.div<CollapsibleProps>`
+  flex: 1;
+  padding: 20px;
+  margin-left: ${(props) =>
+    props.collapsed ? "0" : "235px"}; /* Adjust margin based on sidebar width */
+  transition: margin-left 0.3s ease;
+  padding-left: ${(props) => (props.collapsed ? "10px" : "20px")};
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* Take full width when sidebar is collapsed */
+    padding-left: 10px;
+    width: 100%; /* Ensure content takes full width */
+  }
+`;
+
+const SidebarHeader = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    justify-content: center; /* Center logo on mobile */
+  }
+`;
+
+const Logo = styled.img<CollapsibleProps>`
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
+  transition: margin-right 0.3s ease;
+
+  /* Hide logo when collapsed on any screen size */
+  display: ${(props) => (props.collapsed ? "none" : "block")};
+`;
+
+const BrandName = styled.span<CollapsibleProps>`
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffffff;
+  display: ${(props) => (props.collapsed ? "none" : "block")};
+  transition: display 0.3s ease;
+  margin-right: 4px;
+
+  @media (max-width: 768px) {
+    display: none; /* Hide brand name on mobile */
+  }
+`;
+
+const CollapseButton = styled.button`
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: auto;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
   }
 
-  const DashboardContainer = styled.div`
-    display: flex;
-    font-family: "Manrope", sans-serif;
-    height: 100vh;
-  `;
+  @media (max-width: 768px) {
+    display: none; /* Hide collapse button on mobile */
+  }
+`;
 
-  const SidebarContainer = styled.aside<CollapsibleProps>`
-    width: ${(props) => (props.collapsed ? "80px" : "210px")};
-    background-color: green;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-    box-shadow: 2px 0 5px rgba(50, 180, 33, 0.1);
-    transition: width 0.3s ease;
-    position: fixed;
-    overflow-y: auto;
+const NavList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
 
-    /* Hide scrollbar for Chrome, Safari, and Opera */
-    &::-webkit-scrollbar {
-      display: none;
-    }
+const NavItem = styled.li`
+  margin: 10px 0;
+`;
 
-    /* Hide scrollbar for IE, Edge, and Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+const NavLink = styled.a`
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 
-    /* Responsive: Make the sidebar take full width on small screens */
-    @media (max-width: 768px) {
-      width: ${(props) => (props.collapsed ? "0" : "100%")};
-    }
-  `;
+  &:hover {
+    background-color: #34495e;
+  }
+`;
 
-  const SidebarHeader = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 20px;
-  `;
+const Icon = styled(FontAwesomeIcon)<CollapsibleProps>`
+  margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
+  transition: margin-right 0.3s ease;
+`;
 
-  const Logo = styled.img<CollapsibleProps>`
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
-    transition: margin-right 0.3s ease;
-  `;
+const NavTitle = styled.li<CollapsibleProps>`
+  font-size: 14px;
+  font-weight: bold;
+  color: #bdc3c7;
+  margin: 20px 0 10px;
+  text-transform: uppercase;
+  display: ${(props) => (props.collapsed ? "none" : "block")};
+  transition: display 0.3s ease;
 
-  const BrandName = styled.span<CollapsibleProps>`
-    font-size: 13px;
-    font-weight: bold;
-    color: #ffffff;
-    display: ${(props) => (props.collapsed ? "none" : "block")};
-    transition: display 0.3s ease;
-    margin-right: 4px;
-  `;
+  @media (max-width: 768px) {
+    display: none; /* Hide section titles on mobile */
+  }
+`;
 
-  const CollapseButton = styled.button`
-    background: none;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    margin-left: auto;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
+const LinkText = styled.span<CollapsibleProps>`
+  display: ${(props) => (props.collapsed ? "none" : "inline")};
+  transition: display 0.3s ease;
+`;
 
-    &:hover {
-      opacity: 1;
-    }
-  `;
+const UserDashboard: React.FC = () => {
+  const [collapsed, setCollapsed] = useState(true); // Collapse the sidebar by default on mobile
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
-  const NavList = styled.ul`
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  `;
-
-  const NavItem = styled.li`
-    margin: 10px 0;
-  `;
-
-  const NavLink = styled.a`
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: #34495e;
-    }
-  `;
-
-  const Icon = styled(FontAwesomeIcon)<CollapsibleProps>`
-    margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
-    transition: margin-right 0.3s ease;
-  `;
-
-  const NavTitle = styled.li<CollapsibleProps>`
-    font-size: 14px;
-    font-weight: bold;
-    color: #bdc3c7;
-    margin: 20px 0 10px;
-    text-transform: uppercase;
-    display: ${(props) => (props.collapsed ? "none" : "block")};
-    transition: display 0.3s ease;
-  `;
-
-  const LinkText = styled.span<CollapsibleProps>`
-    display: ${(props) => (props.collapsed ? "none" : "inline")};
-    transition: display 0.3s ease;
-  `;
-
-  const MainContent = styled.div<CollapsibleProps>`
-    flex: 1;
-    padding: 20px;
-    margin-left: ${(props) =>
-      props.collapsed
-        ? "80px"
-        : "235px"}; /* Adjust margin based on sidebar width */
-    transition: margin-left 0.3s ease;
-    padding-left: ${(props) => (props.collapsed ? "5px" : "20px")};
-
-    @media (max-width: 768px) {
-      margin-left: 0;
-      padding-left: 10px;
-    }
-  `;
-
-  const UserDashboard: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
-    const navigate = useNavigate();
-    const { logout } = useAuth();
-
-    const toggleCollapse = () => {
-      setCollapsed(!collapsed);
+  // Update the sidebar state based on screen width
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setCollapsed(false); // Open sidebar on large screens
+      } else {
+        setCollapsed(true); // Collapse sidebar on small screens
+      }
     };
 
-    const handleLogout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/");
-      logout();
-    };
+    // Initial check
+    handleResize();
 
-    return (
-      <DashboardContainer>
-        <SidebarContainer collapsed={collapsed}>
-          <SidebarHeader>
-            <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />
-            <BrandName collapsed={collapsed}>Lumeart Studio</BrandName>
-            <CollapseButton onClick={toggleCollapse}>
-              <FontAwesomeIcon icon={faArrowLeft} />
-            </CollapseButton>
-          </SidebarHeader>
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
 
-          <NavList>
-            <NavTitle collapsed={collapsed}>Activity</NavTitle>
-            <NavItem>
-              <NavLink as={Link} to="/portal/orders" aria-label="My Orders">
-                <Icon icon={faListAlt} collapsed={collapsed} />
-                <LinkText collapsed={collapsed}>My Orders</LinkText>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink as={Link} to="/" >
-                <Icon icon={faReplyAll} collapsed={collapsed} />
-                <LinkText collapsed={collapsed}>Back to site</LinkText>
-              </NavLink>
-            </NavItem>
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-            <NavTitle collapsed={collapsed}>Reviews and tips</NavTitle>
-            <NavItem>
-              <NavLink href="https://www.facebook.com/miblart" target="_blank">
-                <Icon icon={faStar} collapsed={collapsed} />
-                <LinkText collapsed={collapsed}>Post a review</LinkText>
-              </NavLink>
-            </NavItem>
-
-            <NavTitle collapsed={collapsed}>Account and billing</NavTitle>
-            <NavItem>
-              <NavLink as={Link} to="/portal/profile" aria-label="My Orders">
-                <Icon icon={faUser} collapsed={collapsed} />
-                <LinkText collapsed={collapsed}>My profile</LinkText>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink as={Link} to="/portal/invoices" aria-label="My Invoices">
-                <Icon icon={faFileAlt} collapsed={collapsed} />
-                <LinkText collapsed={collapsed}>Invoices</LinkText>
-              </NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink as="button" onClick={handleLogout}>
-                <Icon icon={faSignOutAlt} collapsed={collapsed} />
-                <LinkText collapsed={collapsed}>Sign Out</LinkText>
-              </NavLink>
-            </NavItem>
-          </NavList>
-        </SidebarContainer>
-        <MainContent collapsed={collapsed}>
-          <Outlet />
-        </MainContent>
-      </DashboardContainer>
-    );
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
   };
 
-  export default UserDashboard;
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+    logout();
+  };
+
+  return (
+    <DashboardContainer>
+      <SidebarContainer collapsed={collapsed}>
+        <SidebarHeader>
+          <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />
+          <BrandName collapsed={collapsed}>Lumeart Studio</BrandName>
+          <CollapseButton onClick={toggleCollapse}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </CollapseButton>
+        </SidebarHeader>
+
+        <NavList>
+          <NavTitle collapsed={collapsed}>Activity</NavTitle>
+          <NavItem>
+            <NavLink as={Link} to="/portal/orders" aria-label="My Orders">
+              <Icon icon={faListAlt} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>My Orders</LinkText>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink as={Link} to="/">
+              <Icon icon={faReplyAll} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Back to site</LinkText>
+            </NavLink>
+          </NavItem>
+
+          <NavTitle collapsed={collapsed}>Reviews and tips</NavTitle>
+          <NavItem>
+            <NavLink href="https://www.facebook.com/miblart" target="_blank">
+              <Icon icon={faStar} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Post a review</LinkText>
+            </NavLink>
+          </NavItem>
+
+          {/* <NavTitle collapsed={collapsed}>Account and billing</NavTitle> */}
+          {/* <NavItem>
+            <NavLink as={Link} to="/portal/profile" aria-label="My Orders">
+              <Icon icon={faUser} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>My profile</LinkText>
+            </NavLink>
+          </NavItem> */}
+          {/* <NavItem>
+            <NavLink as={Link} to="/portal/invoices" aria-label="My Invoices">
+              <Icon icon={faFileAlt} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Invoices</LinkText>
+            </NavLink>
+          </NavItem> */}
+
+          <NavItem>
+            <NavLink as="button" onClick={handleLogout}>
+              <Icon icon={faSignOutAlt} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Sign Out</LinkText>
+            </NavLink>
+          </NavItem>
+        </NavList>
+      </SidebarContainer>
+      <MainContent collapsed={collapsed}>
+        <Outlet />
+      </MainContent>
+    </DashboardContainer>
+  );
+};
+
+export default UserDashboard;

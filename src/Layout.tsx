@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer, { FooterProps } from "./components/Footer/footer";
+// import TopBar from "./components/TopBar/TopBar";
 
 // import Footer from "./components/Footer/Footer2";
 
@@ -65,6 +66,8 @@ const footerData: FooterProps = {
 const Layout: React.FC = () => {
   return (
     <>
+    
+    {/* <TopBar/> */}
       <Header />
       <main>
         <Outlet />
