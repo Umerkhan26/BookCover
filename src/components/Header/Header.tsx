@@ -3,6 +3,8 @@
 // import { NavLink, useNavigate } from "react-router-dom";
 // import logo from "../../assets/logo/Lumestudio-1.png";
 // import { useAuth } from "../../context/authContext";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 // interface NavNBtnProps {
 //   isMenuOpen: boolean;
@@ -12,6 +14,7 @@
 //   body {
 //     margin: 0;
 //     padding: 0;
+//     font-family: "Manrope", sans-serif;
 //   }
 
 //   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -33,7 +36,6 @@
 //   padding: 20px 40px;
 //   background-color: #fff;
 //   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//   font-family: "Manrope", sans-serif;
 //   position: fixed;
 //   top: 0;
 //   left: 0;
@@ -44,13 +46,8 @@
 
 // const Logo = styled.img`
 //   height: 35px;
-//   // height: 35px;
 //   width: auto;
-// <<<<<<< HEAD
-//   margin-right: 25px;
-// =======
-//   margin-right:50px;
-// >>>>>>> 9c2af608a2cfb9e304ad7ea7962b7428907b9bfa
+//   margin-right: 50px;
 //   display: block;
 
 //   @media (max-width: 768px) {
@@ -119,7 +116,6 @@
 //   margin: 0 auto;
 
 //   @media (max-width: 768px) {
-//     // justify-content: space-between;
 //     width: 100%;
 //   }
 // `;
@@ -130,8 +126,8 @@
 //   top: 100%;
 //   left: 0;
 //   height: auto;
-//   max-height: 200px; /* Set max height for dropdown */
-//   overflow-y: auto; /* Enable vertical scroll */
+//   max-height: 200px;
+//   overflow-y: auto;
 //   background-color: #fff;
 //   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 //   padding: 15px;
@@ -141,7 +137,7 @@
 //   flex-wrap: wrap;
 //   width: 100vw;
 //   margin-left: -13vw;
-//   transition: opacity 0.3s ease;
+//   transition: opacity 0.3s ease, transform 0.3s ease;
 //   opacity: 0;
 //   pointer-events: none;
 //   gap: 6px;
@@ -150,6 +146,14 @@
 //     display: flex;
 //     opacity: 1;
 //     pointer-events: auto;
+//   }
+
+//   @media (max-width: 768px) {
+//     position: static;
+//     width: 100%;
+//     margin-left: 0;
+//     box-shadow: none;
+//     background-color: transparent;
 //   }
 // `;
 
@@ -188,8 +192,8 @@
 //   @media (max-width: 768px) {
 //     display: flex;
 //     position: absolute;
-//     top: 25px; /* Adjust this value */
-//     right: 10px; /* Adjust this value */
+//     top: 20px;
+//     right: 20px;
 //     z-index: 1100;
 //   }
 // `;
@@ -209,31 +213,26 @@
 
 //   @media (max-width: 768px) {
 //     width: 100%;
-//     justify-content: center; /* Center the contact button */
+//     justify-content: center;
 //     margin-top: 10px;
 //   }
 // `;
+
 // const NavNBtn = styled.nav<NavNBtnProps>`
-//   display: flex;
+//   display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
 //   align-items: center;
 //   flex-grow: 1;
-//   padding: 0;
 //   justify-content: flex-start;
+//   background-color: white;
+//   transition: opacity 0.3s ease, transform 0.3s ease;
 
 //   @media (max-width: 768px) {
-//     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
-//     flex-direction: column;
 //     position: absolute;
-//     top: 0;
+//     top: 75px;
 //     left: 0;
 //     width: 100vw;
-//     height: 100vh;
-//     max-height: 100vh;
-//     overflow-y: auto;
-//     background-color: white;
-//     z-index: 1000;
-//     padding: 20px;
-//     align-items: flex-start;
+//     height: calc(100vh - 75px);
+//     flex-direction: column;
 //     gap: 15px;
 //   }
 // `;
@@ -251,24 +250,9 @@
 // const ServicesLink = styled(NavLinkButton)`
 //   position: relative;
 //   padding-right: 30px;
-
-//   &::after {
-//     content: "▼";
-//     position: absolute;
-//     right: 10px;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     font-size: 12px;
-//     transition: transform 0.3s ease;
-
-//     @media (min-width: 769px) {
-//       display: none;
-//     }
-//   }
-
-//   &.active::after {
-//     transform: translateY(-50%) rotate(180deg);
-//   }
+//   display: flex;
+//   align-items: center;
+//   gap: 8px; // Add spacing between text and icon
 // `;
 
 // const DropdownContainer = styled.div`
@@ -280,12 +264,18 @@
 //     opacity: 1;
 //     pointer-events: auto;
 //   }
+
+//   @media (max-width: 768px) {
+//     width: 100%;
+//   }
 // `;
 
 // function Header() {
 //   const [isMenuOpen, setIsMenuOpen] = useState(false);
 //   const [isServicesOpen, setIsServicesOpen] = useState(false);
 //   const menuRef = useRef<HTMLDivElement>(null);
+//   const servicesRef = useRef<HTMLDivElement>(null); // Ref for the Services dropdown
+//   const servicesToggleRef = useRef<HTMLAnchorElement>(null); // Ref for the Services toggle button
 
 //   const { isAuthenticated } = useAuth();
 //   const navigate = useNavigate();
@@ -301,35 +291,35 @@
 
 //   const toggleMenu = () => {
 //     setIsMenuOpen((prev) => !prev);
-//     console.log("Toggling menu, updated state:", !isMenuOpen);
-//     setIsServicesOpen(false);
+//     console.log("NavNBtn Clicked! isMenuOpen:", !isMenuOpen);
+//     if (!isMenuOpen) setIsServicesOpen(false);
 //   };
 
-//   const toggleServices = () => {
+//   const toggleServices = (e: React.MouseEvent) => {
+//     e.stopPropagation();
 //     setIsServicesOpen((prev) => !prev);
+//     console.log("Services Clicked! isServicesOpen:", !isServicesOpen);
 //   };
 
-//   // Close the menu when clicking outside
 //   useEffect(() => {
 //     const handleClickOutside = (event: MouseEvent) => {
-//       if (
-//         menuRef.current &&
-//         !menuRef.current.contains(event.target as Node) &&
-//         isMenuOpen
-//       ) {
+//       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
 //         setIsMenuOpen(false);
-//         setIsServicesOpen(false);
 //       }
 //     };
 
 //     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, [isMenuOpen]);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, []);
+
 //   const handleCloseMenu = () => {
 //     setIsMenuOpen(false);
 //     setIsServicesOpen(false);
+//   };
+
+//   const closeMenu = () => {
+//     setIsMenuOpen(false);
+//     console.log("Menu Closed!");
 //   };
 
 //   return (
@@ -347,69 +337,111 @@
 //           </ContactUsWrapper>
 
 //           <div ref={menuRef}>
-//             <HamburgerMenu
-//               onClick={(e) => {
-//                 e.stopPropagation();
-//                 toggleMenu();
-//               }}
-//             >
+//             <HamburgerMenu onClick={toggleMenu}>
 //               {isMenuOpen ? <MenuIcon>✖</MenuIcon> : <MenuIcon>☰</MenuIcon>}
 //             </HamburgerMenu>
 //           </div>
 
-//           <NavNBtn
-//             isMenuOpen={isMenuOpen}
-//             className="scrollable-menu"
-//             ref={menuRef}
-//           >
-//             <DropdownContainer>
+//           {/* Services Dropdown (Outside NavNBtn for desktop, inside for mobile) */}
+//           {window.innerWidth > 768 && (
+//             <DropdownContainer ref={servicesRef}>
 //               <ServicesLink
 //                 to="/services"
 //                 onClick={toggleServices}
 //                 className={isServicesOpen ? "active" : ""}
+//                 ref={servicesToggleRef} // Add ref to the toggle button
 //               >
 //                 Services
+//                 <FontAwesomeIcon
+//                   icon={isServicesOpen ? faChevronUp : faChevronDown}
+//                   style={{ fontSize: "12px" }}
+//                 />
 //               </ServicesLink>
 //               <DropdownMenu className={isServicesOpen ? "active" : ""}>
-//                 <DropdownItem to="/fictionCover">
+//                 <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
 //                   Fiction Cover Design
 //                 </DropdownItem>
-//                 <DropdownItem to="/illustrated">
+//                 <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
 //                   Illustrated Cover Design
 //                 </DropdownItem>
-//                 <DropdownItem to="/bookCoverRedesign">
+//                 <DropdownItem to="/bookCoverRedesign" onClick={handleCloseMenu}>
 //                   Book Covers Redesign
 //                 </DropdownItem>
-//                 <DropdownItem to="/nonFiction">
+//                 <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
 //                   Non-Fiction Cover Design
 //                 </DropdownItem>
-//                 {/* <DropdownItem to="/portfolio-2">
-//                     Premium Cover Design
-//                   </DropdownItem> */}
-//                 <DropdownItem to="/audioBookCover">
+//                 <DropdownItem to="/audioBookCover" onClick={handleCloseMenu}>
 //                   Audiobook Cover Design
 //                 </DropdownItem>
-//                 <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
+//                 <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
+//                   Logo & Branding
+//                 </DropdownItem>
 //               </DropdownMenu>
 //             </DropdownContainer>
+//           )}
 
-//             <NavLinkButton to="/portfolio" onClick={handleCloseMenu}>
+//           {/* Main Menu */}
+//           <NavNBtn
+//           isMenuOpen={isMenuOpen}
+//             onClick={() => console.log("NavNBtn Clicked!")}
+//           >
+//             <NavLinkButton to="/portfolio" onClick={() => alert("Clicked!")}>
 //               Portfolio
 //             </NavLinkButton>
-//             <NavLinkButton to="/aboutUs" onClick={handleCloseMenu}>
+//             <NavLinkButton to="/aboutUs" onClick={closeMenu}>
 //               About Us
 //             </NavLinkButton>
-//             <NavLinkButton to="/FAQs" onClick={handleCloseMenu}>
+//             <NavLinkButton to="/FAQs" onClick={closeMenu}>
 //               FAQ
 //             </NavLinkButton>
-//             <NavLinkButton to="/contactUs" onClick={handleCloseMenu}>
+//             <NavLinkButton to="/contactUs" onClick={closeMenu}>
 //               Contact Us
 //             </NavLinkButton>
-//             <NavLinkButton to="/partner" onClick={handleCloseMenu}>
+//             <NavLinkButton to="/partner" onClick={() => setIsMenuOpen(false)}>
 //               Partner With Us
 //             </NavLinkButton>
 
-//             {/* Conditionally render "Client Portal" and "Get a Cover" based on screen size */}
+//             {/* Conditionally render Services Dropdown inside NavNBtn for mobile */}
+//             {window.innerWidth <= 768 && (
+//               <DropdownContainer ref={servicesRef}>
+//                 <ServicesLink
+//                   to="/services"
+//                   onClick={toggleServices}
+//                   className={isServicesOpen ? "active" : ""}
+//                   ref={servicesToggleRef} // Add ref to the toggle button
+//                 >
+//                   Services
+//                   <FontAwesomeIcon
+//                     icon={isServicesOpen ? faChevronUp : faChevronDown}
+//                     style={{ fontSize: "12px" }}
+//                   />
+//                 </ServicesLink>
+//                 <DropdownMenu className={isServicesOpen ? "active" : ""}>
+//                   <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
+//                     Fiction Cover Design
+//                   </DropdownItem>
+//                   <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
+//                     Illustrated Cover Design
+//                   </DropdownItem>
+//                   <DropdownItem
+//                     to="/bookCoverRedesign"
+//                     onClick={handleCloseMenu}
+//                   >
+//                     Book Covers Redesign
+//                   </DropdownItem>
+//                   <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
+//                     Non-Fiction Cover Design
+//                   </DropdownItem>
+//                   <DropdownItem to="/audioBookCover" onClick={handleCloseMenu}>
+//                     Audiobook Cover Design
+//                   </DropdownItem>
+//                   <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
+//                     Logo & Branding
+//                   </DropdownItem>
+//                 </DropdownMenu>
+//               </DropdownContainer>
+//             )}
+
 //             {!isMenuOpen && (
 //               <>
 //                 <NavText to="/portal/orders" onClick={handleNavigation}>
@@ -432,6 +464,8 @@ import styled, { createGlobalStyle } from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.png";
 import { useAuth } from "../../context/authContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 interface NavNBtnProps {
   isMenuOpen: boolean;
@@ -499,6 +533,11 @@ const NavLinkButton = styled(NavLink)`
     color: #14b8b8;
     background: rgba(255, 255, 255, 0.6);
   }
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+    padding: 15px 42px;
+  }
 `;
 
 const NavButton = styled(NavLink)`
@@ -547,6 +586,126 @@ const HeaderContainer = styled.div`
   }
 `;
 
+const DropdownItem = styled(NavLink)`
+  color: #6d6d6d;
+  text-decoration: none;
+  padding: 18px 10px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(30% - 10px);
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+
+  &:hover {
+    color: #14b8b8;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 20px;
+  }
+`;
+
+const HamburgerMenu = styled.div`
+  display: none;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+  }
+`;
+
+const MenuIcon = styled.span`
+  font-size: 32px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 12px;
+`;
+
+const ContactUsWrapper = styled.div`
+  display: flex;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+`;
+
+const NavNBtn = styled.nav<NavNBtnProps>`
+  display: flex; // Always display on desktop
+  align-items: start; // Align items horizontally
+  flex-grow: 1;
+  justify-content: flex-start;
+  background-color: white;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  @media (max-width: 768px) {
+    display: ${({ isMenuOpen }) =>
+      isMenuOpen
+        ? "flex"
+        : "none"}; // Only show on mobile when isMenuOpen is true
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 75px);
+    flex-direction: column;
+    gap: 15px;
+    font-size: 22px;
+    padding: 15px 0px;
+  }
+`;
+
+const MobileContactButton = styled(NavButton)`
+  display: none;
+  padding: 6px 16px;
+  margin-right: -3rem;
+
+  @media (max-width: 768px) {
+    display: inline-block;
+  }
+`;
+
+const ServicesLink = styled(NavLinkButton)`
+  position: relative;
+  padding-right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+    padding: 15px 42px;
+  }
+`;
+
+const DropdownContainer = styled.div`
+  position: relative;
+  display: inline-block;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
 const DropdownMenu = styled.div`
   display: none;
   position: absolute;
@@ -584,150 +743,28 @@ const DropdownMenu = styled.div`
   }
 `;
 
-const DropdownItem = styled(NavLink)`
-  color: #6d6d6d;
-  text-decoration: none;
-  padding: 18px 10px;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: calc(30% - 10px);
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 5px;
-
-  &:hover {
-    color: #14b8b8;
-    background: rgba(255, 255, 255, 0.6);
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const HamburgerMenu = styled.div`
-  display: none;
-  cursor: pointer;
-  width: 35px;
-  height: 35px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-
-  @media (max-width: 768px) {
-    display: flex;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1100;
-  }
-`;
-
-const MenuIcon = styled.span`
-  font-size: 28px;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const ContactUsWrapper = styled.div`
-  display: flex;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    justify-content: center;
-    margin-top: 10px;
-  }
-`;
-
-const NavNBtn = styled.nav<NavNBtnProps>`
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  padding: 0;
-  justify-content: flex-start;
-
-  @media (max-width: 768px) {
-    display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
-    flex-direction: column;
-    position: absolute;
-    top: 75px;
-    left: 0;
-    width: 100vw;
-    height: calc(100vh - 75px);
-    max-height: calc(100vh - 75px);
-    overflow-y: auto;
-    background-color: white;
-    z-index: 1000;
-    padding: 20px;
-    align-items: flex-start;
-    gap: 15px;
-    transition: transform 0.3s ease;
-    transform: ${({ isMenuOpen }) =>
-      isMenuOpen ? "translateX(0)" : "translateX(-100%)"};
-  }
-`;
-
-const MobileContactButton = styled(NavButton)`
-  display: none;
-  padding: 6px 16px;
-  margin-right: -3rem;
-
-  @media (max-width: 768px) {
-    display: inline-block;
-  }
-`;
-
-const ServicesLink = styled(NavLinkButton)`
-  position: relative;
-  padding-right: 30px;
-
-  &::after {
-    content: "▼";
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 12px;
-    transition: transform 0.3s ease;
-
-    @media (min-width: 769px) {
-      display: none;
-    }
-  }
-
-  &.active::after {
-    transform: translateY(-50%) rotate(180deg);
-  }
-`;
-
-const DropdownContainer = styled.div`
-  position: relative;
-  display: inline-block;
-
-  &:hover ${DropdownMenu} {
-    display: flex;
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Track screen size
   const menuRef = useRef<HTMLDivElement>(null);
+  const navNBtnRef = useRef<HTMLDivElement>(null);
+
+  const servicesRef = useRef<HTMLDivElement>(null); // Ref for the Services dropdown
+  const servicesToggleRef = useRef<HTMLAnchorElement>(null); // Ref for the Services toggle button
 
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  // Handle window resize to update isMobile state
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleNavigation = () => {
     if (!isAuthenticated) {
@@ -739,32 +776,42 @@ function Header() {
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-    if (!isMenuOpen) setIsServicesOpen(false); // Reset services dropdown when opening
+    setIsMenuOpen((prev) => {
+      console.log("Toggling menu, new state:", !prev);
+      return !prev;
+    });
   };
 
   const toggleServices = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent event bubbling
+    e.stopPropagation();
     setIsServicesOpen((prev) => !prev);
+    console.log("Services Clicked! isServicesOpen:", !isServicesOpen);
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        navNBtnRef.current &&
+        !navNBtnRef.current.contains(event.target as Node)
+      ) {
         setIsMenuOpen(false);
-        setIsServicesOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleCloseMenu = () => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    console.log("Menu Closed!");
   };
 
   return (
@@ -782,102 +829,112 @@ function Header() {
           </ContactUsWrapper>
 
           <div ref={menuRef}>
-            <HamburgerMenu
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleMenu();
-              }}
-            >
+            <HamburgerMenu onClick={toggleMenu}>
               {isMenuOpen ? <MenuIcon>✖</MenuIcon> : <MenuIcon>☰</MenuIcon>}
             </HamburgerMenu>
           </div>
 
           {/* Services Dropdown (Outside NavNBtn for desktop, inside for mobile) */}
-          <DropdownContainer>
-            <ServicesLink
-              to="/services"
-              onClick={toggleServices}
-              className={isServicesOpen ? "active" : ""}
-            >
-              Services
-            </ServicesLink>
-            <DropdownMenu className={isServicesOpen ? "active" : ""}>
-              <DropdownItem to="/fictionCover">
-                Fiction Cover Design
-              </DropdownItem>
-              <DropdownItem to="/illustrated">
-                Illustrated Cover Design
-              </DropdownItem>
-              <DropdownItem to="/bookCoverRedesign">
-                Book Covers Redesign
-              </DropdownItem>
-              <DropdownItem to="/nonFiction">
-                Non-Fiction Cover Design
-              </DropdownItem>
-              <DropdownItem to="/audioBookCover">
-                Audiobook Cover Design
-              </DropdownItem>
-              <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
-            </DropdownMenu>
-          </DropdownContainer>
+          {!isMobile && (
+            <DropdownContainer ref={servicesRef}>
+              <ServicesLink
+                to="/services"
+                onClick={toggleServices}
+                className={isServicesOpen ? "active" : ""}
+                ref={servicesToggleRef}
+              >
+                Services
+              </ServicesLink>
+              <DropdownMenu className={isServicesOpen ? "active" : ""}>
+                <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
+                  Fiction Cover Design
+                </DropdownItem>
+                <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
+                  Illustrated Cover Design
+                </DropdownItem>
+                <DropdownItem to="/bookCoverRedesign" onClick={handleCloseMenu}>
+                  Book Covers Redesign
+                </DropdownItem>
+                <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
+                  Non-Fiction Cover Design
+                </DropdownItem>
+                <DropdownItem to="/audioBookCover" onClick={handleCloseMenu}>
+                  Audiobook Cover Design
+                </DropdownItem>
+                <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
+                  Logo & Branding
+                </DropdownItem>
+              </DropdownMenu>
+            </DropdownContainer>
+          )}
 
           {/* Main Menu */}
-          <NavNBtn isMenuOpen={isMenuOpen} className="scrollable-menu">
+          <NavNBtn
+            ref={navNBtnRef}
+            isMenuOpen={isMenuOpen}
+            onClick={toggleMenu}
+          >
+            <NavLinkButton to="/portfolio" onClick={closeMenu}>
+              Portfolio
+            </NavLinkButton>
+            <NavLinkButton to="/aboutUs" onClick={closeMenu}>
+              About Us
+            </NavLinkButton>
+            <NavLinkButton to="/FAQs" onClick={closeMenu}>
+              FAQ
+            </NavLinkButton>
+            <NavLinkButton to="/contactUs" onClick={closeMenu}>
+              Contact Us
+            </NavLinkButton>
+            <NavLinkButton to="/partner" onClick={closeMenu}>
+              Partner With Us
+            </NavLinkButton>
+
             {/* Conditionally render Services Dropdown inside NavNBtn for mobile */}
-            {window.innerWidth <= 768 && (
-              <DropdownContainer>
+            {isMobile && (
+              <DropdownContainer ref={servicesRef}>
                 <ServicesLink
                   to="/services"
                   onClick={toggleServices}
                   className={isServicesOpen ? "active" : ""}
+                  ref={servicesToggleRef}
                 >
                   Services
+                  <FontAwesomeIcon
+                    icon={isServicesOpen ? faChevronUp : faChevronDown}
+                    style={{ fontSize: "12px" }}
+                  />
                 </ServicesLink>
                 <DropdownMenu className={isServicesOpen ? "active" : ""}>
-                  <DropdownItem to="/fictionCover">
+                  <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
                     Fiction Cover Design
                   </DropdownItem>
-                  <DropdownItem to="/illustrated">
+                  <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
                     Illustrated Cover Design
                   </DropdownItem>
-                  <DropdownItem to="/bookCoverRedesign">
+                  <DropdownItem
+                    to="/bookCoverRedesign"
+                    onClick={handleCloseMenu}
+                  >
                     Book Covers Redesign
                   </DropdownItem>
-                  <DropdownItem to="/nonFiction">
+                  <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
                     Non-Fiction Cover Design
                   </DropdownItem>
-                  <DropdownItem to="/audioBookCover">
+                  <DropdownItem to="/audioBookCover" onClick={handleCloseMenu}>
                     Audiobook Cover Design
                   </DropdownItem>
-                  <DropdownItem to="/logoBrand">Logo & Branding</DropdownItem>
+                  <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
+                    Logo & Branding
+                  </DropdownItem>
                 </DropdownMenu>
               </DropdownContainer>
             )}
 
-            <NavLinkButton to="/portfolio" onClick={handleCloseMenu}>
-              Portfolio
-            </NavLinkButton>
-            <NavLinkButton to="/aboutUs" onClick={handleCloseMenu}>
-              About Us
-            </NavLinkButton>
-            <NavLinkButton to="/FAQs" onClick={handleCloseMenu}>
-              FAQ
-            </NavLinkButton>
-            <NavLinkButton to="/contactUs" onClick={handleCloseMenu}>
-              Contact Us
-            </NavLinkButton>
-            <NavLinkButton to="/partner" onClick={handleCloseMenu}>
-              Partner With Us
-            </NavLinkButton>
-
-            {!isMenuOpen && (
-              <>
-                <NavText to="/portal/orders" onClick={handleNavigation}>
-                  Client Portal
-                </NavText>
-                <NavButton to="/GetACover">Get a Cover</NavButton>
-              </>
-            )}
+            <NavText to="/portal/orders" onClick={handleNavigation}>
+              Client Portal
+            </NavText>
+            <NavButton to="/GetACover">Get a Cover</NavButton>
           </NavNBtn>
         </HeaderContainer>
       </Nav>
