@@ -8,12 +8,12 @@ import {
   HeaderSection,
   Title,
   UserCount,
-  SearchInput,
-  AddUserButton,
+
   Table,
   TableHeader,
   TableRow,
   TableData,
+  Button,
 } from "./user.styles";
 
 interface User {
@@ -108,118 +108,64 @@ const User: React.FC = () => {
     }
   };
 
+  
+  
   return (
     <Container>
       <HeaderSection>
         <div>
           <Title>All Users</Title>
-          <UserCount>({users.length})</UserCount>{" "}
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <SearchInput type="text" placeholder="Search users..." />
-          <AddUserButton>Add User</AddUserButton>
+          <UserCount>({users.length})</UserCount>
         </div>
       </HeaderSection>
-
+  
       <Table>
         <thead>
           <tr>
-            <TableHeader>ID</TableHeader>
+            <TableHeader className="id-column">ID</TableHeader>
             <TableHeader>Name</TableHeader>
-            <TableHeader>Email</TableHeader>
-            <TableHeader>Role</TableHeader>
-            <TableHeader>Action</TableHeader>
+            <TableHeader className="email-column">Email</TableHeader>
+            <TableHeader className="role-column">Role</TableHeader>
+            <TableHeader className="action-column">Action</TableHeader>
           </tr>
         </thead>
         <tbody>
           {users.map((user, index) => (
             <TableRow key={user.id}>
-              <TableData>{index + 1}</TableData>
+              <TableData className="id-column">{index + 1}</TableData>
               <TableData>{`${user.firstName} ${user.lastName}`}</TableData>
-              <TableData>{user.email}</TableData>
-              <TableData>{user.role}</TableData>
-              <TableData>
+              <TableData className="email-column">{user.email}</TableData>
+                <TableData>{user.role}</TableData>
+              <TableData className="action-column">
                 {editingStatusUserId === user.userId ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "5px",
-                      alignItems: "center",
-                    }}
-                  >
-                    <button
-                      onClick={() =>
-                        handleStatusOptionChange(user.userId, "Active")
-                      }
-                      style={{
-                        backgroundColor:
-                          user.status === "active" ? "green" : "green",
-                        color: "white",
-                        padding: "7px 15px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
+                  <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                    <Button
+                      onClick={() => handleStatusOptionChange(user.userId, "Active")}
+                      bgColor={user.status === "active" ? "green" : "green"}
                     >
                       Active
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleStatusOptionChange(user.userId, "Blocked")
-                      }
-                      style={{
-                        backgroundColor:
-                          user.status === "inactive" ? "#dc3545" : "green",
-                        color: "white",
-                        padding: "7px 10px",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "5px",
-                      }}
+                    </Button>
+                    <Button
+                      onClick={() => handleStatusOptionChange(user.userId, "Blocked")}
+                      bgColor={user.status === "inactive" ? "#dc3545" : "green"}
                     >
                       Block
-                    </button>
-                    <button
-                      onClick={() => handleDeleteUser(user)}
-                      className="btn btn-danger ms-2"
-                      style={{
-                        padding: "7px 9px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
-                    >
+                    </Button>
+                    <Button onClick={() => handleDeleteUser(user)} bgColor="#dc3545">
                       Delete
-                    </button>
+                    </Button>
                   </div>
                 ) : (
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <button
+                    <Button
                       onClick={() => toggleStatusButtons(user.userId)}
-                      style={{
-                        backgroundColor:
-                          user.status === "active" ? "green" : "#dc3545",
-                        color: "white",
-                        padding: "7px 9px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
+                      bgColor={user.status === "active" ? "green" : "#dc3545"}
                     >
                       {user.status === "active" ? "Active" : "Blocked"}
-                    </button>
-                    <button
-                      onClick={() => handleDeleteUser(user)}
-                      className="btn btn-danger ms-2"
-                      style={{
-                        padding: "7px 10px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
-                    >
+                    </Button>
+                    <Button onClick={() => handleDeleteUser(user)} bgColor="#dc3545">
                       Delete
-                    </button>
+                    </Button>
                   </div>
                 )}
               </TableData>
@@ -229,6 +175,10 @@ const User: React.FC = () => {
       </Table>
     </Container>
   );
+  
+
+  
+  
 };
 
 export default User;

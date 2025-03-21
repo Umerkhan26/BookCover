@@ -57,15 +57,15 @@ const AdminCoverIdea: React.FC = () => {
         <Table>
           <thead>
             <tr>
-              <TableHeader>ID</TableHeader>
-              <TableHeader>User Name</TableHeader>
-              <TableHeader>Email</TableHeader>
+              <TableHeader className="header-id">ID</TableHeader>
+              <TableHeader className="header-username">User Name</TableHeader>
+              <TableHeader className="header-email">Email</TableHeader>
 
-              <TableHeader>Book Title</TableHeader>
-              <TableHeader>Genre</TableHeader>
-              <TableHeader>Is Series?</TableHeader>
-              <TableHeader>Cover Preference</TableHeader>
-              <TableHeader>More Info</TableHeader>
+              <TableHeader className="header-booktitle">Book Title</TableHeader>
+              <TableHeader className="header-genre">Genre</TableHeader>
+              <TableHeader className="header-series">Is Series?</TableHeader>
+              <TableHeader className="header-cover">Cover Preference</TableHeader>
+              <TableHeader className="header-moreinfo">More Info</TableHeader>
             </tr>
           </thead>
           <tbody>
@@ -73,15 +73,15 @@ const AdminCoverIdea: React.FC = () => {
             {bookRequests.length > 0 ? (
               bookRequests.map((bookRequest) => (
                 <TableRow key={bookRequest._id}>
-                  <TableData>{bookRequest._id}</TableData>
-                  <TableData>{bookRequest.name}</TableData>
-                  <TableData>{bookRequest.email}</TableData>
+                  <TableData className="book-id">{bookRequest._id}</TableData>
+                  <TableData className="user-name">{bookRequest.name}</TableData>
+                  <TableData className="book-email">{bookRequest.email}</TableData>
 
-                  <TableData>{bookRequest.title}</TableData>
-                  <TableData>{bookRequest.genre}</TableData>
-                  <TableData>{bookRequest.isSeries ? "Yes" : "No"}</TableData>
-<TableData>{bookRequest.coverPreference?.join(", ")}</TableData>
-                  <TableData>
+                  <TableData className="book-title">{bookRequest.title}</TableData>
+                  <TableData className="book-genre">{bookRequest.genre}</TableData>
+                  <TableData className="book-series">{bookRequest.isSeries ? "Yes" : "No"}</TableData>
+<TableData className="book-cover">{bookRequest.coverPreference?.join(", ")}</TableData>
+                  <TableData className="book-button">
                     <button className="font-bold text-green-600 text-lg" onClick={() => handleInfoClick(bookRequest)}>
                       Info
                     </button>

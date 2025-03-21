@@ -9,10 +9,13 @@ export const Container = styled.div`
 
   @media (max-width: 768px) {
     padding: 15px;
+    margin-left:65px;
   }
 
   @media (max-width: 480px) {
     padding: 10px;
+        margin-left:65px;
+
   }
 `;
 
@@ -38,6 +41,14 @@ export const TableHeader = styled.th`
   color: black;
   font-weight: bold;
 
+  &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
+    display: table-cell; /* Ensure they are visible by default */
+  }
+
+  &.header-username, &.header-booktitle, &.header-moreinfo {
+    display: table-cell;
+  }
+
   @media (max-width: 768px) {
     padding: 8px;
     font-size: 12px;
@@ -46,6 +57,10 @@ export const TableHeader = styled.th`
   @media (max-width: 480px) {
     padding: 6px;
     font-size: 10px;
+
+    &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
+      display: none;
+    }
   }
 `;
 
@@ -57,6 +72,14 @@ export const TableData = styled.td`
   margin-top: 18px;
   border-bottom: 1px solid #ececec;
 
+  &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover {
+    display: table-cell;
+  }
+
+  &.book-username, &.book-title, &.book-moreinfo {
+    display: table-cell;
+  }
+
   @media (max-width: 768px) {
     padding: 8px;
     font-size: 12px;
@@ -65,6 +88,10 @@ export const TableData = styled.td`
   @media (max-width: 480px) {
     padding: 6px;
     font-size: 10px;
+
+    &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover {
+      display: none;
+    }
   }
 `;
 
