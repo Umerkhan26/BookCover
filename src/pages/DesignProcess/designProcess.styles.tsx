@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface StepCircleProps {
   isActive: boolean;
@@ -13,6 +13,10 @@ export const ProcessContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 // Title for the process
@@ -22,19 +26,30 @@ export const Title = styled.h2`
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
 `;
 
 // Steps container with clickable steps
 export const StepsContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 120px;
+  margin-bottom: 80px;
   gap: 30px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+
+  @media (max-width: 600px) {
+    gap: 15px;
+    margin-bottom: 40px;
+  }
 `;
 
 // Individual step clickable circle
 export const StepCircle = styled.div<StepCircleProps>`
-  background-color: ${({ isActive }) => (isActive ? '#6dc7d1' : '#E2E8F0')};
+  background-color: ${({ isActive }) => (isActive ? "#6dc7d1" : "#E2E8F0")};
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -46,8 +61,15 @@ export const StepCircle = styled.div<StepCircleProps>`
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
   &:hover {
     background-color: #6dc7d1;
+  }
+
+  @media (max-width: 600px) {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
   }
 `;
 
@@ -58,13 +80,23 @@ export const ContentWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+  }
 `;
 
 // Left content (text)
 export const LeftContent = styled.div`
   flex: 1;
   padding: 20px;
-  margin-bottom:20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    text-align: center;
+  }
 `;
 
 // Step title
@@ -72,6 +104,10 @@ export const StepTitle = styled.h3`
   font-size: 2rem;
   font-weight: 600;
   color: #2d3748;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 // Step description
@@ -79,35 +115,51 @@ export const StepDescription = styled.p`
   font-size: 1.125rem;
   color: #4a5568;
   margin-top: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
 `;
 
 // Image container for the right side
 export const RightContent = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: center;
+
   img {
     width: 100%;
     max-width: 400px;
     height: auto;
     border-radius: 8px;
+
+    @media (max-width: 768px) {
+      max-width: 300px;
+    }
   }
 `;
+
 export const Button = styled.a`
   display: inline-block;
   min-width: 180px;
   padding: 10px 30px;
   font-size: 16px;
   font-weight: bold;
-  margin-left: 20px;
-  margin-top:30px;
+  margin-top: 30px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: white;
-  border: 2px ;
   background: #6dc7d1;
   text-align: center;
-  position: relative;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   text-decoration: none;
+
+  @media (max-width: 768px) {
+    padding: 12px 50px;
+    font-size: 16px;
+    min-width: 150px;
+  }
 `;

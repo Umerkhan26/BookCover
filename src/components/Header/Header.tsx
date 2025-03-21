@@ -271,9 +271,9 @@ const ServicesLink = styled(NavLinkButton)`
   align-items: center;
   gap: 8px;
 
-  @media (max-width: 1024px) {
-    display: none;
-  }
+  // @media (max-width: 1024px) {
+  //   display: none;
+  // }
 
   @media (max-width: 768px) {
     font-size: 22px;

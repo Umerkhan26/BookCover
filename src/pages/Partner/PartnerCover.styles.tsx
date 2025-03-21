@@ -1,17 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #e0e0e0; /* A slightly darker gray */
+  background-color: #e0e0e0;
   padding: 25px 20px;
-  // margin-top: 2 0px; /* Adds space at the top */
-  // display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  // padding-top: 93px;
-  // padding-bottom: 52px;
-  // position: relative;
 
   @media (max-width: 768px) {
     padding: 30px 15px;
@@ -44,7 +39,11 @@ export const Title = styled.h1`
   }
 
   @media (max-width: 768px) {
-    font-size: 40px;
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 28px;
   }
 `;
 
@@ -54,7 +53,12 @@ export const Subtitle = styled.p`
   line-height: 29px;
   margin-bottom: 24px;
   color: #000;
+
   @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
     font-size: 0.9rem;
   }
 `;
