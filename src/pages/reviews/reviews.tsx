@@ -1,16 +1,28 @@
-import { Button, CardsWrapper, ReviewCard, ReviewsWrapper } from "./reviews.styles";
+import {
+  Button,
+  CardsWrapper,
+  ReviewCard,
+  ReviewsWrapper,
+} from "./reviews.styles";
 
 const Reviews = () => {
   return (
-    <div className="text-gray-600 dark:text-gray-300 pt-8 dark: mb-24" id="reviews">
+    <div
+      className="text-gray-600 dark:text-gray-300 pt-8 dark: mb-24"
+      id="reviews"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
         <div className="mb-10 space-y-4 px-6 md:px-0">
-          <h2 className="text-center text-2xl font-bold text-gray-800 dark: md:text-4xl">
+          <h2 className="text-2xl font-bold text-gray-800 text-left md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
             What Do Our <span className="text-[#00bcd4]">Client Say</span>
           </h2>
         </div>
         <div>
-          <a href="https://www.facebook.com/YourPageName/reviews" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.facebook.com/YourPageName/reviews"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button className="mb-4">Leave A Review</Button>
           </a>
         </div>

@@ -1,101 +1,41 @@
-// import styled from "styled-components";
-
-// export const GridContainer = styled.div`
-//   display: grid;
-//   margin-left: 180px;
-//   margin-right: 180px;
-//   margin-top: 80px;
-//   margin-bottom: 80px;
-
-//   grid-template-columns: repeat(1, 1fr); // For mobile, 1 column per row
-//   gap: 40px 30px; // 40px between columns and 30px between rows
-
-//   @media (min-width: 640px) {
-//     grid-template-columns: repeat(
-//       2,
-//       1fr
-//     ); // For small screens, 2 columns per row
-//   }
-
-//   @media (min-width: 768px) {
-//     grid-template-columns: repeat(
-//       3,
-//       1fr
-//     ); // For medium screens, 3 columns per row
-//   }
-
-//   @media (min-width: 1024px) {
-//     grid-template-columns: repeat(
-//       3,
-//       1fr
-//     ); // For large screens, 3 columns per row
-//   }
-// `;
-
-// export const GridItem = styled.div`
-//   text-align: left;
-//   cursor: pointer;
-// `;
-
-// export const ItemImage = styled.img`
-//   width: 80%;
-//   height: auto;
-//   border-radius: 10px;
-//   border: 2px solid #6dc7d1; // Add a black border around each image
-// `;
-
-// export const ItemTitle = styled.p`
-//   margin-top: 10px;
-//   font-size: 1rem;
-//   font-weight: 600;
-//   color: #333;
-//   margin-right: 110px;
-// `;
-
 import styled from "styled-components";
 
 export const GridContainer = styled.div`
   display: grid;
-  margin-left: 50px; // Reduced from 180px to 50px
-  margin-right: 50px; // Reduced from 180px to 50px
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 80px;
   margin-bottom: 80px;
+  justify-items: center; // Center items in the grid
 
-  grid-template-columns: repeat(1, 1fr); // For mobile, 1 column per row
-  gap: 40px 30px; // 40px between columns and 30px between rows
+  grid-template-columns: repeat(1, 1fr);
+  gap: 40px 30px;
 
   @media (min-width: 640px) {
-    grid-template-columns: repeat(
-      2,
-      1fr
-    ); // For small screens, 2 columns per row
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media (min-width: 768px) {
-    grid-template-columns: repeat(
-      3,
-      1fr
-    ); // For medium screens, 3 columns per row
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(
-      3,
-      1fr
-    ); // For large screens, 3 columns per row
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 
 export const GridItem = styled.div`
-  text-align: left;
+  text-align: center;
   cursor: pointer;
+  width: 100%;
+  max-width: 250px;
 `;
 
 export const ItemImage = styled.img`
-  width: 80%;
+  width: 100%;
   height: auto;
   border-radius: 10px;
-  border: 2px solid #6dc7d1; // Add a black border around each image
+  border: 2px solid #6dc7d1;
 `;
 
 export const ItemTitle = styled.p`
@@ -103,5 +43,4 @@ export const ItemTitle = styled.p`
   font-size: 1rem;
   font-weight: 600;
   color: #333;
-  margin-right: 110px;
 `;
