@@ -136,49 +136,50 @@ const User: React.FC = () => {
               <TableData>{`${user.firstName} ${user.lastName}`}</TableData>
               <TableData className="email-column">{user.email}</TableData>
                 <TableData>{user.role}</TableData>
-              <TableData className="action-column">
-                {editingStatusUserId === user.userId ? (
-                  <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-                    <Button
-                      onClick={() => handleStatusOptionChange(user.userId, "Active")}
-                      bgColor={user.status === "active" ? "green" : "green"}
-                    >
-                      Active
-                    </Button>
-                    <Button
-                      onClick={() => handleStatusOptionChange(user.userId, "Blocked")}
-                      bgColor={user.status === "inactive" ? "#dc3545" : "green"}
-                    >
-                      Block
-                    </Button>
-                    <Button onClick={() => handleDeleteUser(user)} bgColor="#dc3545">
-                      Delete
-                    </Button>
-                  </div>
-                ) : (
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <Button
-                      onClick={() => toggleStatusButtons(user.userId)}
-                      bgColor={user.status === "active" ? "green" : "#dc3545"}
-                    >
-                      {user.status === "active" ? "Active" : "Blocked"}
-                    </Button>
-                    <Button onClick={() => handleDeleteUser(user)} bgColor="#dc3545">
-                      Delete
-                    </Button>
-                  </div>
-                )}
-              </TableData>
+                <TableData className="action-column">
+  {editingStatusUserId === user.userId ? (
+    <div className="flex gap-2 items-center">
+      <Button
+        onClick={() => handleStatusOptionChange(user.userId, "Active")}
+        bgColor={user.status === "active" ? "green" : "green"}
+        className="px-4 py-2"
+      >
+        Active
+      </Button>
+      <Button
+        onClick={() => handleStatusOptionChange(user.userId, "Blocked")}
+        bgColor={user.status === "inactive" ? "#dc3545" : "green"}
+        className="px-4 py-2"
+      >
+        Block
+      </Button>
+      <Button onClick={() => handleDeleteUser(user)} bgColor="#dc3545" className="px-4 py-2">
+        Delete
+      </Button>
+    </div>
+  ) : (
+    <div className="flex gap-2 items-center">
+      <Button
+        onClick={() => toggleStatusButtons(user.userId)}
+        bgColor={user.status === "active" ? "green" : "#dc3545"}
+        className="px-4 py-2"
+      >
+        {user.status === "active" ? "Active" : "Blocked"}
+      </Button>
+      <Button className="px-4 py-2" onClick={() => handleDeleteUser(user)} bgColor="#dc3545">
+        Delete
+      </Button>
+    </div>
+  )}
+</TableData>
+
             </TableRow>
           ))}
         </tbody>
       </Table>
     </Container>
   );
-  
 
-  
-  
 };
 
 export default User;
