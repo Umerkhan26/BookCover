@@ -12,20 +12,24 @@ const Reviews = () => {
       id="reviews"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-        <div className="mb-10 space-y-4 px-6 md:px-0">
-          <h2 className="text-2xl font-bold text-gray-800 text-left md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
-            What Do Our <span className="text-[#00bcd4]">Client Say</span>
-          </h2>
-        </div>
-        <div>
-          <a
-            href="https://www.facebook.com/YourPageName/reviews"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button className="mb-4">Leave A Review</Button>
-          </a>
-        </div>
+      <div className="mb-10 space-y-4 px-6 md:px-0 text-center md:text-left">
+  <h2 className="text-2xl font-bold text-gray-800 text-center md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
+    What Do Our <span className="text-[#00bcd4]">Clients Say</span>
+  </h2>
+</div>
+
+
+<div>
+  <a
+    href="https://www.facebook.com/YourPageName/reviews"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{ textDecoration: "none" }}  // Add inline style here
+  >
+    <Button className="mb-4">Leave A Review</Button>
+  </a>
+</div>
+
         <ReviewsWrapper>
           <CardsWrapper>
             {/* Card 1 */}
