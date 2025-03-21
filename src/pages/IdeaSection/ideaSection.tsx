@@ -8,6 +8,10 @@ const Section = styled.section`
   padding: 4rem 0;
   overflow: hidden;
   font-family: "Manrope", sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1rem;
+  }
 `;
 
 const SvgBlock = styled.div`
@@ -57,11 +61,29 @@ const Title = styled.h2`
   span {
     color: #6dc7d1;
   }
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    font-weight: 900;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+    font-weight: 900;
+  }
 `;
 
 const Subtitle = styled.p`
   font-size: 20px;
   color: #666;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
 `;
 
 const SvgSphere = styled.svg`
@@ -163,7 +185,10 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
           <Subtitle>{subtitle}</Subtitle>
         </SectionTitle>
         <div className="text-center">
-          <LinkButton href="#" onClick={onButtonClick ? onButtonClick : undefined}>
+          <LinkButton
+            href="#"
+            onClick={onButtonClick ? onButtonClick : undefined}
+          >
             {buttonText}
           </LinkButton>
         </div>

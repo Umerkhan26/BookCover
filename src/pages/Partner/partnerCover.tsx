@@ -1,11 +1,4 @@
-import {
-
-  Title,
-  Subtitle,
-
-  Container,
-  Section,
-} from './PartnerCover.styles';
+import { Title, Container, Section } from "./PartnerCover.styles";
 
 interface BookCoversTextProps {
   text: string;
@@ -16,8 +9,8 @@ const BookCoversText = ({ text }: BookCoversTextProps) => {
 };
 
 interface PartnerCoverProps {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   bookCoversText: string;
   image?: string; // Made optional
 
@@ -29,8 +22,6 @@ interface PartnerCoverProps {
 }
 
 const PartnerCover = ({
-  title,
-  subtitle,
   bookCoversText,
   designProcessComponent,
   packagesComponent,
@@ -41,16 +32,15 @@ const PartnerCover = ({
     <div>
       <Container>
         <Section>
-        
-            <Title>{title}</Title>
-            <Subtitle>{subtitle}</Subtitle>
-      
-    
+          <Title className="title inner-title">
+            We Help Authors Make Book Cover Design <br /> Their Best Marketing
+            Tool{" "}
+          </Title>
+
           <BookCoversText text={bookCoversText} />
         </Section>
       </Container>
 
- 
       {reviewsComponent}
       {designProcessComponent}
       {packagesComponent}

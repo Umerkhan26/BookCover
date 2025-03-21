@@ -1,116 +1,38 @@
-// import styled from "styled-components";
-
-// export const ContactFormWrapper = styled.div`
-//   max-width: 600px;
-//   margin: 0 auto;
-//   padding: 40px 20px;
-//   background: #fff;
-//   border-radius: 8px;
-//   margin-right:230px;
-//   margin-top: -180px;
-//   margin-bottom: 60px;
-//   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-// `;
-
-// export const Title = styled.h1`
-//   font-size: 80px;
-//   font-weight: bold;
-//   color: #f5f5f5;
-//   text-transform: uppercase;
-//   position: absolute;
-//   top: 10%;
-//   left: 5%;
-//   z-index: -1;
-// `;
-
-// export const Form = styled.form`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 15px;
-// `;
-
-// export const Label = styled.label`
-//   font-size: 14px;
-//   font-weight: 600;
-//   color: #333;
-// `;
-
-// export const Input = styled.input`
-//   width: 100%;
-//   padding: 10px;
-//   border: 1px solid #ccc;
-//   border-radius: 4px;
-//   font-size: 16px;
-//   color:black;
-// `;
-
-// export const Textarea = styled.textarea`
-//   width: 100%;
-//   padding: 10px;
-//   border: 1px solid #ccc;
-//   border-radius: 4px;
-//   font-size: 16px;
-//   resize: none;
-//   height: 120px;
-//   color:black;
-// `;
-
-// export const CheckboxWrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//   color:black;
-//   font-size: 14px;
-// `;
-
-// export const Button = styled.button`
-//   background: #6dc7d1;
-//   color: white;
-//   font-size: 16px;
-//   padding: 10px;
-//   border: none;
-//   border-radius: 4px;
-//   cursor: pointer;
-//   &:hover {
-//     background: #6dc7d1;
-//   }
-// `;
-
 import styled from "styled-components";
 
 export const ContactFormWrapper = styled.div`
-  max-width: 800px;
+  max-width: 90%;
   margin: 0 auto;
-  padding: 40px;
+  padding: 30px;
   background: #fff;
   border-radius: 8px;
-  margin-right: 230px;
-  margin-top: -380px;
-  margin-bottom: 60px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1;
-  margin-top: -120px;
-  margin-bottom: 60px;
 
-  @media (max-width: 768px) {
-    padding: 20px;
-    margin-top: -80px;
+  @media (min-width: 1024px) {
+    max-width: 800px;
+    // padding: 10px;
   }
 `;
 
 export const Title = styled.h1`
-  font-size: 80px;
+  font-size: 50px;
   font-weight: bold;
   color: #f5f5f5;
   text-transform: uppercase;
   position: absolute;
-  top: 10%;
+  top: 5%;
   left: 5%;
   z-index: -1;
 
   @media (max-width: 768px) {
-    font-size: 60px;
-    top: 5%;
+    font-size: 40px;
+    top: 3%;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 30px;
   }
 `;
 
@@ -118,6 +40,22 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  @media (min-width: 768px) {
+    .form-group {
+      flex-direction: row;
+    }
+
+    .form-group div {
+      flex: 1;
+    }
+  }
 `;
 
 export const Label = styled.label`
@@ -128,29 +66,36 @@ export const Label = styled.label`
 
 export const Input = styled.input`
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  color: #333;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 export const Textarea = styled.textarea`
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
   resize: none;
   height: 120px;
-  color: #333;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 export const CheckboxWrapper = styled.div`
   display: flex;
   align-items: center;
-  color: #333;
   font-size: 14px;
+  color: #333;
+  gap: 8px;
 `;
 
 export const Button = styled.button`
@@ -162,22 +107,14 @@ export const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-align: center;
 
   &:hover {
     background: #5ab7c1;
   }
-`;
 
-export const ErrorMessage = styled.div`
-  color: #ff0000;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 10px;
-`;
-
-export const SuccessMessage = styled.div`
-  color: #00cc00;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 10px;
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 10px 18px;
+  }
 `;

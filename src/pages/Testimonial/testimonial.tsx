@@ -389,9 +389,7 @@ const Testimonials: React.FC = () => {
           </ColTestimonials>
         </ListTestimonials>
         <ButtonWrapper>
-          <ButtonGreen href="https://miblart.com/testimonials/">
-            View all reviews
-          </ButtonGreen>
+          <ButtonGreen href="">View all reviews</ButtonGreen>
         </ButtonWrapper>
       </Container>
 

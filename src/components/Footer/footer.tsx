@@ -56,6 +56,7 @@ const FooterName = styled.div`
 
   @media (max-width: 768px) {
     font-size: 18px;
+    margin-top: -5px;
   }
 `;
 
@@ -72,6 +73,15 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  margin-bottom: -10px;
+
+  @media (max-width: 768) {
+    margin-bottom: -30px;
+  }
+
+  @media (max-width: 480) {
+    margin-bottom: -40px;
+  }
 `;
 
 const Row = styled.div`

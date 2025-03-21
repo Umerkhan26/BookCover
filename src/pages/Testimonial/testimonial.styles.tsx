@@ -100,7 +100,7 @@ export const Subtitle = styled.p`
     max-width: 675px;
     margin: 0 auto;
     margin-top: 30px;
-    padding: 0;
+    padding: 0 10px;
   }
 `;
 
@@ -201,6 +201,8 @@ export const SocialNetwork = styled.div`
 
   @media (max-width: 480px) {
     justify-content: center;
+    margin-top: 0;
+    margin-bottom: 6px;
   }
 `;
 
@@ -257,14 +259,15 @@ export const ButtonGreen = styled.a`
   }
 
   @media (max-width: 768px) {
-    padding: 10px 40px;
-    font-size: 14px;
+    display: block;
+    width: 230px;
     margin-bottom: 80px;
   }
 
   @media (max-width: 480px) {
-    padding: 8px 30px;
-    font-size: 12px;
+    display: block;
+    width: 230px;
+    font-size: 16px;
     margin-bottom: 60px;
   }
 `;

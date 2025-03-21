@@ -4,7 +4,6 @@ import {
   Container,
   Row,
   BenefitItemWrap,
-  BenefitItem,
   BenefitItems,
   BenefitHeader,
   BenefitImage,
@@ -44,7 +43,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
           </TextContainer>
           {firstTwoCards.map((benefit, index) => (
             <BenefitItemWrap key={index}>
-              <BenefitItem>
+              <BenefitItems>
                 <BenefitHeader>
                   <BenefitImage>
                     <img
@@ -58,7 +57,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
                   />
                 </BenefitHeader>
                 <BenefitSubtitle>{benefit.subtitle}</BenefitSubtitle>
-              </BenefitItem>
+              </BenefitItems>
             </BenefitItemWrap>
           ))}
         </FirstRow>

@@ -33,7 +33,11 @@ export const Container = styled.div`
   height: auto;
   overflow: hidden;
   padding: 5vw;
-  background-color: #f9fafb; // Light background for better contrast
+  background-color: #f9fafb;
+
+  @media (min-width: 1024px) {
+    padding: 0px 3px;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -54,7 +58,7 @@ export const Title = styled.h1`
   font-weight: 700;
   font-size: clamp(28px, 5vw, 52px);
   margin-bottom: 4vh;
-  margin-top: 10vh;
+  margin-top: 16vh;
 
   @media (max-width: 768px) {
     margin-top: 6vh;

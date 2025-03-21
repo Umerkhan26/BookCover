@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.8rem;
+  font-size: 34px;
   font-weight: 900;
   color: #333;
   margin-bottom: 2rem;
@@ -24,7 +24,7 @@ const Title = styled.h2`
 
   span {
     color: #6dc7d1;
-    font-weight: 900;
+    font-weight: 800;
   }
 `;
 
@@ -35,8 +35,9 @@ const FeaturedList = styled.div`
   gap: 1.5rem;
 
   @media (max-width: 768px) {
-    justify-content: center; // Center items on mobile
-    gap: 1rem; // Smaller gap on mobile
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 26px;
   }
 `;
 
