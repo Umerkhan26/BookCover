@@ -107,9 +107,14 @@ const NavButton = styled(NavLink)`
     background-color: #4fa3a2;
   }
 
+  @media (max-width: 1024px) {
+    padding: 15px 50px;
+    margin-left: 40px;
+  }
+
   @media (max-width: 768px) {
     padding: 15px 42px;
-    margin-left: 31px;
+    margin-left: 38px;
   }
 `;
 
@@ -125,6 +130,11 @@ const NavText = styled(NavLink)`
 
   &:hover {
     color: #4fa3a2;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 15px 47px;
+    font-size: 28px;
   }
 
   @media (max-width: 768px) {
