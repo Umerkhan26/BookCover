@@ -170,9 +170,9 @@ import {
   SliderContainer,
   ImageWrapper,
   Image,
-  ImageOverlay,
-  ImageTitle,
-  ImageSubtitle,
+  // ImageOverlay,
+  // ImageTitle,
+  // ImageSubtitle,
   ButtonContainer,
   PortfolioButton,
   ImagePreviewOverlay,
@@ -297,10 +297,10 @@ const Carousel = () => {
                   alt={`Slide ${index}`}
                   style={{ cursor: "pointer" }}
                 />
-                <ImageOverlay>
+                {/* <ImageOverlay>
                   <ImageTitle>{image.title}</ImageTitle>
                   <ImageSubtitle>{image.subtitle}</ImageSubtitle>
-                </ImageOverlay>
+                </ImageOverlay> */}
               </ImageWrapper>
             </div>
           ))}

@@ -12,11 +12,12 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  justify-content: space-between; /* Align columns side by side */
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: flex-start; // Left-align for small screens
-    text-align: left; // Left-align text for small screens
+    align-items: center; /* Center align on small screens */
+    text-align: center; /* Center text on small screens */
   }
 `;
 
@@ -27,7 +28,7 @@ const LeftColumn = styled.div`
 
   @media (max-width: 768px) {
     max-width: 100%;
-    text-align: left; // Left-align text for small screens
+    text-align: center; /* Center align text for small screens */
   }
 `;
 
@@ -39,7 +40,7 @@ const RightColumn = styled.div`
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 40px;
-    text-align: left;
+    text-align: center; /* Center align text for small screens */
   }
 `;
 
@@ -51,10 +52,11 @@ const SectionTitle = styled.h2`
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Center align title for small screens */
     margin: 0 0 10px;
     padding: 0 37px;
     font-size: 28px;
+    line-height: 1.5;
   }
 `;
 
@@ -62,6 +64,7 @@ const Highlight = styled.span`
   color: #6dc7d1;
   display: inline-block;
   border-bottom: 2px solid #4fa3a2;
+  
 `;
 
 const Subtitle = styled.p`
@@ -72,7 +75,7 @@ const Subtitle = styled.p`
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Center align subtitle for small screens */
     margin: 0 0 50px;
     padding: 0 37px;
   }
@@ -83,9 +86,7 @@ const StepsContainer = styled.div`
   flex-direction: column;
 
   @media (max-width: 768px) {
-    text-align: left;
-    flex: 0 0 100%;
-    max-width: 100%;
+    align-items: center; /* Center align steps for small screens */
   }
 `;
 
@@ -97,9 +98,9 @@ const Step = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    margin-bottom: 0px;
+    align-items: center; /* Center align steps on small screens */
+    text-align: center;
+    margin-bottom: 30px;
   }
 `;
 
@@ -135,13 +136,7 @@ const StepNumber = styled.div`
   }
 
   @media (max-width: 768px) {
-    position: relative;
-    left: 0;
-    margin-bottom: 15px;
-    text-align: left;
-    font-size: 44px;
-    left: -2px;
-    margin-right: 0;
+    display: none; /* Hide step number on small screens */
   }
 `;
 
@@ -149,7 +144,7 @@ const StepContent = styled.div`
   flex: 1;
 
   @media (max-width: 768px) {
-    text-align: left; // Left-align content for small screens
+    text-align: center; /* Center align content for small screens */
   }
 `;
 
@@ -160,7 +155,7 @@ const StepTitle = styled.h3`
   color: #212121;
 
   @media (max-width: 768px) {
-    text-align: left;
+    text-align: center; /* Center align title for small screens */
     font-size: 20px;
   }
 `;
@@ -170,7 +165,7 @@ const StepDescription = styled.p`
   color: #333;
 
   @media (max-width: 768px) {
-    text-align: left;
+    text-align: center; /* Center align description for small screens */
     font-size: 14px;
     padding: 5px 0;
   }
@@ -195,9 +190,12 @@ const Button = styled.a`
   }
 
   @media (max-width: 768px) {
-    display: block;
+    display: inline-block;
     width: 230px;
     margin: 20px 0 0;
+    justify-items:center;
+    justify-content:center;
+    text-align: center; /* Ensure the button is centered */
   }
 `;
 
