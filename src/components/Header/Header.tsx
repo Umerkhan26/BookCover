@@ -77,6 +77,12 @@ const NavLinkButton = styled(NavLink)`
     background: rgba(255, 255, 255, 0.6);
   }
 
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    padding: 20px 50px;
+    margin-right: 50px;
+  }
+
   @media (max-width: 768px) {
     font-size: 22px;
     padding: 15px 42px;
@@ -246,11 +252,11 @@ const NavNBtn = styled.nav<NavNBtnProps>`
     padding: 15px 0px;
   }
 
-  @media (min-width: 768px) and (max-width: 1024px) {
-    .services-link {
-      display: none; // Hide Services in this range
-    }
-  }
+  // @media (min-width: 768px) and (max-width: 1024px) {
+  //   .services-link {
+  //     display: none;
+  //   }
+  // }
 
   @media (max-width: 768px) {
     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
@@ -283,14 +289,20 @@ const ServicesLink = styled(NavLinkButton)`
   align-items: center;
   gap: 8px;
 
+  @media (min-width: 1028px) {
+    .chevron-icon {
+      display: none;
+    }
+  }
+
   @media (max-width: 768px) {
     font-size: 22px;
     padding: 15px 42px;
-    display: flex;
+    // display: flex;
   }
 
   .mobile-menu & {
-    display: flex !important;
+    // display: flex !important;
     font-size: 22px;
     padding: 15px 42px;
   }
@@ -349,7 +361,7 @@ const DropdownMenu = styled.div`
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const menuRef = useRef<HTMLDivElement>(null);
   const navNBtnRef = useRef<HTMLDivElement>(null);
 
@@ -459,7 +471,7 @@ function Header() {
           </div>
 
           {/* Services Dropdown for Desktop */}
-          {!isMobile && (
+          {/* {!isMobile && (
             <DropdownContainer ref={servicesRef}>
               <ServicesLink
                 to="/services"
@@ -490,7 +502,7 @@ function Header() {
                 </DropdownItem>
               </DropdownMenu>
             </DropdownContainer>
-          )}
+          )} */}
 
           {/* Main Menu */}
           <NavNBtn
@@ -499,50 +511,47 @@ function Header() {
             onClick={toggleMenu}
           >
             {/* Services Dropdown for Mobile */}
-            {isMobile && (
-              <DropdownContainer ref={servicesRef}>
-                <ServicesLink
-                  to="/services"
-                  onClick={toggleServices}
-                  className={isServicesOpen ? "active" : ""}
-                  ref={servicesToggleRef}
-                >
-                  Services
-                  <FontAwesomeIcon
-                    icon={isServicesOpen ? faChevronUp : faChevronDown}
-                    style={{ fontSize: "12px" }}
-                  />
-                </ServicesLink>
-                {isServicesOpen && ( // Conditionally render DropdownMenu
-                  <DropdownMenu className={isServicesOpen ? "active" : ""}>
-                    <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
-                      Fiction Cover Design
-                    </DropdownItem>
-                    <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
-                      Illustrated Cover Design
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/bookCoverRedesign"
-                      onClick={handleCloseMenu}
-                    >
-                      Book Covers Redesign
-                    </DropdownItem>
-                    <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
-                      Non-Fiction Cover Design
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/audioBookCover"
-                      onClick={handleCloseMenu}
-                    >
-                      Audiobook Cover Design
-                    </DropdownItem>
-                    <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
-                      Logo & Branding
-                    </DropdownItem>
-                  </DropdownMenu>
-                )}
-              </DropdownContainer>
-            )}
+
+            <DropdownContainer ref={servicesRef}>
+              <ServicesLink
+                to="/services"
+                onClick={toggleServices}
+                className={isServicesOpen ? "active" : ""}
+                ref={servicesToggleRef}
+              >
+                Services
+                <FontAwesomeIcon
+                  className="chevron-icon"
+                  icon={isServicesOpen ? faChevronUp : faChevronDown}
+                  style={{ fontSize: "12px" }}
+                />
+              </ServicesLink>
+              {isServicesOpen && ( // Conditionally render DropdownMenu
+                <DropdownMenu className={isServicesOpen ? "active" : ""}>
+                  <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
+                    Fiction Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
+                    Illustrated Cover Design
+                  </DropdownItem>
+                  <DropdownItem
+                    to="/bookCoverRedesign"
+                    onClick={handleCloseMenu}
+                  >
+                    Book Covers Redesign
+                  </DropdownItem>
+                  <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
+                    Non-Fiction Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/audioBookCover" onClick={handleCloseMenu}>
+                    Audiobook Cover Design
+                  </DropdownItem>
+                  <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
+                    Logo & Branding
+                  </DropdownItem>
+                </DropdownMenu>
+              )}
+            </DropdownContainer>
 
             <NavLinkButton
               to="/portfolio"
