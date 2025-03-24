@@ -105,7 +105,7 @@ const NavButton = styled(NavLink)`
   }
 `;
 
-const NavText = styled(NavLink)`
+const NavText = styled.nav`
   display: inline-block;
   color: #6dc7d1;
   font-weight: bold;
@@ -367,13 +367,38 @@ function Header() {
   }, []);
 
   const handleNavigation = () => {
+    const userDataString = localStorage.getItem("user"); // Fetch user data as a string
+  
+    if (!userDataString) {
+      // If no user data exists in localStorage, treat as not authenticated
+      localStorage.setItem("redirectAfterLogin", "/portal");
+      navigate("/login");
+      return;
+    }
+  
+    // Parse the user data safely
+    const userData = JSON.parse(userDataString);
+  
+    // Check if the user is authenticated by verifying the userId exists
+    const isAuthenticated = userData && userData.userId;
+  
     if (!isAuthenticated) {
       localStorage.setItem("redirectAfterLogin", "/portal");
       navigate("/login");
     } else {
-      navigate("/portal/orders");
+      // Check the role of the user and navigate accordingly
+      const userRole = userData.role;
+  console.log("user role is",userRole)
+      if (userRole === "admin") {
+        navigate("/Admin/users"); // Admin portal
+      } else if (userRole === "user") {
+        navigate("/portal/orders"); // Regular user orders
+      } else {
+        navigate("/portal/orders"); // Default route or fallback
+      }
     }
   };
+  
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -531,7 +556,7 @@ function Header() {
               Partner With Us
             </NavLinkButton>
 
-            <NavText to="/portal/orders" onClick={handleNavigation}>
+            <NavText onClick={handleNavigation}>
               Client Portal
             </NavText>
             {/* <NavButton to="/GetACover">Get a Cover</NavButton> */}

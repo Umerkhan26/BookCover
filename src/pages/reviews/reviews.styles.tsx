@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 export const Button = styled.a`
-  display: inline-block;
-  min-width: 180px;
+  display: flex; /* Use flex for both small and large screens */
+  width: 220px;
   padding: 10px 30px;
   font-size: 16px;
   font-weight: bold;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the button horizontally */
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: white;
@@ -21,11 +21,15 @@ export const Button = styled.a`
 
   /* Make the button responsive */
   @media (max-width: 768px) {
-    min-width: 150px;
-    padding: 8px 20px;
-    font-size: 14px;
+    width: 220px;
+    padding: 12px 20px;
+    font-size: 16px;
+    text-align: center;
+    justify-content:center;
+    text-decoration: none; /* Remove the underline */
   }
 `;
+
 
 export const ReviewsWrapper = styled.div`
   width: 100%;
