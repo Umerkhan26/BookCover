@@ -7,13 +7,13 @@ import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 const Partner = () => {
   return (
     <div>
-      <PartnerCover
-        title={
+      <PartnerCover 
+        title2={ 
           <>
-            Partner With Lumeart <br />
-            Studio
+            Partner With Lumeart Studio
           </>
         }
+        title=""
         subtitle="Let's cooperate to make the self-publishing industry better!"
         bookCoversText=""
       />
