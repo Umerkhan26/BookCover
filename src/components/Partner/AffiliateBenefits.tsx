@@ -7,13 +7,13 @@ import {
   Title,
   BenefitsList,
   BenefitItem,
-  Button
+  Button,
 } from "./AffiliateBenefits.styles";
 // import defaultImage from "../../assets/pacakge1.jpeg"; // Default image
-import benfits2 from '../../assets/benifits2.jpg'
+import benfits2 from "../../assets/benifits2.jpg";
 
 const AffiliateBenefits = ({
-  title = "Benefits You Get",
+  // title = "Benefits You Get",
   benefits = [
     "On-time monthly payments",
     "24/7 support",
@@ -30,7 +30,9 @@ const AffiliateBenefits = ({
           <Image src={image} alt="Affiliate Benefits" />
         </ImageWrapper>
         <TextWrapper>
-          <Title>{title}</Title>
+          <Title>
+            Benefits You <span>Get</span>
+          </Title>
           <BenefitsList>
             {benefits.map((benefit, index) => (
               <BenefitItem key={index}>{benefit}</BenefitItem>

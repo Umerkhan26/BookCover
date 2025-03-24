@@ -61,8 +61,8 @@ export const Title = styled.h1`
   margin-top: 16vh;
 
   @media (max-width: 768px) {
-    margin-top: 6vh;
-    font-size: 40px;
+    margin-top: 8vh;
+    font-size: 34px;
   }
 `;
 
@@ -75,7 +75,9 @@ export const Subtitle = styled.p`
   word-break: break-word;
 
   @media (max-width: 480px) {
-    text-align: justify;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 1vh;
   }
 `;
 

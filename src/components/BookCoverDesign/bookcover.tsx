@@ -35,8 +35,8 @@ const Title = styled.h1`
   font-weight: 700;
   font-size: 52px;
 
-  @media (max-width: 600px) {
-    font-size: 40px;
+  @media (max-width: 768px) {
+    font-size: 34px;
   }
 `;
 
@@ -45,6 +45,10 @@ const Subtitle = styled.div`
   color: #455a64;
   font-size: 18px;
   margin-top: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 // const rotateOuterCircle = keyframes`

@@ -155,11 +155,15 @@ export const Title = styled.h1`
   }
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 34px;
+    max-width: 554px;
+    text-align: center;
   }
 
   @media (max-width: 480px) {
-    font-size: 1.8rem;
+    font-size: 34px;
+    max-width: 554px;
+    text-align: center;
   }
 `;
 
@@ -171,17 +175,19 @@ export const Subtitle = styled.p`
   text-align: left;
 
   @media (max-width: 1024px) {
-    font-size: 0.95rem;
+    font-size: 16px;
     text-align: center;
   }
 
   @media (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 16px;
     margin-right: 0;
+    text-align: center;
   }
 
   @media (max-width: 480px) {
-    font-size: 0.85rem;
+    font-size: 16px;
+    text-align: center;
   }
 `;
 
