@@ -65,7 +65,7 @@ const NavLinkButton = styled(NavLink)`
   font-size: 15px;
   font-weight: 200;
   text-transform: capitalize;
-  padding: 5px 20px;
+  padding: 8px 20px;
   text-align: left;
   text-decoration: none;
   border-radius: 5px;
@@ -111,8 +111,8 @@ const NavText = styled(NavLink)`
   display: inline-block;
   color: #6dc7d1;
   font-weight: bold;
-  font-size: 14px;
-  padding: 6px 25px;
+  font-size: 15px;
+  padding: 8px 25px;
   text-align: left;
   text-decoration: none;
   margin-right: 15px;
@@ -206,6 +206,10 @@ const MenuIcon = styled.span`
   height: 100%;
   margin-top: 12px;
 
+  @media (max-width: 768px) {
+    font-size: 32px;
+    font-weight: 50;
+  }
   @media (max-width: 390px) {
     margin-left: 20px;
   }
