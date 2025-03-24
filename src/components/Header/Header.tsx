@@ -271,13 +271,20 @@ const ServicesLink = styled(NavLinkButton)`
   align-items: center;
   gap: 8px;
 
-  // @media (max-width: 1024px) {
-  //   display: none;
-  // }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    display: none;
+  }
 
-  @media (max-width: 768px) {
+  // Ensure it's visible inside the hamburger menu
+  @media (max-width: 1024px) {
     font-size: 22px;
     padding: 15px 42px;
+    display: flex;
+  }
+
+  // If the mobile menu is open, ensure visibility
+  .mobile-menu & {
+    display: flex !important;
   }
 `;
 
@@ -328,6 +335,12 @@ const DropdownMenu = styled.div`
     &.active {
       display: flex; // Show when active on mobile
     }
+  }
+`;
+
+const GetACoverButton = styled(NavButton)`
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -521,7 +534,8 @@ function Header() {
             <NavText to="/portal/orders" onClick={handleNavigation}>
               Client Portal
             </NavText>
-            <NavButton to="/GetACover">Get a Cover</NavButton>
+            {/* <NavButton to="/GetACover">Get a Cover</NavButton> */}
+            <GetACoverButton to="/cover">Get a Cover</GetACoverButton>
           </NavNBtn>
         </HeaderContainer>
       </Nav>
