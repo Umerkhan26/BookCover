@@ -7,7 +7,16 @@ import SpecialEditionAddOns from "../../pages/SpecialEditionAddOns/SpecialEditio
 const GetACover = () => {
   return (
     <div>
-      <PartnerCover bookCoversText="" />
+      <PartnerCover
+        bookCoversText=""
+        title={
+          <>
+            We Help Authors Make Book Cover Design <br />
+            Their Best Marketing Tool
+          </>
+        }
+      />
+
       <BookCoverDesigns />
       <SpecialEditionAddOns />
       <Carousel />

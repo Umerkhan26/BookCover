@@ -29,6 +29,12 @@ export const Title = styled.h1`
   span {
     color: #6dc7d1;
   }
+
+  @media (max-width: 768px) {
+    font-size: 34px;
+    text-align: center;
+    margin: 0 0 8px;
+  }
 `;
 
 export const Subtitle = styled.p`
@@ -37,6 +43,11 @@ export const Subtitle = styled.p`
   color: #455a64;
   margin: 0;
   margin-right: 35px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    text-align: center;
+  }
 `;
 
 export const SliderContainer = styled.div`

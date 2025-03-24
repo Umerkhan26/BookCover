@@ -27,7 +27,7 @@ export const FAQTitle = styled.h2`
   display: inline-block;
   margin-bottom: 40px;
   color: black;
-margin-top: 6vh;
+  margin-top: 6vh;
   &::after {
     content: "";
     display: block;
@@ -46,7 +46,7 @@ margin-top: 6vh;
   }
 
   @media (max-width: 480px) {
-    font-size: 28px;
+    font-size: 34px;
     margin-top: 60px;
   }
 `;

@@ -63,7 +63,7 @@ export const Title = styled.h2`
   }
 
   @media (max-width: 768px) {
-    font-size: 24px;
+    font-size: 28px;
   }
 `;
 

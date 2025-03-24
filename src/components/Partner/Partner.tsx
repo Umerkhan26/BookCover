@@ -8,7 +8,12 @@ const Partner = () => {
   return (
     <div>
       <PartnerCover
-        title="Partner With Miblart"
+        title={
+          <>
+            Partner With Lumeart <br />
+            Studio
+          </>
+        }
         subtitle="Let's cooperate to make the self-publishing industry better!"
         bookCoversText=""
       />
@@ -77,7 +82,6 @@ Work"
         buttonLink="/custom-design"
       />
       <AffiliateBenefits
-        title="Benefits you get"
         benefits={[
           "Supplement your services to give more value to your clients",
           "Save costs for in-house resources ",

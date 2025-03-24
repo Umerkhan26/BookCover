@@ -30,10 +30,13 @@ export const Section = styled.section`
 export const Title = styled.h1`
   color: #212529;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 29px;
   margin-bottom: 24px;
 
+  & span {
+    color: #6dc7d1;
+  }
   @media (max-width: 1024px) {
     font-size: 2.5rem;
   }
@@ -43,7 +46,10 @@ export const Title = styled.h1`
   }
 
   @media (max-width: 480px) {
-    font-size: 28px;
+    font-size: 34px;
+    line-height: 30px;
+    margin-bottom: 8px;
+    text-transform: capitalize;
   }
 `;
 

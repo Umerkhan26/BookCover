@@ -1,3 +1,4 @@
+import { Subtitle } from "../logo&branding/LogoAuthorBranding.styles";
 import { Title, Container, Section } from "./PartnerCover.styles";
 
 interface BookCoversTextProps {
@@ -9,7 +10,7 @@ const BookCoversText = ({ text }: BookCoversTextProps) => {
 };
 
 interface PartnerCoverProps {
-  title?: string;
+  title: React.ReactNode;
   subtitle?: string;
   bookCoversText: string;
   image?: string; // Made optional
@@ -22,6 +23,8 @@ interface PartnerCoverProps {
 }
 
 const PartnerCover = ({
+  title,
+  subtitle,
   bookCoversText,
   designProcessComponent,
   packagesComponent,
@@ -32,10 +35,16 @@ const PartnerCover = ({
     <div>
       <Container>
         <Section>
-          <Title className="title inner-title">
-            We Help Authors Make Book Cover Design <br /> Their Best Marketing
-            Tool{" "}
+          <Title
+            style={{
+              fontSize: "48px",
+              lineHeight: "1.2",
+            }}
+          >
+            {title}
           </Title>
+
+          <Subtitle>{subtitle}</Subtitle>
 
           <BookCoversText text={bookCoversText} />
         </Section>
