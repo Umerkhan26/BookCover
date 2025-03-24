@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// Container and other styles remain the same
 export const Container = styled.div`
   width: 100%;
   padding: 20px;
@@ -9,13 +10,12 @@ export const Container = styled.div`
 
   @media (max-width: 768px) {
     padding: 15px;
-    margin-left:65px;
+    margin-left: 65px;
   }
 
   @media (max-width: 480px) {
     padding: 10px;
-        margin-left:65px;
-
+    margin-left: 65px;
   }
 `;
 
@@ -42,11 +42,18 @@ export const TableHeader = styled.th`
   font-weight: bold;
 
   &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
-    display: table-cell; /* Ensure they are visible by default */
+    display: table-cell;
   }
 
   &.header-username, &.header-booktitle, &.header-moreinfo {
     display: table-cell;
+  }
+
+  /* For 1024px screens and below, hide certain columns */
+  @media (max-width: 1024px) {
+    &.header-email, &.header-genre, &.header-series {
+      display: none;  /* Hide these columns on 1024px screens */
+    }
   }
 
   @media (max-width: 768px) {
@@ -57,7 +64,6 @@ export const TableHeader = styled.th`
   @media (max-width: 480px) {
     padding: 6px;
     font-size: 10px;
-
     &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
       display: none;
     }
@@ -80,6 +86,13 @@ export const TableData = styled.td`
     display: table-cell;
   }
 
+  /* For 1024px screens and below, hide certain columns */
+  @media (max-width: 1024px) {
+    &.book-email, &.book-genre, &.book-series {
+      display: none;  /* Hide these columns on 1024px screens */
+    }
+  }
+
   @media (max-width: 768px) {
     padding: 8px;
     font-size: 12px;
@@ -88,7 +101,6 @@ export const TableData = styled.td`
   @media (max-width: 480px) {
     padding: 6px;
     font-size: 10px;
-
     &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover {
       display: none;
     }
@@ -257,4 +269,3 @@ export const InfoButton = styled.button`
     padding: 4px 8px;
   }
 `;
-
