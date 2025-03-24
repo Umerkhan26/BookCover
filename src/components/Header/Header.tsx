@@ -105,7 +105,7 @@ const NavButton = styled(NavLink)`
   }
 `;
 
-const NavText = styled.nav`
+const NavText = styled(NavLink)`
   display: inline-block;
   color: #6dc7d1;
   font-weight: bold;
@@ -220,8 +220,8 @@ const ContactUsWrapper = styled.div`
 `;
 
 const NavNBtn = styled.nav<NavNBtnProps>`
-  display: flex; // Always display on desktop
-  align-items: start; // Align items horizontally
+  display: flex;
+  align-items: start;
   flex-grow: 1;
   justify-content: flex-start;
   background-color: white;
@@ -238,6 +238,12 @@ const NavNBtn = styled.nav<NavNBtnProps>`
     gap: 15px;
     font-size: 22px;
     padding: 15px 0px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .services-link {
+      display: none; // Hide Services in this range
+    }
   }
 
   @media (max-width: 768px) {
@@ -271,20 +277,16 @@ const ServicesLink = styled(NavLinkButton)`
   align-items: center;
   gap: 8px;
 
-  @media (min-width: 768px) and (max-width: 1024px) {
-    display: none;
-  }
-
-  // Ensure it's visible inside the hamburger menu
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     font-size: 22px;
     padding: 15px 42px;
     display: flex;
   }
 
-  // If the mobile menu is open, ensure visibility
   .mobile-menu & {
     display: flex !important;
+    font-size: 22px;
+    padding: 15px 42px;
   }
 `;
 
@@ -347,7 +349,7 @@ const GetACoverButton = styled(NavButton)`
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
   const menuRef = useRef<HTMLDivElement>(null);
   const navNBtnRef = useRef<HTMLDivElement>(null);
 
@@ -367,38 +369,13 @@ function Header() {
   }, []);
 
   const handleNavigation = () => {
-    const userDataString = localStorage.getItem("user"); // Fetch user data as a string
-  
-    if (!userDataString) {
-      // If no user data exists in localStorage, treat as not authenticated
-      localStorage.setItem("redirectAfterLogin", "/portal");
-      navigate("/login");
-      return;
-    }
-  
-    // Parse the user data safely
-    const userData = JSON.parse(userDataString);
-  
-    // Check if the user is authenticated by verifying the userId exists
-    const isAuthenticated = userData && userData.userId;
-  
     if (!isAuthenticated) {
       localStorage.setItem("redirectAfterLogin", "/portal");
       navigate("/login");
     } else {
-      // Check the role of the user and navigate accordingly
-      const userRole = userData.role;
-  console.log("user role is",userRole)
-      if (userRole === "admin") {
-        navigate("/Admin/users"); // Admin portal
-      } else if (userRole === "user") {
-        navigate("/portal/orders"); // Regular user orders
-      } else {
-        navigate("/portal/orders"); // Default route or fallback
-      }
+      navigate("/portal/orders");
     }
   };
-  
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -425,6 +402,11 @@ function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleNavClick = (path: string) => {
+    setIsMenuOpen(false); // Close the mobile menu
+    navigate(path); // Navigate to the selected page
+  };
+
   const handleCloseMenu = () => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
@@ -432,6 +414,7 @@ function Header() {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+    navigate(path);
   };
 
   return (
@@ -556,7 +539,7 @@ function Header() {
               Partner With Us
             </NavLinkButton>
 
-            <NavText onClick={handleNavigation}>
+            <NavText to="/portal/orders" onClick={handleNavigation}>
               Client Portal
             </NavText>
             {/* <NavButton to="/GetACover">Get a Cover</NavButton> */}
