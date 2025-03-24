@@ -19,70 +19,66 @@ const faqs: FAQItem[] = [
     answer:
       "An illustration is created entirely from scratch using the digital painting technique. Photo manipulated book covers are covers combined from stock photos and manipulated with special effects in graphic design software.",
   },
-  {
-    question: "What information do I need to send you?",
-    answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
-  },
+ 
   {
     question: "How long does it take to create a photo manipulated book cover?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "It takes around 7-10 business days to create a book cover concept, which is the quickest timeline in the industry. Please, note, that further revisions require extra time.",
   },
   {
     question: "Who are your designers?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "We have 5 in-house senior designers who work on your covers and specialize in different genres and techniques: Sharmoz, Ali, Shehryar, shahid, and umar. Our main office is located in Pakistan.",
   },  {
     question: "What genres do you specialize in?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "We design a book cover for all genres. If you need more examples of book covers in your genre, feel free to contact us!",
   },  {
     question: "What stock images do you use?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "We use only licensed, royalty-free stock photos from such websites as Depositphotos, Shutterstock, Twenty20, Envato Elements, Neostock, etc. Also, you don’t have to pay extra for stock images, the price you pay for your book cover includes all stock images used.",
   },
   {
     question: "What if I don't know what I want to see on the cover?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "Actually, you don’t have to. It’s our job to analyze your book idea, target audience, and genre and come up with the cover design that will attract the right audience and catch attention from first sight.",
   },{
     question: "Can I order 2 or more concepts of the book cover design?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "Yes, sure. You can order 2 concepts. The additional concept costs $100.",
   },{
     question: "Do I communicate directly with my designer?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "Our designers spend 100% of their time creating a cover design for you and we don’t want to distract them. That’s why all communication, invoicing, and paperwork is handled by our in-house project managers.",
   },{
     question: "Can I use my own image for the cover?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "We can use your image, but it should be licensed with a resolution of 300 DPI. Yet, we customize photos from stock photography sites and create illustrations for the ebook and print book cover designs",
   },
   {
-    question: "What final files will I receive?",
+    question: "Do you have any discount on book series?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "Yes, when ordering book series, we give you 10% OFF each book cover, starting from the second one.",
   },
   {
     question: "Do you provide source files?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "Lumeart studio provides a flattened source file with editable text in PSD format.",
   },
   {
     question: "How many revisions can I get?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "We provide an unlimited number of revisions for book cover design. No hidden fees.",
   },
   {
-    question: "Can I use my own image for the cover?",
+    question: "Do you generate a barcode?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "We can generate the barcode for your print book if you provide the ISBN. ISBNs for Amazon and IngramSpark are different. You should only purchase one for IngramSpark, and Amazon gives its free ISBN and generates a barcode.",
   },
   {
-    question: "Can I use my own image for the cover?",
+    question: "What if i am not satisfied with the results?",
     answer:
-      "You need to provide your book title, author name, genre, and any specific ideas or references you have for the cover.",
+      "Don’t worry, we provide unlimited revisions to provide you with the cover of your dreams.",
   },
 ];
 
