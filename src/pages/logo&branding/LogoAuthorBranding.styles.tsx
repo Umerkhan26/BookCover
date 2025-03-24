@@ -38,11 +38,11 @@ export const Title = styled.h1`
 `;
 
 export const Subtitle = styled.p`
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 200;
   color: #455a64;
   margin: 0;
-  margin-right: 35px;
+  // margin-right: 35px;
 
   @media (max-width: 768px) {
     font-size: 16px;

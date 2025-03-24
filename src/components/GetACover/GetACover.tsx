@@ -9,6 +9,7 @@ const GetACover = () => {
     <div>
       <PartnerCover
         bookCoversText=""
+        title2=""
         title={
           <>
             We Help Authors Make Book Cover Design <br />
