@@ -340,12 +340,6 @@ const DropdownMenu = styled.div`
   }
 `;
 
-const GetACoverButton = styled(NavButton)`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -402,20 +396,16 @@ function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleNavClick = (path: string) => {
-    setIsMenuOpen(false); // Close the mobile menu
-    navigate(path); // Navigate to the selected page
-  };
-
   const handleCloseMenu = () => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
   };
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-    navigate(path);
-  };
+  // const closeMenu = (path: string) => {
+  //   setIsMenuOpen(false);
+
+  //   setTimeout(() => navigate(path), 0);
+  // };
 
   return (
     <>
@@ -523,27 +513,32 @@ function Header() {
               </DropdownContainer>
             )}
 
-            <NavLinkButton to="/portfolio" onClick={closeMenu}>
+            <NavLinkButton
+              to="/portfolio"
+              onClick={() => navigate("/portfolio")}
+            >
               Portfolio
             </NavLinkButton>
-            <NavLinkButton to="/aboutUs" onClick={closeMenu}>
+            <NavLinkButton to="/aboutUs" onClick={() => navigate("/aboutUs")}>
               About Us
             </NavLinkButton>
-            <NavLinkButton to="/FAQs" onClick={closeMenu}>
+            <NavLinkButton to="/FAQs" onClick={() => navigate("/FAQs")}>
               FAQ
             </NavLinkButton>
-            <NavLinkButton to="/contactUs" onClick={closeMenu}>
+            <NavLinkButton
+              to="/contactUs"
+              onClick={() => navigate("/contactUs")}
+            >
               Contact Us
             </NavLinkButton>
-            <NavLinkButton to="/partner" onClick={closeMenu}>
+            <NavLinkButton to="/partner" onClick={() => navigate("/partner")}>
               Partner With Us
             </NavLinkButton>
 
             <NavText to="/portal/orders" onClick={handleNavigation}>
               Client Portal
             </NavText>
-            {/* <NavButton to="/GetACover">Get a Cover</NavButton> */}
-            <GetACoverButton to="/cover">Get a Cover</GetACoverButton>
+            <NavButton to="/GetACover">Get a Cover</NavButton>
           </NavNBtn>
         </HeaderContainer>
       </Nav>
