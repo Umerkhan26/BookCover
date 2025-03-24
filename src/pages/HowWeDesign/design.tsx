@@ -64,7 +64,6 @@ const Highlight = styled.span`
   color: #6dc7d1;
   display: inline-block;
   border-bottom: 2px solid #4fa3a2;
-  
 `;
 
 const Subtitle = styled.p`
@@ -191,10 +190,12 @@ const Button = styled.a`
 
   @media (max-width: 768px) {
     display: inline-block;
-    width: 230px;
-    margin: 20px 0 0;
-    justify-items:center;
-    justify-content:center;
+    min-width: 230px;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: 900;
+    justify-items: center;
+    justify-content: center;
     text-align: center; /* Ensure the button is centered */
   }
 `;
