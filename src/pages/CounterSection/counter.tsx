@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import CountUp from "react-countup"; // Import CountUp
 
 // Styled Components
 const CounterSectionWrapper = styled.section`
@@ -124,14 +125,55 @@ interface CounterSectionProps {
 
 // Main Component
 const CounterSection: React.FC<CounterSectionProps> = ({ data }) => {
+  const counterRef = useRef(null); // Reference for the counter section
+  const [isInView, setIsInView] = useState(false); // State to track if the section is in view
+
+  useEffect(() => {
+    // Create an intersection observer
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // If the counter section is in view, set the state to true
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      {
+        threshold: 0.5, // 50% of the element should be in view
+      }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    // Clean up the observer on unmount
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <CounterSectionWrapper>
+    <CounterSectionWrapper ref={counterRef}>
       <Container>
         <WrapCounter>
           {data.map((item, index) => (
             <ColCount key={index}>
               <Top>
-                <Num>{item.num}</Num>
+                <Num>
+                  {isInView ? (
+                    <CountUp
+                      start={0}
+                      end={item.num}
+                      duration={2.5}
+                      separator=","
+                      delay={0}
+                    />
+                  ) : (
+                    item.num
+                  )}
+                </Num>
                 {item.showPlus && (
                   <PlusIcon
                     src="https://miblart.com/wp-content/uploads/2023/02/plus.svg"
