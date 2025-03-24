@@ -12,6 +12,12 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+  }
 `;
 
 // Left Column for Step Image
@@ -20,6 +26,11 @@ export const LeftColumn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    width: 100%;
+  }
 `;
 
 export const RightColumn = styled.div`
@@ -27,6 +38,12 @@ export const RightColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    width: 100%;
+    align-items: center;
+  }
 `;
 
 export const StepsContainer = styled.div`
@@ -40,6 +57,12 @@ export const Step = styled.div`
   align-items: center;
   margin-bottom: 40px;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 // Number Styling
@@ -48,6 +71,10 @@ export const StepNumber = styled.div`
   font-weight: 700;
   color: #fbc02d;
   margin-bottom: 8px;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
 `;
 
 // Step Content (Title + Description)
@@ -55,12 +82,20 @@ export const StepContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 `;
 
 export const StepTitle = styled.h3`
   font-size: 20px;
   font-weight: bold;
   color: #212121;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 export const StepDescription = styled.p`
@@ -74,7 +109,7 @@ export const StepImage = styled.img`
   height: auto;
   object-fit: cover;
   border-radius: 10px;
-  margin-right:200px;
+  margin-right: 200px;
 `;
 
 // Button Styling

@@ -285,7 +285,6 @@ const NavNBtn = styled.nav<NavNBtnProps>`
 const MobileContactButton = styled(NavButton)`
   display: none;
   padding: 6px 16px;
-  // margin-right: -3rem;
 
   @media (max-width: 768px) {
     display: inline-block;
@@ -308,11 +307,9 @@ const ServicesLink = styled(NavLinkButton)`
   @media (max-width: 768px) {
     font-size: 22px;
     padding: 15px 42px;
-    // display: flex;
   }
 
   .mobile-menu & {
-    // display: flex !important;
     font-size: 22px;
     padding: 15px 42px;
   }
@@ -371,7 +368,6 @@ const DropdownMenu = styled.div`
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const menuRef = useRef<HTMLDivElement>(null);
   const navNBtnRef = useRef<HTMLDivElement>(null);
 
@@ -381,29 +377,26 @@ function Header() {
   // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth <= 768);
+  //   };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   const handleNavigation = () => {
-    const userDataString = localStorage.getItem("user"); // Fetch user data as a string
+    const userDataString = localStorage.getItem("user");
 
     if (!userDataString) {
-      // If no user data exists in localStorage, treat as not authenticated
       localStorage.setItem("redirectAfterLogin", "/portal");
       navigate("/login");
       return;
     }
 
-    // Parse the user data safely
     const userData = JSON.parse(userDataString);
 
-    // Check if the user is authenticated by verifying the userId exists
     const isAuthenticated = userData && userData.userId;
 
     if (!isAuthenticated) {
@@ -454,12 +447,6 @@ function Header() {
     setIsServicesOpen(false);
   };
 
-  // const closeMenu = (path: string) => {
-  //   setIsMenuOpen(false);
-
-  //   setTimeout(() => navigate(path), 0);
-  // };
-
   return (
     <>
       <GlobalStyle />
@@ -479,40 +466,6 @@ function Header() {
               {isMenuOpen ? <MenuIcon>✖</MenuIcon> : <MenuIcon>☰</MenuIcon>}
             </HamburgerMenu>
           </div>
-
-          {/* Services Dropdown for Desktop */}
-          {/* {!isMobile && (
-            <DropdownContainer ref={servicesRef}>
-              <ServicesLink
-                to="/services"
-                onClick={toggleServices}
-                className={isServicesOpen ? "active" : ""}
-                ref={servicesToggleRef}
-              >
-                Services
-              </ServicesLink>
-              <DropdownMenu className={isServicesOpen ? "active" : ""}>
-                <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
-                  Fiction Cover Design
-                </DropdownItem>
-                <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
-                  Illustrated Cover Design
-                </DropdownItem>
-                <DropdownItem to="/bookCoverRedesign" onClick={handleCloseMenu}>
-                  Book Covers Redesign
-                </DropdownItem>
-                <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
-                  Non-Fiction Cover Design
-                </DropdownItem>
-                <DropdownItem to="/audioBookCover" onClick={handleCloseMenu}>
-                  Audiobook Cover Design
-                </DropdownItem>
-                <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
-                  Logo & Branding
-                </DropdownItem>
-              </DropdownMenu>
-            </DropdownContainer>
-          )} */}
 
           {/* Main Menu */}
           <NavNBtn
