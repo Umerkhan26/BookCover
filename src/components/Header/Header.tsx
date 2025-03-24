@@ -103,7 +103,7 @@ const NavButton = styled(NavLink)`
 
   @media (max-width: 768px) {
     padding: 15px 42px;
-    margin-left:31px;
+    margin-left: 31px;
   }
 `;
 
@@ -365,11 +365,36 @@ function Header() {
   }, []);
 
   const handleNavigation = () => {
+    const userDataString = localStorage.getItem("user"); // Fetch user data as a string
+
+    if (!userDataString) {
+      // If no user data exists in localStorage, treat as not authenticated
+      localStorage.setItem("redirectAfterLogin", "/portal");
+      navigate("/login");
+      return;
+    }
+
+    // Parse the user data safely
+    const userData = JSON.parse(userDataString);
+
+    // Check if the user is authenticated by verifying the userId exists
+    const isAuthenticated = userData && userData.userId;
+
     if (!isAuthenticated) {
       localStorage.setItem("redirectAfterLogin", "/portal");
       navigate("/login");
     } else {
       navigate("/portal/orders");
+      // Check the role of the user and navigate accordingly
+      const userRole = userData.role;
+      console.log("user role is", userRole);
+      if (userRole === "admin") {
+        navigate("/Admin/users"); // Admin portal
+      } else if (userRole === "user") {
+        navigate("/portal/orders"); // Regular user orders
+      } else {
+        navigate("/portal/orders"); // Default route or fallback
+      }
     }
   };
 
