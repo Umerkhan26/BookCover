@@ -6,6 +6,10 @@ export const Container = styled.div`
   justify-content: center;
   background: #ffffff;
   padding: 120px 20px;
+
+  @media (max-width: 768px) {
+    padding: 60px 15px;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -14,21 +18,39 @@ export const ContentWrapper = styled.div`
   gap: 30px;
   max-width: 1100px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+  }
 `;
 
 export const ImageWrapper = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+  }
 `;
 
 export const Image = styled.img`
   width: 100%;
   max-width: 430px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 export const TextWrapper = styled.div`
   flex: 1;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 export const Title = styled.h2`
@@ -38,6 +60,10 @@ export const Title = styled.h2`
 
   span {
     color: #6dc7d1;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 24px;
   }
 `;
 
@@ -53,13 +79,23 @@ export const BenefitItem = styled.li`
   font-size: 18px;
   color: #333;
   margin-bottom: 10px;
-  
+
   &::before {
     content: "✔";
     color: #6dc7d1;
     margin-right: 10px;
     font-size: 20px;
     font-weight: bold;
+
+    @media (max-width: 768px) {
+      content: ""; /* Hides the checkmark */
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    justify-content: center;
   }
 `;
 
@@ -74,8 +110,15 @@ export const Button = styled.button`
   cursor: pointer;
   transition: background 0.3s ease;
   outline: none;
-  
+
   &:hover {
-    background:#6dc7d1;
+    background: #6dc7d1;
+  }
+
+  @media (max-width: 768px) {
+    min-width: 230px;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: 900;
   }
 `;
