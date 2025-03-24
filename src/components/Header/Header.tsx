@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.png";
-import { useAuth } from "../../context/authContext";
+// import { useAuth } from "../../context/authContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
@@ -80,6 +80,7 @@ const NavLinkButton = styled(NavLink)`
   @media (max-width: 768px) {
     font-size: 22px;
     padding: 15px 42px;
+    margin-right: 30px;
   }
 `;
 
@@ -102,6 +103,7 @@ const NavButton = styled(NavLink)`
 
   @media (max-width: 768px) {
     padding: 15px 42px;
+    margin-left:31px;
   }
 `;
 
@@ -263,7 +265,7 @@ const NavNBtn = styled.nav<NavNBtnProps>`
 const MobileContactButton = styled(NavButton)`
   display: none;
   padding: 6px 16px;
-  margin-right: -3rem;
+  // margin-right: -3rem;
 
   @media (max-width: 768px) {
     display: inline-block;
@@ -350,7 +352,7 @@ function Header() {
   const servicesRef = useRef<HTMLDivElement>(null);
   const servicesToggleRef = useRef<HTMLAnchorElement>(null);
 
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
