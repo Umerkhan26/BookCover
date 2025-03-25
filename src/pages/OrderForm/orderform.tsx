@@ -247,6 +247,7 @@ import {
   TotalSection,
   TotalText,
   TotalAmount,
+  Label,
 } from "./orderform.styles";
 import { toast, ToastContainer } from "react-toastify";
 import styled from "styled-components";
@@ -306,12 +307,12 @@ const OrderForm: React.FC = () => {
     };
 
     // First toast: Data saved successfully
-    toast.success("Step 1: Data saved successfully!");
+    toast.success("Extra Services: Data saved successfully!");
 
     // Show loader and delay the next steps
     setTimeout(() => {
       // Second toast: Continuing to the client portal
-      toast.success("Step 2: Continuing to client portal");
+      toast.success("For Order Information: Continuing to client portal");
 
       // Now navigate to the next page (client portal)
       setTimeout(() => {
@@ -362,10 +363,10 @@ const OrderForm: React.FC = () => {
 
             {/* Add-Ons Selection */}
             <FormGroup>
-              <label style={{ color: "#00254d", fontWeight: "500" }}>
+              <Label >
                 Add extra services to your order
-                <span className="multiple ml-8">multiple</span>
-              </label>
+                {/* <span className="multiple ml-8">multiple</span> */}
+              </Label>
               <Row>
                 {availableServices.map((item) => (
                   <ItemCards

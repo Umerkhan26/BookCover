@@ -131,14 +131,14 @@ const FormOrder: React.FC = () => {
           <HeaderTitle>Your order information</HeaderTitle>
           <HeaderSubtitle></HeaderSubtitle>
         </HeaderContent>
-        <HeaderActions>
+        {/* <HeaderActions>
           <HeaderButton onClick={() => console.log("Save draft clicked")}>
             Save draft
           </HeaderButton>
           <HeaderButton onClick={() => console.log("Copy clicked")}>
             Copy
           </HeaderButton>
-        </HeaderActions>
+        </HeaderActions> */}
       </HeaderContainer>
 
       {/* Form Section */}
@@ -348,13 +348,19 @@ const FormOrder: React.FC = () => {
 };
 
 export default FormOrder;
-
 // Styled Components
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  margin-left: 60px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0;
+  }
 `;
 
 const HeaderContent = styled.div`
@@ -363,20 +369,32 @@ const HeaderContent = styled.div`
 
 const HeaderTitle = styled.h1`
   font-size: 24px;
-  margin-bottom: 8px;
   font-weight: bold;
   color: #00254d;
+  margin-bottom: -29px;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    margin-left:62px;
+    
+    display:flex;
+    justify-content:center;
+  }
 `;
 
 const HeaderSubtitle = styled.div`
   font-size: 14px;
   color: #6c757d;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
-const HeaderActions = styled.div`
-  display: flex;
-  gap: 10px;
-`;
+// const HeaderActions = styled.div`
+//   display: flex;
+//   gap: 10px;
+// `;
 
 const Select = styled.select`
   width: 100%;
@@ -386,27 +404,20 @@ const Select = styled.select`
   border-radius: 4px;
 `;
 
-const HeaderButton = styled.button`
-  padding: 8px 16px;
-  font-size: 14px;
-  color: #00254d;
-  background-color: transparent;
-  border: 1px solid #00254d;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgb(194, 189, 189);
-    color: #fff;
-  }
-`;
-
 const FormContainer = styled.div`
   padding: 20px;
   margin: 0 auto;
   color: black;
   padding: 3rem;
   border-radius: 8px;
+  margin-left: 40px;
+  margin-right: 40px;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+    margin-left: 55px;
+    margin-right: 20px;
+  }
 `;
 
 const FormGroup = styled.div`
@@ -437,6 +448,7 @@ const TextArea = styled.textarea`
   border-radius: 4px;
   resize: vertical;
 `;
+
 
 // const FileInputContainer = styled.div`
 //   border: 2px dashed #ccc;
@@ -488,4 +500,11 @@ const SubmitButton = styled.button`
   &:hover {
     background-color: rgb(11, 142, 43);
   }
+
+  @media (max-width: 768px) {
+    float: none;
+    width: 100%;
+    padding: 0.375rem;
+  }
 `;
+
