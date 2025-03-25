@@ -91,6 +91,7 @@ export const Row = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 0 32px;
+    margin-top:0;
   }
 `;
 
