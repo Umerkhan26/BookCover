@@ -247,6 +247,7 @@ import {
   TotalSection,
   TotalText,
   TotalAmount,
+  Label,
 } from "./orderform.styles";
 import { toast, ToastContainer } from "react-toastify";
 import styled from "styled-components";
@@ -362,10 +363,10 @@ const OrderForm: React.FC = () => {
 
             {/* Add-Ons Selection */}
             <FormGroup>
-              <label style={{ color: "#00254d", fontWeight: "500" }}>
+              <Label >
                 Add extra services to your order
-                <span className="multiple ml-8">multiple</span>
-              </label>
+                {/* <span className="multiple ml-8">multiple</span> */}
+              </Label>
               <Row>
                 {availableServices.map((item) => (
                   <ItemCards
