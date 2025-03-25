@@ -148,6 +148,7 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
+  color:black;
   width: 100%;
 `;
 
@@ -205,9 +206,9 @@ const CloseButton = styled.button`
   border: none;
   font-size: 20px;
   cursor: pointer;
-
+ color:#45a049;
   &:hover {
-    color: #ff0000;
+    color:#45a049;
   }
 `;
 

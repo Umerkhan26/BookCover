@@ -62,6 +62,10 @@ export const Label = styled.label`
   font-size: 14px;
   font-weight: 600;
   color: #333;
+   @media (max-width: 768px) {
+    font-size: 13px;
+    font-weight:550;
+    }
 `;
 
 export const Input = styled.input`
@@ -70,7 +74,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-
+color:black;
   @media (max-width: 480px) {
     padding: 10px;
   }
