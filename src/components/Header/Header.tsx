@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.png";
-// import { useAuth } from "../../context/authContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
@@ -262,12 +261,6 @@ const NavNBtn = styled.nav<NavNBtnProps>`
     padding: 15px 0px;
   }
 
-  // @media (min-width: 768px) and (max-width: 1024px) {
-  //   .services-link {
-  //     display: none;
-  //   }
-  // }
-
   @media (max-width: 768px) {
     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
     position: absolute;
@@ -315,15 +308,6 @@ const ServicesLink = styled(NavLinkButton)`
   }
 `;
 
-const DropdownContainer = styled.div`
-  position: relative;
-  display: inline-block;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
 const DropdownMenu = styled.div`
   display: none; // Ensure it's hidden by default
   position: absolute;
@@ -351,7 +335,7 @@ const DropdownMenu = styled.div`
     pointer-events: auto;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: static;
     width: 100%;
     margin-left: 0;
@@ -361,6 +345,23 @@ const DropdownMenu = styled.div`
 
     &.active {
       display: flex; // Show when active on mobile
+    }
+  }
+`;
+const DropdownContainer = styled.div`
+  position: relative;
+  display: inline-block;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  /* Hover styles for desktop */
+  @media (min-width: 1025px) {
+    &:hover > ${DropdownMenu} {
+      display: flex;
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 `;
@@ -374,17 +375,7 @@ function Header() {
   const servicesRef = useRef<HTMLDivElement>(null);
   const servicesToggleRef = useRef<HTMLAnchorElement>(null);
 
-  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsMobile(window.innerWidth <= 768);
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
 
   const handleNavigation = () => {
     const userDataString = localStorage.getItem("user");
@@ -404,15 +395,14 @@ function Header() {
       navigate("/login");
     } else {
       navigate("/portal/orders");
-      // Check the role of the user and navigate accordingly
       const userRole = userData.role;
       console.log("user role is", userRole);
       if (userRole === "admin") {
-        navigate("/Admin/users"); // Admin portal
+        navigate("/Admin/users");
       } else if (userRole === "user") {
-        navigate("/portal/orders"); // Regular user orders
+        navigate("/portal/orders");
       } else {
-        navigate("/portal/orders"); // Default route or fallback
+        navigate("/portal/orders");
       }
     }
   };
@@ -423,7 +413,15 @@ function Header() {
 
   const toggleServices = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsServicesOpen((prev) => !prev);
+    // On mobile, toggle the dropdown
+    if (window.innerWidth <= 1024) {
+      setIsServicesOpen((prev) => !prev);
+    }
+    // On desktop, we don't need to handle click as hover will handle it
+  };
+
+  const closeServicesMenu = () => {
+    setIsServicesOpen(false);
   };
 
   useEffect(() => {
@@ -441,11 +439,6 @@ function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const handleCloseMenu = () => {
-    setIsMenuOpen(false);
-    setIsServicesOpen(false);
-  };
 
   return (
     <>
@@ -473,8 +466,7 @@ function Header() {
             isMenuOpen={isMenuOpen}
             onClick={toggleMenu}
           >
-            {/* Services Dropdown for Mobile */}
-
+            {/* Services Dropdown */}
             <DropdownContainer ref={servicesRef}>
               <ServicesLink
                 to="/services"
@@ -489,31 +481,65 @@ function Header() {
                   style={{ fontSize: "12px" }}
                 />
               </ServicesLink>
-              {isServicesOpen && ( // Conditionally render DropdownMenu
-                <DropdownMenu className={isServicesOpen ? "active" : ""}>
-                  <DropdownItem to="/fictionCover" onClick={handleCloseMenu}>
-                    Fiction Cover Design
-                  </DropdownItem>
-                  <DropdownItem to="/illustrated" onClick={handleCloseMenu}>
-                    Illustrated Cover Design
-                  </DropdownItem>
-                  <DropdownItem
-                    to="/bookCoverRedesign"
-                    onClick={handleCloseMenu}
-                  >
-                    Book Covers Redesign
-                  </DropdownItem>
-                  <DropdownItem to="/nonFiction" onClick={handleCloseMenu}>
-                    Non-Fiction Cover Design
-                  </DropdownItem>
-                  <DropdownItem to="/audioBookCover" onClick={handleCloseMenu}>
-                    Audiobook Cover Design
-                  </DropdownItem>
-                  <DropdownItem to="/logoBrand" onClick={handleCloseMenu}>
-                    Logo & Branding
-                  </DropdownItem>
-                </DropdownMenu>
-              )}
+              <DropdownMenu
+                className={isServicesOpen ? "active" : ""}
+                onClick={closeServicesMenu} // Close menu when an item is clicked
+              >
+                <DropdownItem
+                  to="/fictionCover"
+                  onClick={() => {
+                    navigate("/fictionCover");
+                    closeServicesMenu();
+                  }}
+                >
+                  Fiction Cover Design
+                </DropdownItem>
+                <DropdownItem
+                  to="/illustrated"
+                  onClick={() => {
+                    navigate("/illustrated");
+                    closeServicesMenu();
+                  }}
+                >
+                  Illustrated Cover Design
+                </DropdownItem>
+                <DropdownItem
+                  to="/bookCoverRedesign"
+                  onClick={() => {
+                    navigate("/bookCoverRedesign");
+                    closeServicesMenu();
+                  }}
+                >
+                  Book Covers Redesign
+                </DropdownItem>
+                <DropdownItem
+                  to="/nonFiction"
+                  onClick={() => {
+                    navigate("/nonFiction");
+                    closeServicesMenu();
+                  }}
+                >
+                  Non-Fiction Cover Design
+                </DropdownItem>
+                <DropdownItem
+                  to="/audioBookCover"
+                  onClick={() => {
+                    navigate("/audioBookCover");
+                    closeServicesMenu();
+                  }}
+                >
+                  Audiobook Cover Design
+                </DropdownItem>
+                <DropdownItem
+                  to="/logoBrand"
+                  onClick={() => {
+                    navigate("/logoBrand");
+                    closeServicesMenu();
+                  }}
+                >
+                  Logo & Branding
+                </DropdownItem>
+              </DropdownMenu>
             </DropdownContainer>
 
             <NavLinkButton
