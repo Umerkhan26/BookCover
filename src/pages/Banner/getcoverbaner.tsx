@@ -48,6 +48,11 @@ const BannerTitle = styled.div`
     font-weight: 700;
     color: #333;
     margin-bottom: 0.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 32px;
+      margin-top: 12px;
+    }
   }
 
   span {

@@ -22,6 +22,10 @@ const WorksTitle = styled.h2`
   span {
     color: #6dc7d1;
   }
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
 `;
 
 const WorksStep = styled.div`
