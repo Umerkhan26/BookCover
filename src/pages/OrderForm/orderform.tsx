@@ -306,12 +306,12 @@ const OrderForm: React.FC = () => {
     };
 
     // First toast: Data saved successfully
-    toast.success("Step 1: Data saved successfully!");
+    toast.success("Extra Services: Data saved successfully!");
 
     // Show loader and delay the next steps
     setTimeout(() => {
       // Second toast: Continuing to the client portal
-      toast.success("Step 2: Continuing to client portal");
+      toast.success("For Order Information: Continuing to client portal");
 
       // Now navigate to the next page (client portal)
       setTimeout(() => {

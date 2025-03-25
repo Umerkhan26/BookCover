@@ -10,66 +10,65 @@ import specialadd2 from "../../assets/specialadd2.png";
 import specialadd3 from "../../assets/specialadd3.png";
 import specialadd4 from "../../assets/specialadd4.png";
 import { useNavigate } from "react-router-dom";
+import LoginModal from "../../components/Login/LoginModel"; // Import the modal
+import { useState } from "react";
 
 const addOns = [
   {
     title: "Sprayed edges design",
     image: specialadd1, // Placeholder image
     packageId: "sprayed-edges", // Unique ID
-
   },
   {
     title: "Decorative pages design",
     image: specialadd2,
-    packageId: "sprayed-edges", // Unique ID
-
+    packageId: "Decorative-pages", // Unique ID
   },
   {
     title: "Foiled cover design",
     image: specialadd3,
-    packageId: "sprayed-edges", // Unique ID
-
+    packageId: "Foiled-cover-design", // Unique ID
   },
   {
     title: "Chapter header & breaker design",
     image: specialadd4,
-    packageId: "sprayed-edges", // Unique ID
-
+    packageId: "Chapter-header-breaker-design", // Unique ID
   },
 ];
 
 const SpecialEditionAddOns = () => {
   const navigate = useNavigate();
+  const [showLoginModal, setShowLoginModal] = useState(false); // State for showing login modal
 
-  // const handleOrderNow = (packageId: string | undefined) => {
-  //   if (!packageId) {
-  //     console.error("🚨 Package ID is undefined! Cannot navigate.");
-  //     return;
-  //   }
+  const handleLoginSuccess = (token: string) => {
+    localStorage.setItem("token", token);
+    setShowLoginModal(false);
+    const redirectTo = localStorage.getItem("redirectAfterLogin");
+    if (redirectTo) {
+      navigate(redirectTo);
+      localStorage.removeItem("redirectAfterLogin");
+    }
+  };
 
-  //   console.log(`✅ Navigating to /order/${packageId}`);
-  //   navigate(`/order/${packageId}`);
-  // };
-  
   const handleOrderNow = (packageId: string | undefined) => {
     const token = localStorage.getItem("token"); // Check if token exists
-  
+
     if (!token) {
       console.warn("🚨 No token found! Redirecting to login...");
       localStorage.setItem("redirectAfterLogin", `/order/${packageId}`); // Store intended URL
-      navigate("/login");
+      setShowLoginModal(true); // Show login modal
       return;
     }
-  
+
     if (!packageId) {
       console.error("🚨 Package ID is undefined! Cannot navigate.");
       return;
     }
-  
+
     console.log(`✅ Navigating to /order/${packageId}`);
     navigate(`/order/${packageId}`);
   };
-  
+
   return (
     <AddOnsContainer>
       <Title>
@@ -87,6 +86,13 @@ const SpecialEditionAddOns = () => {
           </AddOnCard>
         ))}
       </AddOnsGrid>
+
+      {/* Show login modal if necessary */}
+      <LoginModal
+        show={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </AddOnsContainer>
   );
 };
