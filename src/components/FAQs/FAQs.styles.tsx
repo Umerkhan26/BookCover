@@ -27,6 +27,8 @@ export const FAQTitle = styled.h2`
   display: inline-block;
   margin-bottom: 40px;
   color: black;
+  display:flex;
+  justify-content:center;
   margin-top: 6vh;
   &::after {
     content: "";
