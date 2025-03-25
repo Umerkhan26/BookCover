@@ -7,13 +7,22 @@ export const Section = styled.section`
   align-items: center;
   text-align: center;
   padding: 3rem 1.5rem;
+  font-family: "Manrope", sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 // Title Styling
 export const Title = styled.h2`
   font-size: 2rem;
   font-weight: bold;
-      color: #333;
+  color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
 `;
 
 export const HighlightedText = styled.span`
@@ -33,6 +42,10 @@ export const Subtitle = styled.p`
   color: #6b7280; /* Gray Color */
   margin-top: 1rem;
   font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 // Grid Layout
@@ -41,6 +54,11 @@ export const GridContainer = styled.div`
   justify-content: center;
   gap: 5rem; /* Increased gap between columns */
   margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    padding: 0 32px;
+  }
 `;
 
 // List Column

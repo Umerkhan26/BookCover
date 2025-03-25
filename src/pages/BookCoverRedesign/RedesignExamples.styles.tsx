@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export  const Container = styled.div`
+export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 50px 20px;
+  font-family: "Manrope", sans-serif;
 `;
 
 export const Heading = styled.h2`
@@ -31,17 +32,27 @@ export const Example = styled.div<ExampleProps>`
   @media (min-width: 768px) {
     flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
     align-items: center;
+    // text-align: left;
   }
 `;
 
 export const TextSection = styled.div`
   flex: 1;
+
+  @media (min-width: 768px) {
+    text-align: center;
+  }
 `;
 
 export const PointsList = styled.ul`
   list-style-type: disc;
   padding-left: 20px;
   margin: 0;
+
+  @media (max-width: 767px) {
+    list-style: none;
+    padding-left: 0;
+  }
 `;
 
 export const ListItem = styled.li`
@@ -76,4 +87,3 @@ export const StyledImage = styled.img`
   height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
-

@@ -3,9 +3,14 @@ import styled from "styled-components";
 export const Section = styled.section`
   max-width: 900px;
   margin: 0 auto;
-  padding: 3rem .5rem;
+  padding: 3rem 0.5rem;
+  font-family: "Manrope", sans-serif;
   text-align: left;
-  margin-bottom:20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 // Title
@@ -13,7 +18,11 @@ export const Title = styled.h2`
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
-      color: #333;
+  color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+  }
 `;
 
 // Highlighted Text
@@ -23,10 +32,13 @@ export const HighlightedText = styled.span`
 
 // FAQ Item
 export const FAQItem = styled.div`
-  border-bottom: 89px ;
+  border-bottom: 89px;
   padding: 1rem 0;
   cursor: pointer;
-  
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 0;
+  }
 `;
 
 // Question Row
@@ -36,14 +48,18 @@ export const QuestionRow = styled.div`
   justify-content: space-between;
   font-size: 1rem;
   font-weight: bold;
-      color: #333;
+  color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 // Icon Circle (Updated Green color with `?` inside)
 export const IconCircle = styled.div`
-  width: 30px;  /* Increased width */
+  width: 30px; /* Increased width */
   height: 30px; /* Increased height */
-  background-color: #6dc7d1;  /* Changed to the new color */
+  background-color: #6dc7d1; /* Changed to the new color */
   color: #fff;
   font-size: 1.2rem;
   font-weight: bold;
@@ -52,6 +68,12 @@ export const IconCircle = styled.div`
   justify-content: center;
   border-radius: 50%;
   margin-right: 10px;
+
+  @media (max-width: 768px) {
+    width: 25px;
+    height: 25px;
+    font-size: 1rem;
+  }
 `;
 
 // Toggle Icon (Dropdown Arrow)
@@ -60,7 +82,12 @@ export const ToggleIcon = styled.span<{ isOpen: boolean }>`
   color: #000;
   transition: transform 0.3s ease;
 
-  ${({ isOpen }) => (isOpen ? "transform: rotate(180deg);" : "transform: rotate(0);")}
+  ${({ isOpen }) =>
+    isOpen ? "transform: rotate(180deg);" : "transform: rotate(0);"}
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 interface AnswerProps {
@@ -75,4 +102,10 @@ export const Answer = styled.p<AnswerProps>`
   height: ${({ isOpen }) => (isOpen ? "auto" : "0")};
   overflow: hidden;
   transition: height 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0 32px;
+    text-align: left;
+  }
 `;

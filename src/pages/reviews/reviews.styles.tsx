@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Button = styled.a`
   display: flex; /* Use flex for both small and large screens */
@@ -18,6 +18,7 @@ export const Button = styled.a`
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   text-decoration: none;
+  font-family: "Manrope", sans-serif;
 
   /* Make the button responsive */
   @media (max-width: 768px) {
@@ -25,14 +26,14 @@ export const Button = styled.a`
     padding: 12px 20px;
     font-size: 16px;
     text-align: center;
-    justify-content:center;
+    justify-content: center;
     text-decoration: none; /* Remove the underline */
   }
 `;
 
-
 export const ReviewsWrapper = styled.div`
   width: 100%;
+  font-family: "Manrope", sans-serif;
   overflow: hidden; /* Ensures no horizontal scrolling */
 `;
 
@@ -89,4 +90,3 @@ export const ReviewCard = styled.div`
     margin-top: 2rem;
   }
 `;
-

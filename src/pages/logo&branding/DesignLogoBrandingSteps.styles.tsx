@@ -3,6 +3,7 @@ import styled from "styled-components";
 // Main Section Styling
 export const Section = styled.section`
   padding: 60px 0;
+  font-family: "Manrope", sans-serif;
 `;
 
 export const Container = styled.div`
@@ -74,6 +75,7 @@ export const StepNumber = styled.div`
 
   @media (max-width: 768px) {
     font-size: 28px;
+    display: none;
   }
 `;
 
@@ -94,13 +96,22 @@ export const StepTitle = styled.h3`
   color: #212121;
 
   @media (max-width: 768px) {
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
   }
 `;
 
 export const StepDescription = styled.p`
   font-size: 14px;
   color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 0 15px;
+  }
 `;
 
 // Image for each step
@@ -110,6 +121,15 @@ export const StepImage = styled.img`
   object-fit: cover;
   border-radius: 10px;
   margin-right: 200px;
+
+  @media (max-width: 768px) {
+    max-width: 3500px;
+    margin-right: 0;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 300px;
+  }
 `;
 
 // Button Styling
@@ -128,5 +148,10 @@ export const Button = styled.a`
 
   &:hover {
     background-color: #218838;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 10px 20px;
   }
 `;
