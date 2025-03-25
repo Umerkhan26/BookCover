@@ -28,7 +28,7 @@ const LeftColumn = styled.div`
 
   @media (max-width: 768px) {
     max-width: 100%;
-    text-align: center; /* Center align text for small screens */
+    text-align: center;
   }
 `;
 
@@ -40,7 +40,7 @@ const RightColumn = styled.div`
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 40px;
-    text-align: center; /* Center align text for small screens */
+    text-align: center;
   }
 `;
 
@@ -190,13 +190,13 @@ const Button = styled.a`
 
   @media (max-width: 768px) {
     display: inline-block;
-    min-width: 230px;
+    min-width: 190px;
     padding: 12px 15px;
     font-size: 16px;
     font-weight: 900;
     justify-items: center;
     justify-content: center;
-    text-align: center; /* Ensure the button is centered */
+    text-align: center;
   }
 `;
 

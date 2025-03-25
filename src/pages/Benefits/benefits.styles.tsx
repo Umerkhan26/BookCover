@@ -65,6 +65,14 @@ export const FirstRow = styled.div`
   width: 100%;
 
   @media (max-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 100%;
+    // padding: 0 32px;
+  }
+
+  @media (max-width: 480px) {
     flex-direction: column;
     align-items: flex-start;
     padding: 0 32px;
@@ -89,9 +97,16 @@ export const Row = styled.div`
   margin-top: 20px;
 
   @media (max-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 480px) {
     flex-direction: column;
     padding: 0 32px;
-    margin-top:0;
+    margin-top: 0;
   }
 `;
 

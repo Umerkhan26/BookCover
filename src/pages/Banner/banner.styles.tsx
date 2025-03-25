@@ -49,14 +49,18 @@ export const BannerContent = styled.div`
   border-radius: 10px; // Optional: Add rounded corners
 
   @media (max-width: 768px) {
-    align-items: center;
-    text-align: center;
-    padding: 15px 10px; // Adjusted padding for smaller screens
+    // align-items: center;
+    align-items: start;
+    // text-align: center;
+    text-align: start;
+    padding: 15px 10px;
   }
 
   @media (max-width: 480px) {
-    padding: 10px 5px; // Further reduced padding for mobile screens
-    width: 95%; // Adjust for smaller screens
+    padding: 10px 5px;
+    text-align: center;
+    align-items: center;
+    width: 95%;
   }
 `;
 
@@ -216,7 +220,7 @@ export const CardSection = styled.div`
 
   @media (max-width: 768px) {
     justify-content: flex-start;
-    padding: 0 10px; // Adjusted padding for smaller screens
+    padding: 0 10px;
   }
 
   @media (max-width: 480px) {
@@ -243,6 +247,7 @@ export const Card = styled.a`
   @media (max-width: 768px) {
     flex: 0 0 calc(33.333% - 10px);
     max-width: calc(33.333% - 10px);
+    min-height: 240px;
   }
 
   @media (max-width: 480px) {

@@ -162,7 +162,7 @@ const HeaderContainer = styled.div`
 const DropdownItem = styled(NavLink)`
   color: #6d6d6d;
   text-decoration: none;
-  padding: 18px 10px;
+  padding: 10px 10px;
   font-size: 15px;
   display: flex;
   align-items: center;
@@ -309,7 +309,7 @@ const ServicesLink = styled(NavLinkButton)`
 `;
 
 const DropdownMenu = styled.div`
-  display: none; // Ensure it's hidden by default
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -323,7 +323,7 @@ const DropdownMenu = styled.div`
   border-radius: 0;
   flex-wrap: wrap;
   width: 100vw;
-  margin-left: -13vw;
+  margin-left: -15vw;
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 0;
   pointer-events: none;

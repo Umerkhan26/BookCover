@@ -107,7 +107,7 @@ const LinkButton = styled.a`
   }
 
   @media (max-width: 768px) {
-    min-width: 230px;
+    min-width: 190px;
     padding: 12px 15px;
     font-size: 16px;
     font-weight: 900;

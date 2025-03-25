@@ -561,6 +561,8 @@ export const PortfolioButton = styled.button`
   @media (max-width: 480px) {
     width: 190px;
     padding: 12px 0;
+    margin-top: 10px;
+    font-weight: 900;
   }
 `;
 

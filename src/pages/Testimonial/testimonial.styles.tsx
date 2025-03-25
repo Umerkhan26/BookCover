@@ -110,6 +110,14 @@ export const ListTestimonials = styled.div`
   gap: 1rem;
   justify-content: center;
 
+  @media (max-width: 820px) {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.6rem;
+    justify-content: center;
+    padding: 0 5px;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
@@ -139,8 +147,8 @@ export const ColTestimonials = styled.div`
   margin-top: -165px;
 
   @media (max-width: 768px) {
-    margin-top: -100px;
-    max-width: 80%;
+    margin-top: 0px;
+    max-width: 70%;
   }
 
   @media (max-width: 480px) {
@@ -266,9 +274,12 @@ export const ButtonGreen = styled.a`
 
   @media (max-width: 480px) {
     display: block;
-    width: 230px;
+    width: 190px;
     font-size: 16px;
     margin-bottom: 60px;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 900;
   }
 `;
 
