@@ -405,7 +405,7 @@ const Packages: React.FC = () => {
       <PackageTitle>
         Our <span className="text-[#6dc7d1]">Packages</span>
       </PackageTitle>
-        <span className="color-white"> ${totalPrice}</span>
+        <span className="text-white"> ${totalPrice}</span>
 
       {loading ? (
         <p>Loading packages...</p>
