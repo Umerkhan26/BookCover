@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 // Animation for fading images
 
-
 // Container for the entire component
 export const Container = styled.div`
   display: flex;
@@ -12,6 +11,13 @@ export const Container = styled.div`
   padding: 20px;
   background-color: #f8f8f8;
   height: 100vh;
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* Stack sections vertically */
+    height: auto;
+    gap: 30px;
+    padding: 10px;
+  }
 `;
 
 // Left section containing the image slider
@@ -25,6 +31,16 @@ export const LeftSection = styled.div`
   border: 2px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
+
+  @media (max-width: 1024px) {
+    width: 90%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 300px;
+  }
 `;
 
 export const ImageSlider = styled.div`
@@ -51,6 +67,16 @@ export const RightSection = styled.div`
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
+
+  @media (max-width: 1024px) {
+    width: 90%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 15px;
+  }
 `;
 
 export const BorderWrapper = styled.div`
@@ -68,17 +94,34 @@ export const TitleSection = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: -30px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10px;
+  }
 `;
 
 export const Title = styled.h1`
   font-size: 1.5rem;
   color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 
 export const Price = styled.p`
   font-size: 1.2rem;
   font-weight: bold;
-color:#6dc7d1;`;
+  color: #6dc7d1;
+  margin-top: 12px;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    margin-top: 12px;
+  }
+`;
 
 // Feature list and its items
 export const FeatureList = styled.ul`
@@ -95,7 +138,12 @@ export const FeatureItem = styled.li`
 
   &:before {
     content: "✔";
-  color:#6dc7d1;    margin-right: 8px;
+    color: #6dc7d1;
+    margin-right: 8px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
   }
 `;
 
@@ -103,7 +151,7 @@ export const FeatureItem = styled.li`
 export const Button = styled.button`
   font-size: 1rem;
   color: white;
-  background-color:#6dc7d1;
+  background-color: #6dc7d1;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -111,6 +159,17 @@ export const Button = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #6dc7d1;;
+    background-color: #6dc7d1;
+  }
+
+  @media (max-width: 768px) {
+    display: inline-block;
+    min-width: 230px;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: 900;
+    justify-items: center;
+    justify-content: center;
+    text-align: center;
   }
 `;

@@ -17,6 +17,12 @@ export const Title = styled.h2`
     color: #6dc7d1; /* Your theme color */
     font-weight: bold;
   }
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+
+    text-align: center;
+  }
 `;
 
 export const AddOnsGrid = styled.div`
@@ -29,12 +35,12 @@ export const AddOnsGrid = styled.div`
 
 export const AddOnCard = styled.div`
   background: #fff;
-//   border-radius: 8px;
+  //   border-radius: 8px;
   overflow: hidden;
   text-align: center;
   width: 280px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-//   border: 2px solid #6dc7d1; /* Theme border */
+  //   border: 2px solid #6dc7d1; /* Theme border */
   padding: 1rem;
 
   img {

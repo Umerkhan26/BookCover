@@ -7,6 +7,7 @@ import {
   LargeImage,
   StepsContainer,
   Step,
+  Title,
 } from "./illustratedDesignProcess.styles";
 import image1 from "../../../assets/pacakge1.jpeg"; // Replace with actual images
 import image2 from "../../../assets/package2.png";
@@ -21,6 +22,10 @@ const DesignProcess = () => {
 
   return (
     <div>
+      <Title>
+        Our Illustrated Book Cover{" "}
+        <span className="text-[#6dc7d1] !important">Design Process</span>
+      </Title>
       <Container>
         <ImageContainer>
           <SmallImage src={image1} alt="Sketch Image" />
@@ -33,10 +38,6 @@ const DesignProcess = () => {
         </ImageContainer>
 
         <StepsContainer>
-          <h2>
-            Our Illustrated Book Cover{" "}
-            <span className="text-[#6dc7d1] !important">Design Process</span>
-          </h2>
           <Step>
             <h3>
               01 <span className="text-[#6dc7d1]">STEP</span>
@@ -82,7 +83,7 @@ const DesignProcess = () => {
           </Step>
         </StepsContainer>
       </Container>
-<Packages/>
+      <Packages />
       {/* <IllustratedPackages packagesData={myPackagesData} /> */}
       <div className="mb-32">
         <Reviews />

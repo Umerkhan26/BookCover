@@ -7,6 +7,7 @@ const slideWidth = imageWidth * imagesPerRow + gap * (imagesPerRow - 1);
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: "Manrope", sans-serif;
   align-items: center;
   text-align: center;
   padding: 40px 20px;

@@ -5,8 +5,9 @@ export const FullWidthContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-family: "Manrope", sans-serif;
   align-items: center;
-  margin-bottom:60px;
+  margin-bottom: 60px;
   background-color: #f8f8f8; /* Light background to match the theme */
 `;
 
@@ -16,6 +17,10 @@ export const Heading = styled.h1`
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
 `;
 
 export const SubHeading = styled.p`
@@ -25,9 +30,8 @@ export const SubHeading = styled.p`
   text-align: center;
 `;
 
-
 export const Button = styled.button`
-   background-color: #6dc7d1; /* Theme color */
+  background-color: #6dc7d1; /* Theme color */
   color: white;
   border: none;
   padding: 10px 20px;
