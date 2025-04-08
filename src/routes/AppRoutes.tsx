@@ -75,7 +75,7 @@ const AppRoutes: React.FC = () => {
           element={
             <FictionCover
               title="Book Cover Design For Indie Authors"
-              subtitle="PAY ONLY WHEN YOU'RE SATISFIED WITH THE FINAL RESULT"
+              subtitle="Pay Only When You are Satisfied With The final result"
               image={fictonCoverImg}
               bookCoversText=""
               benefitsComponent={

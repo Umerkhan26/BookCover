@@ -4,7 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-
+import userlogo from '../../assets//userlogo.png';
+import LoginModal from "../Login/LoginModel";
 interface NavNBtnProps {
   isMenuOpen: boolean;
 }
@@ -117,7 +118,7 @@ const NavButton = styled(NavLink)`
   }
 `;
 
-const NavText = styled(NavLink)`
+const NavText = styled.div`
   display: inline-block;
   color: #6dc7d1;
   font-weight: bold;
@@ -371,6 +372,7 @@ function Header() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const navNBtnRef = useRef<HTMLDivElement>(null);
+  const [showLoginModal, setShowLoginModal] = useState(false); // State to show/hide modal
 
   const servicesRef = useRef<HTMLDivElement>(null);
   const servicesToggleRef = useRef<HTMLAnchorElement>(null);
@@ -382,31 +384,29 @@ function Header() {
 
     if (!userDataString) {
       localStorage.setItem("redirectAfterLogin", "/portal");
-      navigate("/login");
+      setShowLoginModal(true); // Show the login modal
       return;
     }
 
     const userData = JSON.parse(userDataString);
-
     const isAuthenticated = userData && userData.userId;
 
     if (!isAuthenticated) {
       localStorage.setItem("redirectAfterLogin", "/portal");
-      navigate("/login");
+      setShowLoginModal(true); // Show the login modal
     } else {
-      navigate("/portal/orders");
       const userRole = userData.role;
-      console.log("user role is", userRole);
       if (userRole === "admin") {
         navigate("/Admin/users");
-      } else if (userRole === "user") {
-        navigate("/portal/orders");
       } else {
         navigate("/portal/orders");
       }
     }
   };
-
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false); // Close modal on successful login
+    navigate("/portal/orders");
+  };
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
@@ -564,12 +564,31 @@ function Header() {
               Partner With Us
             </NavLinkButton>
 
-            <NavText to="/portal/orders" onClick={handleNavigation}>
+            {/* <NavText to="/portal/orders" onClick={handleNavigation}>
               Client Portal
-            </NavText>
+            </NavText> */}
+       
+
             <NavButton to="/GetACover">Get a Cover</NavButton>
           </NavNBtn>
+          <NavText onClick={handleNavigation}>
+        <img
+          src={userlogo}
+          alt="User Logo"
+          style={{ width: "32px", height: "32px", cursor: "pointer" }}
+        />
+      </NavText>
+
+      {/* Conditional Rendering of Login Modal */}
+      {showLoginModal && (
+        <LoginModal
+          show={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          onLoginSuccess={handleLoginSuccess} // Pass success handler
+        />
+      )}
         </HeaderContainer>
+     
       </Nav>
     </>
   );
