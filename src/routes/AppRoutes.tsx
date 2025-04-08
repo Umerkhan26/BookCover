@@ -81,7 +81,7 @@ const AppRoutes: React.FC = () => {
                 <BenefitsSection
                   title={
                     <>
-                      Self-Publishing Authors Love Working <span>with Us</span>
+                      Here's What Benefits <span>You Get</span>
                     </>
                   }
                   benefits={benefitsData}
