@@ -70,10 +70,8 @@ const TabContainer = styled.div`
   width: 100%; // Ensure it spans the full width
   max-width: 1200px; // Match the max-width of the banner
   margin: 0 auto; // Center the container
-  padding: 0 0px; // Add padding for spacing
+  padding: 36px 0px; // Add padding for spacing
   position: relative;
-  padding-bottom: 10px;
-  margin-top: 36px;
 
   &::after {
     content: "";

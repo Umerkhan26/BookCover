@@ -44,10 +44,11 @@ const FooterPartnerLogo = styled.div`
   font-weight: 400;
   position: relative;
   -webkit-font-smoothing: antialiased;
+  padding-right: 3.5rem;
 `;
 
 const FooterName = styled.div`
-  font-weight: 600;
+  font-weight: 800;
   font-size: 15px;
   line-height: 17px;
   text-transform: uppercase;
@@ -62,7 +63,7 @@ const FooterName = styled.div`
 
 const FooterContainer = styled.footer`
   background-color: #fafafa;
-  padding: 90px 0px 0px;
+  padding: 35px 60px;
 
   @media (max-width: 768px) {
     padding: 50px 20px;
@@ -72,8 +73,8 @@ const FooterContainer = styled.footer`
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
-  margin-bottom: -10px;
+  padding: 0 40px;
+  margin-bottom: -20px;
 
   @media (max-width: 768) {
     margin-bottom: -30px;
@@ -88,7 +89,7 @@ const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -103,7 +104,7 @@ const FooterNav = styled.div`
   justify-content: flex-start;
   justify-content: space-between;
   // width: 100%;
-  gap: 80px;
+  gap: 50px;
 
   @media (max-width: 1024px) {
     gap: 30px;
@@ -139,9 +140,10 @@ const FooterItem = styled.li`
 `;
 
 const FooterAnchor = styled.a`
-  color: #8c8c8c;
+  color: #000000;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 15px;
+  white-space: nowrap;
 
   @media (max-width: 768px) {
     font-size: 16px;
@@ -150,32 +152,19 @@ const FooterAnchor = styled.a`
 
 const FooterNote = styled.p`
   text-align: center;
-  margin-top: 0.6rem;
+  margin-top: 1rem;
   font-size: 14px;
   color: #455a64;
-
+  margin-bottom: -1rem;
   @media (max-width: 768px) {
     font-size: 16px;
   }
 `;
 
 const BotFooter = styled.div`
-  padding: 0.2rem 0;
+  // padding: 0.2rem 0;
   text-align: center;
 `;
-
-// const RowLogo = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   flex-wrap: wrap;
-//   margin-top: 20px;
-//   gap: 60px;
-//   align-items: center;
-
-//   @media (max-width: 768px) {
-//     gap: 30px;
-//   }
-// `;
 
 const LogoContainer = styled.div`
   display: flex;
@@ -190,8 +179,8 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 55px;
-  width: auto;
+  height: 65px;
+  width: 295px;
   display: block;
 
   @media (max-width: 768px) {
@@ -214,14 +203,34 @@ const Footer: React.FC<FooterProps> = ({
       <FooterContainer>
         <Container>
           <Row>
-            {/* Partner Logo */}
-            <FooterPartnerLogo>
-              <LogoContainer>
-                <NavLink to="/">
-                  <Logo src={logo} alt="Logo" />
-                </NavLink>
-              </LogoContainer>
-              <Row>
+            {/* Footer Navigation */}
+            <FooterNav>
+              {/* Partner Logo */}
+              <FooterPartnerLogo>
+                <LogoContainer>
+                  <NavLink to="/">
+                    <Logo src={logo} alt="Logo" />
+                  </NavLink>
+                </LogoContainer>
+
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: "15px",
+                    color: "#000000",
+                    maxWidth: "500px",
+                    margin: "10px auto",
+                    lineHeight: "1.5em",
+                    maxHeight: "3em", // Adjust this to fit the full text
+                    overflow: "visible", // Ensures full visibility
+                    whiteSpace: "normal", // Allows wrapping
+                    wordBreak: "break-word",
+                  }}
+                >
+                  Lumeart Studio is a creative hub for book lovers, authors, and
+                  publishers.
+                </p>
+
                 <SocialNetwork
                   style={{
                     display: "flex",
@@ -269,11 +278,7 @@ const Footer: React.FC<FooterProps> = ({
                   </div>
                   {/* Copyright Text */}
                 </SocialNetwork>
-              </Row>
-            </FooterPartnerLogo>
-
-            {/* Footer Navigation */}
-            <FooterNav>
+              </FooterPartnerLogo>
               {categories.map((category, index) => (
                 <FooterCategoryWrapper key={index}>
                   <FooterName>{category.name}</FooterName>
@@ -296,20 +301,18 @@ const Footer: React.FC<FooterProps> = ({
 
       {/* Bottom Footer */}
       <BotFooter>
-        <Container>
-          <span
-            style={{
-              display: "block",
-              textAlign: "center",
-              fontWeight: 300,
-              fontSize: "13px",
-              lineHeight: "15px",
-              color: "#212121",
-            }}
-          >
-            <FooterNote>{copyrightText}</FooterNote>
-          </span>
-        </Container>
+        <span
+          style={{
+            display: "block",
+            textAlign: "center",
+            fontWeight: 300,
+            fontSize: "13px",
+            lineHeight: "15px",
+            color: "#212121",
+          }}
+        >
+          <FooterNote>{copyrightText}</FooterNote>
+        </span>
       </BotFooter>
     </>
   );

@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const AddOnsContainer = styled.div`
   text-align: center;
   padding: 3rem 1.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: -30px;
+  }
 `;
 
 export const Title = styled.h2`

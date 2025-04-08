@@ -205,7 +205,7 @@ const Paranormal: React.FC = () => {
         />
       </div>
       {selectedImage && (
-        <ModalOverlay>
+        <ModalOverlay onClick={closeModal}>
           <ModalContent>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />

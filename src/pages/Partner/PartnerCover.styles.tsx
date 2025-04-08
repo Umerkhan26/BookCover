@@ -32,7 +32,7 @@ export const Title = styled.h1`
   font-weight: 700;
   font-size: 24px;
   line-height: 40px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 
   & span {
     color: #6dc7d1;
@@ -44,7 +44,6 @@ export const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 1.8rem;
     font-size: 24px;
-    
 
     text-transform: capitalize;
   }
@@ -54,7 +53,6 @@ export const Title = styled.h1`
     line-height: 40px;
     margin-bottom: 8px;
     text-transform: capitalize;
-    
   }
 `;
 export const Title2 = styled.h1`
@@ -62,7 +60,7 @@ export const Title2 = styled.h1`
   font-weight: 700;
   font-size: 52px;
   line-height: 40px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 
   & span {
     color: #6dc7d1;
@@ -74,7 +72,6 @@ export const Title2 = styled.h1`
   @media (max-width: 768px) {
     font-size: 1.8rem;
     font-size: 34px;
-    
 
     text-transform: capitalize;
   }
@@ -84,7 +81,6 @@ export const Title2 = styled.h1`
     line-height: 40px;
     margin-bottom: 8px;
     text-transform: capitalize;
-    
   }
 `;
 // export const Subtitle = styled.p`

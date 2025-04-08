@@ -59,14 +59,13 @@ import Order from "../components/AdminDashboard/Order/order";
 import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
 import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
 import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
+import MarketingMaterial from "../components/Marketing Material/marketing";
 // import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-
       <Route path="/" element={<Layout />}>
-      
         <Route index element={<Home />} />
         <Route path="/book-cover-form" element={<BookCoverForm />} />
         {/* Wrap FictionCover inside Route and pass its props */}
@@ -132,6 +131,7 @@ const AppRoutes: React.FC = () => {
           <Route path="kindle-vella-covers" element={<KindleVellaCover />} />
           <Route path="illustrated-covers" element={<IllustratedCover />} />
           <Route path="logo-design" element={<LogoDesign />} />
+          <Route path="marketing-materials" element={<MarketingMaterial />} />
         </Route>
         ;
         <Route path="/aboutUs" element={<AboutUs />} />

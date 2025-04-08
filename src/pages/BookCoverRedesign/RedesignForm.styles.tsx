@@ -8,14 +8,18 @@ export const FullWidthContainer = styled.div`
   font-family: "Manrope", sans-serif;
   align-items: center;
   margin-bottom: 60px;
-  background-color: #f8f8f8; /* Light background to match the theme */
+  background-color: #f8f8f8;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
 
 export const Heading = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   text-align: center;
 
   @media (max-width: 768px) {

@@ -1,19 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 50px 20px;
-  font-family: "Manrope", sans-serif;
-`;
-
-export const Heading = styled.h2`
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 40px;
-`;
-
 export const ExampleSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,26 +9,6 @@ export const ExampleSection = styled.div`
 interface ExampleProps {
   reverse: boolean;
 }
-
-export const Example = styled.div<ExampleProps>`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  @media (min-width: 768px) {
-    flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
-    align-items: center;
-    // text-align: left;
-  }
-`;
-
-export const TextSection = styled.div`
-  flex: 1;
-
-  @media (min-width: 768px) {
-    text-align: center;
-  }
-`;
 
 export const PointsList = styled.ul`
   list-style-type: disc;
@@ -59,12 +25,16 @@ export const ListItem = styled.li`
   font-size: 1rem;
   color: #555;
   margin-bottom: 10px;
-`;
-
-export const ImageSection = styled.div`
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: "✓";
+    color: #6dc7d1;
+    font-weight: bold;
+    margin-right: 8px;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -82,8 +52,57 @@ export const ImageLabel = styled.span`
   border-radius: 4px;
 `;
 
+// export const StyledImage = styled.img`
+//   width: 380px;
+//   height: auto;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+// `;
+
+export const Container = styled.div`
+  max-width: 1400px; /* Increased for larger screens */
+  margin: 0 auto;
+  padding: 50px 20px;
+  font-family: "Manrope", sans-serif;
+`;
+
+export const Example = styled.div<ExampleProps>`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
+    align-items: center;
+  }
+
+  @media (min-width: 1200px) {
+    gap: 50px; /* Increased spacing for larger screens */
+  }
+`;
+
+export const TextSection = styled.div`
+  flex: 1;
+  max-width: 600px; /* Limit text width */
+
+  @media (min-width: 768px) {
+    text-align: center;
+  }
+`;
+
+export const ImageSection = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap; /* Ensure images wrap properly on large screens */
+`;
+
 export const StyledImage = styled.img`
-  width: 380px;
+  width: 100%;
+  max-width: 400px; /* Allow images to grow but not too much */
   height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 1200px) {
+    max-width: 500px; /* Increase image size on larger screens */
+  }
 `;

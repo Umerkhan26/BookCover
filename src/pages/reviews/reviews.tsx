@@ -8,27 +8,26 @@ import {
 const Reviews = () => {
   return (
     <div
-      className="text-gray-600 dark:text-gray-300 pt-8 dark: mb-24"
+      className="text-gray-600 dark:text-gray-300 pt-8 dark: mb-32 md:mb-[-5px]"
       id="reviews"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-      <div className="mb-10 space-y-4 px-6 md:px-0 text-center md:text-left">
-  <h2 className="text-2xl font-bold text-gray-800 text-center md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
-    What Do Our <span className="text-[#00bcd4]">Clients Say</span>
-  </h2>
-</div>
+        <div className="mb-10 space-y-4 px-6 md:px-0 text-center md:text-left">
+          <h2 className="text-2xl font-bold text-gray-800 text-center md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
+            What Do Our <span className="text-[#6dc7d1]">Clients Say</span>
+          </h2>
+        </div>
 
-
-<div>
-  <a
-    href="https://www.facebook.com/YourPageName/reviews"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ textDecoration: "none" }}  // Add inline style here
-  >
-    <Button className="mb-4">Leave A Review</Button>
-  </a>
-</div>
+        <div>
+          <a
+            href="https://www.facebook.com/YourPageName/reviews"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none" }} // Add inline style here
+          >
+            <Button className="mb-4">Leave A Review</Button>
+          </a>
+        </div>
 
         <ReviewsWrapper>
           <CardsWrapper>

@@ -48,7 +48,7 @@ const footerData: FooterProps = {
     { href: "", text: "Twitter" },
     { href: "", text: "Pinterest" },
   ],
-  copyrightText: "© 2024 Lumeart Studio. All rights Reserved.",
+  copyrightText: "© 2025 Lumeart Studio. All rights Reserved.",
   brandLogos: [
     {
       src: "",
@@ -66,8 +66,7 @@ const footerData: FooterProps = {
 const Layout: React.FC = () => {
   return (
     <>
-    
-    {/* <TopBar/> */}
+      {/* <TopBar/> */}
       <Header />
       <main>
         <Outlet />

@@ -4,7 +4,7 @@ export const FAQContainer = styled.div`
   width: 90%;
   max-width: 1200px;
   margin: auto;
-  padding: 100px 20px; /* Reduced padding for smaller screens */
+  padding: 40px 20px; /* Reduced padding for smaller screens */
 
   @media (max-width: 1024px) {
     padding: 80px 20px;
@@ -18,6 +18,30 @@ export const FAQContainer = styled.div`
     padding: 40px 10px;
   }
 `;
+export const FAQTitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Fixes potential overflow */
+  margin: 0;
+  height: 310px; /* Adjust height */
+  background-color: #f8f9fa; /* Light gray background */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  padding: 20px 0; /* Adds space */
+  font-size: 36px;
+  font-weight: bold;
+  color: #222; /* Darker text for contrast */
+
+  @media (max-width: 768px) {
+    height: 140px;
+    font-size: 30px;
+  }
+
+  @media (max-width: 480px) {
+    height: 120px;
+    font-size: 26px;
+  }
+`;
 
 export const FAQTitle = styled.h2`
   font-size: 48px;
@@ -27,8 +51,8 @@ export const FAQTitle = styled.h2`
   display: inline-block;
   margin-bottom: 40px;
   color: black;
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   margin-top: 6vh;
   &::after {
     content: "";

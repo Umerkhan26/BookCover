@@ -13,6 +13,7 @@ export const Container = styled.div`
   @media (max-width: 768px) {
     padding: 30px 10px;
     margin-top: 50px;
+    margin-bottom: -10px;
   }
 `;
 
@@ -169,9 +170,7 @@ export const Title = styled.h1`
 
 export const Subtitle = styled.p`
   font-size: 1rem;
-  color: #555;
-  margin-top: 10px;
-  margin-right: 5px;
+  color: #00000;
   text-align: left;
 
   @media (max-width: 1024px) {

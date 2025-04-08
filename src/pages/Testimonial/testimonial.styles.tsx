@@ -188,7 +188,7 @@ export const TestimonialTitle = styled.h3`
   }
 
   @media (max-width: 480px) {
-    font-size: 1.2rem;
+    font-size: 24px;
     margin-top: -15px;
   }
 `;
@@ -198,7 +198,7 @@ export const TestimonialDescription = styled.p`
   color: #6c757d;
 
   @media (max-width: 480px) {
-    font-size: 0.75rem;
+    font-size: 16px;
   }
 `;
 

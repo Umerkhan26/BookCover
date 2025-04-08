@@ -40,7 +40,7 @@ const DesignProcess = () => {
         <StepsContainer>
           <Step>
             <h3>
-              01 <span className="text-[#6dc7d1]">STEP</span>
+              <span className="text-[#6dc7d1]">STEP</span> 01
             </h3>
             <h4>Place an order</h4>
             <p>
@@ -50,7 +50,7 @@ const DesignProcess = () => {
           </Step>
           <Step>
             <h3>
-              02 <span>STEP</span>
+              <span>STEP</span> 02
             </h3>
             <h4>Choose a style</h4>
             <p>
@@ -63,7 +63,7 @@ const DesignProcess = () => {
           </Step>
           <Step>
             <h3>
-              03 <span>STEP</span>
+              <span>STEP</span> 03
             </h3>
             <h4>Get your first sketch</h4>
             <p>
@@ -73,7 +73,7 @@ const DesignProcess = () => {
           </Step>
           <Step>
             <h3>
-              04 <span>STEP</span>
+              <span>STEP</span> 04
             </h3>
             <h4>Final concept & typography</h4>
             <p>
