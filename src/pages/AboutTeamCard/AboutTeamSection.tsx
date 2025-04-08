@@ -42,15 +42,14 @@ const teamMembers = [
   { name: "Jawad", role: "Senior Graphic Designer", imageSrc: packag1 },
   { name: "Umar", role: "Developer", imageSrc: packag1 },
   { name: "Ali", role: "Marketing Manager", imageSrc: packag1 },
-  { name: "Helen", role: "Marketing Manager", imageSrc: packag1 },
 ];
 
 const TeamSection: React.FC = () => {
   return (
-    <div className="mt-10 mb-32 px-10">
-      <h2 className="text-xl font-semibold text-center mt-32">
+    <div className="mt-10 mb-20 px-10">
+      <h2 className="text-xl font-semibold text-center mt-32 -mb-6">
         <span className="text-black">Our</span>
-        <span className="font-bold text-3xl text-[#6dc7d1]"> Team</span>
+        <span className="font-bold text-3xl text-[#6dc7d1] "> Team</span>
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-16 w-full max-w-screen-xl mx-auto">

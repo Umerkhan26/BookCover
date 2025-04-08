@@ -27,6 +27,8 @@ export const SectionTitle = styled.h2`
   width: 100%;
   max-width: 500px;
   line-height: 1.3;
+  text-align: left;
+  justify-content: center;
 
   span {
     color: #6dc7d1;
@@ -34,14 +36,18 @@ export const SectionTitle = styled.h2`
 
   @media (max-width: 600px) {
     font-size: 28px;
-    text-align: left;
-    // padding: 0 32px;
+    text-align: center;
+    padding: 0 32px;
   }
 `;
 
 export const BenefitsWrap = styled.section`
   padding: 60px 0;
   font-family: "Manrope", sans-serif;
+  background-color: #f8f8f8;
+  @media (max-width: 768px) {
+    margin-bottom: -30px;
+  }
 `;
 
 export const Container = styled.div`
@@ -82,7 +88,8 @@ export const FirstRow = styled.div`
 export const TextContainer = styled.div`
   flex: 1;
   max-width: 40%;
-  padding: 0 8px;
+  padding: 54px 8px;
+  text-align: left;
 
   @media (max-width: 768px) {
     max-width: 100%;

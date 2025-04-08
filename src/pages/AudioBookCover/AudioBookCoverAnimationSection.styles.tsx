@@ -16,7 +16,7 @@ export const Container = styled.div`
     flex-direction: column; /* Stack sections vertically */
     height: auto;
     gap: 30px;
-    padding: 10px;
+    padding: 25px;
   }
 `;
 
@@ -164,7 +164,7 @@ export const Button = styled.button`
 
   @media (max-width: 768px) {
     display: inline-block;
-    min-width: 230px;
+    min-width: 190px;
     padding: 12px 15px;
     font-size: 16px;
     font-weight: 900;

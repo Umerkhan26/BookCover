@@ -5,9 +5,12 @@ import AboutContent from "../../pages/AboutContent/AboutContent";
 const AboutUs = () => {
   return (
     <div>
-      <div >
-      
-      <ContactUsCover title="Meet Our Team" subtitle="" email="" />
+      <div>
+        <ContactUsCover
+          title="Meet Our Team"
+          subtitle="Meet the minds that drive our vision forward."
+          email=""
+        />
       </div>
       <AboutContent />
       <TeamSection />

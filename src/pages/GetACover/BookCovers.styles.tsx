@@ -7,7 +7,7 @@ export const GridContainer = styled.div`
   margin-top: 80px;
   margin-bottom: 80px;
   justify-items: center; // Center items in the grid
-
+  text-decoration: none;
   grid-template-columns: repeat(1, 1fr);
   gap: 40px 30px;
 
@@ -42,5 +42,6 @@ export const ItemTitle = styled.p`
   margin-top: 10px;
   font-size: 1rem;
   font-weight: 600;
+  text-decoration: none;
   color: #333;
 `;

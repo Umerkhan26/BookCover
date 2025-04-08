@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Section = styled.section`
   padding: 60px 0px;
   font-family: "Manrope", sans-serif;
+  background-color: #f2f2f2;
 `;
 
 const Container = styled.div`
@@ -18,6 +19,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center; /* Center align on small screens */
     text-align: center; /* Center text on small screens */
+    margin-bottom: -30px;
   }
 `;
 
@@ -68,7 +70,7 @@ const Highlight = styled.span`
 
 const Subtitle = styled.p`
   color: #455a64;
-  font-size: clamp(14px, 2.5vw, 16px);
+  font-size: clamp(16px, 2.5vw, 16px);
   margin-top: 7px;
 
   @media (max-width: 768px) {

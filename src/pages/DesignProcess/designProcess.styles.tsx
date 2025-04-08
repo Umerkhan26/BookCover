@@ -16,6 +16,7 @@ export const ProcessContainer = styled.div`
 
   @media (max-width: 768px) {
     padding: 20px;
+    margin-bottom: -30px;
   }
 `;
 
@@ -146,7 +147,7 @@ export const Button = styled.a`
   padding: 10px 30px;
   font-size: 16px;
   font-weight: bold;
-  margin-top: 30px;
+  margin-top: 50px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: white;

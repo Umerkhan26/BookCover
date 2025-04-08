@@ -17,23 +17,21 @@ import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 
 type PortfolioItem = {
   id: number;
-  title: string;
-  subtitle?: string;
   imageUrl: string;
 };
 
 const portfolioItems: PortfolioItem[] = [
-  { id: 1, title: "HUNTER'S", subtitle: "BILLMCCURRY", imageUrl: img1 },
-  { id: 2, title: "CAM SINCLAIR", subtitle: "FULLY", imageUrl: img2 },
-  { id: 3, title: "GALLES", subtitle: "BORGERS", imageUrl: img3 },
-  { id: 4, title: "SEAR", subtitle: "ECHOES", imageUrl: img4 },
-  { id: 5, title: "SOLECON", subtitle: "OF THE", imageUrl: img5 },
-  { id: 6, title: "SIGRA", subtitle: "SAMUEL", imageUrl: img6 },
-  { id: 7, title: "ALEXANDER", subtitle: "BOOK TWO", imageUrl: img7 },
-  { id: 8, title: "ZIP-KRAMMEN", subtitle: "BROKILLES", imageUrl: img8 },
-  { id: 9, title: "Book Nine", imageUrl: img9 },
-  { id: 10, title: "Book Ten", imageUrl: img10 },
-  { id: 11, title: "Book Eleven", imageUrl: img11 },
+  { id: 1, imageUrl: img1 },
+  { id: 2, imageUrl: img2 },
+  { id: 3, imageUrl: img3 },
+  { id: 4, imageUrl: img4 },
+  { id: 5, imageUrl: img5 },
+  { id: 6, imageUrl: img6 },
+  { id: 7, imageUrl: img7 },
+  { id: 8, imageUrl: img8 },
+  { id: 9, imageUrl: img9 },
+  { id: 10, imageUrl: img10 },
+  { id: 11, imageUrl: img11 },
 ];
 
 const PortfolioItemCard = styled.div`
@@ -51,19 +49,6 @@ const TextOverlay = styled.div`
   left: 20px;
   color: white;
   text-align: left;
-`;
-
-const Title = styled.h2`
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0;
-  text-transform: uppercase;
-`;
-
-const Subtitle = styled.p`
-  font-size: 14px;
-  margin: 5px 0 0;
-  text-transform: uppercase;
 `;
 
 // Modal Styles
@@ -233,11 +218,8 @@ const KindleVellaCover: React.FC = () => {
       <PortfolioContainer>
         {portfolioItems.map((item, index) => (
           <PortfolioItemCard key={item.id} onClick={() => openModal(index)}>
-            <Image src={item.imageUrl} alt={item.title} loading="lazy" />
-            <TextOverlay>
-              <Title>{item.title}</Title>
-              {item.subtitle && <Subtitle>{item.subtitle}</Subtitle>}
-            </TextOverlay>
+            <Image src={item.imageUrl} alt="" loading="lazy" />
+            <TextOverlay></TextOverlay>
           </PortfolioItemCard>
         ))}
       </PortfolioContainer>
@@ -252,7 +234,7 @@ const KindleVellaCover: React.FC = () => {
       </div>
 
       {selectedImage && (
-        <ModalOverlay>
+        <ModalOverlay onClick={closeModal}>
           <ModalContent>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />

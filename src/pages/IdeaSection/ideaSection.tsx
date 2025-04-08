@@ -64,12 +64,12 @@ const Title = styled.h2`
 
   @media (max-width: 768px) {
     font-size: 28px;
-    font-weight: 900;
+    font-weight: 700;
   }
 
   @media (max-width: 480px) {
     font-size: 28px;
-    font-weight: 900;
+    font-weight: 700;
   }
 `;
 

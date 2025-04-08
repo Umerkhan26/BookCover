@@ -16,6 +16,7 @@ export const Container = styled.div`
     align-items: center;
     gap: 30px;
     padding: 40px 5%;
+    margin-bottom: -30px;
   }
 `;
 
@@ -39,6 +40,7 @@ export const Title = styled.h2`
     font-size: 28px;
     text-align: center;
     margin-bottom: -25px;
+    margin-top: 90px;
   }
 `;
 
@@ -58,7 +60,7 @@ export const ImageContainer = styled.div`
 export const SmallImage = styled.img`
   width: 280px;
   height: 180px;
-  border: 3px solid green;
+  // border: 3px solid green;
   position: absolute;
   top: 5px;
   left: 0;
@@ -68,7 +70,7 @@ export const SmallImage = styled.img`
     position: relative;
     width: 100%;
     height: auto;
-    padding: 0 90px;
+    padding: 0 110px;
   }
 `;
 export const LargeImageWrapper = styled.div<LargeImageWrapperProps>`
@@ -95,7 +97,7 @@ export const LargeImage = styled.img`
   @media (max-width: 768px) {
     width: 100%;
     height: auto;
-    padding: 10px 90px;
+    padding: 0px 110px;
   }
 `;
 
@@ -130,14 +132,14 @@ export const Step = styled.div`
     span {
       font-size: 24px;
       color: #6dc7d1;
-      margin-left: 5px;
+     
     }
   }
 
   h4 {
     font-size: 18px;
     font-weight: bold;
-    color: #666;
+    color: #000;
   }
 
   p {

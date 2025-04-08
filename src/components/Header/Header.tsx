@@ -40,7 +40,7 @@ const Nav = styled.nav`
   left: 0;
   width: 100%;
   z-index: 1000;
-  height: 75px;
+  height: 85px;
 
   @media (max-width: 1024px) {
     padding: 15px 20px;
@@ -48,21 +48,26 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.img`
-  height: 35px;
+  height: 47px;
   width: auto;
-  margin-right: 50px;
   display: block;
+  vertical-align: middle;
 
   @media (max-width: 768px) {
     height: 50px;
   }
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const NavLinkButton = styled(NavLink)`
   display: inline-block;
-  color: #6d6d6d;
-  font-size: 15px;
-  font-weight: 200;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 500;
   text-transform: capitalize;
   padding: 8px 20px;
   text-align: left;
@@ -160,10 +165,10 @@ const HeaderContainer = styled.div`
 `;
 
 const DropdownItem = styled(NavLink)`
-  color: #6d6d6d;
+  color: #000000;
   text-decoration: none;
   padding: 10px 10px;
-  font-size: 15px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -446,7 +451,9 @@ function Header() {
       <Nav>
         <HeaderContainer>
           <NavLink to="/">
-            <Logo src={logo} alt="Logo" />
+            <LogoContainer>
+              <Logo src={logo} alt="Logo" />
+            </LogoContainer>
           </NavLink>
           <ContactUsWrapper>
             <MobileContactButton to="/contactUs">

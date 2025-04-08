@@ -143,18 +143,17 @@
 //   });
 
 //   console.log(`✅ Navigating to /order/${packageId} with total price: $${finalPrice}`);
-  
+
 //   // Pass total price along with the package ID to the order page
 //   navigate(`/order/${packageId}`, { state: { totalPrice: finalPrice } });
 // };
-
 
 //   return (
 //     <PackageContainer>
 //       <PackageTitle>
 //         Our <span className="text-[#6dc7d1]">Packages</span>
 //       </PackageTitle>
-  
+
 //       {loading ? (
 //         <p>Loading packages...</p>
 //       ) : error ? (
@@ -168,7 +167,7 @@
 //                 <h3 style={{ fontSize: "15px" }} className="text-black">{pkg.name}</h3>
 //                 <Price style={{ fontSize: "18px" }}>${pkg.price}</Price>
 //               </div>
-  
+
 //               <div className="content-wrapper" style={{ display: "flex", justifyContent: "flex-start" }}>
 //                 <ul className="features-list" style={{ marginRight: "20px" }}>
 //                   {pkg.features.length > 0 ? (
@@ -181,7 +180,7 @@
 //                     <li>No features available.</li>
 //                   )}
 //                 </ul>
-  
+
 //                 <div className="free-addons " style={{
 //                   borderRadius: "8px",
 //                   padding: "15px",
@@ -202,17 +201,17 @@
 //                   </ul>
 //                 </div>
 //               </div>
-  
+
 //               <AddOns>
 //                 <div className="addons-options">
 //                   {pkg.conceptPricing.length > 0 ? (
 //                     pkg.conceptPricing.map((concept, conceptIdx) => (
 //                       <div key={conceptIdx}>
-//                         <input 
+//                         <input
 //                           type="checkbox"
 //                           checked={selectedConcepts[pkg.id || ""]?.includes(conceptIdx) || false}
 //                           onChange={() => handleConceptChange(pkg.id || "", conceptIdx, concept.additionalPrice)}
-//                           id={`concept${conceptIdx}-${index}`} 
+//                           id={`concept${conceptIdx}-${index}`}
 //                         />
 //                         <label className="ml-2" htmlFor={`concept${conceptIdx}-${index}`}>
 //                           {concept.conceptCount} concept{concept.conceptCount > 1 ? 's' : ''}
@@ -225,7 +224,7 @@
 //                   )}
 //                 </div>
 //               </AddOns>
-  
+
 //               <OrderButton onClick={() => handleOrderNow(pkg.id)}>Order Now</OrderButton>
 //             </PackageCard>
 //           ))}
@@ -238,10 +237,6 @@
 // };
 
 // export default Packages;
-
-
-
-
 
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -273,7 +268,9 @@ const Packages: React.FC = () => {
   const [packagesData, setPackagesData] = useState<Package[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedConcepts, setSelectedConcepts] = useState<{ [key: string]: number[] }>({}); // Track selected concepts (packageId -> concept indexes)
+  const [selectedConcepts, setSelectedConcepts] = useState<{
+    [key: string]: number[];
+  }>({}); // Track selected concepts (packageId -> concept indexes)
   const [totalPrice, setTotalPrice] = useState<number>(0); // Total price with package + selected concepts
   const [showLoginModal, setShowLoginModal] = useState(false); // State for showing login modal
 
@@ -299,11 +296,14 @@ const Packages: React.FC = () => {
         console.log("Fetched packages:", response);
 
         const mappedPackages = response
-          .filter(pkg => pkg.page === pageName) // Filter based on page name
+          .filter((pkg) => pkg.page === pageName) // Filter based on page name
           .map((pkg, index) => {
             const packageId = pkg.id || pkg._id;
             if (!packageId) {
-              console.warn(`Warning: Package at index ${index} is missing an ID`, pkg);
+              console.warn(
+                `Warning: Package at index ${index} is missing an ID`,
+                pkg
+              );
             }
             return { ...pkg, id: packageId };
           });
@@ -337,17 +337,19 @@ const Packages: React.FC = () => {
 
     // Handle selecting and deselecting concepts
     if (updatedConcepts[packageId].includes(conceptIdx)) {
-      updatedConcepts[packageId] = updatedConcepts[packageId].filter(idx => idx !== conceptIdx); // Remove the concept
+      updatedConcepts[packageId] = updatedConcepts[packageId].filter(
+        (idx) => idx !== conceptIdx
+      ); // Remove the concept
     } else {
       updatedConcepts[packageId].push(conceptIdx); // Add the selected concept
     }
 
     // Calculate the total price based on selected concepts
-    const selectedPackage = packagesData.find(pkg => pkg.id === packageId);
+    const selectedPackage = packagesData.find((pkg) => pkg.id === packageId);
     let newTotalPrice = selectedPackage?.price || 0;
 
     // Loop through selected concepts for this package
-    updatedConcepts[packageId].forEach(conceptIdx => {
+    updatedConcepts[packageId].forEach((conceptIdx) => {
       if (selectedPackage && selectedPackage.conceptPricing[conceptIdx]) {
         const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
         if (selectedConcept.additionalPrice > 0) {
@@ -376,7 +378,7 @@ const Packages: React.FC = () => {
       return;
     }
 
-    const selectedPackage = packagesData.find(pkg => pkg.id === packageId);
+    const selectedPackage = packagesData.find((pkg) => pkg.id === packageId);
 
     if (!selectedPackage) {
       console.error("Package not found.");
@@ -387,15 +389,17 @@ const Packages: React.FC = () => {
 
     // Loop through selected concepts for this package and add additional prices
     const selectedConceptsForPackage = selectedConcepts[packageId] || [];
-    selectedConceptsForPackage.forEach(conceptIdx => {
+    selectedConceptsForPackage.forEach((conceptIdx) => {
       const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
       if (selectedConcept && selectedConcept.additionalPrice > 0) {
         finalPrice += selectedConcept.additionalPrice; // Add concept price if it's not free
       }
     });
 
-    console.log(`✅ Navigating to /order/${packageId} with total price: $${finalPrice}`);
-    
+    console.log(
+      `✅ Navigating to /order/${packageId} with total price: $${finalPrice}`
+    );
+
     // Pass total price along with the package ID to the order page
     navigate(`/order/${packageId}`, { state: { totalPrice: finalPrice } });
   };
@@ -405,7 +409,7 @@ const Packages: React.FC = () => {
       <PackageTitle>
         Our <span className="text-[#6dc7d1]">Packages</span>
       </PackageTitle>
-        <span className="color-white"> ${totalPrice}</span>
+      {/* <span className="text-white"> ${totalPrice}</span> */}
 
       {loading ? (
         <p>Loading packages...</p>
@@ -414,39 +418,48 @@ const Packages: React.FC = () => {
       ) : packagesData.length > 0 ? (
         <div className="packages-wrapper">
           {packagesData.map((pkg, index) => (
-            <PackageCard key={pkg.id || index}>
+            <PackageCard className="popular" key={pkg.id || index}>
               {/* Title and Price in the same row */}
               <div className="title-price">
-                <h3 style={{ fontSize: "15px" }} className="text-black">{pkg.name}</h3>
-                <Price style={{ fontSize: "18px" }}>${pkg.price}</Price>
+                <h3 style={{ fontSize: "20px" }} className="text-black">
+                  {pkg.name}
+                </h3>
+                <Price style={{ fontSize: "23px" }}>${pkg.price}</Price>
               </div>
 
-              <div className="content-wrapper" style={{ display: "flex", justifyContent: "flex-start" }}>
+              <div
+                className="content-wrapper"
+                style={{ display: "flex", justifyContent: "flex-start" }}
+              >
                 <ul className="features-list" style={{ marginRight: "20px" }}>
                   {pkg.features.length > 0 ? (
                     pkg.features.map((feature, idx) => (
-                      <li key={idx}>
-                        <span className="checkmark">✔</span> {feature}
-                      </li>
+                      <li key={idx}>{feature}</li>
                     ))
                   ) : (
                     <li>No features available.</li>
                   )}
                 </ul>
 
-                <div className="free-addons" style={{
-                  borderRadius: "8px",
-                  padding: "15px",
-                  marginTop: "0",
-                  marginLeft: "-19px",
-                }}>
-                  <p className="free-title" style={{ fontWeight: "bold", marginBottom: "8px" }}>FREE OF CHARGE</p>
+                <div
+                  className="free-addons"
+                  style={{
+                    borderRadius: "8px",
+                    padding: "15px",
+                    marginTop: "0",
+                    marginLeft: "-19px",
+                  }}
+                >
+                  <p
+                    className="free-title"
+                    style={{ fontWeight: "bold", marginBottom: "8px" }}
+                  >
+                    FREE OF CHARGE
+                  </p>
                   <ul>
                     {pkg.freeFeatures.length > 0 ? (
                       pkg.freeFeatures.map((addon, idx) => (
-                        <li key={idx}>
-                          <span className="checkmark">✔</span> {addon}
-                        </li>
+                        <li key={idx}>{addon}</li>
                       ))
                     ) : (
                       <li>No free features available.</li>
@@ -462,13 +475,24 @@ const Packages: React.FC = () => {
                       <div key={conceptIdx}>
                         <input
                           type="checkbox"
-                          checked={selectedConcepts[pkg.id || ""]?.includes(conceptIdx) || false}
-                          onChange={() => handleConceptChange(pkg.id || "", conceptIdx)}
+                          checked={
+                            selectedConcepts[pkg.id || ""]?.includes(
+                              conceptIdx
+                            ) || false
+                          }
+                          onChange={() =>
+                            handleConceptChange(pkg.id || "", conceptIdx)
+                          }
                           id={`concept${conceptIdx}-${index}`}
                         />
-                        <label className="ml-2" htmlFor={`concept${conceptIdx}-${index}`}>
-                          {concept.conceptCount} concept{concept.conceptCount > 1 ? 's' : ''}
-                          {concept.additionalPrice > 0 && ` (+$${concept.additionalPrice})`}
+                        <label
+                          className="ml-2"
+                          htmlFor={`concept${conceptIdx}-${index}`}
+                        >
+                          {concept.conceptCount} concept
+                          {concept.conceptCount > 1 ? "s" : ""}
+                          {concept.additionalPrice > 0 &&
+                            ` (+$${concept.additionalPrice})`}
                         </label>
                       </div>
                     ))
@@ -478,7 +502,9 @@ const Packages: React.FC = () => {
                 </div>
               </AddOns>
 
-              <OrderButton onClick={() => handleOrderNow(pkg.id)}>Order Now</OrderButton>
+              <OrderButton onClick={() => handleOrderNow(pkg.id)}>
+                Order Now
+              </OrderButton>
             </PackageCard>
           ))}
         </div>
