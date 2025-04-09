@@ -168,9 +168,9 @@ const UserDashboard: React.FC = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setCollapsed(false); // Open sidebar on large screens
+        setCollapsed(false);
       } else {
-        setCollapsed(true); // Collapse sidebar on small screens
+        setCollapsed(true);
       }
     };
 
@@ -188,11 +188,15 @@ const UserDashboard: React.FC = () => {
     setCollapsed(!collapsed);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/");
-    logout();
+  const handleLogout = async () => {
+    try {
+      await logout(); // Properly wait for logout to finish
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate("/"); // After logout, navigate to home
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (

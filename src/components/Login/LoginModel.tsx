@@ -31,6 +31,9 @@ const LoginModal = ({
         setTimeout(() => navigate("/Admin/users"));
         break;
       case "client":
+        toast.success("Redirecting to client Dashboard...");
+        setTimeout(() => navigate("portal/orders"));
+        break;
       case "designer":
         toast.success("Redirecting to Portal...");
         toast.success("You are logged in as a User.");

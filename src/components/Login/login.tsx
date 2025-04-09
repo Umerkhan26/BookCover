@@ -38,10 +38,10 @@ const Login = () => {
         setTimeout(() => navigate("/Admin/users"));
         break;
       case "client":
-      case "designer":
         toast.success("Redirecting to Portal...");
         setTimeout(() => navigate("/portal/orders"));
         break;
+      case "designer":
       default:
         toast.success("Redirecting to Home...");
         setTimeout(() => navigate(redirectPath));
