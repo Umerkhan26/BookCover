@@ -143,8 +143,9 @@ const NavText = styled.div`
     font-size: 28px;
 
     img {
-      height: 50px;
+      height: 60px;
       padding-right: 20px;
+      margin-top: 10px;
     }
   }
 
@@ -153,8 +154,9 @@ const NavText = styled.div`
     font-size: 22px;
 
     img {
-      height: 45px;
+      height: 60px;
       padding-right: 15px;
+      margin-top: 10px;
     }
   }
 
@@ -166,6 +168,7 @@ const NavText = styled.div`
     img {
       height: 60px;
       padding-right: 20px;
+      margin-top: 10px;
     }
   }
 `;
@@ -288,6 +291,7 @@ const NavNBtn = styled.nav<NavNBtnProps>`
     gap: 15px;
     font-size: 22px;
     padding: 15px 0px;
+    overflow-y: auto;
   }
 
   @media (max-width: 768px) {

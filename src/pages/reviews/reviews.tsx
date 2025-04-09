@@ -8,13 +8,14 @@ import {
 const Reviews = () => {
   return (
     <div
-      className="text-gray-600 dark:text-gray-300 pt-8 dark: mb-32 md:mb-[-5px]"
+      className=" bg-gray-100 text-gray-600 dark:text-gray-300 pt-8 dark: mb-32 md:mb-[-5px]"
       id="reviews"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
         <div className="mb-10 space-y-4 px-6 md:px-0 text-center md:text-left">
-          <h2 className="text-2xl font-bold text-gray-800 text-center md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
-            What Do Our <span className="text-[#6dc7d1]">Clients Say</span>
+          <h2 className="text-2xl font-bold text-black text-center md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
+            <span className="text-black">What Do Our</span>{" "}
+            <span className="text-[#6dc7d1]">Clients Say</span>
           </h2>
         </div>
 
@@ -33,7 +34,7 @@ const Reviews = () => {
           <CardsWrapper>
             {/* Card 1 */}
             <ReviewCard>
-              <div className="flex gap-4">
+              <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
                   src="https://randomuser.me/api/portraits/women/12.jpg"
@@ -43,10 +44,10 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-gray-700 dark:">
+                  <h6 className="text-lg font-medium text-black-700 dark:">
                     Daniella Doe
                   </h6>
-                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                  <p className="text-sm text-black-500 dark:text-black-300">
                     Mobile dev
                   </p>
                   <div className="flex text-yellow-500">
@@ -58,7 +59,7 @@ const Reviews = () => {
                   </div>
                 </div>
               </div>
-              <p className="mt-8">
+              <p className="mt-8 text-black">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
                 aliquid quo eum quae quos illo earum ipsa doloribus nostrum
                 minus libero aspernatur laborum cum, a suscipit, ratione ea
@@ -68,7 +69,7 @@ const Reviews = () => {
 
             {/* Card 2 */}
             <ReviewCard>
-              <div className="flex gap-4">
+              <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
                   src="https://randomuser.me/api/portraits/women/14.jpg"
@@ -78,10 +79,10 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-gray-700 dark:">
+                  <h6 className="text-lg font-medium text-black-700 dark:">
                     Jane doe
                   </h6>
-                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                  <p className="text-sm text-black-500 dark:text-black-300">
                     Marketing
                   </p>
                   <div className="flex text-yellow-500">
@@ -93,7 +94,7 @@ const Reviews = () => {
                   </div>
                 </div>
               </div>
-              <p className="mt-8">
+              <p className="mt-8 text-black">
                 Lorem ipsum dolor laboriosam deleniti aperiam ab veniam sint non
                 cumque quis tempore cupiditate. Sint libero voluptas veniam at
                 reprehenderit, veritatis harum et rerum.
@@ -102,7 +103,7 @@ const Reviews = () => {
 
             {/* Card 3 */}
             <ReviewCard>
-              <div className="flex gap-4">
+              <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
                   src="https://randomuser.me/api/portraits/women/18.jpg"
@@ -112,10 +113,10 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-gray-700 dark:">
+                  <h6 className="text-lg font-medium text-black-700 dark:">
                     Yanick Doe
                   </h6>
-                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                  <p className="text-sm text-black-500 dark:text-black-300">
                     Developer
                   </p>
                   <div className="flex text-yellow-500">
@@ -127,7 +128,7 @@ const Reviews = () => {
                   </div>
                 </div>
               </div>
-              <p className="mt-8">
+              <p className="mt-8 text-black">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Architecto laboriosam deleniti aperiam ab veniam sint non cumque
                 quis tempore cupiditate. Sint libero voluptas veniam at
@@ -137,7 +138,7 @@ const Reviews = () => {
 
             {/* Card 4 - New Review */}
             <ReviewCard>
-              <div className="flex gap-4">
+              <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
                   src="https://randomuser.me/api/portraits/men/22.jpg"
@@ -147,10 +148,10 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-gray-700 dark:">
+                  <h6 className="text-lg font-medium text-black-700 dark:">
                     John Smith
                   </h6>
-                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                  <p className="text-sm text-black-500 dark:text-black-300">
                     Designer
                   </p>
                   <div className="flex text-yellow-500">
@@ -162,7 +163,7 @@ const Reviews = () => {
                   </div>
                 </div>
               </div>
-              <p className="mt-8">
+              <p className="mt-8 text-black">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
                 et nisl nec lorem scelerisque consectetur. Proin laoreet
                 tristique dolor.

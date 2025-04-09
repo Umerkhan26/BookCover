@@ -8,7 +8,7 @@ export const Section = styled.section`
   text-align: center;
   padding: 3rem 1.5rem;
   font-family: "Manrope", sans-serif;
-
+  background-color: #f7f7f7;
   @media (max-width: 768px) {
     padding: 2rem 1rem;
   }

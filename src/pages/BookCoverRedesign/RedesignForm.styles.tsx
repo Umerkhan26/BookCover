@@ -1,13 +1,12 @@
 import styled from "styled-components";
 export const FullWidthContainer = styled.div`
   width: 100%;
-  height: 200px;
+  height: 230px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-family: "Manrope", sans-serif;
   align-items: center;
-  margin-bottom: 60px;
   background-color: #f8f8f8;
 
   @media (max-width: 768px) {
@@ -19,7 +18,7 @@ export const Heading = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   text-align: center;
 
   @media (max-width: 768px) {
@@ -40,6 +39,7 @@ export const Button = styled.button`
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
+  margin-bottom: 30px;
   cursor: pointer;
   border-radius: 5px;
   transition: 0.3s;

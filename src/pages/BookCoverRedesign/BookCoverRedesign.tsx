@@ -8,7 +8,7 @@ import RedesignForm from "./RedesignForm";
 import { examples } from "./RedesignExampleData";
 const BookCoverRedesign = () => {
   return (
-    <div className="mb-32 text-black">
+    <div className=" text-black">
       <FictionCover
         title="Book Cover Redesign"
         subtitle=""

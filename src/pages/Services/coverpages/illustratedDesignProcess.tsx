@@ -85,7 +85,7 @@ const DesignProcess = () => {
       </Container>
       <Packages />
       {/* <IllustratedPackages packagesData={myPackagesData} /> */}
-      <div className="mb-32">
+      <div>
         <Reviews />
       </div>
     </div>

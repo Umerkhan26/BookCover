@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const Section = styled.section`
   padding: 60px 0;
   font-family: "Manrope", sans-serif;
+  background-color: #eaeaea;
 `;
 
 export const Container = styled.div`

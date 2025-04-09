@@ -6,7 +6,6 @@ interface StepCircleProps {
 
 // Container for the overall layout
 export const ProcessContainer = styled.div`
-  max-width: 1200px;
   margin: 0 auto;
   padding: 40px;
   display: flex;
