@@ -40,11 +40,11 @@ const Login = () => {
       case "client":
       case "designer":
         toast.success("Redirecting to Portal...");
-        setTimeout(() => navigate("/portal/orders")); // Delay navigation to show toast
+        setTimeout(() => navigate("/portal/orders"));
         break;
       default:
         toast.success("Redirecting to Home...");
-        setTimeout(() => navigate(redirectPath)); // Delay navigation to show toast
+        setTimeout(() => navigate(redirectPath));
     }
   };
 
