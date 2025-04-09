@@ -398,7 +398,7 @@ const DropdownContainer = styled.div`
 const UserLogo = styled.img`
   height: 60px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 4px;
   padding-right: 21px;
 
   /* Media queries */
@@ -450,7 +450,7 @@ function Header() {
     }
   };
   const handleLoginSuccess = () => {
-    setShowLoginModal(false); // Close modal on successful login
+    setShowLoginModal(false);
     navigate("/portal/orders");
   };
   const toggleMenu = () => {
