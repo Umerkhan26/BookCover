@@ -45,6 +45,11 @@ const FooterPartnerLogo = styled.div`
   position: relative;
   -webkit-font-smoothing: antialiased;
   padding-right: 3.5rem;
+
+  @media (max-width: 768px) {
+    padding-right: 0;
+    text-align: center;
+  }
 `;
 
 const FooterName = styled.div`
@@ -192,6 +197,31 @@ const Logo = styled.img`
   }
 `;
 
+const Paragraph = styled.p`
+  text-align: center;
+  font-size: 15px;
+  color: #000000;
+  max-width: 500px;
+  margin: 10px auto;
+  line-height: 1.5em;
+  max-height: 3em;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-word;
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+    max-width: 90%;
+    margin: 10px 5%;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 15px;
+    margin-bottom: 26px;
+    text-align: center;
+  }
+`;
+
 // Footer Component
 const Footer: React.FC<FooterProps> = ({
   // partnerLogo,
@@ -213,23 +243,10 @@ const Footer: React.FC<FooterProps> = ({
                   </NavLink>
                 </LogoContainer>
 
-                <p
-                  style={{
-                    textAlign: "center",
-                    fontSize: "15px",
-                    color: "#000000",
-                    maxWidth: "500px",
-                    margin: "10px auto",
-                    lineHeight: "1.5em",
-                    maxHeight: "3em", // Adjust this to fit the full text
-                    overflow: "visible", // Ensures full visibility
-                    whiteSpace: "normal", // Allows wrapping
-                    wordBreak: "break-word",
-                  }}
-                >
+                <Paragraph>
                   Lumeart Studio is a creative hub for book lovers, authors, and
                   publishers.
-                </p>
+                </Paragraph>
 
                 <SocialNetwork
                   style={{

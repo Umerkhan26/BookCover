@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import userlogo from '../../assets//userlogo.png';
+import userlogo from "../../assets//userlogo.png";
 import LoginModal from "../Login/LoginModel";
 interface NavNBtnProps {
   isMenuOpen: boolean;
@@ -126,6 +126,7 @@ const NavButton = styled(NavLink)`
 const NavText = styled.div`
   display: inline-block;
   color: #6dc7d1;
+  // align-items: center;
   font-weight: bold;
   font-size: 15px;
   padding: 8px 25px;
@@ -140,11 +141,32 @@ const NavText = styled.div`
   @media (max-width: 1024px) {
     padding: 15px 47px;
     font-size: 28px;
+
+    img {
+      height: 50px;
+      padding-right: 20px;
+    }
   }
 
   @media (max-width: 768px) {
     padding: 15px 42px;
     font-size: 22px;
+
+    img {
+      height: 45px;
+      padding-right: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px 12px;
+    font-size: 16px;
+    margin-right: 5px;
+
+    img {
+      height: 60px;
+      padding-right: 20px;
+    }
   }
 `;
 
@@ -372,6 +394,24 @@ const DropdownContainer = styled.div`
   }
 `;
 
+const UserLogo = styled.img`
+  height: 60px;
+  cursor: pointer;
+  margin-top: 10px;
+  padding-right: 21px;
+
+  /* Media queries */
+  @media (max-width: 768px) {
+    height: 50px;
+    padding-right: 15px;
+  }
+
+  @media (max-width: 480px) {
+    height: 50px;
+    padding-right: 30px;
+  }
+`;
+
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -574,28 +614,22 @@ function Header() {
             {/* <NavText to="/portal/orders" onClick={handleNavigation}>
               Client Portal
             </NavText> */}
-       
 
             <NavButton to="/GetACover">Get a Cover</NavButton>
           </NavNBtn>
           <NavText onClick={handleNavigation}>
-        <img
-          src={userlogo}
-          alt="User Logo"
-          style={{ width: "32px", height: "32px", cursor: "pointer" }}
-        />
-      </NavText>
+            <UserLogo src={userlogo} alt="User Logo" />
+          </NavText>
 
-      {/* Conditional Rendering of Login Modal */}
-      {showLoginModal && (
-        <LoginModal
-          show={showLoginModal}
-          onClose={() => setShowLoginModal(false)}
-          onLoginSuccess={handleLoginSuccess} // Pass success handler
-        />
-      )}
+          {/* Conditional Rendering of Login Modal */}
+          {showLoginModal && (
+            <LoginModal
+              show={showLoginModal}
+              onClose={() => setShowLoginModal(false)}
+              onLoginSuccess={handleLoginSuccess} // Pass success handler
+            />
+          )}
         </HeaderContainer>
-     
       </Nav>
     </>
   );

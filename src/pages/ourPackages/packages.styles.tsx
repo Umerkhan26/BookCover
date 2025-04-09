@@ -312,7 +312,7 @@ export const PackageContainer = styled.div`
 `;
 
 export const PackageTitle = styled.h2`
-  font-size: 3.5rem;
+  font-size: 40px;
   font-weight: 900;
   color: #212121;
   margin-bottom: 2rem;
