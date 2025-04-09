@@ -37,7 +37,6 @@ export const SectionTitle = styled.h2`
   @media (max-width: 600px) {
     font-size: 28px;
     text-align: center;
-    padding: 0 32px;
   }
 `;
 
@@ -94,6 +93,7 @@ export const TextContainer = styled.div`
   @media (max-width: 768px) {
     max-width: 100%;
     text-align: left;
+    padding: 6px 8px;
   }
 `;
 

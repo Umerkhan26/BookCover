@@ -45,10 +45,12 @@ export const Title = styled.h1`
   @media (max-width: 600px) {
     font-size: 28px;
     text-align: center;
+    margin-top: 30px;
   }
 
   @media (max-width: 390px) {
     font-size: 1.8rem;
+    margin-top: 20px;
   }
 `;
 
