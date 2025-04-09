@@ -106,7 +106,6 @@
 
 // export default Admin;
 
-
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -138,7 +137,7 @@ const DashboardContainer = styled.div`
 
 const SidebarContainer = styled.aside<CollapsibleProps>`
   width: ${(props) => (props.collapsed ? "80px" : "210px")};
-  background-color: green;
+  background-color: #6dc7d1;
   color: white;
   padding: 20px;
   height: 100vh;
@@ -149,7 +148,8 @@ const SidebarContainer = styled.aside<CollapsibleProps>`
   z-index: 999;
 
   @media (max-width: 768px) {
-    width: ${(props) => (props.collapsed ? "68px" : "100%")}; /* Full width on mobile */
+    width: ${(props) =>
+      props.collapsed ? "68px" : "100%"}; /* Full width on mobile */
   }
 `;
 
@@ -253,7 +253,7 @@ const Icon = styled(FontAwesomeIcon)<CollapsibleProps>`
 const NavTitle = styled.li<CollapsibleProps>`
   font-size: 14px;
   font-weight: bold;
-  color: #bdc3c7;
+  color: #000000;
   margin: 20px 0 10px;
   text-transform: uppercase;
   display: ${(props) => (props.collapsed ? "none" : "block")};

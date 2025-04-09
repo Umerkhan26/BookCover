@@ -8,7 +8,6 @@ import {
   HeaderSection,
   Title,
   UserCount,
-
   Table,
   TableHeader,
   TableRow,
@@ -108,8 +107,6 @@ const User: React.FC = () => {
     }
   };
 
-  
-  
   return (
     <Container>
       <HeaderSection>
@@ -118,7 +115,7 @@ const User: React.FC = () => {
           <UserCount>({users.length})</UserCount>
         </div>
       </HeaderSection>
-  
+
       <Table>
         <thead>
           <tr>
@@ -135,51 +132,63 @@ const User: React.FC = () => {
               <TableData className="id-column">{index + 1}</TableData>
               <TableData>{`${user.firstName} ${user.lastName}`}</TableData>
               <TableData className="email-column">{user.email}</TableData>
-                <TableData>{user.role}</TableData>
-                <TableData className="action-column">
-  {editingStatusUserId === user.userId ? (
-    <div className="flex gap-2 items-center">
-      <Button
-        onClick={() => handleStatusOptionChange(user.userId, "Active")}
-        bgColor={user.status === "active" ? "green" : "green"}
-        className="px-4 py-2"
-      >
-        Active
-      </Button>
-      <Button
-        onClick={() => handleStatusOptionChange(user.userId, "Blocked")}
-        bgColor={user.status === "inactive" ? "#dc3545" : "green"}
-        className="px-4 py-2"
-      >
-        Block
-      </Button>
-      <Button onClick={() => handleDeleteUser(user)} bgColor="#dc3545" className="px-4 py-2">
-        Delete
-      </Button>
-    </div>
-  ) : (
-    <div className="flex gap-2 items-center">
-      <Button
-        onClick={() => toggleStatusButtons(user.userId)}
-        bgColor={user.status === "active" ? "green" : "#dc3545"}
-        className="px-4 py-2"
-      >
-        {user.status === "active" ? "Active" : "Blocked"}
-      </Button>
-      <Button className="px-4 py-2" onClick={() => handleDeleteUser(user)} bgColor="#dc3545">
-        Delete
-      </Button>
-    </div>
-  )}
-</TableData>
-
+              <TableData>{user.role}</TableData>
+              <TableData className="action-column">
+                {editingStatusUserId === user.userId ? (
+                  <div className="flex gap-2 items-center">
+                    <Button
+                      onClick={() =>
+                        handleStatusOptionChange(user.userId, "Active")
+                      }
+                      bgColor={user.status === "active" ? "#6dc7d1" : "#6dc7d1"}
+                      className="px-4 py-2"
+                    >
+                      Active
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        handleStatusOptionChange(user.userId, "Blocked")
+                      }
+                      bgColor={
+                        user.status === "inactive" ? "#dc3545" : "#6dc7d1"
+                      }
+                      className="px-4 py-2"
+                    >
+                      Block
+                    </Button>
+                    <Button
+                      onClick={() => handleDeleteUser(user)}
+                      bgColor="#dc3545"
+                      className="px-4 py-2"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2 items-center">
+                    <Button
+                      onClick={() => toggleStatusButtons(user.userId)}
+                      bgColor={user.status === "active" ? "#6dc7d1" : "#dc3545"}
+                      className="px-4 py-2"
+                    >
+                      {user.status === "active" ? "Active" : "Blocked"}
+                    </Button>
+                    <Button
+                      className="px-4 py-2"
+                      onClick={() => handleDeleteUser(user)}
+                      bgColor="#dc3545"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                )}
+              </TableData>
             </TableRow>
           ))}
         </tbody>
       </Table>
     </Container>
   );
-
 };
 
 export default User;

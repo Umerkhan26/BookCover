@@ -252,6 +252,7 @@ const MenuIcon = styled.span`
   @media (max-width: 768px) {
     font-size: 32px;
     font-weight: 50;
+    margin-top: 23px;
   }
   @media (max-width: 390px) {
     margin-left: 20px;
