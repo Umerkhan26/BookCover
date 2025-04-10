@@ -13,6 +13,12 @@ import {
   Card,
 } from "./banner.styles";
 import { useNavigate } from "react-router-dom";
+import img1 from "../../assets/banner/The Butterfly Spell.jpg";
+import img2 from "../../assets/banner/The Last Defender Cover.jpg";
+import img3 from "../../assets/banner/Stormborn.jpg";
+import img4 from "../../assets/banner/Murder Melody cover.jpg";
+import img5 from "../../assets/banner/Archers Ascent.jpg";
+import img6 from "../../assets/banner/Dust and destiny cover.jpg";
 
 // React functional component
 const TopBanner: React.FC = () => {
@@ -69,40 +75,22 @@ const TopBanner: React.FC = () => {
         </TopBannerR>
         <CardSection>
           <Card href="#">
-            <img
-              src="https://miblart.com/wp-content/uploads/2024/01/main.jpg"
-              alt="Cover Image"
-            />
+            <img src={img1} alt="Cover Image" />
           </Card>
           <Card href="#">
-            <img
-              src="https://miblart.com/wp-content/uploads/2024/01/main-3-1-scaled.jpg"
-              alt="Cover Image"
-            />
+            <img src={img2} alt="Cover Image" />
           </Card>
           <Card href="#">
-            <img
-              src="https://miblart.com/wp-content/uploads/2024/01/main-2-scaled.jpg"
-              alt="Cover Image"
-            />
+            <img src={img3} alt="Cover Image" />
           </Card>
           <Card href="#">
-            <img
-              src="https://miblart.com/wp-content/uploads/2024/01/main-4.jpg"
-              alt="Cover Image"
-            />
+            <img src={img4} alt="Cover Image" />
           </Card>
           <Card href="#">
-            <img
-              src="https://miblart.com/wp-content/uploads/2024/01/main-5-scaled.jpg"
-              alt="Cover Image"
-            />
+            <img src={img5} alt="Cover Image" />
           </Card>
           <Card href="#">
-            <img
-              src="https://miblart.com/wp-content/uploads/2024/01/main-6-scaled.jpg"
-              alt="Cover Image"
-            />
+            <img src={img6} alt="Cover Image" />
           </Card>
         </CardSection>
       </Wrapper>

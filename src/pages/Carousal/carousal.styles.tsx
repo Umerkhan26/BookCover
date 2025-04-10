@@ -72,6 +72,7 @@ export const SliderContainer = styled.div`
 export const ImageWrapper = styled.div`
   position: relative;
   border-radius: 8px;
+  margin-bottom: 10px;
   overflow: hidden;
   transition: transform 0.3s ease;
 
