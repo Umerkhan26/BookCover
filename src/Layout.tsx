@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer, { FooterProps } from "./components/Footer/footer";
+import { Helmet } from "react-helmet-async";
 // import TopBar from "./components/TopBar/TopBar";
 
 // import Footer from "./components/Footer/Footer2";
@@ -66,6 +67,10 @@ const footerData: FooterProps = {
 const Layout: React.FC = () => {
   return (
     <>
+      <Helmet>
+        {" "}
+        <title> Lumeart Studio</title>
+      </Helmet>
       {/* <TopBar/> */}
       <Header />
       <main>

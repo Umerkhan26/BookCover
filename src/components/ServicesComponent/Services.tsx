@@ -1,11 +1,15 @@
-import GetACover from "../GetACover/GetACover"
+import { Helmet } from "react-helmet-async";
+import GetACover from "../GetACover/GetACover";
 
 const Services = () => {
   return (
     <div>
-        <GetACover/>
+      <Helmet>
+        <title>Our Services</title>
+      </Helmet>
+      <GetACover />
     </div>
-  )
-}
+  );
+};
 
-export default Services
+export default Services;

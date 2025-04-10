@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ShareIdeasSection from "../../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 const images = Object.entries(
   import.meta.glob<{ default: string }>(
@@ -187,6 +188,13 @@ const MysteryThrillerSuspense: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Mystery, Thriller & Suspense Book Covers</title>
+        <meta
+          name="description"
+          content="Browse mystery, thriller & suspense book covers."
+        />
+      </Helmet>
       <PortfolioContainer>
         {filteredImages.map((img, index) => (
           <PortfolioItemCard

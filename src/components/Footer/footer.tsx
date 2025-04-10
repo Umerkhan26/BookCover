@@ -189,11 +189,13 @@ const Logo = styled.img`
   display: block;
 
   @media (max-width: 768px) {
-    height: 40px;
+    height: 84px;
+    object-fit: scale-down;
   }
 
   @media (max-width: 480px) {
-    height: 35px;
+    height: 74px;
+    object-fit: scale-down;
   }
 `;
 

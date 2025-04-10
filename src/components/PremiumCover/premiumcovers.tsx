@@ -14,6 +14,7 @@ import img9 from "../../assets/Premiem/img9.jpg";
 import img10 from "../../assets/Premiem/img10.jpg";
 import img11 from "../../assets/Premiem/img11.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 type PortfolioItem = {
   id: number;
@@ -209,6 +210,10 @@ const PremiumCover: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Premium Book Covers</title>
+        <meta name="description" content="Browse our premium book covers." />
+      </Helmet>
       <PortfolioContainer>
         {portfolioItems.map((item, index) => (
           <PortfolioItemCard key={item.id} onClick={() => openModal(index)}>

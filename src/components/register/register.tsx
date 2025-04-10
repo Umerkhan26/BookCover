@@ -13,6 +13,7 @@ import {
   Label,
 } from "./register.styles";
 import { toast, ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -95,6 +96,9 @@ const Register = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
       <ToastContainer />
       {verificationMessage ? (
         <div style={{ textAlign: "center", padding: "20px" }}>

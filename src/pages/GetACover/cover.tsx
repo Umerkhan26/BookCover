@@ -3,8 +3,9 @@ import styled from "styled-components";
 import BannerSection from "../Banner/getcoverbaner";
 import HowItWorksSection from "../../components/HowItsWork/howitwork";
 import { createBookRequest } from "../../apis/apis"; // Adjust the path to your API function
-import { toast, ToastContainer } from "react-toastify";  // Import react-toastify
+import { toast, ToastContainer } from "react-toastify"; // Import react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for Toast
+import { Helmet } from "react-helmet-async";
 
 const FormContainer = styled.div`
   max-width: 600px;
@@ -98,7 +99,7 @@ const CheckboxContainer = styled.div`
     color: #666;
 
     a {
-      color:#6dc7d1;
+      color: #6dc7d1;
       text-decoration: underline;
     }
   }
@@ -129,19 +130,23 @@ const BookCoverForm: React.FC = () => {
   //   }
   // };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value, type } = e.target;
-  
+
     if (type === "checkbox") {
-      setFormData({ 
-        ...formData, 
-        [name]: (e.target as HTMLInputElement).checked 
+      setFormData({
+        ...formData,
+        [name]: (e.target as HTMLInputElement).checked,
       });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
-  
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
@@ -169,16 +174,21 @@ const BookCoverForm: React.FC = () => {
 
     try {
       const response = await createBookRequest(bookRequestData);
-      console.log("submitted successfully",response)
+      console.log("submitted successfully", response);
       toast.success("Book cover request submitted successfully!");
       // Reset the form or show success message here
     } catch (err) {
-      toast.error("Failed to submit the book cover request. Please try again later.");
+      toast.error(
+        "Failed to submit the book cover request. Please try again later."
+      );
     }
   };
 
   return (
     <>
+      <Helmet>
+        <title>Book Form</title>
+      </Helmet>
       <BannerSection />
       <HowItWorksSection />
 
@@ -187,11 +197,7 @@ const BookCoverForm: React.FC = () => {
         <Disclaimer>
           * This is not an order form. If you want to order a cover design,
           choose your package{" "}
-          <a
-            href="/book-cover-form"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="/book-cover-form" target="_blank" rel="noopener noreferrer">
             here
           </a>
           .
@@ -227,7 +233,9 @@ const BookCoverForm: React.FC = () => {
             value={formData.isSeries ? "yes" : "no"}
             onChange={handleChange}
           >
-            <option value="no">Will the book continue as a series? optional</option>
+            <option value="no">
+              Will the book continue as a series? optional
+            </option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </StyledSelect>
@@ -248,8 +256,12 @@ const BookCoverForm: React.FC = () => {
               setFormData({ ...formData, coverPreference: selectedOptions });
             }}
           >
-            <option value="">Please select what covers you prefer (optional)</option>
-            <option value="detailed-characters">With detailed characters</option>
+            <option value="">
+              Please select what covers you prefer (optional)
+            </option>
+            <option value="detailed-characters">
+              With detailed characters
+            </option>
             <option value="silhouettes">Only with silhouettes</option>
             <option value="object-based">Object-based covers</option>
             <option value="dont-know">I don't know</option>

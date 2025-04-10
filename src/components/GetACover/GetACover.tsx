@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Carousel from "../../pages/Carousal/carousal";
 import BookCoverDesigns from "../../pages/GetACover/BookCovers";
 import PartnerCover from "../../pages/Partner/partnerCover";
@@ -7,6 +8,9 @@ import SpecialEditionAddOns from "../../pages/SpecialEditionAddOns/SpecialEditio
 const GetACover = () => {
   return (
     <div>
+      <Helmet>
+        <title>Get a Book Cover</title>
+      </Helmet>
       <PartnerCover
         bookCoversText=""
         title2=""

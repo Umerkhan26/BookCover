@@ -60,6 +60,7 @@ import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
 import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
 import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
 import MarketingMaterial from "../components/Marketing Material/marketing";
+import { Helmet } from "react-helmet-async";
 // import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
@@ -72,35 +73,99 @@ const AppRoutes: React.FC = () => {
         <Route
           path="/fictionCover"
           element={
-            <FictionCover
-              title="Book Cover Design For Indie Authors"
-              subtitle="Pay Only When You are Satisfied With The final result"
-              image={fictonCoverImg}
-              bookCoversText=""
-              benefitsComponent={
-                <BenefitsSection
-                  title={
-                    <>
-                      Here's What Benefits <span>You Get</span>
-                    </>
-                  }
-                  benefits={benefitsData}
+            <>
+              {" "}
+              <Helmet>
+                <title>Book Cover Design For Indie Authors</title>
+                <meta
+                  name="description"
+                  content="Pay only when you are satisfied with the final book cover result."
                 />
-              }
-              designProcessComponent={<DesignProcess />}
-              // Pass the 'myPackagesData' as a prop to 'Packages' component
-              packagesComponent={<Packages />}
-              reviewsComponent={<Reviews />}
-              specialEditionAddOnsComponent={<SpecialEditionAddOns />}
-            />
+              </Helmet>
+              <FictionCover
+                title="Book Cover Design For Indie Authors"
+                subtitle="Pay Only When You are Satisfied With The final result"
+                image={fictonCoverImg}
+                bookCoversText=""
+                benefitsComponent={
+                  <BenefitsSection
+                    title={
+                      <>
+                        Here's What Benefits <span>You Get</span>
+                      </>
+                    }
+                    benefits={benefitsData}
+                  />
+                }
+                designProcessComponent={<DesignProcess />}
+                // Pass the 'myPackagesData' as a prop to 'Packages' component
+                packagesComponent={<Packages />}
+                reviewsComponent={<Reviews />}
+                specialEditionAddOnsComponent={<SpecialEditionAddOns />}
+              />
+            </>
           }
         />
         {/* Other Routes */}
-        <Route path="/illustrated" element={<Illustrated />} />
-        <Route path="/bookCoverRedesign" element={<BookCoverRedesign />} />
-        <Route path="/logoBrand" element={<LogoBranding />} />
-        <Route path="/nonFiction" element={<NonFictonalCover />} />
-        <Route path="/audioBookCover" element={<AudioBookCover />} />
+        <Route
+          path="/illustrated"
+          element={
+            <>
+              <Helmet>
+                <title>Illustrated Covers</title>
+              </Helmet>
+              <Illustrated />
+            </>
+          }
+        />
+        {/* Book Cover Redesign Route */}
+        <Route
+          path="/bookCoverRedesign"
+          element={
+            <>
+              <Helmet>
+                <title>Book Cover Redesign</title>
+              </Helmet>
+              <BookCoverRedesign />
+            </>
+          }
+        />
+        {/* Logo Branding Route */}
+        <Route
+          path="/logoBrand"
+          element={
+            <>
+              <Helmet>
+                <title>Logo Branding</title>
+              </Helmet>
+              <LogoBranding />
+            </>
+          }
+        />
+        {/* Non-Fiction Route */}
+        <Route
+          path="/nonFiction"
+          element={
+            <>
+              <Helmet>
+                <title>Non-Fiction Book Covers</title>
+              </Helmet>
+              <NonFictonalCover />
+            </>
+          }
+        />
+        {/* Audio Book Cover Route */}
+        <Route
+          path="/audioBookCover"
+          element={
+            <>
+              <Helmet>
+                <title>Audio Book Covers</title>
+              </Helmet>
+              <AudioBookCover />
+            </>
+          }
+        />
         <Route path="/contactUs" element={<ContactUs />} />
         <Route path="/partner" element={<Partner />} />
         <Route path="/FAQs" element={<FAQ />} />

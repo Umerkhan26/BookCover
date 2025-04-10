@@ -12,6 +12,7 @@ import img7 from "../../assets/Marketing Meterial/marketing-release-image-7.jpeg
 import img8 from "../../assets/Marketing Meterial/marketing-cover-reveal-8.jpeg";
 import img9 from "../../assets/Marketing Meterial/marketing-material-9.jpeg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 type PortfolioItem = {
   id: number;
@@ -213,6 +214,13 @@ const MarketingMaterial: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Marketing Materials</title>
+        <meta
+          name="description"
+          content="Browse our marketing materials for your brand."
+        />
+      </Helmet>
       <PortfolioContainer>
         {portfolioItems.map((item, index) => (
           <PortfolioItemCard key={item.id} onClick={() => openModal(index)}>

@@ -14,6 +14,7 @@ import img9 from "../../assets/KindleVellaCovers/img9.jpeg";
 import img10 from "../../assets/Premiem/img10.jpg";
 import img11 from "../../assets/Premiem/img11.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 type PortfolioItem = {
   id: number;
@@ -215,6 +216,10 @@ const KindleVellaCover: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Kindle Vella Book Covers</title>
+        <meta name="description" content="Discover Kindle Vella book covers." />
+      </Helmet>
       <PortfolioContainer>
         {portfolioItems.map((item, index) => (
           <PortfolioItemCard key={item.id} onClick={() => openModal(index)}>

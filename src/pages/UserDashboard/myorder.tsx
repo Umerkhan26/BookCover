@@ -206,6 +206,7 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchOrdersByUserId } from "../../apis/apis"; // Assuming you have the function
+import { Helmet } from "react-helmet-async";
 
 const OrdersTable: React.FC = () => {
   // State to store orders
@@ -234,6 +235,13 @@ const OrdersTable: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto overflow-x-auto px-8 py-4 pl-20">
+      <Helmet>
+        <title>Order Management</title>
+        <meta
+          name="description"
+          content="View and manage all your orders from this section."
+        />
+      </Helmet>
       {/* Header */}
       <div className="flex justify-between items-center text-[#6dc7d1] mb-6 md:flex-col">
         <h1 className="text-3xl font-bold  pb-8 pt-6">Orders</h1>

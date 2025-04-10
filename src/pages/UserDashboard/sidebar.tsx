@@ -11,6 +11,7 @@ import {
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import logo from "../../assets/logo/Lumestudio-1.png";
+import { Helmet } from "react-helmet-async";
 
 interface CollapsibleProps {
   collapsed: boolean;
@@ -201,6 +202,13 @@ const UserDashboard: React.FC = () => {
 
   return (
     <DashboardContainer>
+      <Helmet>
+        <title>User Dashboard</title>
+        <meta
+          name="description"
+          content="Welcome to your user dashboard. Manage your profile, orders, and invoices."
+        />
+      </Helmet>
       <SidebarContainer collapsed={collapsed}>
         <SidebarHeader>
           <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />

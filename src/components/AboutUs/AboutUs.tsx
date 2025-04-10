@@ -1,10 +1,14 @@
 import ContactUsCover from "../../pages/ContactUsCover/ContactUsCover";
 import TeamSection from "../../pages/AboutTeamCard/AboutTeamSection";
 import AboutContent from "../../pages/AboutContent/AboutContent";
+import { Helmet } from "react-helmet-async";
 
 const AboutUs = () => {
   return (
     <div>
+      <Helmet>
+        <title>About Us</title>
+      </Helmet>
       <div>
         <ContactUsCover
           title="Meet Our Team"

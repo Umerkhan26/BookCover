@@ -7,6 +7,7 @@ import {
   QuestionWrapper,
 } from "./FAQs.styles";
 import FAQTitle from "./Title Section/title";
+import { Helmet } from "react-helmet-async";
 
 // Define a type for FAQ items
 interface FAQItem {
@@ -106,6 +107,9 @@ const FAQ: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-white-50 ">
+      <Helmet>
+        <title>FAQs - Frequently Asked Questions</title>
+      </Helmet>
       <div className="w-full">
         <FAQTitle />
       </div>

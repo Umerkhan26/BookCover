@@ -3,6 +3,7 @@ import CoverPortfolio from "../../components/BookCoverDesign/bookcover";
 import styled from "styled-components";
 import Tabs from "../../components/Tabs/tabs";
 import SubCategoryTabs from "../../components/Tabs/subcatagory";
+import { Helmet } from "react-helmet-async";
 
 const PortfolioWrapperWithTabs = () => {
   const location = useLocation();
@@ -24,13 +25,23 @@ const PortfolioWrapperWithTabs = () => {
     location.pathname.startsWith("/portfolio/fiction");
 
   return (
-    <PortfolioWrapper>
-      <CoverPortfolio />
-      <Tabs />
-      {isCustomBookCovers && <SubCategoryTabs />}{" "}
-      {/* Show only for Custom Covers */}
-      <Outlet />
-    </PortfolioWrapper>
+    <>
+      {" "}
+      <Helmet>
+        <title> Portfolio</title>
+        <meta
+          name="description"
+          content="Explore our diverse collection of book cover designs."
+        />
+      </Helmet>
+      <PortfolioWrapper>
+        <CoverPortfolio />
+        <Tabs />
+        {isCustomBookCovers && <SubCategoryTabs />}{" "}
+        {/* Show only for Custom Covers */}
+        <Outlet />
+      </PortfolioWrapper>
+    </>
   );
 };
 

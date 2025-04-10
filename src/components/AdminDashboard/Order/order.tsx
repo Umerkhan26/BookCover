@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllOrders } from "../../../apis/apis";  // Ensure you have the correct path to fetchAllOrders function
+import { fetchAllOrders } from "../../../apis/apis"; // Ensure you have the correct path to fetchAllOrders function
 import {
   Container,
   Table,
   TableData,
   TableHeader,
   TableRow,
-} from "../user.styles";  // Adjust your imports accordingly
+} from "../user.styles"; // Adjust your imports accordingly
+import { Helmet } from "react-helmet-async";
 
 // Define the IOrder interface
 interface IOrder {
@@ -82,6 +83,13 @@ const Order: React.FC = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Manage Orders</title>
+        <meta
+          name="description"
+          content="Admin panel for managing orders and their statuses."
+        />
+      </Helmet>
       <h1 className="text-black mb-4">Orders</h1>
       <Table>
         <thead>
@@ -91,7 +99,8 @@ const Order: React.FC = () => {
             <TableHeader>Package</TableHeader>
             <TableHeader>Total Price</TableHeader>
             <TableHeader>Status</TableHeader>
-            <TableHeader>Form Data</TableHeader> {/* New column for OtherInfo */}
+            <TableHeader>Form Data</TableHeader>{" "}
+            {/* New column for OtherInfo */}
             {/* <TableHeader>Actions</TableHeader> */}
           </tr>
         </thead>
@@ -105,13 +114,19 @@ const Order: React.FC = () => {
                   style={{ cursor: "pointer", color: "blue" }}
                   onClick={() => handleUserClick(order.user)} // Pass full user object
                 >
-                  {order.user ? `${order.user.firstName} ${order.user.lastName}` : "No User"} {/* Display user's first and last name */}
+                  {order.user
+                    ? `${order.user.firstName} ${order.user.lastName}`
+                    : "No User"}{" "}
+                  {/* Display user's first and last name */}
                 </TableData>
                 <TableData
                   style={{ cursor: "pointer", color: "blue" }}
-                  onClick={() => handlePackageClick(order.package, order.addOns)} // Pass both package and addOns to modal
+                  onClick={() =>
+                    handlePackageClick(order.package, order.addOns)
+                  } // Pass both package and addOns to modal
                 >
-                  {order.package ? order.package.name : "No Package"} {/* Display package name */}
+                  {order.package ? order.package.name : "No Package"}{" "}
+                  {/* Display package name */}
                 </TableData>
                 <TableData>${order.totalPrice}</TableData>
                 <TableData>{order.status}</TableData>
@@ -143,7 +158,9 @@ const Order: React.FC = () => {
             </button>
             <h2>User Details</h2>
             <p>User ID: {selectedUser.userId}</p>
-            <p>Name: {selectedUser.firstName} {selectedUser.lastName}</p>
+            <p>
+              Name: {selectedUser.firstName} {selectedUser.lastName}
+            </p>
             <p>Email: {selectedUser.email}</p>
             <p>Role: {selectedUser.role}</p>
             <p>Status: {selectedUser.status}</p>
@@ -169,9 +186,11 @@ const Order: React.FC = () => {
             </ul>
             <p>Free Features:</p>
             <ul>
-              {selectedPackage.freeFeatures?.map((freeFeature: string, idx: number) => (
-                <li key={idx}>{freeFeature}</li>
-              ))}
+              {selectedPackage.freeFeatures?.map(
+                (freeFeature: string, idx: number) => (
+                  <li key={idx}>{freeFeature}</li>
+                )
+              )}
             </ul>
 
             {/* AddOns */}
@@ -191,44 +210,62 @@ const Order: React.FC = () => {
 
       {/* OtherInfo Modal */}
       {selectedOtherInfo && (
-  <div className="modal">
-    <div className="modal-content">
-      <button className="close" onClick={closeOtherInfoModal}>
-        ×
-      </button>
-      <h2 className="modal-heading">Data From Form</h2>
+        <div className="modal">
+          <div className="modal-content">
+            <button className="close" onClick={closeOtherInfoModal}>
+              ×
+            </button>
+            <h2 className="modal-heading">Data From Form</h2>
 
-      <div className="modal-body">
-        <p><strong>Book Title:</strong></p>
-        <p>{selectedOtherInfo.bookTitle}</p>
+            <div className="modal-body">
+              <p>
+                <strong>Book Title:</strong>
+              </p>
+              <p>{selectedOtherInfo.bookTitle}</p>
 
-        <p><strong>Book Subtitle:</strong></p>
-        <p>{selectedOtherInfo.bookSubtitle}</p>
+              <p>
+                <strong>Book Subtitle:</strong>
+              </p>
+              <p>{selectedOtherInfo.bookSubtitle}</p>
 
-        <p><strong>Narrator Name:</strong></p>
-        <p>{selectedOtherInfo.narratorName}</p>
+              <p>
+                <strong>Narrator Name:</strong>
+              </p>
+              <p>{selectedOtherInfo.narratorName}</p>
 
-        <p><strong>Genre:</strong></p>
-        <p>{selectedOtherInfo.genre}</p>
+              <p>
+                <strong>Genre:</strong>
+              </p>
+              <p>{selectedOtherInfo.genre}</p>
 
-        <p><strong>Summary:</strong></p>
-        <p>{selectedOtherInfo.summary}</p>
+              <p>
+                <strong>Summary:</strong>
+              </p>
+              <p>{selectedOtherInfo.summary}</p>
 
-        <p><strong>Cover Style:</strong></p>
-        <p>{selectedOtherInfo.prefferedCoverStyle}</p>
+              <p>
+                <strong>Cover Style:</strong>
+              </p>
+              <p>{selectedOtherInfo.prefferedCoverStyle}</p>
 
-        <p><strong>Like to see on cover:</strong></p>
-        <p>{selectedOtherInfo.likeToSeeOnCover}</p>
+              <p>
+                <strong>Like to see on cover:</strong>
+              </p>
+              <p>{selectedOtherInfo.likeToSeeOnCover}</p>
 
-        <p><strong>First Order:</strong></p>
-        <p>{selectedOtherInfo.firstOrder ? "Yes" : "No"}</p>
+              <p>
+                <strong>First Order:</strong>
+              </p>
+              <p>{selectedOtherInfo.firstOrder ? "Yes" : "No"}</p>
 
-        <p><strong>Share on Portfolio:</strong></p>
-        <p>{selectedOtherInfo.shareOnPortfolio ? "Yes" : "No"}</p>
-      </div>
-    </div>
-  </div>
-)}
+              <p>
+                <strong>Share on Portfolio:</strong>
+              </p>
+              <p>{selectedOtherInfo.shareOnPortfolio ? "Yes" : "No"}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Inline CSS for Modal */}
       <style>

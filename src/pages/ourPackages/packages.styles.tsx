@@ -272,7 +272,6 @@ const float = keyframes`
 export const PackageContainer = styled.div`
   text-align: center;
   padding: 5rem 2rem;
-  max-width: 1400px;
   margin: 0 auto;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
   position: relative;

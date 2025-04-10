@@ -17,6 +17,7 @@ import img12 from "../../assets/IllustratedCovers/img12.jpg";
 import img13 from "../../assets/IllustratedCovers/img13.jpg";
 import img14 from "../../assets/IllustratedCovers/img14.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 type PortfolioItem = {
   id: number;
@@ -224,6 +225,13 @@ const IllustratedCover: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Illustrated Book Covers</title>
+        <meta
+          name="description"
+          content="Explore our illustrated book cover designs."
+        />
+      </Helmet>
       <PortfolioContainer>
         {portfolioItems.map((item, index) => (
           <PortfolioItemCard key={item.id} onClick={() => openModal(index)}>

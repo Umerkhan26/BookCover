@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import invoices from "../../../services/invoices";
 import InvoicePreview from "./preview";
+import { Helmet } from "react-helmet-async";
 
 type Invoice = {
   invoice: string;
@@ -87,6 +88,13 @@ const InvoiceTable: React.FC = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Invoice Management</title>
+        <meta
+          name="description"
+          content="View your invoices and track payment status here."
+        />
+      </Helmet>
       <Title className="text-black font-bold text-3xl pb-8 pt-6">
         Invoices
       </Title>

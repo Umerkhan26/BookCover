@@ -12,6 +12,7 @@ import img7 from "../../assets/LogoDesign/img7.jpeg";
 import img8 from "../../assets/LogoDesign/img8.jpeg";
 import img9 from "../../assets/LogoDesign/img9.jpeg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 type PortfolioItem = {
   id: number;
@@ -225,6 +226,13 @@ const LogoDesign: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Logo Design</title>
+        <meta
+          name="description"
+          content="Find the best logo designs for your brand."
+        />
+      </Helmet>
       <PortfolioContainer>
         {portfolioItems.map((item, index) => (
           <PortfolioItemCard key={item.id} onClick={() => openModal(index)}>

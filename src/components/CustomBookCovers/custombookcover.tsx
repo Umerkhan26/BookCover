@@ -217,6 +217,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 // Dynamically import all images using import.meta.glob
 const images = Object.entries(
@@ -401,6 +402,13 @@ const CustomCover: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Customs Book Covers</title>
+        <meta
+          name="description"
+          content="Explore our diverse collection of book cover designs."
+        />
+      </Helmet>
       <PortfolioContainer>
         {images.map((img) => (
           <PortfolioItemCard

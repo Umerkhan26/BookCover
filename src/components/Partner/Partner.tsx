@@ -3,16 +3,16 @@ import PartnerCover from "../../pages/Partner/partnerCover";
 import AffiliateBenefits from "./AffiliateBenefits";
 import benfits1 from "../../assets/benifits1.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
+import { Helmet } from "react-helmet-async";
 
 const Partner = () => {
   return (
     <div>
-      <PartnerCover 
-        title2={ 
-          <>
-            Partner With Lumeart Studio
-          </>
-        }
+      <Helmet>
+        <title>Partner With Us</title>
+      </Helmet>
+      <PartnerCover
+        title2={<>Partner With Lumeart Studio</>}
         title=""
         subtitle="Let's cooperate to make the self-publishing industry better!"
         bookCoversText=""

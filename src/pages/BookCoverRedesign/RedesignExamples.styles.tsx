@@ -63,7 +63,6 @@ export const Container = styled.div`
   margin: 0 auto;
   padding: 50px 20px;
   font-family: "Manrope", sans-serif;
-  background-color: #f9f9f9;
 `;
 
 export const Example = styled.div<ExampleProps>`

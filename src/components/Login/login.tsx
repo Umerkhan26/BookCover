@@ -15,6 +15,7 @@ import {
   LoadingSpinner,
 } from "./login.styles";
 import { toast, ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -80,6 +81,9 @@ const Login = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <ToastContainer />
       <Form onSubmit={handleLogin}>
         <Title>Login</Title>

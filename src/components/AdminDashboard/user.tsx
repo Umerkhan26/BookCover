@@ -14,6 +14,7 @@ import {
   TableData,
   Button,
 } from "./user.styles";
+import { Helmet } from "react-helmet-async";
 
 interface User {
   _id: string;
@@ -109,6 +110,13 @@ const User: React.FC = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Manage Users</title>
+        <meta
+          name="description"
+          content="Admin panel for managing users and their roles."
+        />
+      </Helmet>
       <HeaderSection>
         <div>
           <Title>All Users</Title>

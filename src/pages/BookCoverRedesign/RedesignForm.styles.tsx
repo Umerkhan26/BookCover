@@ -7,7 +7,7 @@ export const FullWidthContainer = styled.div`
   justify-content: center;
   font-family: "Manrope", sans-serif;
   align-items: center;
-  background-color: #f8f8f8;
+  background-color: #dcf3f4;
 
   @media (max-width: 768px) {
     margin-bottom: 0px;
@@ -18,7 +18,7 @@ export const Heading = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   text-align: center;
 
   @media (max-width: 768px) {
