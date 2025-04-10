@@ -7,7 +7,6 @@ import {
   Container,
   BenifitsComponent,
 } from "./FictionCover.styles";
-import { Helmet } from "react-helmet";
 
 interface BookCoversTextProps {
   text: string;

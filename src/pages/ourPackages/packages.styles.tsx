@@ -250,11 +250,11 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const pulse = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-`;
+// const pulse = keyframes`
+//   0% { transform: scale(1); }
+//   50% { transform: scale(1.05); }
+//   100% { transform: scale(1); }
+// `;
 
 const glow = keyframes`
   0% { box-shadow: 0 0 5px rgba(109, 199, 209, 0.5); }
