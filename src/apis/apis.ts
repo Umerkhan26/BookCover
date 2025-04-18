@@ -21,7 +21,7 @@ export const registerUser = async (userData: {
 export const verifyEmailAPI = async (token: string) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/verifyEmail?token=${token}`
+      `${API_BASE_URL}/verify-email?token=${token}`
     );
     return response.data;
   } catch (error: any) {
