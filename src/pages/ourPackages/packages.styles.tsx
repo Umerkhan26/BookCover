@@ -372,6 +372,15 @@ export const PackageTitle = styled.h2`
     &::after {
       display: none;
     }
+
+    @media (max-width: 488px) {
+      font-size: 29px;
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
   }
 `;
 
