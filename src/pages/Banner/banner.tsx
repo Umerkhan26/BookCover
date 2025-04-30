@@ -13,12 +13,12 @@ import {
   Card,
 } from "./banner.styles";
 import { useNavigate } from "react-router-dom";
-import img1 from "../../assets/banner/The Butterfly Spell.jpg";
-import img2 from "../../assets/banner/The Last Defender Cover.jpg";
-import img3 from "../../assets/banner/Stormborn.jpg";
-import img4 from "../../assets/banner/Murder Melody cover.jpg";
-import img5 from "../../assets/banner/Archers Ascent.jpg";
-import img6 from "../../assets/banner/Dust and destiny cover.jpg";
+import img1 from "../../assets/banner/TheButterflySpell.jpg";
+import img2 from "../../assets/banner/TheLastDefenderCover.jpg";
+import img3 from "../../assets/banner/Stormborn (1).jpg";
+import img4 from "../../assets/banner/MurderMelodycover.jpg";
+import img5 from "../../assets/banner/ArchersAscent.jpg";
+import img6 from "../../assets/banner/Dustanddestinycover.jpg";
 
 // React functional component
 const TopBanner: React.FC = () => {

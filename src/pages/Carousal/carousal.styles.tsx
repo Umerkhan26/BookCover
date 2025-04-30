@@ -99,8 +99,7 @@ export const Image = styled.img`
 
   @media (max-width: 480px) {
     width: auto;
-    height: 100%;
-    -o-object-fit: cover;
+    height: 280px;
     object-fit: cover;
     margin: 0 auto;
   }

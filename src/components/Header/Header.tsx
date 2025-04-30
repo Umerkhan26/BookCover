@@ -53,15 +53,21 @@ const Logo = styled.img`
   width: auto;
   display: block;
   vertical-align: middle;
+  max-width: 100%;
 
   @media (max-width: 768px) {
-    height: 50px;
+    height: 47px;
+  }
+
+  @media (max-width: 480px) {
+    height: 47px;
   }
 `;
 
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+  padding: 5px 0;
 `;
 
 const NavLinkButton = styled(NavLink)`
@@ -126,7 +132,6 @@ const NavButton = styled(NavLink)`
 const NavText = styled.div`
   display: inline-block;
   color: #6dc7d1;
-  // align-items: center;
   font-weight: bold;
   font-size: 15px;
   padding: 8px 25px;
@@ -143,7 +148,8 @@ const NavText = styled.div`
     font-size: 28px;
 
     img {
-      height: 60px;
+      max-width: 200px;
+      height: 80px;
       padding-right: 20px;
       margin-top: 10px;
     }
@@ -154,7 +160,8 @@ const NavText = styled.div`
     font-size: 22px;
 
     img {
-      height: 60px;
+      max-width: 200px;
+      height: 70px;
       padding-right: 15px;
       margin-top: 10px;
     }
@@ -166,6 +173,7 @@ const NavText = styled.div`
     margin-right: 5px;
 
     img {
+      max-width: 200px;
       height: 60px;
       padding-right: 20px;
       margin-top: 10px;
@@ -268,7 +276,7 @@ const ContactUsWrapper = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 `;
 
@@ -534,7 +542,7 @@ function Header() {
               </ServicesLink>
               <DropdownMenu
                 className={isServicesOpen ? "active" : ""}
-                onClick={closeServicesMenu} // Close menu when an item is clicked
+                onClick={closeServicesMenu}
               >
                 <DropdownItem
                   to="/fictionCover"
