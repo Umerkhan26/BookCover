@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { verifyEmailAPI } from '../../../apis/apis'; // adjust the path as needed
+import React, { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { verifyEmailAPI } from "../../../apis/apis";
 
 const VerifyEmailPage: React.FC = () => {
   const { token } = useParams();
@@ -13,18 +13,22 @@ const VerifyEmailPage: React.FC = () => {
       try {
         if (token) {
           await verifyEmailAPI(token);
-          toast.success('Email verified successfully!', {
-            position: 'top-center',
+          toast.success("Email verified successfully!", {
+            position: "top-center",
             autoClose: 3000,
           });
-          setTimeout(() => navigate('/login'), 3500);
+          setTimeout(() => {
+            window.dispatchEvent(new Event("showLoginModal"));
+          }, 3000);
         }
-      } catch (error:any) {
-        toast.success('Email verified successfully!', {
-            position: 'top-center',
+      } catch (error: any) {
+        toast.success("Email verified successfully!", {
+          position: "top-center",
           autoClose: 4000,
         });
-        setTimeout(() => navigate('/login'), 4500);
+        setTimeout(() => {
+          window.dispatchEvent(new Event("showLoginModal"));
+        }, 3000);
       }
     };
 
@@ -32,8 +36,14 @@ const VerifyEmailPage: React.FC = () => {
   }, [token, navigate]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '100px', color:"black" }}>
-      <p>Verifying your email, please wait...</p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        paddingTop: "100px",
+        color: "black",
+      }}
+    >
       <ToastContainer />
     </div>
   );

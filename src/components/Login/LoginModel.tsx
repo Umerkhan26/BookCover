@@ -5,13 +5,18 @@ import { useAuth } from "../../context/authContext";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const LoginModal = ({
-  show,
-  onClose,
-}: {
+interface LoginModalProps {
   show: boolean;
   onClose: () => void;
   onLoginSuccess: (token: string) => void;
+  onRegisterClick?: () => void;
+}
+
+const LoginModal: React.FC<LoginModalProps> = ({
+  show,
+  onClose,
+  onLoginSuccess,
+  onRegisterClick,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,6 +65,7 @@ const LoginModal = ({
 
       // Store token & user info
       login(data.token, data.user);
+      onLoginSuccess(data.token);
 
       // Show "Logged in successfully" toast
       toast.success("Logged in successfully!");
@@ -72,6 +78,12 @@ const LoginModal = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleRegisterClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onClose();
+    onRegisterClick?.();
   };
 
   return (
@@ -100,17 +112,20 @@ const LoginModal = ({
           </SubmitButton>
         </Form>
         <Footer>
-          <ForgotPasswordLink href="#"></ForgotPasswordLink>
+          <ForgotPasswordLink href="#">Forgot password?</ForgotPasswordLink>
           <br />
           <span className="color-black">Don't have an account?</span>
-          <RegisterLink href="/register"> Register</RegisterLink>
+          <RegisterLink href="#" onClick={handleRegisterClick}>
+            Register
+          </RegisterLink>
         </Footer>
-        <CloseButton onClick={onClose}>X</CloseButton>
+        <CloseButton onClick={onClose}>×</CloseButton>
       </ModalContent>
     </ModalOverlay>
   );
 };
 
+// Styled components
 const ErrorText = styled.p`
   color: red;
   font-size: 14px;
@@ -127,38 +142,46 @@ const ModalOverlay = styled.div<{ show: boolean }>`
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
   background: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
-  width: 350px;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
   position: relative;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 `;
 
 const Title = styled.h2`
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;
+  font-weight: 600;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 `;
 
 const Input = styled.input`
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  margin-bottom: 10px;
-  color: black;
+  color: #333;
   width: 100%;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #6dc7d1;
+    outline: none;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -168,20 +191,22 @@ const SubmitButton = styled.button`
   border: none;
   border-radius: 4px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.3s;
 
   &:hover {
     background-color: rgb(24, 92, 99);
   }
 
   &:disabled {
-    background-color: #6dc7d1;
+    background-color: #ccc;
     cursor: not-allowed;
   }
 `;
 
 const Footer = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 14px;
   color: #555;
 `;
@@ -190,8 +215,10 @@ const ForgotPasswordLink = styled.a`
   color: #6dc7d1;
   text-decoration: none;
   cursor: pointer;
+  transition: color 0.3s;
 
   &:hover {
+    color: rgb(24, 92, 99);
     text-decoration: underline;
   }
 `;
@@ -201,23 +228,28 @@ const RegisterLink = styled.a`
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
+  margin-left: 5px;
+  transition: color 0.3s;
 
   &:hover {
+    color: #6dc7d1;
     text-decoration: underline;
   }
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
   color: #6dc7d1;
+  transition: color 0.3s;
+
   &:hover {
-    color: rgb(58, 135, 144);
+    color: rgb(24, 92, 99);
   }
 `;
 

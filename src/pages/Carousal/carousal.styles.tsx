@@ -42,6 +42,12 @@ export const Title = styled.h1`
     color: #6dc7d1;
   }
 
+  @media (max-width: 800px) {
+    font-size: 28px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
   @media (max-width: 600px) {
     font-size: 28px;
     text-align: center;
