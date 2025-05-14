@@ -231,7 +231,7 @@ export const BenifitsComponent = styled.div`
   font-weight: 200;
   font-size: 57px;
   width: 100%;
-  margin-top: 70px;
+  /* margin-top: 70px;  */
   text-align: center;
 
   @media (max-width: 1200px) {

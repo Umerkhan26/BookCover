@@ -146,7 +146,7 @@ const SidebarContainer = styled.aside<CollapsibleProps>`
   position: fixed;
   overflow-y: auto;
   z-index: 999;
-
+  
   @media (max-width: 768px) {
     width: ${(props) =>
       props.collapsed ? "68px" : "100%"}; /* Full width on mobile */
@@ -157,7 +157,7 @@ const MainContent = styled.div<CollapsibleProps>`
   flex: 1;
   padding: 20px;
   margin-left: ${(props) =>
-    props.collapsed ? "0" : "235px"}; /* Adjust margin based on sidebar width */
+    props.collapsed ? "80px" : "235px"}; /* Adjust margin based on sidebar width */
   transition: margin-left 0.3s ease;
   padding-left: ${(props) => (props.collapsed ? "10px" : "20px")};
 
