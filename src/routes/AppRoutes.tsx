@@ -167,7 +167,7 @@ const AppRoutes: React.FC = () => {
             </>
           }
         />
-<Route path="/verify-email/:token" element={<VerifyEmailPage />} />
+        <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
 
         <Route path="/contactUs" element={<ContactUs />} />
         <Route path="/partner" element={<Partner />} />

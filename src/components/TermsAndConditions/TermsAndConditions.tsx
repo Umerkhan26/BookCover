@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 // Styled components
 const PageContent = styled.section`
-  padding: 40px 0;
+  padding: 20px 0;
   background-color: #f9f9f9;
+  margin-top: 90px;
 `;
 
 const Container = styled.div`
@@ -23,12 +24,13 @@ const ContentTerm = styled.div`
   font-size: 16px;
   line-height: 1.6;
   color: #333;
+  padding: 10px;
 
   h4 {
     font-size: 20px;
     margin-top: 30px;
     margin-bottom: 15px;
-    color: #007bff;
+    color: #6dc7d1;
   }
 
   p {
@@ -38,10 +40,16 @@ const ContentTerm = styled.div`
   ul {
     margin-left: 20px;
     margin-bottom: 15px;
+    list-style-type:disc;
   }
 
   li {
     margin-bottom: 10px;
+  }
+
+  li::marker{
+    color: #6dc7d1;
+    font-size: 1.2rem;
   }
 
   strong {
@@ -54,6 +62,8 @@ const AnchorWrap = styled.div`
   position: sticky;
   top: 20px;
   align-self: flex-start;
+  padding: 20px;
+  background-color: #e0e0e0;
 
   ul {
     list-style: none;
@@ -65,13 +75,18 @@ const AnchorWrap = styled.div`
   }
 
   a {
-    color: #007bff;
+    color: #212121;
     text-decoration: none;
     font-size: 14px;
 
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  @media (max-width: 768px)
+  {
+    display: none;
   }
 `;
 
@@ -105,6 +120,7 @@ const TermsAndConditions: React.FC = () => {
       <Container className="container">
         <RowContent className="row-content">
           <ContentTerm className="content-term">
+            <h1 style={{fontWeight: 600}}>Terms and Conditions</h1>
             <p>
               <span style={{ fontWeight: 400 }}>
                 These Terms &amp; Conditions form an agreement between you (the
