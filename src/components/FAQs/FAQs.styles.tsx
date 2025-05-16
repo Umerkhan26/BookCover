@@ -80,6 +80,7 @@ export const FAQTitle = styled.h2`
 export const QuestionWrapper = styled.div`
   border-bottom: 1px solid #ddd;
   margin-bottom: 10px;
+  max-width: 800px;
 `;
 
 export const Question = styled.div`
