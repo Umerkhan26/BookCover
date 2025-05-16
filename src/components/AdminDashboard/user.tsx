@@ -134,9 +134,9 @@ const User: React.FC = () => {
             <TableHeader className="action-column">Action</TableHeader>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="">
           {users.map((user, index) => (
-            <TableRow key={user.id}>
+            <TableRow key={user.id} className="">
               <TableData className="id-column">{index + 1}</TableData>
               <TableData>{`${user.firstName} ${user.lastName}`}</TableData>
               <TableData className="email-column">{user.email}</TableData>
@@ -173,7 +173,7 @@ const User: React.FC = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center justify-center">
                     <Button
                       onClick={() => toggleStatusButtons(user.userId)}
                       bgColor={user.status === "active" ? "#6dc7d1" : "#dc3545"}

@@ -53,6 +53,12 @@ export const Table = styled.table`
     overflow-x: hidden; /* Disable horizontal scrolling */
     display: block;
     width: 100%;
+
+     tbody{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 `;
 
