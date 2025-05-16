@@ -216,8 +216,8 @@ const ContactUsForm: React.FC = () => {
       {/* <Title>Contact Us</Title> */}
       <ContactFormWrapper>
         <Form onSubmit={handleSubmit}>
-          <div className="flex gap-4">
-            <div className="w-1/2">
+          <div className="flex gap-4 flex-col sm:flex-row">
+            <div className="sm:w-1/2">
               <Label>First Name *</Label>
               <Input
                 type="text"
@@ -227,7 +227,7 @@ const ContactUsForm: React.FC = () => {
                 required
               />
             </div>
-            <div className="w-1/2">
+            <div className="sm:w-1/2">
               <Label>Last Name *</Label>
               <Input
                 type="text"
