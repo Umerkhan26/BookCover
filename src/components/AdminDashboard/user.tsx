@@ -143,7 +143,7 @@ const User: React.FC = () => {
               <TableData>{user.role}</TableData>
               <TableData className="action-column">
                 {editingStatusUserId === user.userId ? (
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center justify-center">
                     <Button
                       onClick={() =>
                         handleStatusOptionChange(user.userId, "Active")
