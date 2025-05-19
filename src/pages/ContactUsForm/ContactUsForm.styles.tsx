@@ -1,14 +1,39 @@
 import styled from "styled-components";
 
+export const MainContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 2px solid red; */
+  gap: 10px;
+
+
+  @media (max-width: 768px) {
+   flex-direction: column;
+  }
+
+  @media (max-width: 480px) {
+    
+  }
+`
+
+export const InfoWrapper = styled.div`
+  flex: 1;
+  /* border: 2px solid red; */
+`
+
 export const ContactFormWrapper = styled.div`
+flex: 1;
+/* background-color: #6dc7d1; */
+/* border: 2px solid red; */
   max-width: 90%;
   margin: 0 auto;
   padding: 30px;
   margin-bottom: 3rem;
   margin-top: 1rem;
-  background: #fff;
+  background: #fff1f5;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1;
 
@@ -42,6 +67,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  /* border: 2px solid red; */
 
   .form-group {
     display: flex;
@@ -74,9 +100,11 @@ export const Input = styled.input`
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px;
   font-size: 16px;
   color: black;
+   background-color: #ffffff;
+  border: 1px solid #e5aebf;
   @media (max-width: 480px) {
     padding: 10px;
   }
@@ -85,11 +113,20 @@ export const Input = styled.input`
 export const Textarea = styled.textarea`
   width: 100%;
   padding: 12px;
+  color: black;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px;
   font-size: 16px;
   resize: none;
   height: 120px;
+  background-color: #ffffff;
+  border: 1px solid #e5aebf;
+  
+&::placeholder {
+  /* color: #ccc; */
+ 
+}
+
 
   @media (max-width: 480px) {
     padding: 10px;

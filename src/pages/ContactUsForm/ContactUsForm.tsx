@@ -149,6 +149,8 @@ import {
   Input,
   Label,
   Textarea,
+  InfoWrapper,
+  MainContainer
 } from "./ContactUsForm.styles";
 import { submitContactFormAPI } from "../../apis/apis"; // Import the API function
 import { toast, ToastContainer } from "react-toastify"; // Import react-toastify
@@ -214,70 +216,81 @@ const ContactUsForm: React.FC = () => {
   return (
     <div className="relative">
       {/* <Title>Contact Us</Title> */}
-      <ContactFormWrapper>
-        <Form onSubmit={handleSubmit}>
-          <div className="flex gap-4 flex-col sm:flex-row">
-            <div className="sm:w-1/2">
-              <Label>First Name *</Label>
-              <Input
-                type="text"
-                name="firstName"
-                value={firstName}
-                onChange={handleInputChange}
-                required
-              />
+      <MainContainer>
+        <InfoWrapper>
+          hellow
+        </InfoWrapper>
+        <ContactFormWrapper>
+          <Form onSubmit={handleSubmit}>
+            <div className="flex gap-4 flex-col sm:flex-row">
+              <div className="sm:w-1/2">
+                {/* <Label>First Name *</Label> */}
+                <Input
+                  type="text"
+                  name="firstName"
+                  value={firstName}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="First Name"
+                />
+              </div>
+              <div className="sm:w-1/2">
+                {/* <Label>Last Name *</Label> */}
+                <Input
+                  type="text"
+                  name="lastName"
+                  value={lastName}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Last Name"
+                />
+              </div>
             </div>
-            <div className="sm:w-1/2">
-              <Label>Last Name *</Label>
-              <Input
-                type="text"
-                name="lastName"
-                value={lastName}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-          <Label>Email *</Label>
-          <Input
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleInputChange}
-            required
-          />
-          <Label>How did you find us or who were you referred by?</Label>
-          <Input
-            type="text"
-            name="referral"
-            value={referral}
-            onChange={handleInputChange}
-          />
-          <Label>Message</Label>
-          <Textarea
-            name="message"
-            value={message}
-            onChange={handleInputChange}
-            required
-          />
-          <CheckboxWrapper>
-            <input
-              type="checkbox"
-              checked={isAgreed}
-              onChange={handleCheckboxChange}
+            {/* <Label>Email *</Label> */}
+            <Input
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleInputChange}
               required
+              placeholder="Email"
             />
-            <span className="ml-2">
-              Agree with personal data processing. For more info please consult{" "}
-              <a href="#" className="text-[#6dc7d1]">
-                our privacy policy
-              </a>
-              .
-            </span>
-          </CheckboxWrapper>
-          <Button type="submit">Submit</Button>
-        </Form>
-      </ContactFormWrapper>
+            {/* <Label>How did you find us or who were you referred by?</Label> */}
+            <Input
+              type="text"
+              name="referral"
+              value={referral}
+              onChange={handleInputChange}
+              placeholder="How did you find us or who were you referred by?"
+            />
+            {/* <Label>Message</Label> */}
+            <Textarea
+              name="message"
+              value={message}
+              onChange={handleInputChange}
+              required
+              placeholder="Message"
+            />
+            <CheckboxWrapper>
+              <input
+                type="checkbox"
+                checked={isAgreed}
+                onChange={handleCheckboxChange}
+                required
+
+              />
+              <span className="ml-2">
+                Agree with personal data processing. For more info please consult{" "}
+                <a href="#" className="text-[#6dc7d1]">
+                  our privacy policy
+                </a>
+                .
+              </span>
+            </CheckboxWrapper>
+            <Button type="submit">Submit</Button>
+          </Form>
+        </ContactFormWrapper>
+      </MainContainer>
 
       {/* Toast container should be outside the form */}
       <ToastContainer />
