@@ -22,8 +22,8 @@ const footerData: FooterProps = {
           text: "Terms & Conditions",
         },
         { href: "/FAQs", text: "FAQs" },
-        { href: "/TermsAndConditions", text: "Testimonials" },
-        { href: "", text: "Contact Us" },
+        { href: "/testimonial", text: "Testimonials" },
+        { href: "/contactUs", text: "Contact Us" },
       ],
     },
     {
