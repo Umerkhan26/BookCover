@@ -147,7 +147,7 @@ import {
   ContactFormWrapper,
   Form,
   Input,
-  Label,
+
   Textarea,
   InfoWrapper,
   MainContainer
@@ -218,7 +218,18 @@ const ContactUsForm: React.FC = () => {
       {/* <Title>Contact Us</Title> */}
       <MainContainer>
         <InfoWrapper>
-          hellow
+
+
+          <div className="content">
+            <h2>We Design Captivating Covers</h2>
+            <p>
+              We are a creative team turning stories into stunning visuals.
+              From book covers to digital artwork, we craft designs that sell, connect, and inspire.
+              Let's build something eye-catching together.
+            </p>
+          </div>
+
+
         </InfoWrapper>
         <ContactFormWrapper>
           <Form onSubmit={handleSubmit}>

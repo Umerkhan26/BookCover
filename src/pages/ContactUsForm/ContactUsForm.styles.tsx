@@ -6,6 +6,7 @@ export const MainContainer = styled.div`
   justify-content: center;
   /* border: 2px solid red; */
   gap: 10px;
+  
 
 
   @media (max-width: 768px) {
@@ -19,7 +20,39 @@ export const MainContainer = styled.div`
 
 export const InfoWrapper = styled.div`
   flex: 1;
+  /* height: 100%; */
+   /* background-color: #ffe9ef; */
+  color: #333;
+  /* padding: 60px 40px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* margin-bottom: 3rem; */
+  margin-top: 1rem;
+  padding: 30px;
+  border-radius: 8px;
   /* border: 2px solid red; */
+
+ 
+
+.content {
+  max-width: 400px;
+  color: #5e3b47;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #a64160;
+}
+
+p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+  
 `
 
 export const ContactFormWrapper = styled.div`
@@ -31,7 +64,7 @@ flex: 1;
   padding: 30px;
   margin-bottom: 3rem;
   margin-top: 1rem;
-  background: #fff1f5;
+  background: #fdf7f9;
   border-radius: 8px;
   box-shadow: 5px 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -107,6 +140,9 @@ export const Input = styled.input`
   border: 1px solid #e5aebf;
   @media (max-width: 480px) {
     padding: 10px;
+    &::placeholder{
+      font-size: 11px;
+    }
   }
 `;
 
@@ -123,12 +159,15 @@ export const Textarea = styled.textarea`
   border: 1px solid #e5aebf;
   
 &::placeholder {
-  /* color: #ccc; */
+ 
  
 }
 
 
   @media (max-width: 480px) {
+     &::placeholder{
+      font-size: 11px;
+    }
     padding: 10px;
   }
 `;

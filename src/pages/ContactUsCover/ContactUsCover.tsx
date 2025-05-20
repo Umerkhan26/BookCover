@@ -30,7 +30,7 @@ export default ContactUsCover;
 
 // Styled Components
 const Container = styled.div`
-  background-color: #e0e0e0;
+  background-color: #fff1f5;
   padding: 25px 20px;
   flex-direction: column;
   align-items: center;
