@@ -18,7 +18,7 @@ const footerData: FooterProps = {
       name: "Company",
       links: [
         {
-          href: "",
+          href: "/TermsAndConditions",
           text: "Terms & Conditions",
         },
         { href: "/FAQs", text: "FAQs" },
