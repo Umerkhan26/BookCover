@@ -64,7 +64,7 @@ flex: 1;
   padding: 30px;
   margin-bottom: 3rem;
   margin-top: 1rem;
-  background: #fdf7f9;
+  background: #6dc7d1;
   border-radius: 8px;
   box-shadow: 5px 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
