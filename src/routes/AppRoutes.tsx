@@ -131,7 +131,7 @@ const AppRoutes: React.FC = () => {
             </>
           }
         />
-        {/* Logo Branding Route */}
+        {/* Logo Branding Route and */}
         <Route
           path="/logoBrand"
           element={
