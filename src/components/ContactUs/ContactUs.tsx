@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import ContactUsCover from "../../pages/ContactUsCover/ContactUsCover";
 import ContactUsForm from "../../pages/ContactUsForm/ContactUsForm";
+import bannerImg from '../../assets/PageBanners/LUME ART PORTFOLIO WEB COVERS-05.jpg'
 
 const ContactUs = () => {
   return (
@@ -9,7 +10,7 @@ const ContactUs = () => {
         <title>Contact Us</title>
       </Helmet>
       <div className="w-full">
-        <ContactUsCover />
+        <ContactUsCover image={bannerImg}/>
       </div>
       <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
         <ContactUsForm />

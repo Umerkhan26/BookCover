@@ -4,6 +4,7 @@ import AffiliateBenefits from "./AffiliateBenefits";
 import benfits1 from "../../assets/benifits1.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
+import bannerImg from "../../assets/PageBanners/LUME ART PORTFOLIO WEB COVERS-06.jpg"
 
 const Partner = () => {
   return (
@@ -16,6 +17,7 @@ const Partner = () => {
         title=""
         subtitle="Let's cooperate to make the self-publishing industry better!"
         bookCoversText=""
+        image={bannerImg}
       />
 
       <DesignProcess

@@ -1,13 +1,14 @@
 // import { Subtitle } from "../logo&branding/LogoAuthorBranding.styles";
-import { Title,Title2, Container, Section,Subtitle } from "./PartnerCover.styles";
+import {  Container  } from "./PartnerCover.styles";
 
-interface BookCoversTextProps {
-  text: string;
-}
 
-const BookCoversText = ({ text }: BookCoversTextProps) => {
-  return <h2>{text}</h2>;
-};
+// interface BookCoversTextProps {
+//   text: string;
+// }
+
+// const BookCoversText = ({ text }: BookCoversTextProps) => {
+//   return <h2>{text}</h2>;
+// };
 
 interface PartnerCoverProps {
   title: React.ReactNode;
@@ -15,6 +16,7 @@ interface PartnerCoverProps {
   subtitle?: string;
   bookCoversText: string;
   image?: string; // Made optional
+  
 
   benefitsComponent?: JSX.Element;
   designProcessComponent?: JSX.Element;
@@ -24,10 +26,11 @@ interface PartnerCoverProps {
 }
 
 const PartnerCover = ({
-  title,
-  title2,
-  subtitle,
-  bookCoversText,
+  // title,
+  // title2,
+  // subtitle,
+  // bookCoversText,
+  image,
   designProcessComponent,
   packagesComponent,
   reviewsComponent,
@@ -36,7 +39,7 @@ const PartnerCover = ({
   return (
     <div>
       <Container>
-        <Section>
+        {/* <Section>
           <Title
         
           >
@@ -51,7 +54,9 @@ const PartnerCover = ({
           <Subtitle>{subtitle}</Subtitle>
 
           <BookCoversText text={bookCoversText} />
-        </Section>
+        </Section> */}
+
+        <img src={image} alt="Partner with Us" />
       </Container>
 
       {reviewsComponent}

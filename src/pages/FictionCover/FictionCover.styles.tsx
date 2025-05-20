@@ -19,6 +19,7 @@ export const Container = styled.div`
 
 export const SectionFiction = styled.section`
   position: relative;
+  border: 2px solid red;
   overflow: hidden;
   padding: 30px 0;
   font-size: 1rem;

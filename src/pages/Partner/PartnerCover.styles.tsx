@@ -1,16 +1,13 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #e0e0e0;
-  padding: 25px 20px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+ margin-top: 85px;
 
   @media (max-width: 768px) {
-    padding: 30px 15px;
-    margin-top: 50px;
+   img{
+    
+   }
+    
   }
 `;
 
