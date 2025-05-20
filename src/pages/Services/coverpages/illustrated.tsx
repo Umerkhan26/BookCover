@@ -1,5 +1,5 @@
 import FictionCover from "../../FictionCover/FictionCover";
-import illustratedCover from "../../../assets/illustratedCover.png";
+import illustratedCover from "../../../assets/PageBanners/illustrate LUME ART WEB PAGE FICTION COVER-02.jpg";
 import IllusratedDesignProcess from "./illustratedDesignProcess";
 // import Reviews from '../../reviews/reviews'
 // import Packages from '../../ourPackages/packages'

@@ -3,7 +3,7 @@ import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import FictionCover from "../pages/FictionCover/FictionCover";
 import Illustrated from "../pages/Services/coverpages/illustrated";
-import fictonCoverImg from "../assets/fictionCover.png";
+import fictonCoverImg from "../assets/PageBanners/indie LUME ART WEB PAGE FICTION COVER-01.jpg";
 import BenefitsSection from "../pages/Benefits/benefits";
 import { benefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";

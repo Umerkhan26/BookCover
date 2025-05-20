@@ -117,7 +117,7 @@ const Container = styled.div`
   width: 100%;
   height: auto;
   overflow: hidden;
-  border: 2px solid red;
+ 
 
   img{
      width: 100%;

@@ -1,20 +1,21 @@
 import {
-  SectionFiction,
-  FictionCoverImage,
-  Title,
-  Subtitle,
-  Wrapper,
+  // SectionFiction,
+  // FictionCoverImage,
+  // Title,
+  // Subtitle,
+  // Wrapper,
   Container,
   BenifitsComponent,
 } from "./FictionCover.styles";
 
-interface BookCoversTextProps {
-  text: string;
-}
 
-const BookCoversText = ({ text }: BookCoversTextProps) => {
-  return <h2>{text}</h2>;
-};
+// interface BookCoversTextProps {
+//   text: string;
+// }
+
+// const BookCoversText = ({ text }: BookCoversTextProps) => {
+//   return <h2>{text}</h2>;
+// };
 
 interface FictionCoverProps {
   title: string;
@@ -30,10 +31,11 @@ interface FictionCoverProps {
 }
 
 const FictionCover = ({
-  title,
-  subtitle,
+  // title,
+  // subtitle,
+  // image,
+  // bookCoversText,
   image,
-  bookCoversText,
   benefitsComponent,
   designProcessComponent,
   packagesComponent,
@@ -43,7 +45,7 @@ const FictionCover = ({
   return (
     <div>
       <Container>
-        <SectionFiction>
+        {/* <SectionFiction>
           <Wrapper>
             <Title>{title}</Title>
             <Subtitle>{subtitle}</Subtitle>
@@ -54,7 +56,9 @@ const FictionCover = ({
             </FictionCoverImage>
           )}
           <BookCoversText text={bookCoversText} />
-        </SectionFiction>
+        </SectionFiction> */}
+        <img src={image} alt="BookCoverImage" />
+
       </Container>
 
       {benefitsComponent && (

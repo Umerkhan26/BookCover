@@ -1,5 +1,5 @@
 import FictionCover from '../FictionCover/FictionCover'
-import AudioCover from '../../assets/AudioBookCover.png'
+import AudioCover from '../../assets/PageBanners/audiobook LUME ART WEB PAGE FICTION COVER-06.jpg'
 import BenefitsSection from '../Benefits/benefits'
 import { benefitsData } from '../../services/benefits'
 import DesignProcess from '../HowWeDesign/design'

@@ -35,7 +35,7 @@
 // export default BookCoverRedesign;
 
 import FictionCover from "../FictionCover/FictionCover";
-import BookCoverRedesaign from "../../assets/BookCoverRedesign.png";
+import BookCoverRedesaign from "../../assets/PageBanners/redesign LUME ART WEB PAGE FICTION COVER-03.jpg";
 import Packages from "../ourPackages/packages";
 // import { myPackagesData } from "../ourPackages/packagesData";
 import SpecialEditionAddOns from "../SpecialEditionAddOns/SpecialEditionAddOns";

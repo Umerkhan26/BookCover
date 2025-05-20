@@ -1,5 +1,5 @@
 import FictionCover from "../FictionCover/FictionCover"
-import NonFictional from '../../assets/NonFictional.png'
+import NonFictional from '../../assets/PageBanners/non-fic LUME ART WEB PAGE FICTION COVER-05.jpg'
 import BenefitsSection from "../Benefits/benefits"
 import { benefitsData } from "../../services/benefits"
 import Packages from "../ourPackages/packages"

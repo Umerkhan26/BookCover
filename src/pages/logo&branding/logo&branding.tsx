@@ -1,5 +1,5 @@
 import FictionCover from "../FictionCover/FictionCover"
-import logoBrand from '../../assets/logoBrand.png'
+import logoBrand from '../../assets/PageBanners/Logos LUME ART WEB PAGE FICTION COVER-04.jpg'
 import Packages from "../ourPackages/packages"
 // import { myPackagesData } from "../ourPackages/packagesData"
 import RedesignExamples from "../BookCoverRedesign/RedesignExamples"
