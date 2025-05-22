@@ -186,6 +186,7 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 1200px;
+  pointer: cursor;
   margin: 0 auto;
 
   @media (max-width: 1024px) {
