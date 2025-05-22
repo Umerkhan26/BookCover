@@ -288,6 +288,7 @@ const ContactUsForm: React.FC = () => {
                 checked={isAgreed}
                 onChange={handleCheckboxChange}
                 required
+                className="scale-[1.2]"
 
               />
               <span className="ml-2">

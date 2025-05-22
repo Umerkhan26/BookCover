@@ -7,6 +7,7 @@ export const MainContainer = styled.div`
   /* border: 2px solid red; */
   gap: 10px;
   
+  
 
 
   @media (max-width: 768px) {
@@ -38,13 +39,14 @@ export const InfoWrapper = styled.div`
 .content {
   max-width: 400px;
   color: #5e3b47;
+  /* border: 2px solid red; */
 }
 
 h2 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #a64160;
+  color: #6dc7d1;
 }
 
 p {
@@ -138,6 +140,7 @@ export const Input = styled.input`
   color: black;
    background-color: #ffffff;
   border: 1px solid #e5aebf;
+  
   @media (max-width: 480px) {
     padding: 10px;
     &::placeholder{
@@ -155,7 +158,7 @@ export const Textarea = styled.textarea`
   font-size: 16px;
   resize: none;
   height: 120px;
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #e5aebf;
   
 &::placeholder {
@@ -175,13 +178,13 @@ export const Textarea = styled.textarea`
 export const CheckboxWrapper = styled.div`
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   gap: 8px;
 `;
 
 export const Button = styled.button`
-  background: #6dc7d1;
+  background: #0ebccb;
   color: white;
   font-size: 16px;
   padding: 12px 69px;
