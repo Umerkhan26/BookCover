@@ -1,5 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import bannerImg from "../../assets/PageBanners/FAQ LUME ART PORTFOLIO WEB COVERS-04.jpg"
+
+
+const Container = styled.div`
+  margin-top: 85px;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+ 
+
+  img{
+     width: 100%;
+    height: auto;
+   object-fit: cover;
+  /* display: block; */
+  }
+
+  @media (max-width:768px) {
+    img{
+       max-height: 300px; /* adjust for smaller screens */
+    }
+  }
+`;
 
 const colors = {
   primary: "#6dc7d1",
@@ -15,7 +38,7 @@ const colors = {
 const PageContainer = styled.section`
   padding: 40px 0;
   background-color: ${colors.background};
-  margin-top: 90px;
+  /* margin-top: 90px; */
   font-family: 'Arial', sans-serif;
 `;
 
@@ -386,44 +409,50 @@ const TermsAndConditions: React.FC = () => {
   }));
 
   return (
-    <PageContainer className="page-content page-content-terms">
-      <ContentWrapper className="container">
-        <MainContent className="content-term">
-          <h1>Terms and Conditions</h1>
+    <>
+      <Container>
+        <img src={bannerImg} alt="Terms And Condition Img" />
+      </Container>
+      <PageContainer className="page-content page-content-terms">
 
-          {termsContent.map((section) => (
-            <React.Fragment key={section.id}>
-              <h4 id={section.id}>{section.title}</h4>
-              {section.paragraphs && section.paragraphs.map((paragraph, pIndex) => (
-                <p key={`p-${section.id}-${pIndex}`}>
-                  {paragraph}
-                </p>
-              ))}
-              {section.listItems && (
-                <ul>
-                  {section.listItems.map((item, liIndex) => (
-                    <li key={`li-${section.id}-${liIndex}`}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </React.Fragment>
-          ))}
-        </MainContent>
+        <ContentWrapper className="container">
+          <MainContent className="content-term">
+            <h1>Terms and Conditions</h1>
 
-        <SidebarNav className="anchor-wrap">
-          <h5>Table of Contents</h5>
-          <ul>
-            {anchorLinks.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
-              </li>
+            {termsContent.map((section) => (
+              <React.Fragment key={section.id}>
+                <h4 id={section.id}>{section.title}</h4>
+                {section.paragraphs && section.paragraphs.map((paragraph, pIndex) => (
+                  <p key={`p-${section.id}-${pIndex}`}>
+                    {paragraph}
+                  </p>
+                ))}
+                {section.listItems && (
+                  <ul>
+                    {section.listItems.map((item, liIndex) => (
+                      <li key={`li-${section.id}-${liIndex}`}>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </React.Fragment>
             ))}
-          </ul>
-        </SidebarNav>
-      </ContentWrapper>
-    </PageContainer>
+          </MainContent>
+
+          <SidebarNav className="anchor-wrap">
+            <h5>Table of Contents</h5>
+            <ul>
+              {anchorLinks.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </SidebarNav>
+        </ContentWrapper>
+      </PageContainer>
+    </>
   );
 };
 
