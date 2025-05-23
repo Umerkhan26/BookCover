@@ -32,6 +32,7 @@
 import React from "react";
 import TeamCard from "./TeamCard";
 import shahid from "../../assets/shahid.jpeg";
+import Umer from "../../assets/Umer.jpg";
 import packag1 from "../../assets/pacakge1.jpeg";
 
 const teamMembers = [
@@ -40,7 +41,7 @@ const teamMembers = [
   { name: "Shahid Khan", role: "Developer", imageSrc: shahid },
   { name: "Shamroz Khan", role: "Senior Graphic Designer", imageSrc: packag1 },
   { name: "Jawad", role: "Senior Graphic Designer", imageSrc: packag1 },
-  { name: "Umar", role: "Developer", imageSrc: packag1 },
+  { name: "Umar", role: "Developer", imageSrc: Umer },
   { name: "Ali", role: "Marketing Manager", imageSrc: packag1 },
 ];
 
