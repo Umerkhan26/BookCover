@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import bannerImg from "../../assets/PageBanners/FAQ LUME ART PORTFOLIO WEB COVERS-04.jpg"
+import bannerImg from "../../assets/PageBanners/PrivacyPolicy.jpg"
 
 
 const Container = styled.div`

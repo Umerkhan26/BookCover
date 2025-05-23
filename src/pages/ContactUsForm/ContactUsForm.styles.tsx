@@ -8,7 +8,7 @@ const colors = {
   background: "#fdfdfd", // A very light, almost white for the overall page background
   formBackground: "#ffffff", // Pure white for the contact form itself
   infoBackground: "#eef7f7", // A very light, subtle teal for the info panel
-  inputBorder: "#6dc7d1", // Original input border color
+  inputBorder: "#344243", // Original input border color
   inputFocusBorder: "#0ebccb", // Matches secondary for focus
   buttonHover: "#5ab7c1", // Original button hover
   errorRed: "#e74c3c",
@@ -79,9 +79,10 @@ export const ContactDetail = styled.div`
   color: ${colors.lightText};
 
   .icon {
-    color: ${colors.primary};
-    margin-right: 15px;
-    font-size: 1.5em;
+    /* color: ${colors.primary};   */
+    margin-right: 10px;
+    /* margin-left: 10px; */
+    font-size: 1.3rem;
     min-width: 24px;
   }
 

@@ -107,12 +107,12 @@ const ContactUsForm: React.FC = () => {
             Have a question or a project in mind? We'd love to hear from you. Reach out through the form or use the direct contact details below.
           </p>
 
-          <ContactDetail>
+          {/* <ContactDetail>
             <FaGlobe className="icon" />
             <a href="https://www.lumeart.com" target="_blank" rel="noopener noreferrer">
               www.lumeart.com
             </a>
-          </ContactDetail>
+          </ContactDetail> */}
           {/* <ContactDetail>
             <FaPhone className="icon" />
             <a href="tel:+1234567890">
