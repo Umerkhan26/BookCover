@@ -37,6 +37,7 @@ export const Nav = styled.nav`
   width: 100%;
   z-index: 1000;
   height: 85px;
+  /* border: 2px solid red; */
 
   @media (max-width: 1024px) {
     padding: 15px 20px;
@@ -49,6 +50,7 @@ export const Logo = styled.img`
   display: block;
   vertical-align: middle;
   max-width: 100%;
+  /* border: 2px solid red; */
 
   @media (max-width: 768px) {
     height: 47px;
@@ -67,6 +69,7 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 5px 0;
+  
 `;
 
 export const NavLinkButton = styled(NavLink)`
@@ -79,8 +82,9 @@ export const NavLinkButton = styled(NavLink)`
   text-align: left;
   text-decoration: none;
   border-radius: 5px;
-  margin-right: 15px;
+  margin:0 8px;
   background: rgba(255, 255, 255, 0.4);
+   /* border: 2px solid red; */
 
   &:hover {
     color: #14b8b8;
@@ -110,7 +114,8 @@ export const NavButton = styled(NavLink)`
   border-radius: 4px;
   text-align: left;
   text-decoration: none;
-  margin-right: 15px;
+  margin: 0 8px;
+   /* border: 2px solid red; */
 
   &:hover {
     color: #ffffff;
@@ -133,10 +138,11 @@ export const NavText = styled.div`
   color: #6dc7d1;
   font-weight: bold;
   font-size: 15px;
-  padding: 8px 25px;
+  padding: 8px 30px;
   text-align: left;
   text-decoration: none;
-  margin-right: 15px;
+  margin: 0;
+   /* border: 2px solid blue; */
 
   &:hover {
     color: #4fa3a2;
@@ -187,6 +193,7 @@ export const HeaderContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  /* border: 2px solid green; */
 
   @media (max-width: 1024px) {
     justify-content: space-between;
@@ -287,8 +294,9 @@ export const ContactUsWrapper = styled.div`
 
 export const NavNBtn = styled.nav<NavNBtnProps>`
   display: flex;
+  /* border: 2px solid pink; */
   align-items: start;
-  flex-grow: 1;
+  /* flex-grow: 1; */
   justify-content: flex-start;
   background-color: white;
   transition: opacity 0.3s ease, transform 0.3s ease;
