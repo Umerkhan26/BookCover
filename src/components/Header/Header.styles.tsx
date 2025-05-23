@@ -206,6 +206,7 @@ export const HeaderContainer = styled.div`
 
 export const DropdownItem = styled(NavLink)`
   color: #000000;
+  /* font-family: Arial, Helvetica, sans-serif; */
   text-decoration: none;
   padding: 10px 10px;
   font-size: 16px;
@@ -364,9 +365,11 @@ export const ServicesLink = styled(NavLinkButton)`
 `;
 
 export const DropdownMenu = styled.div`
-border: 1px solid silver;
+/* border: 1px solid silver; */
+/* text-align: left; */
   display: none;
   position: absolute;
+  /* transform: translate(0 , 0); */
   top: 100%;
   left: 0;
   height: auto;
@@ -378,7 +381,7 @@ border: 1px solid silver;
   z-index: 1000;
   border-radius: 0;
   flex-wrap: wrap;
-  width: 90vw;
+  width: 100vw;
   margin-left: -15vw;
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 0;
