@@ -352,14 +352,14 @@ const termsContent: ContentBlock[] = [
       "Lumeart reserves the right to modify these Terms and Conditions at any time without prior individual notice. All modifications will be posted on this page and will be effective immediately upon posting. It is the Client's responsibility to review these Terms periodically for changes. Continued engagement with Lumeart's services after any modifications signifies the Client's acceptance of the revised Terms. For existing, ongoing projects, the terms under which the project was initiated will generally apply, unless explicitly agreed otherwise.",
     ],
   },
-  {
-    id: "governing-law-and-jurisdiction",
-    title: "Governing Law and Jurisdiction",
-    paragraphs: [
-      "These Terms and Conditions shall be governed by and construed in accordance with the laws of [Your Country/State/Province, e.g., the laws of Pakistan], without regard to its conflict of law provisions.",
-      "Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts located in [Your City/Region, e.g., Lahore, Pakistan].",
-    ],
-  },
+  // {
+  //   id: "governing-law-and-jurisdiction",
+  //   title: "Governing Law and Jurisdiction",
+  //   paragraphs: [
+  //     "These Terms and Conditions shall be governed by and construed in accordance with the laws of [Your Country/State/Province, e.g., the laws of Pakistan], without regard to its conflict of law provisions.",
+  //     "Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts located in [Your City/Region, e.g., Lahore, Pakistan].",
+  //   ],
+  // },
   {
     id: "severability",
     title: "Severability",
@@ -372,7 +372,7 @@ const termsContent: ContentBlock[] = [
     title: "Contact Us",
     paragraphs: [
       "If you have any questions or concerns regarding these Terms and Conditions, please do not hesitate to contact us at:",
-      "Email: [Your Company Email Address, e.g., support@lumeart.com]",
+      "Email: studioslumeart@gmail.com",
       "Website: www.lumeart.com",
       "We are committed to providing clarity and transparency in our services.",
     ],
