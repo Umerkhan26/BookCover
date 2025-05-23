@@ -31,7 +31,7 @@ const footerData: FooterProps = {
       links: [
         { href: "", text: "Blog" },
         { href: "", text: "Career" },
-        { href: "", text: "Privacy Policy" },
+        { href: "/PrivacyPolicy", text: "Privacy Policy" },
       ],
     },
     {

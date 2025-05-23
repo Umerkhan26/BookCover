@@ -19,7 +19,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
 
 
-import { FaPhone, FaEnvelope, FaGlobe, FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FaEnvelope, FaGlobe, FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { FaThreads } from "react-icons/fa6";
 
 const ContactUsForm: React.FC = () => {
