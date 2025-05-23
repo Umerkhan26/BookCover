@@ -29,6 +29,7 @@ import img7 from "../../assets/Slider/img7.jpg";
 import img8 from "../../assets/Slider/img8.jpg";
 import img9 from "../../assets/Slider/img9.jpg";
 import img10 from "../../assets/Slider/img10.jpg";
+import { useNavigate } from "react-router-dom";
 
 const images = [
   { src: img1, title: "INGLED", subtitle: "OUT" },
@@ -115,6 +116,12 @@ const Carousel = () => {
     setPreviewIndex(null);
   };
 
+  const navigate = useNavigate();
+
+  const handleGoToPortfolio = () => {
+    navigate("/portfolio")
+  }
+
   return (
     <MainContainer>
       <TitleContainer>
@@ -140,7 +147,7 @@ const Carousel = () => {
       </SliderContainer>
 
       <ButtonContainer>
-        <PortfolioButton>See Portfolio</PortfolioButton>
+        <PortfolioButton onClick={handleGoToPortfolio}>See Portfolio</PortfolioButton>
       </ButtonContainer>
 
       {previewIndex !== null && (

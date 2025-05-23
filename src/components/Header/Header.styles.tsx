@@ -216,6 +216,7 @@ export const DropdownItem = styled(NavLink)`
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
+  /* border: 2px solid yellow;  */
 
   &:hover {
     color: #14b8b8;
@@ -363,6 +364,7 @@ export const ServicesLink = styled(NavLinkButton)`
 `;
 
 export const DropdownMenu = styled.div`
+border: 1px solid silver;
   display: none;
   position: absolute;
   top: 100%;
@@ -376,7 +378,7 @@ export const DropdownMenu = styled.div`
   z-index: 1000;
   border-radius: 0;
   flex-wrap: wrap;
-  width: 100vw;
+  width: 90vw;
   margin-left: -15vw;
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 0;

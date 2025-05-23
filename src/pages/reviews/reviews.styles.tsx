@@ -32,6 +32,7 @@ export const Button = styled.a`
 `;
 
 export const ReviewsWrapper = styled.div`
+/* border: 2px solid red; */
   width: 100%;
   font-family: "Manrope", sans-serif;
   overflow: hidden; /* Ensures no horizontal scrolling */

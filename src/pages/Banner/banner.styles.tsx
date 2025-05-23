@@ -229,9 +229,9 @@ export const CardSection = styled.div`
 `;
 export const Card = styled.a`
   flex: 0 0 calc(20% - 10px);
-  max-width: 150px;
+  max-width: 155px;
   margin-top: 20px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 
   img {
     width: 100%;
@@ -241,7 +241,8 @@ export const Card = styled.a`
   }
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
+    /* margin: 0 10px; */
   }
 
   @media (max-width: 768px) {
