@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ShareIdeasSection from "../../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
+import { motion, Variants } from "framer-motion";
 
 const images = Object.entries(
   import.meta.glob<{ default: string }>(
@@ -20,7 +21,24 @@ const images = Object.entries(
 const selectedIndices = [44, 18, 43, 37, 13, 31, 1, 22, 32, 14, 47, 30];
 const filteredImages = images.filter((img) => selectedIndices.includes(img.id));
 
-const PortfolioItemCard = styled.div`
+const cardVariants: Variants = {
+  hidden: { y: 70, opacity: 0 }, 
+  visible: (i: number) => ({ 
+    y: 0,          
+    opacity: 1,    
+    transition: {
+      type: "spring", 
+      stiffness: 80,  
+      damping: 18,    
+      mass: 1,
+      duration: 1.0,
+      delay: i * 0.08, 
+    },
+  }),
+};
+
+
+const PortfolioItemCard = styled(motion.div)`
   position: relative;
   overflow: hidden;
   border-radius: 10px;
@@ -200,6 +218,11 @@ const Horror: React.FC = () => {
           <PortfolioItemCard
             key={img.id}
             onClick={() => openModal(img.imageUrl, index)}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            custom={index}
+            viewport={{ once: false, amount: 0.1 }}
           >
             <Image src={img.imageUrl} alt={`Book ${img.id}`} loading="lazy" />
           </PortfolioItemCard>

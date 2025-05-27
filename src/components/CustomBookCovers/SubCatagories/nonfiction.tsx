@@ -27,6 +27,7 @@ const PortfolioItemCard = styled.div`
   cursor: pointer;
   width: 100%;
   max-width: 250px;
+  /* border: 2px solid red; */
 `;
 
 const PortfolioContainer = styled.div`

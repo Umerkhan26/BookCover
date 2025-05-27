@@ -277,7 +277,7 @@ const DesignProcess = ({
                 // (initialDelay for left column) + (a fixed offset) + (index * staggerDelay)
                 // We add a fixed offset (e.g., 400ms) to ensure steps start after the left column elements.
                 data-aos-delay={initialDelay + 400 + (index * staggerDelay)}
-                data-aos-once="true">
+                data-aos-once="false">
                 <StepNumber>{step.number}</StepNumber>
                 <StepContent>
                   <StepTitle>{step.title}</StepTitle>
