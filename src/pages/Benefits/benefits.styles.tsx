@@ -55,6 +55,7 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  /* border: 2px solid red; */
 
   @media (max-width: 768px) {
     flex-direction: column;

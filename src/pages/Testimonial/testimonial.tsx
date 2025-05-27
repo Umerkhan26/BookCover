@@ -23,6 +23,8 @@ import {
   WrapTestimonials,
   YoutubeIconWrapper,
 } from "./testimonial.styles";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 // Component
 const Testimonials: React.FC = () => {
@@ -205,7 +207,11 @@ const Testimonials: React.FC = () => {
       <Container>
         <ListTestimonials>
           {/* Testimonial 1 */}
-          <ColTestimonials>
+          <ColTestimonials
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="1000"
+            data-aos-once="false">
             <a
               href="#testimonials-video-popup"
               className="open-testimonials-video-popup"
@@ -269,7 +275,10 @@ const Testimonials: React.FC = () => {
           </ColTestimonials>
 
           {/* Testimonial 2 */}
-          <ColTestimonials>
+          <ColTestimonials data-aos="fade-up"
+            data-aos-delay="400"
+            data-aos-duration="1000"
+            data-aos-once="false">
             <a
               href="#testimonials-video-popup"
               className="open-testimonials-video-popup"
@@ -325,7 +334,10 @@ const Testimonials: React.FC = () => {
           </ColTestimonials>
 
           {/* Testimonial 3 */}
-          <ColTestimonials>
+          <ColTestimonials data-aos="fade-up"
+            data-aos-delay="600"
+            data-aos-duration="1000"
+            data-aos-once="false">
             <a
               href="#testimonials-video-popup"
               className="open-testimonials-video-popup"

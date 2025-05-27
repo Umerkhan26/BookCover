@@ -58,6 +58,7 @@ export const SvgRightBottom = styled(SvgContainer)`
 export const Container = styled.div`
   position: relative;
   z-index: 2;
+  /* border: 2px solid red; */
 `;
 
 export const MainScreen = styled.div`
@@ -109,6 +110,7 @@ export const ListTestimonials = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+  
 
   @media (max-width: 820px) {
     display: flex;
