@@ -60,7 +60,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
               data-aos="fade-right"
               data-aos-delay={baseDelay}
               data-aos-duration="1000"
-              data-aos-once="true"
+              data-aos-once="false"
             >{title}</SectionTitle>
           </TextContainer>
           {firstTwoCards.map((benefit, index) => (
