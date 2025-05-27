@@ -47,7 +47,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
   const firstTwoCards = benefits.slice(0, 2);
   const remainingCards = benefits.slice(2);
 
-  const baseDelay = 100;
+  const baseDelay = 0;
   const delayIncrement = 200;
 
   return (
@@ -59,7 +59,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
             <SectionTitle
               data-aos="fade-right"
               data-aos-delay={baseDelay}
-              data-aos-duration="1500"
+              data-aos-duration="1000"
               data-aos-once="true"
             >{title}</SectionTitle>
           </TextContainer>
@@ -88,7 +88,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
         <Row>
           {remainingCards.map((benefit, index) => (
             <BenefitItemWrap data-aos="fade-up"
-              data-aos-duration="800"
+              data-aos-duration="600"
               // Calculate delay: baseDelay + (position_in_sequence) * delayIncrement
               // (2 + index + 1) means we start after the first two cards and the text container
               data-aos-delay={baseDelay + (2 + index + 1) * delayIncrement}
