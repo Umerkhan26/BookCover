@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const GridContainer = styled.div`
+/* border: 2px solid #6dc7d1; */
   display: grid;
   margin-left: auto;
   margin-right: auto;
@@ -9,7 +10,11 @@ export const GridContainer = styled.div`
   justify-items: center; // Center items in the grid
   text-decoration: none;
   grid-template-columns: repeat(1, 1fr);
-  gap: 20px 20px;
+  gap: 20px 10px;
+
+  @media (max-width: 768px){
+    margin-top: 35px;
+  }
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
@@ -28,7 +33,7 @@ export const GridItem = styled.div`
   text-align: center;
   cursor: pointer;
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
 `;
 
 export const ItemImage = styled.img`
