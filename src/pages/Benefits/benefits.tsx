@@ -1,4 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import {
   BenefitsWrap,
   Container,
@@ -30,8 +32,23 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
   title,
   benefits,
 }) => {
+
+  useEffect(() => {
+
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: "ease-in-out",
+      offset: 150,
+    });
+    AOS.refresh();
+  }, []);
+
   const firstTwoCards = benefits.slice(0, 2);
   const remainingCards = benefits.slice(2);
+
+  const baseDelay = 100;
+  const delayIncrement = 200;
 
   return (
     <BenefitsWrap>
@@ -39,10 +56,15 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
         {/* First row with text and the first two cards */}
         <FirstRow>
           <TextContainer>
-            <SectionTitle>{title}</SectionTitle>
+            <SectionTitle
+              data-aos="fade-right"
+              data-aos-delay={baseDelay}
+              data-aos-duration="1500"
+              data-aos-once="true"
+            >{title}</SectionTitle>
           </TextContainer>
           {firstTwoCards.map((benefit, index) => (
-            <BenefitItemWrap key={index}>
+            <BenefitItemWrap data-aos="fade-up" data-aos-duration="800" data-aos-delay={baseDelay + (index + 1) * delayIncrement} data-aos-once="true" key={index}>
               <BenefitItems>
                 <BenefitHeader>
                   <BenefitImage>
@@ -65,7 +87,12 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
         {/* Remaining cards */}
         <Row>
           {remainingCards.map((benefit, index) => (
-            <BenefitItemWrap key={index}>
+            <BenefitItemWrap data-aos="fade-up"
+              data-aos-duration="800"
+              // Calculate delay: baseDelay + (position_in_sequence) * delayIncrement
+              // (2 + index + 1) means we start after the first two cards and the text container
+              data-aos-delay={baseDelay + (2 + index + 1) * delayIncrement}
+              data-aos-once="false" key={index}>
               <BenefitItems>
                 <BenefitHeader>
                   <BenefitImage>
