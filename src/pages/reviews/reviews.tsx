@@ -1,17 +1,32 @@
+import React, { useEffect } from "react";
 import {
   Button,
   CardsWrapper,
   ReviewCard,
   ReviewsWrapper,
 } from "./reviews.styles";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Reviews = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 700, // Animation duration in milliseconds
+      easing: 'ease-out-cubic', // Easing function for animation
+      once: false, // Animation plays only once per element
+      offset: 50, // Trigger animation when element is 150px from viewport bottom
+    });
+
+    AOS.refresh();
+  }, []);
+
   return (
     <div
       className=" bg-gray-100 text-gray-600 dark:text-gray-300 pt-8 dark: mb-32 md:mb-[-5px]"
       id="reviews"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
+        {/* Removed data-aos from this div */}
         <div className="mb-10 space-y-4 px-6 md:px-0 text-center md:text-left">
           <h2 className="text-2xl font-bold text-black text-center md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
             <span className="text-black">What Do Our</span>{" "}
@@ -20,11 +35,12 @@ const Reviews = () => {
         </div>
 
         <div>
+          {/* Removed data-aos from this anchor tag */}
           <a
             href="https://www.facebook.com/YourPageName/reviews"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ textDecoration: "none" }} // Add inline style here
+            style={{ textDecoration: "none" }}
           >
             <Button className="mb-4">Leave A Review</Button>
           </a>
@@ -33,7 +49,10 @@ const Reviews = () => {
         <ReviewsWrapper>
           <CardsWrapper>
             {/* Card 1 */}
-            <ReviewCard>
+            <ReviewCard
+              data-aos="fade-up" // Simple down-to-up animation
+              data-aos-delay="0" // No delay for the first card
+            >
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -60,15 +79,18 @@ const Reviews = () => {
                 </div>
               </div>
               <p className="mt-8 text-black">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
-                aliquid quo eum quae quos illo earum ipsa doloribus nostrum
-                minus libero aspernatur laborum cum, a suscipit, ratione ea
-                totam ullam!
+                Lumeart Studio turned my idea into a clean, professional cover
+                that matched my vision perfectly. Communication was smooth, and
+                revisions were handled quickly. I’m very pleased with the final
+                design and the overall experience.
               </p>
             </ReviewCard>
 
             {/* Card 2 */}
-            <ReviewCard>
+            <ReviewCard
+              data-aos="fade-up" // Simple down-to-up animation
+              data-aos-delay="200" // Delay for staggered effect
+            >
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -95,14 +117,18 @@ const Reviews = () => {
                 </div>
               </div>
               <p className="mt-8 text-black">
-                Lorem ipsum dolor laboriosam deleniti aperiam ab veniam sint non
-                cumque quis tempore cupiditate. Sint libero voluptas veniam at
-                reprehenderit, veritatis harum et rerum.
+                Professional, fast, and creative! I needed a standout cover for
+                my digital product, and Lumeart Studio nailed it. The design
+                was polished, the style was unique, and revisions were handled
+                quickly. Highly recommended!
               </p>
             </ReviewCard>
 
             {/* Card 3 */}
-            <ReviewCard>
+            <ReviewCard
+              data-aos="fade-up" // Simple down-to-up animation
+              data-aos-delay="400" // Delay for staggered effect
+            >
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -129,15 +155,18 @@ const Reviews = () => {
                 </div>
               </div>
               <p className="mt-8 text-black">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Architecto laboriosam deleniti aperiam ab veniam sint non cumque
-                quis tempore cupiditate. Sint libero voluptas veniam at
-                reprehenderit, veritatis harum et rerum.
+                Absolutely loved the creativity! Lumeart delivered a cover design
+                that was not only visually appealing but also matched my brand
+                perfectly. The process was smooth, communication was great, and
+                the final result exceeded my expectations.
               </p>
             </ReviewCard>
 
             {/* Card 4 - New Review */}
-            <ReviewCard>
+            <ReviewCard
+              data-aos="fade-up" // Simple down-to-up animation
+              data-aos-delay="600" // Delay for staggered effect
+            >
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -164,9 +193,10 @@ const Reviews = () => {
                 </div>
               </div>
               <p className="mt-8 text-black">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                et nisl nec lorem scelerisque consectetur. Proin laoreet
-                tristique dolor.
+                Stunning work by Lumeart Studio! The cover design I received was
+                modern, sharp, and exactly what I had imagined. Their attention
+                to detail and unique design style really set them apart. I’ll
+                definitely be coming back for future projects!
               </p>
             </ReviewCard>
           </CardsWrapper>
