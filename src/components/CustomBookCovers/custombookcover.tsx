@@ -218,6 +218,20 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
+import {motion , Variants} from "framer-motion";
+
+const variants: Variants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { 
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+      
+    }
+  },
+};
 
 // Dynamically import all images using import.meta.glob
 const images = Object.entries(
@@ -243,6 +257,7 @@ const PortfolioContainer = styled.div`
   width: 100%; // Ensure it spans the full width
   max-width: 1200px; // Match the max-width of the banner
   margin: 0 auto; // Center the container
+  /* border: 2px solid red; */
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(4, 1fr); // 4 per row on large screens
@@ -268,6 +283,7 @@ const PortfolioItemCard = styled.div`
   cursor: pointer;
   width: 100%;
   max-width: 250px; // Limit the maximum width of each card
+  
 `;
 
 const Image = styled.img`
@@ -414,6 +430,11 @@ const CustomCover: React.FC = () => {
           <PortfolioItemCard
             key={img.id}
             onClick={() => openModal(img.imageUrl)}
+            as={motion.div}
+            variants={variants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
           >
             <Image src={img.imageUrl} alt={`Book ${img.id}`} loading="lazy" />
           </PortfolioItemCard>
