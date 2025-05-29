@@ -208,12 +208,12 @@ export const DropdownItem = styled(NavLink)`
   color: #000000;
   /* font-family: Arial, Helvetica, sans-serif; */
   text-decoration: none;
-  padding: 10px 10px;
-  font-size: 16px;
+  padding: 8px 8px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(30% - 10px);
+  /* width: calc(25% - 10px); */
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
@@ -367,13 +367,18 @@ export const ServicesLink = styled(NavLinkButton)`
 export const DropdownMenu = styled.div`
 /* border: 1px solid silver; */
 /* text-align: left; */
-  display: none;
+  display: flex;
   position: absolute;
+  /* border: 2px solid red; */
   /* transform: translate(0 , 0); */
+  /* border: 1px solid gray; */
   top: 100%;
-  left: 0;
+  left: 220px;
   height: auto;
   max-height: 200px;
+  /* align-items: center; */
+  /* justify-content: space-around; */
+  /* gap:200px; */
   overflow-y: auto;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -407,9 +412,18 @@ export const DropdownMenu = styled.div`
     }
   }
 `;
+
+export const DropdownGroup = styled.div`
+/* border: 2px solid blue; */
+/* margin-right: 20px; */
+
+
+`
 export const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
+  /* border: 2px solid green; */
+  
 
   @media (max-width: 768px) {
     width: 100%;
@@ -419,8 +433,14 @@ export const DropdownContainer = styled.div`
   @media (min-width: 1025px) {
     &:hover > ${DropdownMenu} {
       display: flex;
+      padding: 10 40px;
+      /* align-items: center; */
+      justify-content: space-between;
       opacity: 1;
       pointer-events: auto;
+      /* gap: 20px; */
+      /* border: 2px solid red; */
+      width: 60vw;
     }
   }
 `;
