@@ -12,7 +12,6 @@ import specialadd4 from "../../assets/specialadd4.png";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../../components/Login/LoginModel"; // Import the modal
 import { useState } from "react";
-import AOS from "aos"
 import "aos/dist/aos.css";
 const addOns = [
   {

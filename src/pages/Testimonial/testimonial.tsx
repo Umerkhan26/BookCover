@@ -23,7 +23,6 @@ import {
   WrapTestimonials,
   YoutubeIconWrapper,
 } from "./testimonial.styles";
-import AOS from "aos";
 import "aos/dist/aos.css";
 
 // Component

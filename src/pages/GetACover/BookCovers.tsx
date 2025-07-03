@@ -6,7 +6,6 @@ import cover4 from "../../assets/BookCoverRedesign.png";
 import cover5 from "../../assets/premiumbookcover.jpg";
 import cover6 from "../../assets/illustratedBookcover.jpg";
 import cover7 from "../../assets/logobrandingcover.jpg";
-import AOS from "aos";
 import "aos/dist/aos.css";
 
 import {
