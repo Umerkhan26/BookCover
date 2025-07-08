@@ -395,7 +395,7 @@ const CustomCover: React.FC = () => {
   };
 
   const handlePreviewPrev = () => {
-    const newIndex = (currentIndex - 1 + images.length) % images.length; // Avoid negative index
+    const newIndex = (currentIndex - 1 + images.length) % images.length;
     setCurrentIndex(newIndex);
     setSelectedImage(images[newIndex].imageUrl);
   };
