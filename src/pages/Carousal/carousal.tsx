@@ -25,6 +25,7 @@ import img3 from "../../assets/banner/Stormborn (1).jpg";
 import img4 from "../../assets/banner/MurderMelodycover.jpg";
 import img5 from "../../assets/banner/ArchersAscent.jpg";
 import img6 from "../../assets/banner/Dustanddestinycover.jpg";
+import { useNavigate } from "react-router-dom";
 
 // import img1 from "../../assets/Slider/img1.jpg";
 // import img2 from "../../assets/Slider/img2.jpg";
