@@ -11,7 +11,7 @@ const AboutContent: React.FC<AboutContentProps> = ({
   highlightedText = "in this world worth telling...",
   description = `Our is not an exception. It started with three young people sharing the same passion for creating a unique design. 
   Through hard work and an infinite amount of hours mastering their craft, the guys ended up founding a place for people who 
-  shared their values – Miblart. Our team believes that book cover design can look professional without costing you a fortune. 
+  shared their values – Lumeart. Our team believes that book cover design can look professional without costing you a fortune. 
   There are so many stories in this world worth telling. Let us make sure yours gets the attention it deserves.`,
 }) => {
   return (

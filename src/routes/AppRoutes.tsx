@@ -62,6 +62,7 @@ import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
 import MarketingMaterial from "../components/Marketing Material/marketing";
 import { Helmet } from "react-helmet-async";
 import VerifyEmailPage from "../pages/UserDashboard/Navbar/VerifyEmailPage";
+import PrivacyPolicy from "../components/TermsAndConditions/PrivacyPolicy";
 // import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
@@ -173,6 +174,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/partner" element={<Partner />} />
         <Route path="/FAQs" element={<FAQ />} />
         <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
+        <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/GetACover" element={<GetACover />} />
         <Route path="/services" element={<Services />} />
         <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>

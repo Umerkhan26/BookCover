@@ -12,7 +12,7 @@ import specialadd4 from "../../assets/specialadd4.png";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../../components/Login/LoginModel"; // Import the modal
 import { useState } from "react";
-
+import "aos/dist/aos.css";
 const addOns = [
   {
     title: "Sprayed edges design",
@@ -77,7 +77,11 @@ const SpecialEditionAddOns = () => {
       </Title>
       <AddOnsGrid>
         {addOns.map((item, index) => (
-          <AddOnCard key={index}>
+          <AddOnCard key={index}
+            data-aos="fade-up"
+            data-aos-delay={index * 200} // Stagger the animations
+            data-aos-duration="1000"
+            data-aos-once="false">
             <img src={item.image} alt={item.title} />
             <p>{item.title}</p>
             <OrderButton onClick={() => handleOrderNow(item.packageId)}>

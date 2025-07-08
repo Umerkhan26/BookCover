@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { motion, Variants } from "framer-motion"; // Import motion and Variants type
 import ShareIdeasSection from "../../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 
+// Image import logic (unchanged)
 const images = Object.entries(
   import.meta.glob<{ default: string }>(
     "../../../assets/CustomBookCovers/*.{jpg,jpeg,png}",
@@ -20,7 +22,29 @@ const images = Object.entries(
 const selectedIndices = [34, 8, 23, 7, 33, 15, 41, 50];
 const filteredImages = images.filter((img) => selectedIndices.includes(img.id));
 
-const PortfolioItemCard = styled.div`
+// --- Framer Motion Variants for individual cards ---
+// We only need variants for the individual cards now,
+// as the container will no longer orchestrate them.
+const cardVariants: Variants = {
+  hidden: { y: 70, opacity: 0 }, // Cards start invisible and 70px below their final position
+  visible: (i: number) => ({ // 'i' here is the index passed from `custom` prop
+    y: 0,          // Animate to original Y position
+    opacity: 1,    // Animate to full opacity
+    transition: {
+      type: "spring", // Use a spring animation for a natural feel
+      stiffness: 80,  // Softer spring
+      damping: 18,    // Slower settling
+      mass: 1,
+      duration: 1.0, // Approximate duration for the spring animation
+      delay: i * 0.08, // Stagger delay based on index: each card appears slightly after the previous
+    },
+  }),
+};
+
+// --- Styled Components ---
+
+// PortfolioItemCard is now directly a motion.div
+const PortfolioItemCard = styled(motion.div)`
   position: relative;
   overflow: hidden;
   border-radius: 10px;
@@ -29,6 +53,8 @@ const PortfolioItemCard = styled.div`
   max-width: 250px;
 `;
 
+// PortfolioContainer is now just a regular styled.div, no motion props here.
+// Each card will animate independently.
 const PortfolioContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -48,11 +74,11 @@ const PortfolioContainer = styled.div`
   }
 
   @media (max-width: 600px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 400px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -153,12 +179,14 @@ const PreviewNavButton = styled.button`
 `;
 
 const PrevPreviewButton = styled(PreviewNavButton)`
-  left: 10px; /* Adjust placement for small screens */
+  left: 10px;
 `;
 
 const NextPreviewButton = styled(PreviewNavButton)`
   right: 10px;
 `;
+
+// --- React Component ---
 
 const Fantasy: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -195,16 +223,26 @@ const Fantasy: React.FC = () => {
           content="Browse our fantasy-themed book covers."
         />
       </Helmet>
+
+      {/* PortfolioContainer is no longer a motion.div itself, just a regular div */}
       <PortfolioContainer>
         {filteredImages.map((img, index) => (
           <PortfolioItemCard
             key={img.id}
             onClick={() => openModal(img.imageUrl, index)}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            // The 'custom' prop passes the index to the 'visible' variant function
+            custom={index}
+            // Each card triggers its own animation when it enters the viewport
+            viewport={{ amount: 0.1, once: true }} // Trigger when 15% visible, only once
           >
             <Image src={img.imageUrl} alt={`Book ${img.id}`} loading="lazy" />
           </PortfolioItemCard>
         ))}
       </PortfolioContainer>
+
       <div style={{ width: "104%", marginLeft: "-18px", marginTop: "100px" }}>
         <ShareIdeasSection
           title="Get a free cover <span>design idea</span>"
@@ -213,6 +251,7 @@ const Fantasy: React.FC = () => {
           buttonLink=""
         />
       </div>
+
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
           <ModalContent>

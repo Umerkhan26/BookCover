@@ -9,6 +9,8 @@ const BannerContainer = styled.section`
   padding: 4rem 0;
   overflow: hidden;
   margin-top: 10px;
+  margin-top: 85px;
+  /* border: 2px solid red; */
 `;
 
 const BannerBack = styled.div`

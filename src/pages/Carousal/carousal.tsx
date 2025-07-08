@@ -122,6 +122,12 @@ const Carousel = () => {
     setPreviewIndex(null);
   };
 
+  const navigate = useNavigate();
+
+  const handleGoToPortfolio = () => {
+    navigate("/portfolio");
+  };
+
   return (
     <MainContainer>
       <TitleContainer>
@@ -147,7 +153,9 @@ const Carousel = () => {
       </SliderContainer>
 
       <ButtonContainer>
-        <PortfolioButton>See Portfolio</PortfolioButton>
+        <PortfolioButton onClick={handleGoToPortfolio}>
+          See Portfolio
+        </PortfolioButton>
       </ButtonContainer>
 
       {previewIndex !== null && (

@@ -23,6 +23,7 @@ import {
   MobileContactButton,
   ServicesLink,
   DropdownMenu,
+  DropdownGroup,
   GlobalStyle,
   DropdownContainer,
   UserLogo,
@@ -144,6 +145,7 @@ function Header() {
           >
             {/* Services Dropdown */}
             <DropdownContainer ref={servicesRef}>
+
               <ServicesLink
                 to="/services"
                 onClick={toggleServices}
@@ -161,60 +163,75 @@ function Header() {
                 className={isServicesOpen ? "active" : ""}
                 onClick={closeServicesMenu}
               >
-                <DropdownItem
-                  to="/fictionCover"
-                  onClick={() => {
-                    navigate("/fictionCover");
-                    closeServicesMenu();
-                  }}
-                >
-                  Fiction Cover Design
-                </DropdownItem>
-                <DropdownItem
-                  to="/illustrated"
-                  onClick={() => {
-                    navigate("/illustrated");
-                    closeServicesMenu();
-                  }}
-                >
-                  Illustrated Cover Design
-                </DropdownItem>
-                <DropdownItem
-                  to="/bookCoverRedesign"
-                  onClick={() => {
-                    navigate("/bookCoverRedesign");
-                    closeServicesMenu();
-                  }}
-                >
-                  Book Covers Redesign
-                </DropdownItem>
-                <DropdownItem
-                  to="/nonFiction"
-                  onClick={() => {
-                    navigate("/nonFiction");
-                    closeServicesMenu();
-                  }}
-                >
-                  Non-Fiction Cover Design
-                </DropdownItem>
-                <DropdownItem
-                  to="/audioBookCover"
-                  onClick={() => {
-                    navigate("/audioBookCover");
-                    closeServicesMenu();
-                  }}
-                >
-                  Audiobook Cover Design
-                </DropdownItem>
-                <DropdownItem
-                  to="/logoBrand"
-                  onClick={() => {
-                    navigate("/logoBrand");
-                    closeServicesMenu();
-                  }}
-                >
-                  Logo & Branding
-                </DropdownItem>
+                <DropdownGroup>
+                  <DropdownItem
+                    to="/fictionCover"
+                    onClick={() => {
+                      navigate("/fictionCover");
+                      closeServicesMenu();
+                    }}
+
+                  >
+
+
+                    Fiction Cover Design
+                  </DropdownItem>
+                  <DropdownItem
+                    to="/illustrated"
+                    onClick={() => {
+                      navigate("/illustrated");
+                      closeServicesMenu();
+                    }}
+                  >
+                    Illustrated Cover Design
+                  </DropdownItem>
+                </DropdownGroup>
+
+                <DropdownGroup>
+                  <DropdownItem
+                    to="/bookCoverRedesign"
+                    onClick={() => {
+                      navigate("/bookCoverRedesign");
+                      closeServicesMenu();
+                    }}
+                  >
+                    Book Covers Redesign
+                  </DropdownItem>
+                  <DropdownItem
+                    to="/nonFiction"
+                    onClick={() => {
+                      navigate("/nonFiction");
+                      closeServicesMenu();
+                    }}
+                  >
+                    Non-Fiction Cover Design
+                  </DropdownItem>
+                </DropdownGroup>
+
+                <DropdownGroup>
+                  <DropdownItem
+                    to="/audioBookCover"
+                    onClick={() => {
+                      navigate("/audioBookCover");
+                      closeServicesMenu();
+                    }}
+                  >
+                    Audiobook Cover Design
+                  </DropdownItem>
+                  <DropdownItem
+                    to="/logoBrand"
+                    onClick={() => {
+                      navigate("/logoBrand");
+                      closeServicesMenu();
+                    }}
+                  >
+                    Logo & Branding
+                  </DropdownItem>
+                </DropdownGroup>
+
+
+
+
               </DropdownMenu>
             </DropdownContainer>
 
