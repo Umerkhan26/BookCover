@@ -270,11 +270,10 @@ const Packages: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedConcepts, setSelectedConcepts] = useState<{
     [key: string]: number[];
-  }>({}); // Track selected concepts (packageId -> concept indexes)
-  const [totalPrice, setTotalPrice] = useState<number>(0); // Total price with package + selected concepts
-  const [showLoginModal, setShowLoginModal] = useState(false); // State for showing login modal
+  }>({});
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // Extract the page name from the URL path (e.g., "/fictionCover" -> "fictionCover")
   const pageName = location.pathname.split("/").pop() || "";
 
   useEffect(() => {
@@ -296,7 +295,7 @@ const Packages: React.FC = () => {
         console.log("Fetched packages:", response);
 
         const mappedPackages = response
-          .filter((pkg) => pkg.page === pageName) // Filter based on page name
+          .filter((pkg) => pkg.page === pageName)
           .map((pkg, index) => {
             const packageId = pkg.id || pkg._id;
             if (!packageId) {
@@ -323,53 +322,47 @@ const Packages: React.FC = () => {
   const handleLoginSuccess = (token: string) => {
     localStorage.setItem("token", token);
     setShowLoginModal(false);
-    // navigateToOrderPage(selectedPackageId as string); // Navigate to the order page with the selected package
+    // navigateToOrderPage(selectedPackageId as string);
   };
 
-  // Handle concept selection and update the total price
   const handleConceptChange = (packageId: string, conceptIdx: number) => {
     const updatedConcepts = { ...selectedConcepts };
 
-    // Initialize array for packageId if it doesn't exist
     if (!updatedConcepts[packageId]) {
       updatedConcepts[packageId] = [];
     }
 
-    // Handle selecting and deselecting concepts
     if (updatedConcepts[packageId].includes(conceptIdx)) {
       updatedConcepts[packageId] = updatedConcepts[packageId].filter(
         (idx) => idx !== conceptIdx
-      ); // Remove the concept
+      );
     } else {
-      updatedConcepts[packageId].push(conceptIdx); // Add the selected concept
+      updatedConcepts[packageId].push(conceptIdx);
     }
 
-    // Calculate the total price based on selected concepts
     const selectedPackage = packagesData.find((pkg) => pkg.id === packageId);
     let newTotalPrice = selectedPackage?.price || 0;
 
-    // Loop through selected concepts for this package
     updatedConcepts[packageId].forEach((conceptIdx) => {
       if (selectedPackage && selectedPackage.conceptPricing[conceptIdx]) {
         const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
         if (selectedConcept.additionalPrice > 0) {
-          newTotalPrice += selectedConcept.additionalPrice; // Add the concept price if it's not free
+          newTotalPrice += selectedConcept.additionalPrice;
         }
       }
     });
 
     setSelectedConcepts(updatedConcepts);
-    setTotalPrice(newTotalPrice); // Update the total price
+    setTotalPrice(newTotalPrice);
   };
 
-  // Handle order now with updated price
   const handleOrderNow = (packageId: string | undefined) => {
-    const token = localStorage.getItem("token"); // Check if token exists
+    const token = localStorage.getItem("token");
 
     if (!token) {
       console.warn("🚨 No token found! Redirecting to login...");
-      localStorage.setItem("redirectAfterLogin", `/order/${packageId}`); // Store intended URL
-      setShowLoginModal(true); // Show login modal
+      localStorage.setItem("redirectAfterLogin", `/order/${packageId}`);
+      setShowLoginModal(true);
       return;
     }
 
@@ -385,14 +378,12 @@ const Packages: React.FC = () => {
       return;
     }
 
-    let finalPrice = selectedPackage.price; // Start with the base package price
-
-    // Loop through selected concepts for this package and add additional prices
+    let finalPrice = selectedPackage.price;
     const selectedConceptsForPackage = selectedConcepts[packageId] || [];
     selectedConceptsForPackage.forEach((conceptIdx) => {
       const selectedConcept = selectedPackage.conceptPricing[conceptIdx];
       if (selectedConcept && selectedConcept.additionalPrice > 0) {
-        finalPrice += selectedConcept.additionalPrice; // Add concept price if it's not free
+        finalPrice += selectedConcept.additionalPrice;
       }
     });
 
@@ -400,7 +391,6 @@ const Packages: React.FC = () => {
       `✅ Navigating to /order/${packageId} with total price: $${finalPrice}`
     );
 
-    // Pass total price along with the package ID to the order page
     navigate(`/order/${packageId}`, { state: { totalPrice: finalPrice } });
   };
 
@@ -419,12 +409,29 @@ const Packages: React.FC = () => {
         <div className="packages-wrapper">
           {packagesData.map((pkg, index) => (
             <PackageCard className="popular" key={pkg.id || index}>
-              {/* Title and Price in the same row */}
               <div className="title-price">
-                <h3 style={{ fontSize: "20px" }} className="text-black">
+                <h3
+                  style={{
+                    fontSize: "22px",
+                    fontWeight: "600",
+                    color: "#00254D",
+                    fontFamily: "Montserrat, sans-serif",
+                    letterSpacing: "0.5px",
+                    textShadow: "1px 1px 2px rgba(0,0,0,0.05)",
+                  }}
+                  className="text-black"
+                >
                   {pkg.name}
                 </h3>
-                <Price style={{ fontSize: "23px" }}>${pkg.price}</Price>
+
+                <Price
+                  style={{
+                    fontSize: "26px",
+                    fontWeight: "700",
+                  }}
+                >
+                  ${pkg.price}
+                </Price>
               </div>
 
               <div
@@ -515,6 +522,7 @@ const Packages: React.FC = () => {
         show={showLoginModal}
         onClose={() => setShowLoginModal(false)}
         onLoginSuccess={handleLoginSuccess}
+        disableRedirect={true}
       />
     </PackageContainer>
   );

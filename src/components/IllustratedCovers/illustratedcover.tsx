@@ -218,7 +218,8 @@ const IllustratedCover: React.FC = () => {
   };
 
   const handlePreviewPrev = () => {
-    const newIndex = (currentIndex - 1) % portfolioItems.length;
+    const newIndex =
+      (currentIndex - 1 + portfolioItems.length) % portfolioItems.length;
     setCurrentIndex(newIndex);
     setSelectedImage(portfolioItems[newIndex].imageUrl);
   };
@@ -252,7 +253,7 @@ const IllustratedCover: React.FC = () => {
 
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

@@ -27,13 +27,14 @@ const filteredImages = images.filter((img) => selectedIndices.includes(img.id));
 // as the container will no longer orchestrate them.
 const cardVariants: Variants = {
   hidden: { y: 70, opacity: 0 }, // Cards start invisible and 70px below their final position
-  visible: (i: number) => ({ // 'i' here is the index passed from `custom` prop
-    y: 0,          // Animate to original Y position
-    opacity: 1,    // Animate to full opacity
+  visible: (i: number) => ({
+    // 'i' here is the index passed from `custom` prop
+    y: 0, // Animate to original Y position
+    opacity: 1, // Animate to full opacity
     transition: {
       type: "spring", // Use a spring animation for a natural feel
-      stiffness: 80,  // Softer spring
-      damping: 18,    // Slower settling
+      stiffness: 80, // Softer spring
+      damping: 18, // Slower settling
       mass: 1,
       duration: 1.0, // Approximate duration for the spring animation
       delay: i * 0.08, // Stagger delay based on index: each card appears slightly after the previous
@@ -192,9 +193,10 @@ const Fantasy: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openModal = (imageUrl: string, index: number) => {
-    setSelectedImage(imageUrl);
+  const openModal = (imageUrl: string) => {
+    const index = images.findIndex((img) => img.imageUrl === imageUrl);
     setCurrentIndex(index);
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
@@ -229,14 +231,12 @@ const Fantasy: React.FC = () => {
         {filteredImages.map((img, index) => (
           <PortfolioItemCard
             key={img.id}
-            onClick={() => openModal(img.imageUrl, index)}
+            onClick={() => openModal(img.imageUrl)}
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            // The 'custom' prop passes the index to the 'visible' variant function
             custom={index}
-            // Each card triggers its own animation when it enters the viewport
-            viewport={{ amount: 0.1, once: true }} // Trigger when 15% visible, only once
+            viewport={{ amount: 0.1, once: true }}
           >
             <Image src={img.imageUrl} alt={`Book ${img.id}`} loading="lazy" />
           </PortfolioItemCard>
@@ -254,7 +254,7 @@ const Fantasy: React.FC = () => {
 
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

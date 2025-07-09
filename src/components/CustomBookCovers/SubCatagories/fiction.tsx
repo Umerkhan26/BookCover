@@ -21,7 +21,6 @@ const images = Object.entries(
 const selectedIndices = [14, 23, 3, 17, 23, 35, 21, 29, 34];
 const filteredImages = images.filter((img) => selectedIndices.includes(img.id));
 
-
 const cardVariants: Variants = {
   hidden: { y: 70, opacity: 0 },
   visible: (i: number) => ({
@@ -182,9 +181,10 @@ const Fiction: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openModal = (imageUrl: string, index: number) => {
-    setSelectedImage(imageUrl);
+  const openModal = (imageUrl: string) => {
+    const index = images.findIndex((img) => img.imageUrl === imageUrl);
     setCurrentIndex(index);
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
@@ -217,7 +217,7 @@ const Fiction: React.FC = () => {
         {filteredImages.map((img, index) => (
           <PortfolioItemCard
             key={img.id}
-            onClick={() => openModal(img.imageUrl, index)}
+            onClick={() => openModal(img.imageUrl)}
             as={motion.div}
             initial="hidden"
             whileInView="visible"
@@ -239,7 +239,7 @@ const Fiction: React.FC = () => {
       </div>
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

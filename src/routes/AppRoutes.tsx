@@ -3,7 +3,7 @@ import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import FictionCover from "../pages/FictionCover/FictionCover";
 import Illustrated from "../pages/Services/coverpages/illustrated";
-import fictonCoverImg from "../assets/PageBanners/indie LUME ART WEB PAGE FICTION COVER-01.jpg";
+import fictonCoverImg from "../assets/PageBanners/indieLUMEARTWEBPAGEFICTIONCOVER-01.jpg";
 import BenefitsSection from "../pages/Benefits/benefits";
 import { benefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";
@@ -50,7 +50,7 @@ import PreviewPage from "../pages/UserDashboard/Form/preview";
 import OrderSubmittedPage from "../pages/UserDashboard/Form/ordersubmitted";
 // import IllustrationOrderForm from "../pages/OrderForm/illustratedorder";
 import Login from "../components/Login/login";
-import Register from "../components/register/register";
+// import Register from "../components/register/register";
 import BookCoverForm from "../pages/GetACover/cover";
 import ProtectedRoute from "./ProtectedRoute";
 import Admin from "../pages/Admin/admin";
@@ -169,7 +169,6 @@ const AppRoutes: React.FC = () => {
           }
         />
         <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
-
         <Route path="/contactUs" element={<ContactUs />} />
         <Route path="/partner" element={<Partner />} />
         <Route path="/FAQs" element={<FAQ />} />
@@ -206,9 +205,9 @@ const AppRoutes: React.FC = () => {
         ;
         <Route path="/aboutUs" element={<AboutUs />} />
       </Route>
-      <Route path="/login" element={<Login />} />
+      {/* <Route path="/login" element={<Login />} /> */}
 
-      <Route path="/register" element={<Register />} />
+      {/* <Route path="/register" element={<Register />} /> */}
 
       <Route element={<ProtectedRoute />}>
         <Route path="/portal" element={<UserDashboard />}>

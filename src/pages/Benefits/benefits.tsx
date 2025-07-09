@@ -32,9 +32,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
   title,
   benefits,
 }) => {
-
   useEffect(() => {
-
     AOS.init({
       duration: 1000,
       once: true,
@@ -61,10 +59,18 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
               data-aos-delay={baseDelay}
               data-aos-duration="1000"
               data-aos-once="false"
-            >{title}</SectionTitle>
+            >
+              {title}
+            </SectionTitle>
           </TextContainer>
           {firstTwoCards.map((benefit, index) => (
-            <BenefitItemWrap data-aos="fade-up" data-aos-duration="800" data-aos-delay={baseDelay + (index + 1) * delayIncrement} data-aos-once="true" key={index}>
+            <BenefitItemWrap
+              data-aos="fade-up"
+              data-aos-duration="800"
+              data-aos-delay={baseDelay + (index + 1) * delayIncrement}
+              data-aos-once="true"
+              key={index}
+            >
               <BenefitItems>
                 <BenefitHeader>
                   <BenefitImage>
@@ -87,12 +93,15 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
         {/* Remaining cards */}
         <Row>
           {remainingCards.map((benefit, index) => (
-            <BenefitItemWrap data-aos="fade-up"
+            <BenefitItemWrap
+              data-aos="fade-up"
               data-aos-duration="600"
               // Calculate delay: baseDelay + (position_in_sequence) * delayIncrement
               // (2 + index + 1) means we start after the first two cards and the text container
               data-aos-delay={baseDelay + (2 + index + 1) * delayIncrement}
-              data-aos-once="false" key={index}>
+              data-aos-once="false"
+              key={index}
+            >
               <BenefitItems>
                 <BenefitHeader>
                   <BenefitImage>

@@ -231,6 +231,7 @@ export const Card = styled.a`
   flex: 0 0 calc(20% - 10px);
   max-width: 155px;
   margin-top: 20px;
+  cursor: pointer;
   transition: transform 0.2s ease-in-out;
 
   img {

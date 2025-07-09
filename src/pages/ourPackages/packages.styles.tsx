@@ -311,23 +311,23 @@ export const PackageContainer = styled.div`
 `;
 
 export const PackageTitle = styled.h2`
-  font-size: 40px;
-  font-weight: 900;
-  color: #212121;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2d3748;
   margin-bottom: 2rem;
   position: relative;
   display: inline-block;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-family: "Montserrat", sans-serif;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 
   span {
     color: #6dc7d1;
     position: relative;
-    background: linear-gradient(135deg, #6dc7d1, #4aa5b0);
+    background: linear-gradient(135deg, #6dc7d1);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    // -webkit-text-fill-color: transparent;
     padding: 0 0.5rem;
 
     &::after {
@@ -338,7 +338,7 @@ export const PackageTitle = styled.h2`
       transform: translateX(-50%);
       width: 80%;
       height: 4px;
-      background: linear-gradient(to right, #6dc7d1, #4aa5b0);
+      background: linear-gradient(to right, #6dc7d1);
       border-radius: 4px;
     }
   }

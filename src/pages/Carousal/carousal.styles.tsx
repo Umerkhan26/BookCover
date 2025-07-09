@@ -201,21 +201,13 @@ export const PreviewImage = styled.img`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
-  color: white;
+  top: 15px;
+  right: 20px;
+  background: none;
   border: none;
-  padding: 10px 15px;
+  font-size: 24px;
+  color: white;
   cursor: pointer;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  z-index: 1001;
-  transition: background 0.3s;
-  background: rgba(0, 0, 0, 0.5);
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.8);
-  }
 `;
 
 export const PreviewNavButton = styled.button`
@@ -238,17 +230,9 @@ export const PreviewNavButton = styled.button`
 `;
 
 export const PrevPreviewButton = styled(PreviewNavButton)`
-  left: -120px;
-
-  @media (max-width: 768px) {
-    left: -80px;
-  }
+  left: 20px;
 `;
 
 export const NextPreviewButton = styled(PreviewNavButton)`
-  right: -120px;
-
-  @media (max-width: 768px) {
-    right: -80px;
-  }
+  right: 20px;
 `;

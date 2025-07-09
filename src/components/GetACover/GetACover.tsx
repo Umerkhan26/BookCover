@@ -4,7 +4,7 @@ import BookCoverDesigns from "../../pages/GetACover/BookCovers";
 import PartnerCover from "../../pages/Partner/partnerCover";
 import Reviews from "../../pages/reviews/reviews";
 import SpecialEditionAddOns from "../../pages/SpecialEditionAddOns/SpecialEditionAddOns";
-import bannerImg from "../../assets/PageBanners/LUME ART PORTFOLIO WEB COVERS-03.jpg"
+import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-03.jpg";
 
 const GetACover = () => {
   return (

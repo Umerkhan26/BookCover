@@ -22,21 +22,20 @@ const selectedIndices = [44, 18, 43, 37, 13, 31, 1, 22, 32, 14, 47, 30];
 const filteredImages = images.filter((img) => selectedIndices.includes(img.id));
 
 const cardVariants: Variants = {
-  hidden: { y: 70, opacity: 0 }, 
-  visible: (i: number) => ({ 
-    y: 0,          
-    opacity: 1,    
+  hidden: { y: 70, opacity: 0 },
+  visible: (i: number) => ({
+    y: 0,
+    opacity: 1,
     transition: {
-      type: "spring", 
-      stiffness: 80,  
-      damping: 18,    
+      type: "spring",
+      stiffness: 80,
+      damping: 18,
       mass: 1,
       duration: 1.0,
-      delay: i * 0.08, 
+      delay: i * 0.08,
     },
   }),
 };
-
 
 const PortfolioItemCard = styled(motion.div)`
   position: relative;
@@ -182,9 +181,10 @@ const Horror: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openModal = (imageUrl: string, index: number) => {
-    setSelectedImage(imageUrl);
+  const openModal = (imageUrl: string) => {
+    const index = images.findIndex((img) => img.imageUrl === imageUrl);
     setCurrentIndex(index);
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
@@ -217,7 +217,7 @@ const Horror: React.FC = () => {
         {filteredImages.map((img, index) => (
           <PortfolioItemCard
             key={img.id}
-            onClick={() => openModal(img.imageUrl, index)}
+            onClick={() => openModal(img.imageUrl)}
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
@@ -238,7 +238,7 @@ const Horror: React.FC = () => {
       </div>
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

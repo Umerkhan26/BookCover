@@ -165,7 +165,7 @@ const Carousel = () => {
             <PreviewImage src={images[previewIndex].src} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>
             <NextPreviewButton onClick={handlePreviewNext}>❯</NextPreviewButton>
-            <CloseButton onClick={closePreview}>×</CloseButton>
+            <CloseButton onClick={closePreview}>✖</CloseButton>
           </ImagePreviewContainer>
         </ImagePreviewOverlay>
       )}

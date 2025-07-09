@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import bannerImg from '../../assets/PageBanners/Portfolio LUME ART PORTFOLIO WEB COVERS-01.jpg';
+import bannerImg from "../../assets/PageBanners/PortfolioLUMEARTPORTFOLIOWEBCOVERS-01.jpg";
 
 // Styled Components - Updated to match PartnerCover styles
 const Container = styled.div`
@@ -13,7 +13,6 @@ const Container = styled.div`
   margin-top: 85px;
 
   @media (max-width: 768px) {
-   
   }
 `;
 
@@ -82,7 +81,12 @@ const CoverPortfolio: React.FC = () => {
           Check out our examples of book covers for different genres.
         </Subtitle>
       </Section> */}
-      <img src={bannerImg} loading="eager" decoding="async" alt="CustomBookCover Banner" />
+      <img
+        src={bannerImg}
+        loading="eager"
+        decoding="async"
+        alt="CustomBookCover Banner"
+      />
     </Container>
   );
 };

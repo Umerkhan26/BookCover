@@ -4,7 +4,7 @@ import AffiliateBenefits from "./AffiliateBenefits";
 import benfits1 from "../../assets/benifits1.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
-import bannerImg from "../../assets/PageBanners/LUME ART PORTFOLIO WEB COVERS-06.jpg"
+import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-06.jpg";
 
 const Partner = () => {
   return (

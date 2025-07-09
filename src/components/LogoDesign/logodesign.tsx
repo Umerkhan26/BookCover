@@ -187,11 +187,13 @@ const PreviewNavButton = styled.button`
 `;
 
 const PrevPreviewButton = styled(PreviewNavButton)`
-  left: 10px; /* Adjust placement for small screens */
+  left: 10px;
+  color: black;
 `;
 
 const NextPreviewButton = styled(PreviewNavButton)`
   right: 10px;
+  color: black;
 `;
 const LogoDesign: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -206,12 +208,6 @@ const LogoDesign: React.FC = () => {
     setSelectedImage(null);
   };
 
-  // const showNext = () => {
-  //   const newIndex = (currentIndex + 1) % portfolioItems.length;
-  //   setCurrentIndex(newIndex);
-  //   setSelectedImage(portfolioItems[newIndex].imageUrl);
-  // };
-
   const handlePreviewNext = () => {
     const newIndex = (currentIndex + 1) % portfolioItems.length;
     setCurrentIndex(newIndex);
@@ -219,11 +215,11 @@ const LogoDesign: React.FC = () => {
   };
 
   const handlePreviewPrev = () => {
-    const newIndex = (currentIndex - 1) % portfolioItems.length;
+    const newIndex =
+      (currentIndex - 1 + portfolioItems.length) % portfolioItems.length;
     setCurrentIndex(newIndex);
     setSelectedImage(portfolioItems[newIndex].imageUrl);
   };
-
   return (
     <>
       <Helmet>
@@ -253,7 +249,7 @@ const LogoDesign: React.FC = () => {
 
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

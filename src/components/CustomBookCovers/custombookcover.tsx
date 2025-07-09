@@ -218,18 +218,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
-import {motion , Variants} from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 60 },
-  visible: { 
+  visible: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 1,
       ease: "easeInOut",
-      
-    }
+    },
   },
 };
 
@@ -283,7 +282,6 @@ const PortfolioItemCard = styled.div`
   cursor: pointer;
   width: 100%;
   max-width: 250px; // Limit the maximum width of each card
-  
 `;
 
 const Image = styled.img`
@@ -385,7 +383,7 @@ const PreviewNavButton = styled.button`
 `;
 
 const PrevPreviewButton = styled(PreviewNavButton)`
-  left: 10px; // Adjust placement for small screens
+  left: 10px;
 `;
 
 const NextPreviewButton = styled(PreviewNavButton)`
@@ -397,6 +395,8 @@ const CustomCover: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const openModal = (imageUrl: string) => {
+    const index = images.findIndex((img) => img.imageUrl === imageUrl);
+    setCurrentIndex(index);
     setSelectedImage(imageUrl);
   };
 
@@ -451,7 +451,7 @@ const CustomCover: React.FC = () => {
       </div>
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

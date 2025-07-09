@@ -34,7 +34,7 @@ import TeamCard from "./TeamCard";
 // import shahid from "../../assets/shahid.jpeg";
 // import Umer from "../../assets/Umer.jpg";
 // import packag1 from "../../assets/pacakge1.jpeg";
-import UserIcon from "../../assets/user.png"
+import UserIcon from "../../assets/user.png";
 // import User from "../../components/AdminDashboard/user";
 
 const teamMembers = [
@@ -42,7 +42,6 @@ const teamMembers = [
   { name: "Anas Ahmad", role: "CEO, Co-Founder", imageSrc: UserIcon },
   { name: "Shahid Khan", role: "Developer", imageSrc: UserIcon },
   { name: "Shamroz Khan", role: "Senior Graphic Designer", imageSrc: UserIcon },
-  { name: "Jawad", role: "Senior Graphic Designer", imageSrc: UserIcon },
   { name: "Umar", role: "Developer", imageSrc: UserIcon },
   { name: "Ali", role: "Marketing Manager", imageSrc: UserIcon },
   { name: "Shaharyar Khan", role: "Graphic Designer", imageSrc: UserIcon },
