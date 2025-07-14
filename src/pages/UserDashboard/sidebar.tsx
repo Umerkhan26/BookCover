@@ -191,10 +191,11 @@ const UserDashboard: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await logout(); // Properly wait for logout to finish
+      await logout();
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      navigate("/"); // After logout, navigate to home
+      localStorage.removeItem("redirectAfterLogin");
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -235,7 +236,10 @@ const UserDashboard: React.FC = () => {
 
           <NavTitle collapsed={collapsed}>Reviews and tips</NavTitle>
           <NavItem>
-            <NavLink href="https://www.facebook.com/miblart" target="_blank">
+            <NavLink
+              href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
+              target="_blank"
+            >
               <Icon icon={faStar} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>Post a review</LinkText>
             </NavLink>

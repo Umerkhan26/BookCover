@@ -4,8 +4,8 @@ import {
   IconSocNet,
   SocialNetwork,
 } from "../../pages/Testimonial/testimonial.styles";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa6";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaLinkedin, FaThreads } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.png";
 
@@ -184,18 +184,17 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 65px;
-  width: 295px;
+  max-height: 65px;
+  width: auto;
+  object-fit: contain;
   display: block;
 
   @media (max-width: 768px) {
-    height: 84px;
-    object-fit: scale-down;
+    max-height: 84px;
   }
 
   @media (max-width: 480px) {
-    height: 74px;
-    object-fit: scale-down;
+    max-height: 74px;
   }
 `;
 
@@ -267,28 +266,28 @@ const Footer: React.FC<FooterProps> = ({
                     }}
                   >
                     <IconSocNet
-                      href="https://www.facebook.com/AuthorDavidBLyons"
+                      href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
                       target="_blank"
                       color="#3b5998"
                     >
                       <FaFacebook size={20} />
                     </IconSocNet>
                     <IconSocNet
-                      href="https://www.facebook.com/AuthorDavidBLyons"
+                      href="https://www.linkedin.com/company/lumeart-studio/"
                       target="_blank"
                       color="#3b5998"
                     >
                       <FaLinkedin size={20} />
                     </IconSocNet>
                     <IconSocNet
-                      href="https://twitter.com/theopenauthor"
+                      href="https://www.threads.com/@lumeart_studio?igshid=NTc4MTIwNjQ2YQ=="
                       target="_blank"
                       color="#1da1f3"
                     >
-                      <FaTwitter size={20} />
+                      <FaThreads size={20} />
                     </IconSocNet>
                     <IconSocNet
-                      href="https://www.instagram.com/theopenauthor/"
+                      href="https://www.instagram.com/lumeart_studio?igsh=MXFsd29mdmo4YWxtMg=="
                       target="_blank"
                       color="#E4405F"
                     >

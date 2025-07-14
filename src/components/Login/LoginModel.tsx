@@ -10,6 +10,7 @@ interface LoginModalProps {
   onClose: () => void;
   onLoginSuccess: (token: string) => void;
   onRegisterClick?: () => void;
+  disableRedirect?: boolean;
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({
@@ -17,6 +18,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   onClose,
   onLoginSuccess,
   onRegisterClick,
+  disableRedirect = false, // NEW
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,35 +26,34 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigateUser = (role: string) => {
     const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
     localStorage.removeItem("redirectAfterLogin");
 
-    // Show a toast message based on the role before navigating
     switch (role) {
       case "admin":
         toast.success("Redirecting to Admin Dashboard...");
-        setTimeout(() => navigate("/Admin/users"));
+        setTimeout(() => navigate("/Admin/users"), 1000);
         break;
       case "client":
         toast.success("Redirecting to client Dashboard...");
-        setTimeout(() => navigate("portal/orders"));
+        setTimeout(() => navigate("/portal/orders"), 1000);
         break;
       case "designer":
-        toast.success("Redirecting to Portal...");
         toast.success("You are logged in as a User.");
-        onClose(); // Close the login modal without navigating anywhere
+        onClose();
         break;
       default:
         toast.success("Redirecting to Home...");
-        setTimeout(() => navigate(redirectPath)); // Delay navigation to show toast
+        setTimeout(() => navigate(redirectPath), 1000);
     }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); // Reset error on every login attempt
+    setError("");
     setIsLoading(true);
 
     try {
@@ -63,15 +64,15 @@ const LoginModal: React.FC<LoginModalProps> = ({
         throw new Error("Invalid user data received.");
       }
 
-      // Store token & user info
       login(data.token, data.user);
       onLoginSuccess(data.token);
-
-      // Show "Logged in successfully" toast
       toast.success("Logged in successfully!");
 
-      // Navigate based on role with a delay to allow the user to read the toast
-      setTimeout(() => navigateUser(data.user.role), 1500); // Delay before navigating
+      if (!disableRedirect) {
+        setTimeout(() => navigateUser(data.user.role), 1500);
+      } else {
+        onClose();
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred during login.");
       toast.error(err.message || "An error occurred during login.");
@@ -99,13 +100,22 @@ const LoginModal: React.FC<LoginModalProps> = ({
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <Input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <PasswordWrapper>
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <TogglePasswordButton
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </TogglePasswordButton>
+          </PasswordWrapper>
+
           {error && <ErrorText>{error}</ErrorText>}
           <SubmitButton type="submit" disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
@@ -125,7 +135,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
   );
 };
 
-// Styled components
+// Styled components...
+
 const ErrorText = styled.p`
   color: red;
   font-size: 14px;
@@ -181,6 +192,27 @@ const Input = styled.input`
   &:focus {
     border-color: #6dc7d1;
     outline: none;
+  }
+`;
+
+const PasswordWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const TogglePasswordButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #6dc7d1;
+
+  &:hover {
+    color: rgb(24, 92, 99);
   }
 `;
 

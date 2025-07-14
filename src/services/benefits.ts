@@ -30,7 +30,7 @@ export const benefitsData: BenefitItem[] = [
   },
   {
     image: "https://miblart.com/wp-content/uploads/2024/03/benefit5.svg",
-    title: "Get points from each order",
+    title: "Get points from each <br> order",
     subtitle:
       "Each time you order cover design, you get points which you can spend for our additional services.",
   },

@@ -1,46 +1,43 @@
-import FictionCover from '../FictionCover/FictionCover'
-import AudioCover from '../../assets/PageBanners/audiobook LUME ART WEB PAGE FICTION COVER-06.jpg'
-import BenefitsSection from '../Benefits/benefits'
-import { benefitsData } from '../../services/benefits'
-import DesignProcess from '../HowWeDesign/design'
-import RedesignForm from '../BookCoverRedesign/RedesignForm'
-import Reviews from '../reviews/reviews'
-import AudioBookCoverAnimationSection from './AudioBookCoverAnimationSection'
+import FictionCover from "../FictionCover/FictionCover";
+import AudioCover from "../../assets/PageBanners/audiobookLUMEARTWEBPAGEFICTIONCOVER-06.jpg";
+import BenefitsSection from "../Benefits/benefits";
+import { benefitsData } from "../../services/benefits";
+import DesignProcess from "../HowWeDesign/design";
+import RedesignForm from "../BookCoverRedesign/RedesignForm";
+import Reviews from "../reviews/reviews";
+import AudioBookCoverAnimationSection from "./AudioBookCoverAnimationSection";
 const AudioBookCover = () => {
   return (
     <div>
+      <FictionCover
+        title="Custom Audiobook Cover Design"
+        subtitle="Pay only when you’re satisfied with the final result"
+        image={AudioCover}
+        bookCoversText=""
+      />
 
-<FictionCover   
-      title="Custom Audiobook Cover Design"
-      subtitle="Pay only when you’re satisfied with the final result"
-      image={AudioCover}
-      bookCoversText=""
-     
-    />
+      <AudioBookCoverAnimationSection />
+      <DesignProcess />
 
-<AudioBookCoverAnimationSection/>
-<DesignProcess/>
-
-     <BenefitsSection
+      <BenefitsSection
         title={
           <>
-          We Create Audiobook Covers  <span>That Pop</span>
+            We Create Audiobook Covers <span>That Pop</span>
           </>
         }
         benefits={benefitsData}
       />
-        
-    <RedesignForm
-  heading={`Don’t Have an Idea for Your Cover?`}
-  subHeading="We’ll help you come up with ideas that work
-" 
-  buttonText="Get a Cover For Free" 
-/>
 
-<Reviews/>
+      <RedesignForm
+        heading={`Don’t Have an Idea for Your Cover?`}
+        subHeading="We’ll help you come up with ideas that work
+"
+        buttonText="Get a Cover For Free"
+      />
 
-</div>
-  )
-}
+      <Reviews />
+    </div>
+  );
+};
 
-export default AudioBookCover
+export default AudioBookCover;

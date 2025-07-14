@@ -165,9 +165,10 @@ const NonFiction: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openModal = (imageUrl: string, index: number) => {
-    setSelectedImage(imageUrl);
+  const openModal = (imageUrl: string) => {
+    const index = images.findIndex((img) => img.imageUrl === imageUrl);
     setCurrentIndex(index);
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
@@ -194,10 +195,10 @@ const NonFiction: React.FC = () => {
         <meta name="description" content="Browse non-fiction book covers." />
       </Helmet>
       <PortfolioContainer>
-        {filteredImages.map((img, index) => (
+        {filteredImages.map((img) => (
           <PortfolioItemCard
             key={img.id}
-            onClick={() => openModal(img.imageUrl, index)}
+            onClick={() => openModal(img.imageUrl)}
           >
             <Image src={img.imageUrl} alt={`Book ${img.id}`} loading="lazy" />
           </PortfolioItemCard>
@@ -214,7 +215,7 @@ const NonFiction: React.FC = () => {
       </div>
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

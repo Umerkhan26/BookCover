@@ -1,41 +1,5 @@
-// import FictionCover from "../FictionCover/FictionCover";
-// import BookCoverRedesaign from "../../assets/BookCoverRedesign.png";
-// import Packages from "../ourPackages/packages";
-// // import { myPackagesData } from "../ourPackages/packagesData";
-// import SpecialEditionAddOns from "../SpecialEditionAddOns/SpecialEditionAddOns";
-// import RedesignExamples from "./RedesignExamples";
-// import RedesignForm from "./RedesignForm";
-// import { examples } from "./RedesignExampleData";
-// import { Helmet } from "react-helmet-async";
-// const BookCoverRedesign = () => {
-//   return (
-//     <div className=" text-black">
-//       <Helmet>
-//         <title>Book Cover Redesign</title>
-//       </Helmet>
-//       <FictionCover
-//         title="Book Cover Redesign"
-//         subtitle=""
-//         image={BookCoverRedesaign} // Can be dynamic as well
-//         bookCoversText=""
-//         // packagesComponent={<Packages />}
-//         // reviewsComponent={<Reviews />}
-//       />
-//       <Packages />
-//       <SpecialEditionAddOns />
-//       <RedesignExamples
-//         heading="Our Book Cover Redesign Examples"
-//         examples={examples}
-//       />{" "}
-//       <RedesignForm />
-//     </div>
-//   );
-// };
-
-// export default BookCoverRedesign;
-
 import FictionCover from "../FictionCover/FictionCover";
-import BookCoverRedesaign from "../../assets/PageBanners/redesign LUME ART WEB PAGE FICTION COVER-03.jpg";
+import BookCoverRedesaign from "../../assets/PageBanners/redesignLUMEARTWEBPAGEFICTIONCOVER-03.jpg";
 import Packages from "../ourPackages/packages";
 // import { myPackagesData } from "../ourPackages/packagesData";
 import SpecialEditionAddOns from "../SpecialEditionAddOns/SpecialEditionAddOns";

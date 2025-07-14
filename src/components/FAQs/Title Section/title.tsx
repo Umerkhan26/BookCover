@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import bannerImg from '../../../assets/PageBanners/FAQ LUME ART PORTFOLIO WEB COVERS-04.jpg'
+import bannerImg from "../../../assets/PageBanners/FAQLUMEARTPORTFOLIOWEBCOVERS-04.jpg";
 
 export const Container = styled.div`
   /* background-color: #e0e0e0;
@@ -10,7 +10,6 @@ export const Container = styled.div`
   text-align: center; */
 
   margin-top: 85px;
-
 
   @media (max-width: 768px) {
     /* padding: 30px 15px;

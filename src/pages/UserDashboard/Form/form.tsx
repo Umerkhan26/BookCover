@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { createOrderAPI } from "../../../apis/apis";
 import styled from "styled-components"; // Ensure correct import for your API function
 import { toast, ToastContainer } from "react-toastify";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const FormOrder: React.FC = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const FormOrder: React.FC = () => {
   const [seriesContinuation, setSeries] = useState("");
   const [summary, setSummary] = useState("");
   const [shareOnPortfolio, setShareOnPortfolio] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [likeToSeeOnCover, setLikeToSeeOnCover] = useState("");
   const [prefferedCoverStyle, setPrefferedCoverStyle] = useState("");
   const [order, setOrder] = useState("");
@@ -81,8 +82,9 @@ const FormOrder: React.FC = () => {
   // };
 
   const handleReview = async () => {
+    setLoading(true);
     const formData = {
-      userId: String(userId), // Ensure userId is a string
+      userId: String(userId),
       packageId: String(packageId), // Ensure packageId is a string
       addOnIds: Array.isArray(addOnIds) ? addOnIds : [], // Ensure addOnIds is an array
       name,
@@ -119,13 +121,26 @@ const FormOrder: React.FC = () => {
     } catch (error) {
       console.error("Error creating order:", error);
       toast.error("Error creating order. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div>
-      <ToastContainer />
-      {/* Header Section */}
+      {loading && (
+        <LoaderOverlay>
+          <ClipLoader color="#6dc7d1" size={40} />
+        </LoaderOverlay>
+      )}
+      <div
+        style={{
+          opacity: loading ? 0.5 : 1,
+          pointerEvents: loading ? "none" : "auto",
+        }}
+      >
+        <ToastContainer />
+      </div>
       <HeaderContainer>
         <HeaderContent>
           <HeaderTitle>Your order information</HeaderTitle>
@@ -239,12 +254,7 @@ const FormOrder: React.FC = () => {
           <Label>What is the preferred cover style?</Label>
           <Select
             value={prefferedCoverStyle}
-            onChange={(e) => {
-              // Get the visible text instead of the value
-              const selectedText =
-                e.target.options[e.target.selectedIndex].text;
-              setPrefferedCoverStyle(selectedText);
-            }}
+            onChange={(e) => setPrefferedCoverStyle(e.target.value)}
           >
             <option value="">Please select...</option>
             <option value="detailed">With detailed characters</option>
@@ -375,10 +385,10 @@ const HeaderTitle = styled.h1`
 
   @media (max-width: 768px) {
     font-size: 20px;
-    margin-left:62px;
-    
-    display:flex;
-    justify-content:center;
+    margin-left: 62px;
+
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -391,10 +401,18 @@ const HeaderSubtitle = styled.div`
   }
 `;
 
-// const HeaderActions = styled.div`
-//   display: flex;
-//   gap: 10px;
-// `;
+const LoaderOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+`;
 
 const Select = styled.select`
   width: 100%;
@@ -449,7 +467,6 @@ const TextArea = styled.textarea`
   resize: vertical;
 `;
 
-
 // const FileInputContainer = styled.div`
 //   border: 2px dashed #ccc;
 //   padding: 20px;
@@ -492,13 +509,13 @@ const SubmitButton = styled.button`
   float: right;
   font-size: 16px;
   color: #fff;
-  background-color: green;
+  background-color: #6dc7d1;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: rgb(11, 142, 43);
+    background-color: rgb(36, 137, 148);
   }
 
   @media (max-width: 768px) {
@@ -507,4 +524,3 @@ const SubmitButton = styled.button`
     padding: 0.375rem;
   }
 `;
-

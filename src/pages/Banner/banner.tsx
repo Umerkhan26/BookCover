@@ -74,22 +74,22 @@ const TopBanner: React.FC = () => {
           </div>
         </TopBannerR>
         <CardSection>
-          <Card href="#">
+          <Card>
             <img src={img1} alt="Cover Image" />
           </Card>
-          <Card href="#">
+          <Card>
             <img src={img2} alt="Cover Image" />
           </Card>
-          <Card href="#">
+          <Card>
             <img src={img3} alt="Cover Image" />
           </Card>
-          <Card href="#">
+          <Card>
             <img src={img4} alt="Cover Image" />
           </Card>
-          <Card href="#">
+          <Card>
             <img src={img5} alt="Cover Image" />
           </Card>
-          <Card href="#">
+          <Card>
             <img src={img6} alt="Cover Image" />
           </Card>
         </CardSection>

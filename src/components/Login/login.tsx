@@ -17,7 +17,16 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 
-const Login = () => {
+// Props interface to allow optional custom login behavior
+interface LoginProps {
+  onLoginSuccess?: (token: string, user: any) => void;
+  disableRedirect?: boolean;
+}
+
+const Login: React.FC<LoginProps> = ({
+  onLoginSuccess,
+  disableRedirect = false,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,31 +34,34 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // Function to handle role-based navigation
-  // Import the toast function
-
+  // Handle role-based navigation
   const navigateUser = (role: string) => {
-    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+    const redirectPath = localStorage.getItem("redirectAfterLogin");
     localStorage.removeItem("redirectAfterLogin");
 
-    // Show a toast message based on the role before navigating
+    if (redirectPath) {
+      toast.success("Redirecting...");
+      setTimeout(() => navigate(redirectPath), 1000);
+      return;
+    }
+
     switch (role) {
       case "admin":
         toast.success("Redirecting to Admin Dashboard...");
-        setTimeout(() => navigate("/Admin/users"));
+        setTimeout(() => navigate("/Admin/users"), 1000);
         break;
       case "client":
         toast.success("Redirecting to Portal...");
-        setTimeout(() => navigate("/portal/orders"));
+        setTimeout(() => navigate("/portal/orders"), 1000);
         break;
       case "designer":
       default:
         toast.success("Redirecting to Home...");
-        setTimeout(() => navigate(redirectPath));
+        setTimeout(() => navigate("/"), 1000);
     }
   };
 
-  // Handle user login
+  // Handle login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -63,14 +75,18 @@ const Login = () => {
         throw new Error("Invalid user data received.");
       }
 
-      // Store token & user info
-      login(data.token, data.user);
+      login(data.token, data.user); // Store token and user info
 
-      // Show "Logged in successfully" toast
       toast.success("Logged in successfully!");
 
-      // Navigate based on role with a delay to allow the user to read the toast
-      setTimeout(() => navigateUser(data.user.role), 1500); // Delay before navigating
+      if (onLoginSuccess) {
+        onLoginSuccess(data.token, data.user); // Custom success handler
+      }
+
+      if (!disableRedirect) {
+        // Only redirect if not disabled
+        setTimeout(() => navigateUser(data.user.role), 1500);
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred during login.");
       toast.error(err.message || "An error occurred during login.");

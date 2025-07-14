@@ -181,9 +181,10 @@ const MysteryThrillerSuspense: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openModal = (imageUrl: string, index: number) => {
-    setSelectedImage(imageUrl);
+  const openModal = (imageUrl: string) => {
+    const index = images.findIndex((img) => img.imageUrl === imageUrl);
     setCurrentIndex(index);
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
@@ -216,14 +217,13 @@ const MysteryThrillerSuspense: React.FC = () => {
         {filteredImages.map((img, index) => (
           <PortfolioItemCard
             key={img.id}
-            onClick={() => openModal(img.imageUrl, index)}
-             as={motion.div}
-                        initial="hidden"
-                        whileInView="visible"
-                        variants={cardVariants}
-                        custom={index}
-                        viewport={{ once: true, amount: 0.1 }}
-
+            onClick={() => openModal(img.imageUrl)}
+            as={motion.div}
+            initial="hidden"
+            whileInView="visible"
+            variants={cardVariants}
+            custom={index}
+            viewport={{ once: true, amount: 0.1 }}
           >
             <Image src={img.imageUrl} alt={`Book ${img.id}`} loading="lazy" />
           </PortfolioItemCard>
@@ -239,7 +239,7 @@ const MysteryThrillerSuspense: React.FC = () => {
       </div>
       {selectedImage && (
         <ModalOverlay onClick={closeModal}>
-          <ModalContent>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={closeModal}>✖</CloseButton>
             <ModalImage src={selectedImage} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>

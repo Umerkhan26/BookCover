@@ -19,17 +19,24 @@ import {
   NextPreviewButton,
 } from "./carousal.styles";
 
-import img1 from "../../assets/Slider/img1.jpg";
-import img2 from "../../assets/Slider/img2.jpg";
-import img3 from "../../assets/Slider/img3.jpg";
-import img4 from "../../assets/Slider/img4.jpg";
-import img5 from "../../assets/Slider/img5.jpg";
-import img6 from "../../assets/Slider/img6.jpg";
-import img7 from "../../assets/Slider/img7.jpg";
-import img8 from "../../assets/Slider/img8.jpg";
-import img9 from "../../assets/Slider/img9.jpg";
-import img10 from "../../assets/Slider/img10.jpg";
+import img1 from "../../assets/banner/TheButterflySpell.jpg";
+import img2 from "../../assets/banner/TheLastDefenderCover.jpg";
+import img3 from "../../assets/banner/Stormborn (1).jpg";
+import img4 from "../../assets/banner/MurderMelodycover.jpg";
+import img5 from "../../assets/banner/ArchersAscent.jpg";
+import img6 from "../../assets/banner/Dustanddestinycover.jpg";
 import { useNavigate } from "react-router-dom";
+
+// import img1 from "../../assets/Slider/img1.jpg";
+// import img2 from "../../assets/Slider/img2.jpg";
+// import img3 from "../../assets/Slider/img3.jpg";
+// import img4 from "../../assets/Slider/img4.jpg";
+// import img5 from "../../assets/Slider/img5.jpg";
+// import img6 from "../../assets/Slider/img6.jpg";
+// import img7 from "../../assets/Slider/img7.jpg";
+// import img8 from "../../assets/Slider/img8.jpg";
+// import img9 from "../../assets/Slider/img9.jpg";
+// import img10 from "../../assets/Slider/img10.jpg";
 
 const images = [
   { src: img1, title: "INGLED", subtitle: "OUT" },
@@ -38,10 +45,10 @@ const images = [
   { src: img4, title: "TRAVELER", subtitle: "ALEX GREENHILL" },
   { src: img5, title: "DEMONS", subtitle: "ELEMENTAL" },
   { src: img6, title: "MAGE", subtitle: "B.EVA" },
-  { src: img7, title: "TITLE7", subtitle: "SUBTITLE7" },
-  { src: img8, title: "TITLE8", subtitle: "SUBTITLE8" },
-  { src: img9, title: "TITLE9", subtitle: "SUBTITLE9" },
-  { src: img10, title: "TITLE10", subtitle: "SUBTITLE10" },
+  { src: img2, title: "TITLE7", subtitle: "SUBTITLE7" },
+  { src: img6, title: "TITLE8", subtitle: "SUBTITLE8" },
+  { src: img1, title: "TITLE9", subtitle: "SUBTITLE9" },
+  { src: img3, title: "TITLE10", subtitle: "SUBTITLE10" },
 ];
 
 const settings = {
@@ -119,8 +126,8 @@ const Carousel = () => {
   const navigate = useNavigate();
 
   const handleGoToPortfolio = () => {
-    navigate("/portfolio")
-  }
+    navigate("/portfolio");
+  };
 
   return (
     <MainContainer>
@@ -147,7 +154,9 @@ const Carousel = () => {
       </SliderContainer>
 
       <ButtonContainer>
-        <PortfolioButton onClick={handleGoToPortfolio}>See Portfolio</PortfolioButton>
+        <PortfolioButton onClick={handleGoToPortfolio}>
+          See Portfolio
+        </PortfolioButton>
       </ButtonContainer>
 
       {previewIndex !== null && (
@@ -156,7 +165,7 @@ const Carousel = () => {
             <PreviewImage src={images[previewIndex].src} alt="Preview" />
             <PrevPreviewButton onClick={handlePreviewPrev}>❮</PrevPreviewButton>
             <NextPreviewButton onClick={handlePreviewNext}>❯</NextPreviewButton>
-            <CloseButton onClick={closePreview}>×</CloseButton>
+            <CloseButton onClick={closePreview}>✖</CloseButton>
           </ImagePreviewContainer>
         </ImagePreviewOverlay>
       )}
