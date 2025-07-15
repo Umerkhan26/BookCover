@@ -1,6 +1,5 @@
 // import { Subtitle } from "../logo&branding/LogoAuthorBranding.styles";
-import {  Container  } from "./PartnerCover.styles";
-
+import { Container } from "./PartnerCover.styles";
 
 // interface BookCoversTextProps {
 //   text: string;
@@ -16,7 +15,6 @@ interface PartnerCoverProps {
   subtitle?: string;
   bookCoversText: string;
   image?: string; // Made optional
-  
 
   benefitsComponent?: JSX.Element;
   designProcessComponent?: JSX.Element;
@@ -56,7 +54,11 @@ const PartnerCover = ({
           <BookCoversText text={bookCoversText} />
         </Section> */}
 
-        <img src={image} alt="Partner with Us" />
+        <img
+          src={image}
+          alt="Partner with Us"
+          style={{ width: "100%", height: "auto" }}
+        />
       </Container>
 
       {reviewsComponent}

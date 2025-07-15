@@ -273,6 +273,7 @@ export const SliderContainer = styled.div`
 export const ImageWrapper = styled.div`
   position: relative;
   border-radius: 8px;
+  margin-bottom: 10px;
   overflow: hidden;
   transition: transform 0.3s ease;
 
@@ -299,11 +300,27 @@ export const Image = styled.img`
 
   @media (max-width: 480px) {
     width: auto;
-    height: 100%;
-    -o-object-fit: cover;
+    height: 280px;
     object-fit: cover;
     margin: 0 auto;
   }
+`;
+
+export const ImageOverlay = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  padding: 20px;
+  color: white;
+  text-align: center;
+`;
+
+export const ImageTitle = styled.h3`
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: bold;
 `;
 
 export const ButtonContainer = styled.div`

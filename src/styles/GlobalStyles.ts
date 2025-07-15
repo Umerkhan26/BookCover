@@ -42,9 +42,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    // max-width: 100%;
-  // box-sizing: border-box;
-  // overflow-x: hidden;
     font-family: ${({ theme }) => theme.fonts.main}, sans-serif;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};

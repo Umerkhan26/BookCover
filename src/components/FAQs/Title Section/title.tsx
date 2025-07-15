@@ -84,7 +84,13 @@ const FAQTitle = () => {
             services.
           </Subtitle>
         </Section> */}
-        <img src={bannerImg} loading="eager" decoding="async" alt="FaqImage" />
+        <img
+          src={bannerImg}
+          loading="eager"
+          decoding="async"
+          alt="FaqImage"
+          style={{ width: "100%", height: "auto" }}
+        />
       </Container>
     </div>
   );

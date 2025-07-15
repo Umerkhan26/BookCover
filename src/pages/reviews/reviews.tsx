@@ -5,14 +5,14 @@ import {
   ReviewCard,
   ReviewsWrapper,
 } from "./reviews.styles";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Reviews = () => {
   useEffect(() => {
     AOS.init({
       duration: 700, // Animation duration in milliseconds
-      easing: 'ease-out-cubic', // Easing function for animation
+      easing: "ease-out-cubic", // Easing function for animation
       once: false, // Animation plays only once per element
       offset: 50, // Trigger animation when element is 150px from viewport bottom
     });
@@ -37,7 +37,7 @@ const Reviews = () => {
         <div>
           {/* Removed data-aos from this anchor tag */}
           <a
-            href="https://www.facebook.com/YourPageName/reviews"
+            href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}
@@ -118,8 +118,8 @@ const Reviews = () => {
               </div>
               <p className="mt-8 text-black">
                 Professional, fast, and creative! I needed a standout cover for
-                my digital product, and Lumeart Studio nailed it. The design
-                was polished, the style was unique, and revisions were handled
+                my digital product, and Lumeart Studio nailed it. The design was
+                polished, the style was unique, and revisions were handled
                 quickly. Highly recommended!
               </p>
             </ReviewCard>
@@ -155,10 +155,10 @@ const Reviews = () => {
                 </div>
               </div>
               <p className="mt-8 text-black">
-                Absolutely loved the creativity! Lumeart delivered a cover design
-                that was not only visually appealing but also matched my brand
-                perfectly. The process was smooth, communication was great, and
-                the final result exceeded my expectations.
+                Absolutely loved the creativity! Lumeart delivered a cover
+                design that was not only visually appealing but also matched my
+                brand perfectly. The process was smooth, communication was
+                great, and the final result exceeded my expectations.
               </p>
             </ReviewCard>
 

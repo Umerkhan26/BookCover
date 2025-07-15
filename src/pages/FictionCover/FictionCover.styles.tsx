@@ -1,20 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  /* background-color: #e0e0e0; */
-  /* padding: 50px 20px;  */
   margin-top: 85px;
-  /* border: 2px solid red; */
-  /* margin-bottom: 10px; */
-
+  width: 100%;
+  height: auto;
   @media (max-width: 1024px) {
     /* padding: 40px 15px;
     margin-top: 60px; */
   }
 
   @media (max-width: 768px) {
-    /* padding: 30px 10px; */
-    /* margin-top: 70px; */
     margin-bottom: -40px;
   }
 `;

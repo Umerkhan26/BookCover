@@ -102,7 +102,9 @@ const DesignProcess = () => {
         </RightContent>
       </ContentWrapper>
       <div>
-        <Button className="mb-4">See Our FAQs</Button>
+        <Button href="/FAQs" className="mb-4">
+          See Our FAQs
+        </Button>
       </div>
     </ProcessContainer>
   );

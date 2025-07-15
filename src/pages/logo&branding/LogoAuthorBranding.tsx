@@ -175,16 +175,12 @@ import {
   NextPreviewButton,
 } from "./LogoAuthorBranding.styles";
 
-import img1 from "../../assets/Slider/img1.jpg";
-import img2 from "../../assets/Slider/img2.jpg";
-import img3 from "../../assets/Slider/img3.jpg";
-import img4 from "../../assets/Slider/img4.jpg";
-import img5 from "../../assets/Slider/img5.jpg";
-import img6 from "../../assets/Slider/img6.jpg";
-import img7 from "../../assets/Slider/img7.jpg";
-import img8 from "../../assets/Slider/img8.jpg";
-import img9 from "../../assets/Slider/img9.jpg";
-import img10 from "../../assets/Slider/img10.jpg";
+import img1 from "../../assets/banner/TheButterflySpell.jpg";
+import img2 from "../../assets/banner/TheLastDefenderCover.jpg";
+import img3 from "../../assets/banner/Stormborn (1).jpg";
+import img4 from "../../assets/banner/MurderMelodycover.jpg";
+import img5 from "../../assets/banner/ArchersAscent.jpg";
+import img6 from "../../assets/banner/Dustanddestinycover.jpg";
 
 const images = [
   { src: img1, title: "INGLED", subtitle: "OUT" },
@@ -193,10 +189,10 @@ const images = [
   { src: img4, title: "TRAVELER", subtitle: "ALEX GREENHILL" },
   { src: img5, title: "DEMONS", subtitle: "ELEMENTAL" },
   { src: img6, title: "MAGE", subtitle: "B.EVA" },
-  { src: img7, title: "TITLE7", subtitle: "SUBTITLE7" },
-  { src: img8, title: "TITLE8", subtitle: "SUBTITLE8" },
-  { src: img9, title: "TITLE9", subtitle: "SUBTITLE9" },
-  { src: img10, title: "TITLE10", subtitle: "SUBTITLE10" },
+  { src: img1, title: "TITLE7", subtitle: "SUBTITLE7" },
+  { src: img4, title: "TITLE8", subtitle: "SUBTITLE8" },
+  { src: img2, title: "TITLE9", subtitle: "SUBTITLE9" },
+  { src: img6, title: "TITLE10", subtitle: "SUBTITLE10" },
 ];
 
 const settings = {

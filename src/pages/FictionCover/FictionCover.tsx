@@ -8,7 +8,6 @@ import {
   BenifitsComponent,
 } from "./FictionCover.styles";
 
-
 // interface BookCoversTextProps {
 //   text: string;
 // }
@@ -57,8 +56,11 @@ const FictionCover = ({
           )}
           <BookCoversText text={bookCoversText} />
         </SectionFiction> */}
-        <img src={image} alt="BookCoverImage" />
-
+        <img
+          src={image}
+          alt="BookCoverImage"
+          style={{ width: "100%", height: "auto" }}
+        />
       </Container>
 
       {benefitsComponent && (
