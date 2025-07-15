@@ -3,6 +3,7 @@ import { registerUser, verifyEmailAPI } from "../../apis/apis";
 import styled from "styled-components";
 import { toast, ToastContainer } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
+import { TogglePasswordButton, PasswordWrapper } from "./register.styles";
 
 const RegisterModal = ({
   show,
@@ -24,6 +25,7 @@ const RegisterModal = ({
   //   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [verificationMessage, setVerificationMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
@@ -125,14 +127,23 @@ const RegisterModal = ({
               onChange={handleChange}
               required
             />
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <PasswordWrapper>
+              <Input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <TogglePasswordButton
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </TogglePasswordButton>
+            </PasswordWrapper>
+
             <Select
               name="role"
               value={formData.role}

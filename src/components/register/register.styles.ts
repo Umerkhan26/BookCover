@@ -146,3 +146,24 @@ export const LoadingSpinner = styled.div`
     }
   }
 `;
+
+export const PasswordWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const TogglePasswordButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #6dc7d1;
+
+  &:hover {
+    color: rgb(24, 92, 99);
+  }
+`;
