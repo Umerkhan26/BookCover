@@ -569,7 +569,7 @@ const Testimonials: React.FC = () => {
       } else if (window.innerWidth < 1280) {
         setCardsToShow(3);
       } else {
-        setCardsToShow(4);
+        setCardsToShow(3);
       }
     };
 
