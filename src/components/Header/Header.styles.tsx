@@ -69,7 +69,6 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 5px 0;
-  
 `;
 
 export const NavLinkButton = styled(NavLink)`
@@ -82,9 +81,13 @@ export const NavLinkButton = styled(NavLink)`
   text-align: left;
   text-decoration: none;
   border-radius: 5px;
-  margin:0 8px;
+  margin: 0 8px;
+  white-space: nowrap;
+  margin: 0 4px;
+  padding: 8px 12px;
+  margin-left: 8px;
   background: rgba(255, 255, 255, 0.4);
-   /* border: 2px solid red; */
+  /* border: 2px solid red; */
 
   &:hover {
     color: #14b8b8;
@@ -115,7 +118,7 @@ export const NavButton = styled(NavLink)`
   text-align: left;
   text-decoration: none;
   margin: 0 8px;
-   /* border: 2px solid red; */
+  /* border: 2px solid red; */
 
   &:hover {
     color: #ffffff;
@@ -142,7 +145,7 @@ export const NavText = styled.div`
   text-align: left;
   text-decoration: none;
   margin: 0;
-   /* border: 2px solid blue; */
+  /* border: 2px solid blue; */
 
   &:hover {
     color: #4fa3a2;
@@ -193,7 +196,8 @@ export const HeaderContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  /* border: 2px solid green; */
+  box-sizing: border-box;
+  padding: 0 20px;
 
   @media (max-width: 1024px) {
     justify-content: space-between;
@@ -296,9 +300,10 @@ export const ContactUsWrapper = styled.div`
 
 export const NavNBtn = styled.nav<NavNBtnProps>`
   display: flex;
-  /* border: 2px solid pink; */
-  align-items: start;
-  /* flex-grow: 1; */
+   display: flex;
+  align-items: center; 
+  flex-wrap: nowrap; 
+  gap: 4px; /*
   justify-content: flex-start;
   background-color: white;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -365,13 +370,13 @@ export const ServicesLink = styled(NavLinkButton)`
 `;
 
 export const DropdownMenu = styled.div`
-/* border: 1px solid silver; */
-/* text-align: left; */
   display: flex;
   position: absolute;
-  /* border: 2px solid red; */
-  /* transform: translate(0 , 0); */
-  /* border: 1px solid gray; */
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 800px;
+  margin-left: 0;
   top: 100%;
   left: 220px;
   height: auto;
@@ -414,16 +419,13 @@ export const DropdownMenu = styled.div`
 `;
 
 export const DropdownGroup = styled.div`
-/* border: 2px solid blue; */
-/* margin-right: 20px; */
-
-
-`
+  /* border: 2px solid blue; */
+  /* margin-right: 20px; */
+`;
 export const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
   /* border: 2px solid green; */
-  
 
   @media (max-width: 768px) {
     width: 100%;
