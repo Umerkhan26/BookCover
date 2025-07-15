@@ -370,13 +370,13 @@ export const ServicesLink = styled(NavLinkButton)`
 `;
 
 export const DropdownMenu = styled.div`
+  /* border: 1px solid silver; */
+  /* text-align: left; */
   display: flex;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-  min-width: 800px;
-  margin-left: 0;
+  /* border: 2px solid red; */
+  /* transform: translate(0 , 0); */
+  /* border: 1px solid gray; */
   top: 100%;
   left: 220px;
   height: auto;
