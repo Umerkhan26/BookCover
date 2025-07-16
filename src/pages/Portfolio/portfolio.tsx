@@ -48,6 +48,10 @@ const PortfolioWrapperWithTabs = () => {
 // Styled Components
 const PortfolioWrapper = styled.div`
   background-color: #f9f9f9;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 `;
 
 export default PortfolioWrapperWithTabs;

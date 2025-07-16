@@ -446,6 +446,7 @@ export const UserLogo = styled.img`
   height: 60px;
   cursor: pointer;
   margin-top: 4px;
+  white-space: nowrap;
 
   /* Media queries */
   @media (max-width: 768px) {
