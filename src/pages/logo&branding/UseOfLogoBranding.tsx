@@ -54,8 +54,8 @@ const UsageSection: React.FC = () => {
 
         {/* Column 3 */}
         <ListColumn>
-        <ListItem>
-          <TickIcon>✓</TickIcon> Emails, newsletters and invoices
+          <ListItem>
+            <TickIcon>✓</TickIcon> Emails, newsletters and invoices
           </ListItem>
           <ListItem>
             <TickIcon>✓</TickIcon> Book cover
@@ -67,7 +67,9 @@ const UsageSection: React.FC = () => {
       </GridContainer>
 
       {/* Order Button */}
-      <OrderButton>Order Now</OrderButton>
+      <OrderButton as="a" href="book-cover-form#">
+        Order Now
+      </OrderButton>
     </Section>
   );
 };

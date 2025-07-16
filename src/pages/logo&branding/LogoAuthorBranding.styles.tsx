@@ -346,6 +346,7 @@ export const PortfolioButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+  text-decoration: none;
   transition: background 0.3s;
 
   &:hover {

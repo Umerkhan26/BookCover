@@ -292,7 +292,9 @@ const LogoAuthorBranding = () => {
       </SliderContainer>
 
       <ButtonContainer>
-        <PortfolioButton>More Examples</PortfolioButton>
+        <PortfolioButton as="a" href="portfolio">
+          More Examples
+        </PortfolioButton>
       </ButtonContainer>
 
       {previewIndex !== null && (

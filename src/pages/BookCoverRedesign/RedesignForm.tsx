@@ -1,4 +1,9 @@
-import { Button, FullWidthContainer, Heading, SubHeading } from "./RedesignForm.styles";
+import {
+  Button,
+  FullWidthContainer,
+  Heading,
+  SubHeading,
+} from "./RedesignForm.styles";
 
 interface RedesignFormProps {
   heading?: string;
@@ -15,7 +20,9 @@ const RedesignForm = ({
     <FullWidthContainer>
       <Heading dangerouslySetInnerHTML={{ __html: heading }} />
       <SubHeading>{subHeading}</SubHeading>
-      <Button>{buttonText}</Button>
+      <Button as="a" href="book-cover-form#">
+        {buttonText}
+      </Button>
     </FullWidthContainer>
   );
 };

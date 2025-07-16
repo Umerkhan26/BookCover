@@ -78,14 +78,11 @@ export const NavLinkButton = styled(NavLink)`
   font-weight: 500;
   text-transform: capitalize;
   padding: 8px 20px;
+  white-space: nowrap;
   text-align: left;
   text-decoration: none;
   border-radius: 5px;
   margin: 0 8px;
-  white-space: nowrap;
-  margin: 0 4px;
-  padding: 8px 12px;
-  margin-left: 8px;
   background: rgba(255, 255, 255, 0.4);
   /* border: 2px solid red; */
 
@@ -114,6 +111,7 @@ export const NavButton = styled(NavLink)`
   font-weight: 600;
   font-size: 14px;
   padding: 9px 25px;
+  white-space: nowrap;
   border-radius: 4px;
   text-align: left;
   text-decoration: none;
@@ -127,12 +125,12 @@ export const NavButton = styled(NavLink)`
 
   @media (max-width: 1024px) {
     padding: 15px 50px;
-    margin-left: 40px;
+    margin-left: 56px;
   }
 
   @media (max-width: 768px) {
     padding: 15px 42px;
-    margin-left: 38px;
+    margin-left: 50px;
   }
 `;
 
@@ -196,8 +194,6 @@ export const HeaderContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  box-sizing: border-box;
-  padding: 0 20px;
 
   @media (max-width: 1024px) {
     justify-content: space-between;
@@ -300,10 +296,9 @@ export const ContactUsWrapper = styled.div`
 
 export const NavNBtn = styled.nav<NavNBtnProps>`
   display: flex;
-   display: flex;
-  align-items: center; 
-  flex-wrap: nowrap; 
-  gap: 4px; /*
+  /* border: 2px solid pink; */
+  align-items: start;
+  /* flex-grow: 1; */
   justify-content: flex-start;
   background-color: white;
   transition: opacity 0.3s ease, transform 0.3s ease;

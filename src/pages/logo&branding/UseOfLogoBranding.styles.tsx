@@ -97,7 +97,7 @@ export const OrderButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-
+  text-decoration: none;
   &:hover {
     background-color: #6dc7d1;
   }

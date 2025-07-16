@@ -42,6 +42,7 @@ export const Button = styled.button`
   margin-bottom: 30px;
   cursor: pointer;
   border-radius: 5px;
+  text-decoration: none;
   transition: 0.3s;
 
   &:hover {

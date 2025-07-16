@@ -482,6 +482,7 @@ export const TestimonialDescription = styled.p`
   color: #6c757d;
   line-height: 1.6;
   margin-bottom: 1.5rem;
+  text-align: justify;
 
   @media (max-width: 768px) {
     font-size: 15px;
