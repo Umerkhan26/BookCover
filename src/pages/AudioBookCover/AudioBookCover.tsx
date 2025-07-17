@@ -5,7 +5,8 @@ import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../HowWeDesign/design";
 import RedesignForm from "../BookCoverRedesign/RedesignForm";
 import Reviews from "../reviews/reviews";
-import AudioBookCoverAnimationSection from "./AudioBookCoverAnimationSection";
+// import AudioBookCoverAnimationSection from "./AudioBookCoverAnimationSection";
+import Packages from "../ourPackages/packages";
 const AudioBookCover = () => {
   return (
     <div>
@@ -16,7 +17,8 @@ const AudioBookCover = () => {
         bookCoversText=""
       />
 
-      <AudioBookCoverAnimationSection />
+      {/* <AudioBookCoverAnimationSection /> */}
+      {<Packages />}
       <DesignProcess />
 
       <BenefitsSection

@@ -426,17 +426,13 @@ export const DropdownContainer = styled.div`
     width: 100%;
   }
 
-  /* Hover styles for desktop */
   @media (min-width: 1025px) {
     &:hover > ${DropdownMenu} {
       display: flex;
       padding: 10 40px;
-      /* align-items: center; */
       justify-content: space-between;
       opacity: 1;
       pointer-events: auto;
-      /* gap: 20px; */
-      /* border: 2px solid red; */
       width: 60vw;
     }
   }

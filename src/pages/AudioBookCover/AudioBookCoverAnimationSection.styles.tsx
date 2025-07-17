@@ -155,6 +155,7 @@ export const Button = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
 

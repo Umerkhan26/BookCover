@@ -429,17 +429,9 @@ export const PreviewNavButton = styled.button`
 `;
 
 export const PrevPreviewButton = styled(PreviewNavButton)`
-  left: -120px;
-
-  @media (max-width: 768px) {
-    left: -80px;
-  }
+  left: 20px;
 `;
 
 export const NextPreviewButton = styled(PreviewNavButton)`
-  right: -120px;
-
-  @media (max-width: 768px) {
-    right: -80px;
-  }
+  right: 20px;
 `;
