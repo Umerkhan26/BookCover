@@ -440,9 +440,10 @@ export const DropdownContainer = styled.div`
 
 export const UserLogo = styled.img`
   height: 60px;
+  min-height: 60px;
   cursor: pointer;
   margin-top: 4px;
-  white-space: nowrap;
+  object-fit: contain;
 
   /* Media queries */
   @media (max-width: 768px) {
