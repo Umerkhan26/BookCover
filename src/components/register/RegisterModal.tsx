@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { registerUser, verifyEmailAPI } from "../../apis/apis";
+import React, { useState } from "react";
+import { registerUser } from "../../apis/apis";
 import styled from "styled-components";
 import { toast, ToastContainer } from "react-toastify";
-import { useSearchParams } from "react-router-dom";
+
 import { TogglePasswordButton, PasswordWrapper } from "./register.styles";
+import VerifyEmailModal from "../../pages/UserDashboard/Navbar/VerifyEmailModal";
 
 const RegisterModal = ({
   show,
@@ -22,13 +23,11 @@ const RegisterModal = ({
     role: "",
   });
   const [loading, setLoading] = useState(false);
-  //   const [message, setMessage] = useState("");
+  const [showVerifyModal, setShowVerifyModal] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
   const [error, setError] = useState("");
-  const [verificationMessage, setVerificationMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -42,11 +41,12 @@ const RegisterModal = ({
     setError("");
 
     try {
-      console.log("Form data being sent:", formData);
-      await registerUser(formData);
+      const response = await registerUser(formData);
+      setRegisteredEmail(response.data.email);
       toast.success(
-        "Registration successful! Please check your email for verification."
+        "Registration successful! Please check your email for OTP."
       );
+      setShowVerifyModal(true);
     } catch (error) {
       console.error("Registration error:", error);
       if (error instanceof Error) {
@@ -59,49 +59,19 @@ const RegisterModal = ({
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      handleEmailVerification(token);
-    }
-  }, [token]);
-
-  const handleEmailVerification = async (token: string) => {
-    try {
-      await verifyEmailAPI(token);
-      setVerificationMessage(
-        "✅ Email verified successfully! Redirecting to login modal..."
-      );
-      toast.success(
-        "Email verified successfully! Redirecting to login modal..."
-      );
-
-      // Show login modal instead of navigating to page
-      setTimeout(() => {
-        window.dispatchEvent(new Event("showLoginModal"));
-        onClose();
-      }, 3000);
-    } catch (error) {
-      setVerificationMessage(`❌ Verification failed: ${error}`);
-      toast.error(`Verification failed: ${error}`);
-    }
-  };
-
   const handleLoginClick = (e: React.MouseEvent) => {
     e.preventDefault();
     onClose();
-    onLoginClick?.(); // Trigger Login modal opening
+    onLoginClick?.();
   };
 
   return (
-    <ModalOverlay show={show}>
-      <ToastContainer position="top-right" style={{ marginTop: "60px" }} />
-      <ModalContent>
-        <Title>Register</Title>
-        {verificationMessage ? (
-          <div style={{ padding: "20px", textAlign: "center" }}>
-            <h2>{verificationMessage}</h2>
-          </div>
-        ) : (
+    <>
+      <ModalOverlay show={show}>
+        <ToastContainer position="top-right" style={{ marginTop: "60px" }} />
+        <ModalContent>
+          <Title>Register</Title>
+
           <Form onSubmit={handleRegister}>
             <Input
               type="text"
@@ -160,14 +130,27 @@ const RegisterModal = ({
               {loading ? "Registering..." : "Register"}
             </SubmitButton>
           </Form>
-        )}
-        <Footer>
-          <span className="color-black">Already have an account?</span>
-          <LoginLink onClick={handleLoginClick}> Login</LoginLink>
-        </Footer>
-        <CloseButton onClick={onClose}>X</CloseButton>
-      </ModalContent>
-    </ModalOverlay>
+
+          <Footer>
+            <span className="color-black">Already have an account?</span>
+            <LoginLink onClick={handleLoginClick}> Login</LoginLink>
+          </Footer>
+          <CloseButton onClick={onClose}>X</CloseButton>
+        </ModalContent>
+      </ModalOverlay>
+
+      {showVerifyModal && (
+        <VerifyEmailModal
+          show={showVerifyModal}
+          email={registeredEmail}
+          onClose={() => setShowVerifyModal(false)}
+          onVerified={() => {
+            // Optional: auto-open login modal after verification
+            window.dispatchEvent(new Event("showLoginModal"));
+          }}
+        />
+      )}
+    </>
   );
 };
 

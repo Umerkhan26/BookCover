@@ -272,12 +272,11 @@ const LinkText = styled.span<CollapsibleProps>`
 `;
 
 const UserDashboard: React.FC = () => {
-  const [collapsed, setCollapsed] = useState<boolean>(true); // Default to collapsed on small screens
+  const [collapsed, setCollapsed] = useState<boolean>(true);
   const navigate = useNavigate();
   const { logout } = useAuth();
 
   useEffect(() => {
-    // Check screen width on initial load and update the sidebar state accordingly
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setCollapsed(false); // Open sidebar on large screens

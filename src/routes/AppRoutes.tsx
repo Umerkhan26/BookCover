@@ -61,7 +61,7 @@ import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditi
 import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
 import MarketingMaterial from "../components/Marketing Material/marketing";
 import { Helmet } from "react-helmet-async";
-import VerifyEmailPage from "../pages/UserDashboard/Navbar/VerifyEmailPage";
+// import VerifyEmailPage from "../pages/UserDashboard/Navbar/VerifyEmailModal";
 import PrivacyPolicy from "../components/TermsAndConditions/PrivacyPolicy";
 // import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
@@ -168,7 +168,7 @@ const AppRoutes: React.FC = () => {
             </>
           }
         />
-        <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
+        {/* <Route path="/verify-email" element={<VerifyEmailPage />} /> */}
         <Route path="/contactUs" element={<ContactUs />} />
         <Route path="/partner" element={<Partner />} />
         <Route path="/FAQs" element={<FAQ />} />

@@ -18,14 +18,15 @@ export const registerUser = async (userData: {
   }
 };
 
-export const verifyEmailAPI = async (token: string) => {
+export const verifyEmailWithOTP = async (email: string, otp: string) => {
   try {
-    const response = await axios.get(
-      `${API_BASE_URL}/verify-email?token=${token}`
-    );
+    const response = await axios.post(`${API_BASE_URL}/verify-email`, {
+      email,
+      otp,
+    });
     return response.data;
   } catch (error: any) {
-    throw error.response?.data?.message || "Email verification failed";
+    throw error.response?.data?.message || "OTP verification failed";
   }
 };
 
@@ -37,15 +38,53 @@ export const loginAPI = async (email: string, password: string) => {
     });
     return response.data;
   } catch (error: any) {
-    throw error.response?.data?.message || "Login failed";
+    const message = error.response?.data?.message || "Login failed";
+
+    throw new Error(message);
   }
+};
+
+export const forgotPasswordAPI = async (email: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/forgot-password`, {
+      email,
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to send password reset email"
+    );
+  }
+};
+
+export const verifyOtpAPI = async (email: string, otp: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/verify-otp`, {
+      email,
+      otp,
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Failed to verify OTP");
+  }
+};
+
+export const resetPasswordAPI = async (email: string, newPassword: string) => {
+  const res = await fetch(`${API_BASE_URL}/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, newPassword }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to reset password");
+  return data;
 };
 
 export const getPackagesByPageAPI = async (page: string) => {
   try {
     const response = await axios.get(
       `${API_BASE_URL}/getPackagesByPage/${page}`
-    ); // Updated URL format
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching packages:", error);
@@ -67,7 +106,7 @@ export const updateUserStatus = async (
   status: "active" | "inactive"
 ) => {
   try {
-    const token = localStorage.getItem("token"); // Get the token from local storage
+    const token = localStorage.getItem("token");
     const response = await axios.put(
       `${API_BASE_URL}/update-status/${userId}`,
       { status },
@@ -85,8 +124,8 @@ export const updateUserStatus = async (
 
 export const deleteUser = async (userId: string) => {
   try {
-    const token = localStorage.getItem("token"); // Get the token from local storage
-    console.log("Token:", token); // Log the token
+    const token = localStorage.getItem("token");
+    console.log("Token:", token);
 
     const response = await axios.delete(
       `${API_BASE_URL}/delete-user/${userId}`,
@@ -126,18 +165,13 @@ export const submitContactFormAPI = async (contactData: {
   message: string;
 }) => {
   try {
-    // Sending a POST request to submit the contact form data
     const response = await axios.post(`${API_BASE_URL}/submit`, contactData);
 
-    // Returning the response from the API
     return response.data;
   } catch (error: any) {
-    // Handle errors
     throw error.response?.data?.message || "Failed to submit contact form";
   }
 };
-
-// Function to create an order
 
 export const createOrderAPI = async (orderData: {
   userId: string;
@@ -146,7 +180,7 @@ export const createOrderAPI = async (orderData: {
   bookTitle: string;
   bookSubtitle: string;
   name: string;
-  narratorName:string;
+  narratorName: string;
   genre: string;
   seriesContinuation: string;
   summary: string;
@@ -159,16 +193,13 @@ export const createOrderAPI = async (orderData: {
   shareOnPortfolio: boolean;
   // paymentMethod: string;
   status: string;
-  userContacts?: string[]; // New field added for contacts
+  userContacts?: string[];
 }) => {
   try {
-    // Sending a POST request to create an order
     const response = await axios.post(`${API_BASE_URL}/create`, orderData);
 
-    // Returning the response from the API
     return response.data;
   } catch (error: any) {
-    // Handle errors
     console.error("Error creating order:", error);
     throw error.response?.data?.message || "Failed to create order";
   }
@@ -206,10 +237,9 @@ export const fetchOrdersByUserId = async (): Promise<any> => {
 
 export const fetchAllOrders = async (): Promise<any> => {
   try {
-    // Make the GET request to the API to fetch all orders
-    const response = await axios.get(`${API_BASE_URL}/getAllorders`); // Endpoint to fetch all orders
-console.log("respomse from all orders api",response)
-    return response.data.orders; // Return the fetched orders
+    const response = await axios.get(`${API_BASE_URL}/getAllorders`);
+    console.log("respomse from all orders api", response);
+    return response.data.orders;
   } catch (error) {
     console.error("Error fetching all orders:", error);
     throw new Error("Failed to fetch orders");
@@ -222,15 +252,14 @@ export const createBookRequest = async (bookRequestData: {
   genre?: string;
   isSeries: boolean;
   description: string;
-  coverPreference: string[]; // Array of selected cover types
+  coverPreference: string[];
   mainCharacters?: string;
   keyObjects?: string;
   setting?: string;
-  comparableCovers: File[]; // Array of files to upload
+  comparableCovers: File[];
   email: string;
 }) => {
   try {
-    // Create a FormData object to send the images as well as other form data
     const formData = new FormData();
 
     formData.append("name", bookRequestData.name);
@@ -247,36 +276,32 @@ export const createBookRequest = async (bookRequestData: {
     formData.append("setting", bookRequestData.setting || "");
     formData.append("email", bookRequestData.email);
 
-    // Append the files to FormData
     bookRequestData.comparableCovers.forEach((file) => {
       formData.append("comparableCovers", file);
     });
 
-    // Send POST request with form data
     const response = await axios.post(
       `${API_BASE_URL}/createCoverIdea`,
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data", // Important for file uploads
+          "Content-Type": "multipart/form-data",
         },
       }
     );
 
-    return response.data; // Return the response from the backend
+    return response.data;
   } catch (error: any) {
     throw error.response?.data?.message || "Failed to create book request";
   }
 };
 
-
 export const fetchAllBookRequests = async (): Promise<any> => {
   try {
-    // Make the GET request to the API to fetch all book requests
-    const response = await axios.get(`${API_BASE_URL}/getCoverIdeas`); // Endpoint to fetch all book requests
+    const response = await axios.get(`${API_BASE_URL}/getCoverIdeas`);
     console.log("Response from all book requests API", response);
-    
-    return response.data; // Return the fetched book requests
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching all book requests:", error);
     throw new Error("Failed to fetch book requests");

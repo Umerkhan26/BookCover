@@ -16,8 +16,6 @@ import {
 } from "./login.styles";
 import { toast, ToastContainer } from "react-toastify";
 import { Helmet } from "react-helmet-async";
-
-// Props interface to allow optional custom login behavior
 interface LoginProps {
   onLoginSuccess?: (token: string, user: any) => void;
   disableRedirect?: boolean;
@@ -75,21 +73,21 @@ const Login: React.FC<LoginProps> = ({
         throw new Error("Invalid user data received.");
       }
 
-      login(data.token, data.user); // Store token and user info
+      login(data.token, data.user);
 
       toast.success("Logged in successfully!");
 
       if (onLoginSuccess) {
-        onLoginSuccess(data.token, data.user); // Custom success handler
+        onLoginSuccess(data.token, data.user);
       }
 
       if (!disableRedirect) {
-        // Only redirect if not disabled
         setTimeout(() => navigateUser(data.user.role), 1500);
       }
     } catch (err: any) {
-      setError(err.message || "An error occurred during login.");
-      toast.error(err.message || "An error occurred during login.");
+      const message = err?.message || "An error occurred during login.";
+      setError(message);
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }

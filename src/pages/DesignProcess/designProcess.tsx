@@ -57,18 +57,16 @@ const steps: Step[] = [
 ];
 
 const DesignProcess = () => {
-  const [activeStep, setActiveStep] = useState<number>(1); // Initial active step (typed as number)
+  const [activeStep, setActiveStep] = useState<number>(1);
 
   const handleStepClick = (stepId: number) => {
-    setActiveStep(stepId); // Change active step on click
+    setActiveStep(stepId);
   };
 
-  // Find the active step based on the id
   const activeStepData = steps.find((step) => step.id === activeStep);
 
-  // Fallback for undefined activeStepData
   if (!activeStepData) {
-    return <div>Error: Step not found.</div>; // Optional: Handle if data is not found
+    return <div>Error: Step not found.</div>;
   }
 
   return (

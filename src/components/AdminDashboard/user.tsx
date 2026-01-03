@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { deleteUser, fetchUsers, updateUserStatus } from "../../apis/apis"; // Import the updateUserStatus function
+import { deleteUser, fetchUsers, updateUserStatus } from "../../apis/apis";
 
 import {
   Container,
@@ -15,6 +15,7 @@ import {
   Button,
 } from "./user.styles";
 import { Helmet } from "react-helmet-async";
+import { toast } from "react-toastify";
 
 interface User {
   _id: string;
@@ -65,10 +66,8 @@ const User: React.FC = () => {
     try {
       console.log("Updating user status:", { userId, status });
 
-      // Map "Active" and "Blocked" to "active" and "inactive"
       const backendStatus = status === "Active" ? "active" : "inactive";
 
-      // Call the updateUserStatus API with userId
       await updateUserStatus(userId, backendStatus);
 
       // Update the user's status in the state
@@ -89,18 +88,16 @@ const User: React.FC = () => {
 
   const handleDeleteUser = async (user: User) => {
     try {
-      console.log(`Deleting user: ${user.firstName} ${user.lastName}`);
-
-      // Call the deleteUser API
       await deleteUser(user.userId);
 
-      // Remove the user from the state
       setUsers((prevUsers) =>
         prevUsers.filter((existingUser) => existingUser.userId !== user.userId)
       );
 
-      console.log("User deleted successfully", user);
+      toast.success("User deleted successfully");
     } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to delete user");
+
       console.error(
         "Failed to delete user:",
         error.response?.data || error.message

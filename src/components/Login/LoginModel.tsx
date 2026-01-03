@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useAuth } from "../../context/authContext";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ForgotPasswordModal from "../ForgotPassword/ForgotPasswordModal";
 
 interface LoginModalProps {
   show: boolean;
@@ -27,6 +28,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotModal, setShowForgotModal] = useState(false);
 
   const navigateUser = (role: string) => {
     const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
@@ -122,7 +124,16 @@ const LoginModal: React.FC<LoginModalProps> = ({
           </SubmitButton>
         </Form>
         <Footer>
-          <ForgotPasswordLink href="#">Forgot password?</ForgotPasswordLink>
+          <ForgotPasswordLink
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowForgotModal(true);
+            }}
+          >
+            Forgot password?
+          </ForgotPasswordLink>
+
           <br />
           <span className="color-black">Don't have an account?</span>
           <RegisterLink href="#" onClick={handleRegisterClick}>
@@ -131,6 +142,19 @@ const LoginModal: React.FC<LoginModalProps> = ({
         </Footer>
         <CloseButton onClick={onClose}>×</CloseButton>
       </ModalContent>
+
+      {showForgotModal && (
+        <ForgotPasswordModal
+          show={showForgotModal}
+          onClose={() => setShowForgotModal(false)}
+          onBackToLogin={() => {
+            setShowForgotModal(false);
+            setTimeout(() => {
+              toast.info("You can now log in with your new password.");
+            }, 500);
+          }}
+        />
+      )}
     </ModalOverlay>
   );
 };
