@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://lumeartstudio.com/sitemap.xml
+
+# Disallow: /admin/
+# Disallow: /checkout/

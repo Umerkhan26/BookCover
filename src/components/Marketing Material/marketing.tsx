@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 // Import images directly
-import img1 from "../../assets/Marketing Meterial/marketing-material-1-768x512.jpeg";
-import img2 from "../../assets/Marketing Meterial/Marketing-materials-2.jpeg";
-import img3 from "../../assets/Marketing Meterial/marketing-cover-3.jpeg";
-import img4 from "../../assets/Marketing Meterial/marketing-release-4.jpeg";
-import img5 from "../../assets/Marketing Meterial/marketing-material-5-768x768.jpeg";
-import img6 from "../../assets/Marketing Meterial/marketing-materials-new-6.jpeg";
-import img7 from "../../assets/Marketing Meterial/marketing-release-image-7.jpeg";
-import img8 from "../../assets/Marketing Meterial/marketing-cover-reveal-8.jpeg";
-import img9 from "../../assets/Marketing Meterial/marketing-material-9.jpeg";
+import img1 from "../../assets/Marketing Meterial/marketing-material-1-768x512.webp";
+import img2 from "../../assets/Marketing Meterial/Marketing-materials-2.webp";
+import img3 from "../../assets/Marketing Meterial/marketing-cover-3.webp";
+import img4 from "../../assets/Marketing Meterial/marketing-release-4.webp";
+import img5 from "../../assets/Marketing Meterial/marketing-material-5-768x768.webp";
+import img6 from "../../assets/Marketing Meterial/marketing-materials-new-6.webp";
+import img7 from "../../assets/Marketing Meterial/marketing-release-image-7.webp";
+import img8 from "../../assets/Marketing Meterial/marketing-cover-reveal-8.webp";
+import img9 from "../../assets/Marketing Meterial/marketing-material-9.webp";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 

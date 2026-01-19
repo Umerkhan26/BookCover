@@ -8,36 +8,93 @@ import { Helmet } from "react-helmet-async";
 const PortfolioWrapperWithTabs = () => {
   const location = useLocation();
 
-  // Check if the current path is "/portfolio" or any subcategory under it
-  const isCustomBookCovers =
-    location.pathname === "/portfolio" ||
-    location.pathname.startsWith("/portfolio/custom-book-covers") ||
-    location.pathname.startsWith("/portfolio/fantasy") ||
-    location.pathname.startsWith("/portfolio/romance") ||
-    location.pathname.startsWith("/portfolio/urban-fantasy") ||
-    location.pathname.startsWith("/portfolio/young-adult") ||
-    location.pathname.startsWith("/portfolio/cozy-mystery") ||
-    location.pathname.startsWith("/portfolio/paranormal") ||
-    location.pathname.startsWith("/portfolio/mystery-thriller-suspense") ||
-    location.pathname.startsWith("/portfolio/horror") ||
-    location.pathname.startsWith("/portfolio/sci-fi") ||
-    location.pathname.startsWith("/portfolio/non-fiction") ||
-    location.pathname.startsWith("/portfolio/fiction");
+  const seoData: { [key: string]: { title: string; description: string } } = {
+    "/portfolio": {
+      title: "Book Cover Design Portfolio | Award-Winning Gallery",
+      description:
+        "Browse our gallery of professional book covers across genres like Fantasy, Romance, and Thrillers. See how we transform stories into visual brands.",
+    },
+    "/portfolio/fantasy": {
+      title: "Fantasy Book Covers | Portfolio",
+      description:
+        "Explore our stunning collection of Fantasy book cover designs.",
+    },
+    "/portfolio/romance": {
+      title: "Romance Book Covers | Portfolio",
+      description: "Discover our creative Romance book cover designs.",
+    },
+    "/portfolio/urban-fantasy": {
+      title: "Urban Fantasy Book Covers | Portfolio",
+      description: "Browse unique Urban Fantasy book cover designs.",
+    },
+    "/portfolio/young-adult": {
+      title: "Young Adult Book Covers | Portfolio",
+      description: "Explore engaging Young Adult book cover designs.",
+    },
+    "/portfolio/cozy-mystery": {
+      title: "Cozy Mystery Book Covers | Portfolio",
+      description: "Check out our Cozy Mystery book cover designs.",
+    },
+    "/portfolio/paranormal": {
+      title: "Paranormal Book Covers | Portfolio",
+      description: "Discover our Paranormal book cover designs.",
+    },
+    "/portfolio/mystery-thriller-suspense": {
+      title: "Mystery & Thriller Book Covers | Portfolio",
+      description:
+        "Explore our collection of Mystery, Thriller, and Suspense covers.",
+    },
+    "/portfolio/horror": {
+      title: "Horror Book Covers | Portfolio",
+      description: "Browse our chilling Horror book cover designs.",
+    },
+    "/portfolio/sci-fi": {
+      title: "Sci-Fi Book Covers | Portfolio",
+      description: "Discover our futuristic Sci-Fi book cover designs.",
+    },
+    "/portfolio/non-fiction": {
+      title: "Non-Fiction Book Covers | Portfolio",
+      description: "Explore professional Non-Fiction book cover designs.",
+    },
+    "/portfolio/fiction": {
+      title: "Fiction Book Covers | Portfolio",
+      description: "Browse our creative Fiction book cover designs.",
+    },
+  };
+  const currentSEO = seoData[location.pathname] || seoData["/portfolio"];
+
+  const canonicalBase = "https://lumeartstudio.com";
+  const canonicalUrl = canonicalBase + location.pathname;
+
+  const customCoverPaths = [
+    "/portfolio",
+    "/portfolio/fantasy",
+    "/portfolio/romance",
+    "/portfolio/urban-fantasy",
+    "/portfolio/young-adult",
+    "/portfolio/cozy-mystery",
+    "/portfolio/paranormal",
+    "/portfolio/mystery-thriller-suspense",
+    "/portfolio/horror",
+    "/portfolio/sci-fi",
+    "/portfolio/non-fiction",
+    "/portfolio/fiction",
+  ];
+
+  // Use . includes() for exact path matching
+  const isCustomBookCovers = customCoverPaths.includes(location.pathname);
 
   return (
     <>
-      {" "}
       <Helmet>
-        <title> Portfolio</title>
-        <meta
-          name="description"
-          content="Explore our diverse collection of book cover designs."
-        />
+        <title>{currentSEO.title}</title>
+        <meta name="description" content={currentSEO.description} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <PortfolioWrapper>
         <CoverPortfolio />
         <Tabs />
-        {isCustomBookCovers && <SubCategoryTabs />}{" "}
+        {isCustomBookCovers && <SubCategoryTabs />}
         {/* Show only for Custom Covers */}
         <Outlet />
       </PortfolioWrapper>

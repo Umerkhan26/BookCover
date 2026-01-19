@@ -6,7 +6,7 @@ import { motion, Variants } from "framer-motion";
 
 const images = Object.entries(
   import.meta.glob<{ default: string }>(
-    "../../../assets/CustomBookCovers/*.{jpg,jpeg,png}",
+    "../../../assets/CustomBookCovers/*.{jpg,jpeg,png,webp}",
     {
       eager: true,
     }

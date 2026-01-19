@@ -105,7 +105,7 @@ export const Title = styled.h1`
   }
 `;
 
-export const Subtitle = styled.div`
+export const Subtitle = styled.p`
   color: #fff;
   font-size: 17.5px;
   font-weight: 400;

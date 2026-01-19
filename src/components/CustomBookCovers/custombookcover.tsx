@@ -19,7 +19,7 @@ const variants: Variants = {
 // Dynamically import all images using import.meta.glob
 const images = Object.entries(
   import.meta.glob<{ default: string }>(
-    "../../assets/CustomBookCovers/*.{jpg,jpeg,png}",
+    "../../assets/CustomBookCovers/*.{jpg,jpeg,png,webp}",
     {
       eager: true,
     }

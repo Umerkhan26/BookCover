@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 // Import images directly
-import img1 from "../../assets/Premiem/img1.jpg";
-import img2 from "../../assets/Premiem/img2.jpg";
-import img3 from "../../assets/Premiem/img3.jpeg";
-import img4 from "../../assets/Premiem/img4.jpeg";
-import img5 from "../../assets/Premiem/img5.jpeg";
-import img6 from "../../assets/Premiem/img6.jpeg";
-import img7 from "../../assets/Premiem/img7.jpeg";
-import img8 from "../../assets/Premiem/img8.jpg";
-import img9 from "../../assets/Premiem/img9.jpg";
-import img10 from "../../assets/Premiem/img10.jpg";
-import img11 from "../../assets/Premiem/img11.jpg";
+import img1 from "../../assets/Premiem/img1.webp";
+import img2 from "../../assets/Premiem/img2.webp";
+import img3 from "../../assets/Premiem/img3.webp";
+import img4 from "../../assets/Premiem/img4.webp";
+import img5 from "../../assets/Premiem/img5.webp";
+import img6 from "../../assets/Premiem/img6.webp";
+import img7 from "../../assets/Premiem/img7.webp";
+import img8 from "../../assets/Premiem/img8.webp";
+import img9 from "../../assets/Premiem/img9.webp";
+import img10 from "../../assets/Premiem/img10.webp";
+import img11 from "../../assets/Premiem/img11.webp";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 

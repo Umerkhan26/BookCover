@@ -1,5 +1,5 @@
 import FictionCover from "../FictionCover/FictionCover";
-import logoBrand from "../../assets/PageBanners/LogosLUMEARTWEBPAGEFICTIONCOVER-04.jpg";
+import logoBrand from "../../assets/PageBanners/LogosLUMEARTWEBPAGEFICTIONCOVER-04.webp";
 import Packages from "../ourPackages/packages";
 // import { myPackagesData } from "../ourPackages/packagesData"
 import RedesignExamples from "../BookCoverRedesign/RedesignExamples";
@@ -11,14 +11,23 @@ import UseOfLogoBranding from "./UseOfLogoBranding";
 import LogoBrandingQA from "./LogoBrandingQA";
 import Reviews from "../reviews/reviews";
 import RedesignForm from "../BookCoverRedesign/RedesignForm";
+import { Helmet } from "react-helmet-async";
 
 const LogoBranding = () => {
   return (
-    <div className="">
+    <div>
+      <Helmet>
+        <title>Author Branding & Logo Design | Visual Identity</title>
+        <meta
+          name="description"
+          content="Build a recognizable author brand. Custom logo design and visual identity kits tailored for writers, novelists, and creative entrepreneurs."
+        />
+        <link rel="canonical" href="https://lumeartstudio.com/logo-branding" />
+      </Helmet>
       <FictionCover
         title="Custom Logo Design and Branding"
         subtitle="Build and maintain a consistent author brand"
-        image={logoBrand} // Can be dynamic as well
+        image={logoBrand}
         bookCoversText=""
         // packagesComponent={<Packages />}
         // reviewsComponent={<Reviews />}

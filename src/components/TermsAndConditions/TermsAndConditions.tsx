@@ -1,25 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-import bannerImg from "../../assets/PageBanners/TermsAndConditions.jpg"
-
+import bannerImg from "../../assets/PageBanners/TermsAndConditions-B5POMQkF.webp";
 
 const Container = styled.div`
   margin-top: 85px;
   width: 100%;
   height: auto;
   overflow: hidden;
- 
 
-  img{
-     width: 100%;
+  img {
+    width: 100%;
     height: auto;
-   object-fit: cover;
-  /* display: block; */
+    object-fit: cover;
+    /* display: block; */
   }
 
-  @media (max-width:768px) {
-    img{
-       max-height: 300px; /* adjust for smaller screens */
+  @media (max-width: 768px) {
+    img {
+      max-height: 300px; /* adjust for smaller screens */
     }
   }
 `;
@@ -39,7 +37,7 @@ const PageContainer = styled.section`
   padding: 40px 0;
   background-color: ${colors.background};
   /* margin-top: 90px; */
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 `;
 
 const ContentWrapper = styled.div`
@@ -84,7 +82,7 @@ const MainContent = styled.div`
     padding-left: 15px;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       top: 50%;
@@ -403,7 +401,7 @@ const termsContent: ContentBlock[] = [
 ];
 
 const TermsAndConditions: React.FC = () => {
-  const anchorLinks = termsContent.map(section => ({
+  const anchorLinks = termsContent.map((section) => ({
     href: `#${section.id}`,
     label: section.title,
   }));
@@ -414,7 +412,6 @@ const TermsAndConditions: React.FC = () => {
         <img src={bannerImg} alt="Terms And Condition Img" />
       </Container>
       <PageContainer className="page-content page-content-terms">
-
         <ContentWrapper className="container">
           <MainContent className="content-term">
             <h1>Terms and Conditions</h1>
@@ -422,17 +419,14 @@ const TermsAndConditions: React.FC = () => {
             {termsContent.map((section) => (
               <React.Fragment key={section.id}>
                 <h4 id={section.id}>{section.title}</h4>
-                {section.paragraphs && section.paragraphs.map((paragraph, pIndex) => (
-                  <p key={`p-${section.id}-${pIndex}`}>
-                    {paragraph}
-                  </p>
-                ))}
+                {section.paragraphs &&
+                  section.paragraphs.map((paragraph, pIndex) => (
+                    <p key={`p-${section.id}-${pIndex}`}>{paragraph}</p>
+                  ))}
                 {section.listItems && (
                   <ul>
                     {section.listItems.map((item, liIndex) => (
-                      <li key={`li-${section.id}-${liIndex}`}>
-                        {item}
-                      </li>
+                      <li key={`li-${section.id}-${liIndex}`}>{item}</li>
                     ))}
                   </ul>
                 )}

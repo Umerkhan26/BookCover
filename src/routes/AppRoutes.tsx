@@ -3,7 +3,7 @@ import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import FictionCover from "../pages/FictionCover/FictionCover";
 import Illustrated from "../pages/Services/coverpages/illustrated";
-import fictonCoverImg from "../assets/PageBanners/indieLUMEARTWEBPAGEFICTIONCOVER-01.jpg";
+import fictonCoverImg from "../assets/PageBanners/indieLUMEARTWEBPAGEFICTIONCOVER-01.webp";
 import BenefitsSection from "../pages/Benefits/benefits";
 import { benefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";
@@ -60,7 +60,6 @@ import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
 import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
 import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
 import MarketingMaterial from "../components/Marketing Material/marketing";
-import { Helmet } from "react-helmet-async";
 // import VerifyEmailPage from "../pages/UserDashboard/Navbar/VerifyEmailModal";
 import PrivacyPolicy from "../components/TermsAndConditions/PrivacyPolicy";
 // import TopBar from "../components/TopBar/TopBar";
@@ -73,17 +72,9 @@ const AppRoutes: React.FC = () => {
         <Route path="/book-cover-form" element={<BookCoverForm />} />
         {/* Wrap FictionCover inside Route and pass its props */}
         <Route
-          path="/fictionCover"
+          path="/fiction-cover"
           element={
             <>
-              {" "}
-              <Helmet>
-                <title>Book Cover Design For Indie Authors</title>
-                <meta
-                  name="description"
-                  content="Pay only when you are satisfied with the final book cover result."
-                />
-              </Helmet>
               <FictionCover
                 title="Book Cover Design For Indie Authors"
                 subtitle="Pay Only When You are Satisfied With The final result"
@@ -113,68 +104,46 @@ const AppRoutes: React.FC = () => {
           path="/illustrated"
           element={
             <>
-              <Helmet>
-                <title>Illustrated Covers</title>
-              </Helmet>
               <Illustrated />
             </>
           }
         />
         {/* Book Cover Redesign Route */}
         <Route
-          path="/bookCoverRedesign"
+          path="/book-cover-redesign"
           element={
             <>
-              <Helmet>
-                <title>Book Cover Redesign</title>
-              </Helmet>
               <BookCoverRedesign />
             </>
           }
         />
         {/* Logo Branding Route and */}
-        <Route
-          path="/logoBrand"
-          element={
-            <>
-              <Helmet>
-                <title>Logo Branding</title>
-              </Helmet>
-              <LogoBranding />
-            </>
-          }
-        />
+        <Route path="/logo-branding" element={<LogoBranding />} />
         {/* Non-Fiction Route */}
         <Route
-          path="/nonFiction"
+          path="/non-fiction-cover"
           element={
             <>
-              <Helmet>
-                <title>Non-Fiction Book Covers</title>
-              </Helmet>
               <NonFictonalCover />
             </>
           }
         />
         {/* Audio Book Cover Route */}
         <Route
-          path="/audioBookCover"
+          path="/audio-book-cover"
           element={
             <>
-              <Helmet>
-                <title>Audio Book Covers</title>
-              </Helmet>
               <AudioBookCover />
             </>
           }
         />
         {/* <Route path="/verify-email" element={<VerifyEmailPage />} /> */}
-        <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/partner" element={<Partner />} />
-        <Route path="/FAQs" element={<FAQ />} />
-        <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
-        <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-        <Route path="/GetACover" element={<GetACover />} />
+        <Route path="/faqs" element={<FAQ />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/get-a-cover" element={<GetACover />} />
         <Route path="/services" element={<Services />} />
         <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
           {/* Default Route: When visiting /portfolio/, show CustomCover */}
@@ -203,7 +172,7 @@ const AppRoutes: React.FC = () => {
           <Route path="marketing-materials" element={<MarketingMaterial />} />
         </Route>
         ;
-        <Route path="/aboutUs" element={<AboutUs />} />
+        <Route path="/about-us" element={<AboutUs />} />
       </Route>
       {/* <Route path="/login" element={<Login />} /> */}
 
@@ -226,7 +195,7 @@ const AppRoutes: React.FC = () => {
 
       {/* <Route path="/order/illustration" element={<IllustrationOrderForm />} /> */}
 
-      <Route path="/Admin" element={<Admin />}>
+      <Route path="/admin" element={<Admin />}>
         {/* Use relative path for nested routes */}
         <Route path="users" element={<User />} />
         <Route path="orders" element={<Order />} />

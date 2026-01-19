@@ -49,7 +49,7 @@ const RightColumn = styled.div`
   }
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled.h1`
   font-size: clamp(24px, 4vw, 34px);
   font-weight: bold;
   color: #212121;
@@ -238,17 +238,15 @@ const DesignProcess = ({
   buttonText = "Order Design",
   buttonLink = "/services",
 }) => {
-
   useEffect(() => {
     AOS.init({
       once: true,
       duration: 1000,
-      easing: 'ease-out',
+      easing: "ease-out",
       offset: 150,
-
     });
     AOS.refresh();
-  }, [])
+  }, []);
 
   const initialDelay = 200;
   const staggerDelay = 150;
@@ -260,7 +258,8 @@ const DesignProcess = ({
             data-aos="fade-right"
             data-aos-duration="1000"
             data-aos-delay={initialDelay}
-            data-aos-once="true">
+            data-aos-once="true"
+          >
             {title} <br />
             <Highlight>{highlight}</Highlight>
           </SectionTitle>
@@ -268,19 +267,24 @@ const DesignProcess = ({
             data-aos="fade-right"
             data-aos-duration="1000"
             data-aos-delay={initialDelay + 200} // A little after the title
-            data-aos-once="true">{subtitle}</Subtitle>
+            data-aos-once="true"
+          >
+            {subtitle}
+          </Subtitle>
         </LeftColumn>
         <RightColumn>
           <StepsContainer>
             {steps.map((step, index) => (
-              <Step key={index} 
-              data-aos="fade-up" // Animate each step fading up
+              <Step
+                key={index}
+                data-aos="fade-up" // Animate each step fading up
                 data-aos-duration="800" // Duration for step animation
                 // Calculate delay for each step:
                 // (initialDelay for left column) + (a fixed offset) + (index * staggerDelay)
                 // We add a fixed offset (e.g., 400ms) to ensure steps start after the left column elements.
-                data-aos-delay={initialDelay + 400 + (index * staggerDelay)}
-                data-aos-once="false">
+                data-aos-delay={initialDelay + 400 + index * staggerDelay}
+                data-aos-once="false"
+              >
                 <StepNumber>{step.number}</StepNumber>
                 <StepContent>
                   <StepTitle>{step.title}</StepTitle>
@@ -289,11 +293,16 @@ const DesignProcess = ({
               </Step>
             ))}
           </StepsContainer>
-          <Button href={buttonLink} data-aos="fade-up"
+          <Button
+            href={buttonLink}
+            data-aos="fade-up"
             data-aos-duration="1000"
             // Delay after the last step
-            data-aos-delay={400 + (steps.length * staggerDelay) + 200}
-            data-aos-once="true">{buttonText}</Button>
+            data-aos-delay={400 + steps.length * staggerDelay + 200}
+            data-aos-once="true"
+          >
+            {buttonText}
+          </Button>
         </RightColumn>
       </Container>
     </Section>

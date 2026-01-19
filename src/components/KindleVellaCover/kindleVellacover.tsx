@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 // Import images directly
-import img1 from "../../assets/KindleVellaCovers/img1.jpg";
-import img2 from "../../assets/KindleVellaCovers/img2.jpeg";
-import img3 from "../../assets/KindleVellaCovers/img3.jpeg";
-import img4 from "../../assets/KindleVellaCovers/img4.jpeg";
-import img5 from "../../assets/KindleVellaCovers/img5.jpeg";
-import img6 from "../../assets/KindleVellaCovers/img6.jpeg";
-import img7 from "../../assets/KindleVellaCovers/img7.jpeg";
-import img8 from "../../assets/KindleVellaCovers/img8.jpeg";
-import img9 from "../../assets/KindleVellaCovers/img9.jpeg";
-import img10 from "../../assets/Premiem/img10.jpg";
-import img11 from "../../assets/Premiem/img11.jpg";
+import img1 from "../../assets/KindleVellaCovers/img1 (1).webp";
+import img2 from "../../assets/KindleVellaCovers/img2 (1).webp";
+import img3 from "../../assets/KindleVellaCovers/img3 (1).webp";
+import img4 from "../../assets/KindleVellaCovers/img4 (1).webp";
+import img5 from "../../assets/KindleVellaCovers/img5 (1).webp";
+import img6 from "../../assets/KindleVellaCovers/img6 (1).webp";
+import img7 from "../../assets/KindleVellaCovers/img7 (1).webp";
+import img8 from "../../assets/KindleVellaCovers/img8 (1).webp";
+import img9 from "../../assets/KindleVellaCovers/img9 (1).webp";
+import img10 from "../../assets/Premiem/img10.webp";
+import img11 from "../../assets/Premiem/img11.webp";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 

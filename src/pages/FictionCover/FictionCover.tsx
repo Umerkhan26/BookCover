@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import {
   // SectionFiction,
   // FictionCoverImage,
@@ -43,6 +44,15 @@ const FictionCover = ({
 }: FictionCoverProps) => {
   return (
     <div>
+      <Helmet>
+        <title>Fiction Book Cover Design | Genre-Specific Art</title>
+        <meta
+          name="description"
+          content="Capture readers with professional fiction covers. Specialized design for Fantasy, Sci-Fi, Mystery, and Romance novels to boost Amazon sales."
+        />
+
+        <link rel="canonical" href="https://lumeartstudio.com/fiction-cover" />
+      </Helmet>
       <Container>
         {/* <SectionFiction>
           <Wrapper>

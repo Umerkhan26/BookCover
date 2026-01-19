@@ -60,7 +60,7 @@ function Header() {
     } else {
       const userRole = userData.role;
       if (userRole === "admin") {
-        navigate("/Admin/users");
+        navigate("/admin/users");
       } else {
         navigate("/portal/orders");
       }
@@ -126,7 +126,7 @@ function Header() {
             </LogoContainer>
           </NavLink>
           <ContactUsWrapper>
-            <MobileContactButton to="/contactUs">
+            <MobileContactButton to="/contact-us">
               Contact Us
             </MobileContactButton>
           </ContactUsWrapper>
@@ -145,7 +145,6 @@ function Header() {
           >
             {/* Services Dropdown */}
             <DropdownContainer ref={servicesRef}>
-
               <ServicesLink
                 to="/services"
                 onClick={toggleServices}
@@ -165,15 +164,12 @@ function Header() {
               >
                 <DropdownGroup>
                   <DropdownItem
-                    to="/fictionCover"
+                    to="/fiction-cover"
                     onClick={() => {
-                      navigate("/fictionCover");
+                      navigate("/fiction-cover");
                       closeServicesMenu();
                     }}
-
                   >
-
-
                     Fiction Cover Design
                   </DropdownItem>
                   <DropdownItem
@@ -189,18 +185,18 @@ function Header() {
 
                 <DropdownGroup>
                   <DropdownItem
-                    to="/bookCoverRedesign"
+                    to="/book-cover-redesign"
                     onClick={() => {
-                      navigate("/bookCoverRedesign");
+                      navigate("/book-cover-redesign");
                       closeServicesMenu();
                     }}
                   >
                     Book Covers Redesign
                   </DropdownItem>
                   <DropdownItem
-                    to="/nonFiction"
+                    to="/non-fiction-cover"
                     onClick={() => {
-                      navigate("/nonFiction");
+                      navigate("/non-fiction-cover");
                       closeServicesMenu();
                     }}
                   >
@@ -210,28 +206,24 @@ function Header() {
 
                 <DropdownGroup>
                   <DropdownItem
-                    to="/audioBookCover"
+                    to="/audio-book-cover"
                     onClick={() => {
-                      navigate("/audioBookCover");
+                      navigate("/audio-book-cover");
                       closeServicesMenu();
                     }}
                   >
                     Audiobook Cover Design
                   </DropdownItem>
                   <DropdownItem
-                    to="/logoBrand"
+                    to="/logo-branding"
                     onClick={() => {
-                      navigate("/logoBrand");
+                      navigate("/logo-branding");
                       closeServicesMenu();
                     }}
                   >
                     Logo & Branding
                   </DropdownItem>
                 </DropdownGroup>
-
-
-
-
               </DropdownMenu>
             </DropdownContainer>
 
@@ -241,19 +233,25 @@ function Header() {
             >
               Portfolio
             </NavLinkButton>
-            <NavLinkButton to="/aboutUs" onClick={() => navigate("/aboutUs")}>
+            <NavLinkButton
+              to="/about-us"
+              onClick={() => navigate("/about-us  ")}
+            >
               About Us
             </NavLinkButton>
-            <NavLinkButton to="/FAQs" onClick={() => navigate("/FAQs")}>
+            <NavLinkButton to="/faqs" onClick={() => navigate("/faqs")}>
               FAQ
             </NavLinkButton>
             <NavLinkButton
-              to="/contactUs"
-              onClick={() => navigate("/contactUs")}
+              to="/contact-us"
+              onClick={() => navigate("/contact-us")}
             >
               Contact Us
             </NavLinkButton>
-            <NavLinkButton to="/partner" onClick={() => navigate("/partner")}>
+            <NavLinkButton
+              to="/partner-with-us"
+              onClick={() => navigate("/partner-with-us")}
+            >
               Partner With Us
             </NavLinkButton>
 
@@ -261,7 +259,7 @@ function Header() {
               Client Portal
             </NavText> */}
 
-            <NavButton to="/GetACover">Get a Cover</NavButton>
+            <NavButton to="/get-a-cover">Get a Cover</NavButton>
           </NavNBtn>
           <NavText onClick={handleNavigation}>
             <UserLogo src={userlogo} alt="User Logo" />

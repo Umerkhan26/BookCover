@@ -13,6 +13,7 @@ import { featuredItems } from "../../services/featured";
 // import { awardsData } from "../../services/awardcarousel";
 import ShareIdeasSection from "../IdeaSection/ideaSection";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const Home: React.FC = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -23,6 +24,14 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Professional Book Cover Design Services | Lumeart Studio</title>
+        <meta
+          name="description"
+          content="Elevate your manuscript with Lumeart Studio. Custom book cover design for indie authors, specializing in fiction, non-fiction, and bespoke illustrations."
+        />
+        <link rel="canonical" href="https://lumeartstudio.com/" />
+      </Helmet>
       <TopBanner />
       <BenefitsSection
         title={

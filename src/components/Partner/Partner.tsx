@@ -4,13 +4,20 @@ import AffiliateBenefits from "./AffiliateBenefits";
 import benfits1 from "../../assets/benifits1.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
-import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-06.jpg";
+import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-06.webp";
 
 const Partner = () => {
   return (
     <div>
       <Helmet>
-        <title>Partner With Us</title>
+        <title>
+          Partnership Programs for Publishers & Editors | Lumeart Studio
+        </title>
+        <meta
+          name="description"
+          content="We collaborate with publishing houses and literary agents. Discover exclusive benefits and professional design partnerships at Lumeart Studio."
+        />
+        <link rel="canonical" href="https://lumeartstudio.com/partner" />
       </Helmet>
       <PartnerCover
         title2={<>Partner With Lumeart Studio</>}

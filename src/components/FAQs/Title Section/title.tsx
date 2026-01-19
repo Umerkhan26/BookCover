@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import bannerImg from "../../../assets/PageBanners/FAQLUMEARTPORTFOLIOWEBCOVERS-04.jpg";
+import bannerImg from "../../../assets/PageBanners/FAQLUMEARTPORTFOLIOWEBCOVERS-04.webp";
 
 export const Container = styled.div`
   /* background-color: #e0e0e0;

@@ -18,12 +18,12 @@ const footerData: FooterProps = {
       name: "Company",
       links: [
         {
-          href: "/TermsAndConditions",
+          href: "/terms-and-conditions",
           text: "Terms & Conditions",
         },
-        { href: "/FAQs", text: "FAQs" },
+        { href: "/faqs", text: "FAQs" },
         { href: "/testimonial", text: "Testimonials" },
-        { href: "/contactUs", text: "Contact Us" },
+        { href: "/contact-us", text: "Contact Us" },
       ],
     },
     {
@@ -31,14 +31,14 @@ const footerData: FooterProps = {
       links: [
         { href: "", text: "Blog" },
         { href: "", text: "Career" },
-        { href: "/PrivacyPolicy", text: "Privacy Policy" },
+        { href: "/privacy-policy", text: "Privacy Policy" },
       ],
     },
     {
       name: "Partners",
       links: [
         { href: "", text: "Useful Resources" },
-        { href: "/partner", text: "Partner with Us" },
+        { href: "/partner-with-us", text: "Partner with Us" },
       ],
     },
   ],

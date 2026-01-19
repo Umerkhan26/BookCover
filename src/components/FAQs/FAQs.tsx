@@ -108,7 +108,15 @@ const FAQ: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full bg-white-50 ">
       <Helmet>
-        <title>FAQs - Frequently Asked Questions</title>
+        <title>
+          FAQs: Design Process, Pricing & Revisions | Lumeart Studio
+        </title>
+        <meta
+          name="description"
+          content="Find answers regarding our book cover design workflow, unlimited revisions, turnaround times, and flexible payment plans for authors."
+        />
+
+        <link rel="canonical" href="https://lumeartstudio.com/faqs" />
       </Helmet>
       <div className="w-full">
         <FAQTitle />

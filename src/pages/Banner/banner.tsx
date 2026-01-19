@@ -13,12 +13,12 @@ import {
   Card,
 } from "./banner.styles";
 import { useNavigate } from "react-router-dom";
-import img1 from "../../assets/banner/TheButterflySpell.jpg";
-import img2 from "../../assets/banner/TheLastDefenderCover.jpg";
-import img3 from "../../assets/banner/Stormborn (1).jpg";
-import img4 from "../../assets/banner/MurderMelodycover.jpg";
-import img5 from "../../assets/banner/ArchersAscent.jpg";
-import img6 from "../../assets/banner/Dustanddestinycover.jpg";
+import img1 from "../../assets/banner/TheButterflySpell.webp";
+import img2 from "../../assets/banner/TheLastDefenderCover.webp";
+import img3 from "../../assets/banner/Stormborn (1).webp";
+import img4 from "../../assets/banner/MurderMelodycover.webp";
+import img5 from "../../assets/banner/ArchersAscent.webp";
+import img6 from "../../assets/banner/Dustanddestinycover.webp";
 
 // React functional component
 const TopBanner: React.FC = () => {
@@ -26,7 +26,10 @@ const TopBanner: React.FC = () => {
   return (
     <Section>
       <BannerImage>
-        <img src={bannerImg} alt="Banner Image" />
+        <img
+          src={bannerImg}
+          alt="Custom book cover design examples by Lumeart Studio"
+        />
         <BannerContent>
           <Title>
             CUSTOM BOOK{" "}
@@ -40,7 +43,7 @@ const TopBanner: React.FC = () => {
               <span>your #1 marketing tool</span>
             </p>
           </Subtitle>
-          <Button onClick={() => navigate("/GetACover")}>
+          <Button onClick={() => navigate("/get-a-cover")}>
             Get A Free Cover Design Idea
           </Button>
         </BannerContent>

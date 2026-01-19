@@ -4,7 +4,7 @@ import ShareIdeasSection from "../../../pages/IdeaSection/ideaSection";
 
 const images = Object.entries(
   import.meta.glob<{ default: string }>(
-    "../../../assets/CustomBookCovers/*.{jpg,jpeg,png}",
+    "../../../assets/CustomBookCovers/*.{jpg,jpeg,png,webp}",
     {
       eager: true,
     }

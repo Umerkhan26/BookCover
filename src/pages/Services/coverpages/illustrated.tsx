@@ -1,11 +1,20 @@
 import FictionCover from "../../FictionCover/FictionCover";
-import illustratedCover from "../../../assets/PageBanners/illustrateLUMEARTWEBPAGEFICTIONCOVER-02.jpg";
+import illustratedCover from "../../../assets/PageBanners/illustrateLUMEARTWEBPAGEFICTIONCOVER-02.webp";
 import IllusratedDesignProcess from "./illustratedDesignProcess";
+import { Helmet } from "react-helmet-async";
 // import Reviews from '../../reviews/reviews'
 // import Packages from '../../ourPackages/packages'
 const Illustrated = () => {
   return (
     <div className="text-black ">
+      <Helmet>
+        <title>Custom Illustrated Book Covers | Bespoke Digital Art</title>
+        <meta
+          name="description"
+          content="Stand out with unique, hand-drawn digital illustrations. 100% custom artwork tailored to your characters, world-building, and story arc."
+        />
+        <link rel="canonical" href="https://lumeartstudio.com/illustrated" />
+      </Helmet>
       <FictionCover
         title="Illustrated book cover design from scratch"
         subtitle="Immerse readers into your world"

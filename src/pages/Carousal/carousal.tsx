@@ -19,12 +19,12 @@ import {
   NextPreviewButton,
 } from "./carousal.styles";
 
-import img1 from "../../assets/banner/TheButterflySpell.jpg";
-import img2 from "../../assets/banner/TheLastDefenderCover.jpg";
-import img3 from "../../assets/banner/Stormborn (1).jpg";
-import img4 from "../../assets/banner/MurderMelodycover.jpg";
-import img5 from "../../assets/banner/ArchersAscent.jpg";
-import img6 from "../../assets/banner/Dustanddestinycover.jpg";
+import img1 from "../../assets/banner/TheButterflySpell.webp";
+import img2 from "../../assets/banner/TheLastDefenderCover.webp";
+import img3 from "../../assets/banner/Stormborn (1).webp";
+import img4 from "../../assets/banner/MurderMelodycover.webp";
+import img5 from "../../assets/banner/ArchersAscent.webp";
+import img6 from "../../assets/banner/Dustanddestinycover.webp";
 import { useNavigate } from "react-router-dom";
 
 const images = [

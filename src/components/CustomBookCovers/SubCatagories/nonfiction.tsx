@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 const images = Object.entries(
   import.meta.glob<{ default: string }>(
-    "../../../assets/CustomBookCovers/*.{jpg,jpeg,png}",
+    "../../../assets/CustomBookCovers/*.{jpg,jpeg,png,webp}",
     {
       eager: true,
     }

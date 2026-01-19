@@ -2,7 +2,7 @@ import ContactUsCover from "../../pages/ContactUsCover/ContactUsCover";
 import TeamSection from "../../pages/AboutTeamCard/AboutTeamSection";
 import AboutContent from "../../pages/AboutContent/AboutContent";
 import { Helmet } from "react-helmet-async";
-import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-02.jpg";
+import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-02.webp";
 
 const AboutUs = () => {
   return (

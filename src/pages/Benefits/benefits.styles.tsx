@@ -17,7 +17,7 @@ export const BenefitItems = styled.div`
   }
 `;
 
-export const SectionTitle = styled.h2`
+export const SectionTitle = styled.h1`
   font-size: 34px;
   font-weight: bold;
   color: #25293f;

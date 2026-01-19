@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 // Import images directly
-import img1 from "../../assets/LogoDesign/img1.jpg";
-import img2 from "../../assets/LogoDesign/img2.jpg";
-import img3 from "../../assets/LogoDesign/img3.jpg";
-import img4 from "../../assets/LogoDesign/img4.jpg";
-import img5 from "../../assets/LogoDesign/img5.jpg";
-import img6 from "../../assets/LogoDesign/img6.jpeg";
-import img7 from "../../assets/LogoDesign/img7.jpeg";
-import img8 from "../../assets/LogoDesign/img8.jpeg";
-import img9 from "../../assets/LogoDesign/img9.jpeg";
+import img1 from "../../assets/LogoDesign/img1.webp";
+import img2 from "../../assets/LogoDesign/img2.webp";
+import img3 from "../../assets/LogoDesign/img3.webp";
+import img4 from "../../assets/LogoDesign/img4.webp";
+import img5 from "../../assets/LogoDesign/img5.webp";
+import img6 from "../../assets/LogoDesign/img6.webp";
+import img7 from "../../assets/LogoDesign/img7.webp";
+import img8 from "../../assets/LogoDesign/img8.webp";
+import img9 from "../../assets/LogoDesign/img9.webp";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 

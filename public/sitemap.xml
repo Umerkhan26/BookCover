@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://lumeartstudio.com/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/services</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/portfolio</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/faqs</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/contact-us</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/partner-with-us</loc>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/get-a-cover</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/fiction-cover</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/non-fiction-cover</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/illustrated</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/book-cover-redesign</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/audio-book-cover</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/logo-branding</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/about-us</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/terms-and-conditions</loc>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://lumeartstudio.com/privacy-policy</loc>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
