@@ -60,7 +60,6 @@ const LoginModal: React.FC<LoginModalProps> = ({
 
     try {
       const data = await loginAPI(email, password);
-      console.log("Login successful:", data);
 
       if (!data.user || !data.user.role) {
         throw new Error("Invalid user data received.");

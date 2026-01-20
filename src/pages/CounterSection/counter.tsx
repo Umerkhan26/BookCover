@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import CountUp from "react-countup"; // Import CountUp
+import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 // Styled Components
 const CounterSectionWrapper = styled.section`
@@ -114,7 +115,6 @@ const Label = styled.span`
   }
 `;
 
-// Component Props
 interface CounterSectionProps {
   data: {
     num: number;
@@ -123,36 +123,56 @@ interface CounterSectionProps {
   }[];
 }
 
-// Main Component
 const CounterSection: React.FC<CounterSectionProps> = ({ data }) => {
-  const counterRef = useRef(null); // Reference for the counter section
-  const [isInView, setIsInView] = useState(false); // State to track if the section is in view
+  const counterRef = useRef(null);
+  const [isInView, setIsInView] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 900);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
-    // Create an intersection observer
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // If the counter section is in view, set the state to true
         if (entry.isIntersecting) {
           setIsInView(true);
         }
       },
       {
-        threshold: 0.5, // 50% of the element should be in view
-      }
+        threshold: 0.5,
+      },
     );
 
     if (counterRef.current) {
       observer.observe(counterRef.current);
     }
 
-    // Clean up the observer on unmount
     return () => {
       if (counterRef.current) {
         observer.unobserve(counterRef.current);
       }
     };
   }, []);
+
+  if (!isLoaded) {
+    return (
+      <CounterSectionWrapper ref={counterRef}>
+        <Container>
+          <WrapCounter>
+            {data.map((_, index) => (
+              <ColCount key={index}>
+                <Top>
+                  <Shimmer height="122px" width="110px" rounded={false} />
+                </Top>
+                <ShimmerText lines={1} width="100px" />
+              </ColCount>
+            ))}
+          </WrapCounter>
+        </Container>
+      </CounterSectionWrapper>
+    );
+  }
 
   return (
     <CounterSectionWrapper ref={counterRef}>

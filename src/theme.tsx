@@ -16,11 +16,7 @@ export const theme = {
     white: "#fff",
   },
   fonts: {
-    main: "Poppins, sans-serif",
-    bold: "'KonnectBold', sans-serif",
-    black: "'KonnectBlack', sans-serif",
-    italic: "'KonnectItalic', sans-serif",
-    textFont: "'KonnectLight', sans-serif",
+    main: "'Manrope', sans-serif",
   },
   images: {
     // background: "./assets/banner/cover-photo.jpg",

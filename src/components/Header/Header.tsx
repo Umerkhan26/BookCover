@@ -248,10 +248,7 @@ function Header() {
             >
               Contact Us
             </NavLinkButton>
-            <NavLinkButton
-              to="/partner-with-us"
-              onClick={() => navigate("/partner-with-us")}
-            >
+            <NavLinkButton to="/partner" onClick={() => navigate("/partner")}>
               Partner With Us
             </NavLinkButton>
 

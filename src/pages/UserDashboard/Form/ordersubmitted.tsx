@@ -11,13 +11,9 @@ const OrderSubmittedPage: React.FC = () => {
 
   const [message, setMessage] = useState("");
 
-  const handleSendMessage = () => {
-    console.log("Message sent:", message);
-  };
+  const handleSendMessage = () => {};
 
-  const handleAddCC = () => {
-    console.log("Add CC clicked");
-  };
+  const handleAddCC = () => {};
 
   return (
     <>

@@ -1,5 +1,5 @@
 import React from "react";
-import bannerImg from "../../assets/logo/Website Cover 1263 × 651 px (2).jpg";
+import bannerImg from "../../assets/logo/WebsiteCover1263651px2.webp";
 import {
   Section,
   BannerImage,
@@ -19,6 +19,7 @@ import img3 from "../../assets/banner/Stormborn (1).webp";
 import img4 from "../../assets/banner/MurderMelodycover.webp";
 import img5 from "../../assets/banner/ArchersAscent.webp";
 import img6 from "../../assets/banner/Dustanddestinycover.webp";
+import { ShimmerImage } from "../../components/Shimmer/Shimmer";
 
 // React functional component
 const TopBanner: React.FC = () => {
@@ -26,9 +27,12 @@ const TopBanner: React.FC = () => {
   return (
     <Section>
       <BannerImage>
-        <img
+        <ShimmerImage
           src={bannerImg}
           alt="Custom book cover design examples by Lumeart Studio"
+          width={1263}
+          height={651}
+          loading="eager"
         />
         <BannerContent>
           <Title>
@@ -78,22 +82,58 @@ const TopBanner: React.FC = () => {
         </TopBannerR>
         <CardSection>
           <Card>
-            <img src={img1} alt="Cover Image" />
+            <ShimmerImage
+              src={img1}
+              alt="Cover Image"
+              width={155}
+              height={260}
+              loading="lazy"
+            />
           </Card>
           <Card>
-            <img src={img2} alt="Cover Image" />
+            <ShimmerImage
+              src={img2}
+              alt="Cover Image"
+              width={155}
+              height={260}
+              loading="lazy"
+            />
           </Card>
           <Card>
-            <img src={img3} alt="Cover Image" />
+            <ShimmerImage
+              src={img3}
+              alt="Cover Image"
+              width={155}
+              height={260}
+              loading="lazy"
+            />
           </Card>
           <Card>
-            <img src={img4} alt="Cover Image" />
+            <ShimmerImage
+              src={img4}
+              alt="Cover Image"
+              width={155}
+              height={260}
+              loading="lazy"
+            />
           </Card>
           <Card>
-            <img src={img5} alt="Cover Image" />
+            <ShimmerImage
+              src={img5}
+              alt="Cover Image"
+              width={155}
+              height={260}
+              loading="lazy"
+            />
           </Card>
           <Card>
-            <img src={img6} alt="Cover Image" />
+            <ShimmerImage
+              src={img6}
+              alt="Cover Image"
+              width={155}
+              height={260}
+              loading="lazy"
+            />
           </Card>
         </CardSection>
       </Wrapper>

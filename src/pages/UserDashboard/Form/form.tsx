@@ -45,48 +45,12 @@ const FormOrder: React.FC = () => {
     "Fiction",
   ];
 
-  // const handleReview = async () => {
-  //   const formData = {
-  //     userId,
-  //     packageId,
-  //     addOnIds,
-  //     authorName,
-  //     bookTitle,
-  //     bookSubtitle,
-  //     narratorName,
-  //     genre,
-  //     seriesContinuation,
-  //     summary,
-  //     see,
-  //     order,
-  //     coverStyle,
-  //     preferences,
-  //     payment,
-  //     status: "Submitted",
-  //     userContacts: userContacts, // Added userContacts field
-  //     // Adding the status as "submitted"
-  //   };
-
-  //   try {
-  //     const response = await createOrderAPI(formData);
-  //     console.log("Order created successfully:", response);
-
-  //     toast.success("Order created successfully!");
-
-  //     // Navigate to the review page after successful order creation
-  //     navigate("/portal/orders", { state: response });
-  //   } catch (error) {
-  //     console.error("Error creating order:", error);
-  //     toast.error("Error creating order. Please try again.");
-  //   }
-  // };
-
   const handleReview = async () => {
     setLoading(true);
     const formData = {
       userId: String(userId),
-      packageId: String(packageId), // Ensure packageId is a string
-      addOnIds: Array.isArray(addOnIds) ? addOnIds : [], // Ensure addOnIds is an array
+      packageId: String(packageId),
+      addOnIds: Array.isArray(addOnIds) ? addOnIds : [],
       name,
       bookTitle,
       bookSubtitle,
@@ -99,7 +63,7 @@ const FormOrder: React.FC = () => {
       // preferences,
       // payment,
       status: "Submitted",
-      userContacts: userContacts ? userContacts.split(",") : [], // Convert to an array
+      userContacts: userContacts ? userContacts.split(",") : [],
       // coverMood: "", // Add missing fields with default values
       // colorPalette: "",
       // examples: "",
@@ -111,7 +75,6 @@ const FormOrder: React.FC = () => {
 
     try {
       const response = await createOrderAPI(formData);
-      console.log("Order created successfully:", response);
       toast.success("Order created successfully!");
 
       // Delay navigation until after toast

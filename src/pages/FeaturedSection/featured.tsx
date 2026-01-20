@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 // Styled Components
 const FeaturedSectionWrapper = styled.section`
@@ -81,11 +82,32 @@ interface FeaturedSectionProps {
 
 // Main Component
 const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredItems }) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 700);
+    return () => clearTimeout(timer);
+  }, []);
+  if (!isLoaded) {
+    return (
+      <FeaturedSectionWrapper>
+        <Container>
+          <ShimmerText lines={1} width="200px" />
+          <FeaturedList>
+            {Array.from({ length: featuredItems.length }).map((_, index) => (
+              <FeaturedItem key={index}>
+                <Shimmer height="80px" width="100%" rounded />
+              </FeaturedItem>
+            ))}
+          </FeaturedList>
+        </Container>
+      </FeaturedSectionWrapper>
+    );
+  }
   return (
     <FeaturedSectionWrapper>
       <Container>
         <Title>
-          As featured <span>in</span> {/* Render the title directly */}
+          As featured <span>in</span>
         </Title>
         <FeaturedList>
           {featuredItems.map((item, index) => (
@@ -95,7 +117,13 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredItems }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FeaturedImage src={item.src} alt={item.alt} />
+              <FeaturedImage
+                src={item.src}
+                alt={item.alt}
+                loading="lazy"
+                srcSet={`${item.src.replace(".png", "-small.webp")} 480w, ${item.src.replace(".png", "-large.webp")} 1200w`}
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
             </FeaturedItem>
           ))}
         </FeaturedList>

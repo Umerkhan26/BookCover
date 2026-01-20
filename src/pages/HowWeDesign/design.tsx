@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 const Section = styled.section`
   padding: 60px 0px;
@@ -238,6 +239,11 @@ const DesignProcess = ({
   buttonText = "Order Design",
   buttonLink = "/services",
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
   useEffect(() => {
     AOS.init({
       once: true,
@@ -250,6 +256,28 @@ const DesignProcess = ({
 
   const initialDelay = 200;
   const staggerDelay = 150;
+
+  if (!isLoaded) {
+    return (
+      <Section>
+        <Container>
+          <LeftColumn>
+            <ShimmerText lines={2} width="70%" />
+          </LeftColumn>
+          <RightColumn>
+            <StepsContainer>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <Step key={index}>
+                  <ShimmerText lines={3} width="80%" />
+                </Step>
+              ))}
+              <Shimmer height="40px" width="150px" rounded />
+            </StepsContainer>
+          </RightColumn>
+        </Container>
+      </Section>
+    );
+  }
   return (
     <Section>
       <Container>

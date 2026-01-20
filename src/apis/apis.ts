@@ -52,7 +52,7 @@ export const forgotPasswordAPI = async (email: string) => {
     return response.data;
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Failed to send password reset email"
+      error.response?.data?.message || "Failed to send password reset email",
     );
   }
 };
@@ -83,7 +83,7 @@ export const resetPasswordAPI = async (email: string, newPassword: string) => {
 export const getPackagesByPageAPI = async (page: string) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/getPackagesByPage/${page}`
+      `${API_BASE_URL}/getPackagesByPage/${page}`,
     );
     return response.data;
   } catch (error) {
@@ -103,7 +103,7 @@ export const fetchUsers = async () => {
 
 export const updateUserStatus = async (
   userId: string,
-  status: "active" | "inactive"
+  status: "active" | "inactive",
 ) => {
   try {
     const token = localStorage.getItem("token");
@@ -114,7 +114,7 @@ export const updateUserStatus = async (
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
@@ -125,7 +125,6 @@ export const updateUserStatus = async (
 export const deleteUser = async (userId: string) => {
   try {
     const token = localStorage.getItem("token");
-    console.log("Token:", token);
 
     const response = await axios.delete(
       `${API_BASE_URL}/delete-user/${userId}`,
@@ -133,13 +132,13 @@ export const deleteUser = async (userId: string) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
     console.error(
       "Failed to delete user:",
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     throw error.response?.data?.message || "Failed to delete user";
   }
@@ -148,7 +147,7 @@ export const deleteUser = async (userId: string) => {
 export const fetchAddOnsByPackageId = async (packageId: string) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/getaddOnsByPackageId${packageId}`
+      `${API_BASE_URL}/getaddOnsByPackageId${packageId}`,
     );
     return response.data.data; // Return only the data array
   } catch (error) {
@@ -226,7 +225,7 @@ export const fetchOrdersByUserId = async (): Promise<any> => {
 
     // Make the GET request to the API to fetch orders by userId
     const response = await axios.get(
-      `${API_BASE_URL}/getOrderByUserId/${userId}`
+      `${API_BASE_URL}/getOrderByUserId/${userId}`,
     );
     return response.data.orders;
   } catch (error) {
@@ -238,7 +237,6 @@ export const fetchOrdersByUserId = async (): Promise<any> => {
 export const fetchAllOrders = async (): Promise<any> => {
   try {
     const response = await axios.get(`${API_BASE_URL}/getAllorders`);
-    console.log("respomse from all orders api", response);
     return response.data.orders;
   } catch (error) {
     console.error("Error fetching all orders:", error);
@@ -269,7 +267,7 @@ export const createBookRequest = async (bookRequestData: {
     formData.append("description", bookRequestData.description);
     formData.append(
       "coverPreference",
-      JSON.stringify(bookRequestData.coverPreference)
+      JSON.stringify(bookRequestData.coverPreference),
     );
     formData.append("mainCharacters", bookRequestData.mainCharacters || "");
     formData.append("keyObjects", bookRequestData.keyObjects || "");
@@ -287,7 +285,7 @@ export const createBookRequest = async (bookRequestData: {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     return response.data;
@@ -299,7 +297,6 @@ export const createBookRequest = async (bookRequestData: {
 export const fetchAllBookRequests = async (): Promise<any> => {
   try {
     const response = await axios.get(`${API_BASE_URL}/getCoverIdeas`);
-    console.log("Response from all book requests API", response);
 
     return response.data;
   } catch (error) {

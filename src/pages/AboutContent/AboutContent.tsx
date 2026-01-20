@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ShimmerText } from "../../components/Shimmer/Shimmer";
 
 interface AboutContentProps {
   title?: string;
@@ -14,6 +15,20 @@ const AboutContent: React.FC<AboutContentProps> = ({
   shared their values – Lumeart. Our team believes that book cover design can look professional without costing you a fortune. 
   There are so many stories in this world worth telling. Let us make sure yours gets the attention it deserves.`,
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 800);
+    return () => clearTimeout(timer);
+  }, []);
+  if (!isLoaded) {
+    return (
+      <div className="text-center max-w-[90%] md:max-w-2xl mx-auto md:px-0 mt-8">
+        <ShimmerText lines={2} width="70%" style={{ marginBottom: "20px" }} />
+        <ShimmerText lines={4} width="80%" />
+      </div>
+    );
+  }
   return (
     <div className="text-center max-w-[90%] md:max-w-2xl mx-auto  md:px-0 mt-8">
       <h3 className="text-[clamp(24px, 6vw, 32px)] font-semibold text-black leading-snug pb-8 ">

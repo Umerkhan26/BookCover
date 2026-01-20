@@ -133,7 +133,7 @@ const BookCoverForm: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = e.target;
 
@@ -179,7 +179,7 @@ const BookCoverForm: React.FC = () => {
       // Reset the form or show success message here
     } catch (err) {
       toast.error(
-        "Failed to submit the book cover request. Please try again later."
+        "Failed to submit the book cover request. Please try again later.",
       );
     }
   };

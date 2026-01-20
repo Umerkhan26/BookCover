@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {
@@ -15,6 +15,7 @@ import {
   FirstRow,
   TextContainer,
 } from "./benefits.styles";
+import { ShimmerCard, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 type BenefitItem = {
   image: string;
@@ -32,6 +33,11 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
   title,
   benefits,
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -47,6 +53,33 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
 
   const baseDelay = 0;
   const delayIncrement = 200;
+
+  if (!isLoaded) {
+    return (
+      <BenefitsWrap>
+        <Container>
+          <FirstRow>
+            <TextContainer>
+              <ShimmerText lines={2} width="80%" />
+            </TextContainer>
+            <BenefitItemWrap>
+              <ShimmerCard height="190px" />
+            </BenefitItemWrap>
+            <BenefitItemWrap>
+              <ShimmerCard height="190px" />
+            </BenefitItemWrap>
+          </FirstRow>
+          <Row>
+            {remainingCards.map((_, index) => (
+              <BenefitItemWrap key={index}>
+                <ShimmerCard height="190px" />
+              </BenefitItemWrap>
+            ))}
+          </Row>
+        </Container>
+      </BenefitsWrap>
+    );
+  }
 
   return (
     <BenefitsWrap>

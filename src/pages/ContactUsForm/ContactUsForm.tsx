@@ -11,32 +11,34 @@ import {
   InfoSectionTitle,
   ContactDetail,
   SocialIconsWrapper,
-  NameInputsWrapper, 
+  NameInputsWrapper,
 } from "./ContactUsForm.styles";
 
-import { submitContactFormAPI } from "../../apis/apis"; 
+import { submitContactFormAPI } from "../../apis/apis";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
-
-import { FaEnvelope, FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
 
 const ContactUsForm: React.FC = () => {
-  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    referral: "", // "How did you find us or who were you referred by?"
+    referral: "",
     message: "",
   });
-  const [isAgreed, setIsAgreed] = useState(false); // State for the privacy policy checkbox
-  const [isLoading, setIsLoading] = useState(false); // State to manage loading during API calls
+  const [isAgreed, setIsAgreed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Generic handler for all text-based inputs (text, email, textarea)
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -45,43 +47,42 @@ const ContactUsForm: React.FC = () => {
     }));
   };
 
-  // Handler for the privacy policy checkbox
   const handleCheckboxChange = () => {
     setIsAgreed((prevAgreed) => !prevAgreed);
   };
-
-  // Basic email validation function
   const validateEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email); // Simple regex for email format
+    return /\S+@\S+\.\S+/.test(email);
   };
 
-  // Handles the form submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission behavior (page reload)
-    setIsLoading(true); // Set loading state to true while submitting
+    e.preventDefault();
+    setIsLoading(true);
 
     const { firstName, lastName, email, message } = formData;
 
-    // Client-side validation checks
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !message.trim() || !isAgreed) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !message.trim() ||
+      !isAgreed
+    ) {
       toast.error("Please fill in all required fields and agree to the terms.");
-      setIsLoading(false); // Stop loading if validation fails
+      setIsLoading(false);
       return;
     }
 
     if (!validateEmail(email)) {
       toast.error("Please enter a valid email address.");
-      setIsLoading(false); // Stop loading if email is invalid
+      setIsLoading(false);
       return;
     }
 
     try {
-      // Call your API to submit contact form data
       const response = await submitContactFormAPI(formData);
-      console.log("API Response:", response); // Log the successful response
-      toast.success("Your message has been sent successfully!"); // Show success notification
+      console.log("API Response:", response);
+      toast.success("Your message has been sent successfully!");
 
-      // Reset form fields after successful submission
       setFormData({
         firstName: "",
         lastName: "",
@@ -89,12 +90,12 @@ const ContactUsForm: React.FC = () => {
         referral: "",
         message: "",
       });
-      setIsAgreed(false); // Uncheck the agreement checkbox
+      setIsAgreed(false);
     } catch (err) {
-      console.error("Contact form submission error:", err); // Log the error for debugging
-      toast.error("Failed to send message. Please try again later."); // Show error notification
+      console.error("Contact form submission error:", err);
+      toast.error("Failed to send message. Please try again later.");
     } finally {
-      setIsLoading(false); // Always set loading state to false after the API call finishes (success or failure)
+      setIsLoading(false);
     }
   };
 
@@ -104,7 +105,8 @@ const ContactUsForm: React.FC = () => {
         <InfoWrapper>
           <InfoSectionTitle>Get in Touch</InfoSectionTitle>
           <p className="description">
-            Have a question or a project in mind? We'd love to hear from you. Reach out through the form or use the direct contact details below.
+            Have a question or a project in mind? We'd love to hear from you.
+            Reach out through the form or use the direct contact details below.
           </p>
 
           {/* <ContactDetail>
@@ -121,33 +123,51 @@ const ContactUsForm: React.FC = () => {
           </ContactDetail> */}
           <ContactDetail>
             <FaEnvelope className="icon" />
-            <a href="mailto:contact@lumeart.com">
-             studioslumeart@gmail.com
-            </a>
+            <a href="mailto:contact@lumeart.com">studioslumeart@gmail.com</a>
           </ContactDetail>
 
           <SocialIconsWrapper>
-            <a href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <a
+              href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
               <FaFacebookF className="social-icon" />
             </a>
-            <a href="https://www.instagram.com/lumeart_studio?igsh=MXFsd29mdmo4YWxtMg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a
+              href="https://www.instagram.com/lumeart_studio?igsh=MXFsd29mdmo4YWxtMg=="
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
               <FaInstagram className="social-icon" />
             </a>
-            <a href="https://www.linkedin.com/company/lumeart-studio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a
+              href="https://www.linkedin.com/company/lumeart-studio/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
               <FaLinkedinIn className="social-icon" />
             </a>
-            <a href="https://www.threads.com/@lumeart_studio?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <a
+              href="https://www.threads.com/@lumeart_studio?igshid=NTc4MTIwNjQ2YQ=="
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
               <FaThreads className="social-icon" />
             </a>
           </SocialIconsWrapper>
-
         </InfoWrapper>
 
         <ContactFormWrapper>
           <Form onSubmit={handleSubmit}>
-            
             <NameInputsWrapper>
-              <div> {/* Wrap each Input in a div to allow NameInputsWrapper to apply flex properties */}
+              <div>
+                {" "}
+                {/* Wrap each Input in a div to allow NameInputsWrapper to apply flex properties */}
                 <Input
                   type="text"
                   name="firstName"
@@ -157,7 +177,9 @@ const ContactUsForm: React.FC = () => {
                   required
                 />
               </div>
-              <div> {/* Wrap each Input in a div */}
+              <div>
+                {" "}
+                {/* Wrap each Input in a div */}
                 <Input
                   type="text"
                   name="lastName"
@@ -201,10 +223,14 @@ const ContactUsForm: React.FC = () => {
                 onChange={handleCheckboxChange}
                 required
               />
-              <span className="ml-2"> {/* ml-2 for margin-left (if using Tailwind) */}
+              <span className="ml-2">
+                {" "}
+                {/* ml-2 for margin-left (if using Tailwind) */}
                 Agree with personal data processing. For more info, please
                 consult{" "}
-                <a href="/privacy-policy" className="text-[#6fa8a8]"> {/* Adjusted text color for link to match new primary */}
+                <a href="/privacy-policy" className="text-[#6fa8a8]">
+                  {" "}
+                  {/* Adjusted text color for link to match new primary */}
                   our privacy policy
                 </a>
                 .
@@ -212,7 +238,8 @@ const ContactUsForm: React.FC = () => {
             </CheckboxWrapper>
 
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Sending..." : "Send Message"} {/* Dynamic button text */}
+              {isLoading ? "Sending..." : "Send Message"}{" "}
+              {/* Dynamic button text */}
             </Button>
           </Form>
         </ContactFormWrapper>

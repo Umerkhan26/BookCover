@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
+import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 // Styled Components
 const Section = styled.section`
@@ -130,6 +131,27 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
   buttonText,
   onButtonClick,
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+  if (!isLoaded) {
+    return (
+      <Section className="section-share-ideas">
+        <Container className="container">
+          <SectionTitle className="section-title">
+            <ShimmerText lines={2} width="70%" />
+            <Shimmer height="10px" width="40px" rounded />
+            <ShimmerText lines={1} width="80%" />
+          </SectionTitle>
+          <div className="text-center">
+            <Shimmer height="40px" width="200px" rounded />
+          </div>
+        </Container>
+      </Section>
+    );
+  }
   return (
     <Section className="section-share-ideas">
       {/* SVG Blocks */}

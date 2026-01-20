@@ -38,7 +38,7 @@ const footerData: FooterProps = {
       name: "Partners",
       links: [
         { href: "", text: "Useful Resources" },
-        { href: "/partner-with-us", text: "Partner with Us" },
+        { href: "/partner", text: "Partner with Us" },
       ],
     },
   ],
@@ -68,8 +68,14 @@ const Layout: React.FC = () => {
   return (
     <>
       <Helmet>
-        {" "}
-        <title> Lumeart Studio</title>
+        <title>Lumeart Studio</title>
+
+        <meta
+          name="google-site-verification"
+          content="ylkKyyM7sG4q34U0AqST1Y3GgQJ1zSALy9RKHCwo6oI"
+        />
+
+        <link rel="canonical" href="https://lumeartstudio.com/" />
       </Helmet>
       {/* <TopBar/> */}
       <Header />

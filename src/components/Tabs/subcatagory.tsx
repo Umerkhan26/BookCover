@@ -1,9 +1,16 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { Shimmer } from "../Shimmer/Shimmer";
 
 const SubCategoryTabs = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 700);
+    return () => clearTimeout(timer);
+  }, []);
 
   const subcategories = [
     { name: "Fantasy", path: "fantasy" },
@@ -18,6 +25,29 @@ const SubCategoryTabs = () => {
     { name: "Non-fiction", path: "non-fiction" },
     { name: "Fiction", path: "fiction" },
   ];
+
+  if (!isLoaded) {
+    return (
+      <Container>
+        <SubCategoryContainer>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+              gap: "10px",
+            }}
+          >
+            {Array.from({ length: 11 }).map((_, i) => (
+              <Shimmer key={i} height="30px" width="100%" rounded />
+            ))}
+          </div>
+          <div
+            style={{ height: "2px", background: "#ddd", marginTop: "10px" }}
+          />
+        </SubCategoryContainer>
+      </Container>
+    );
+  }
 
   return (
     <Container>

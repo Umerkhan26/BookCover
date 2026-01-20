@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FAQContainer,
   Question,
@@ -8,6 +8,7 @@ import {
 } from "./FAQs.styles";
 import FAQTitle from "./Title Section/title";
 import { Helmet } from "react-helmet-async";
+import { Shimmer, ShimmerText } from "../Shimmer/Shimmer";
 
 // Define a type for FAQ items
 interface FAQItem {
@@ -97,13 +98,79 @@ const faqs: FAQItem[] = [
 ];
 
 const FAQ: React.FC = () => {
-  // Define state with proper type
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Properly type `index` parameter
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 900);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isLoaded) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full bg-white-50">
+        <Helmet>
+          <title>
+            FAQs: Design Process, Pricing & Revisions | Lumeart Studio
+          </title>
+          <meta
+            name="description"
+            content="Find answers regarding our book cover design workflow, unlimited revisions, turnaround times, and flexible payment plans for authors."
+          />
+          <link rel="canonical" href="https://lumeartstudio.com/faqs" />
+        </Helmet>
+        <div className="w-full">
+          {/* Shimmer for FAQTitle */}
+          <div style={{ textAlign: "center", padding: "20px" }}>
+            <ShimmerText
+              lines={1}
+              width="300px"
+              style={{ margin: "0 auto 20px" }}
+            />
+          </div>
+        </div>
+
+        <div className="w-full max-w-4xl mx-auto px-4">
+          <FAQContainer>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <QuestionWrapper key={index}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    padding: "16px",
+                    border: "1px solid #e0e0e0",
+                    borderRadius: "8px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <ShimmerText lines={1} width="80%" />
+                  <Shimmer
+                    height="20px"
+                    width="20px"
+                    rounded
+                    // style={{ opacity: 0.5 }}
+                  />{" "}
+                  {/* Icon placeholder */}
+                </div>
+                {index % 2 === 0 && (
+                  <div style={{ padding: "0 16px 16px", opacity: 0.8 }}>
+                    <ShimmerText lines={3} width="90%" />
+                  </div>
+                )}
+              </QuestionWrapper>
+            ))}
+          </FAQContainer>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-white-50 ">

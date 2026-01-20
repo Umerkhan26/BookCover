@@ -36,14 +36,13 @@ const User: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | Error>(null);
   const [editingStatusUserId, setEditingStatusUserId] = useState<string | null>(
-    null
+    null,
   );
 
   useEffect(() => {
     const loadUsers = async () => {
       try {
         const fetchedUsers = await fetchUsers();
-        console.log("userrrrrs", fetchedUsers);
         setUsers(fetchedUsers);
       } catch (err: any) {
         setError(err);
@@ -64,8 +63,6 @@ const User: React.FC = () => {
 
   const handleStatusOptionChange = async (userId: string, status: string) => {
     try {
-      console.log("Updating user status:", { userId, status });
-
       const backendStatus = status === "Active" ? "active" : "inactive";
 
       await updateUserStatus(userId, backendStatus);
@@ -73,15 +70,15 @@ const User: React.FC = () => {
       // Update the user's status in the state
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
-          user.userId === userId ? { ...user, status: backendStatus } : user
-        )
+          user.userId === userId ? { ...user, status: backendStatus } : user,
+        ),
       );
 
       setEditingStatusUserId(null);
     } catch (error: any) {
       console.error(
         "Failed to update user status:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };
@@ -91,7 +88,7 @@ const User: React.FC = () => {
       await deleteUser(user.userId);
 
       setUsers((prevUsers) =>
-        prevUsers.filter((existingUser) => existingUser.userId !== user.userId)
+        prevUsers.filter((existingUser) => existingUser.userId !== user.userId),
       );
 
       toast.success("User deleted successfully");
@@ -100,7 +97,7 @@ const User: React.FC = () => {
 
       console.error(
         "Failed to delete user:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };

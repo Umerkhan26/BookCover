@@ -1,13 +1,45 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { Shimmer } from "../Shimmer/Shimmer";
 
 const Tabs = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const isCustomBookCoversActive =
     location.pathname === "/portfolio" ||
     location.pathname.startsWith("/portfolio/custom-book-covers");
+
+  if (!isLoaded) {
+    return (
+      <>
+        <TabContainer>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "20px",
+            }}
+          >
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Shimmer key={i} height="40px" width="150px" rounded />
+            ))}
+          </div>
+          <div
+            style={{ height: "1px", background: "#ddd", marginTop: "10px" }}
+          />
+        </TabContainer>
+      </>
+    );
+  }
 
   return (
     <>

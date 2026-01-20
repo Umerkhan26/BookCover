@@ -1,6 +1,6 @@
 // import React from "react";
 import styled from "styled-components";
-
+import { ShimmerImage } from "../../components/Shimmer/Shimmer";
 
 interface ContactUsCoverProps {
   title?: string;
@@ -9,9 +9,7 @@ interface ContactUsCoverProps {
   image?: string;
 }
 
-const ContactUsCover: React.FC<ContactUsCoverProps> = ({
- image
-}) => {
+const ContactUsCover: React.FC<ContactUsCoverProps> = ({ image }) => {
   return (
     <Container>
       {/* <Section>
@@ -22,7 +20,21 @@ const ContactUsCover: React.FC<ContactUsCoverProps> = ({
           <EmailLink href={`mailto:${email}`}>{email}</EmailLink>
         </Subtitle>
       </Section> */}
-      <img src={image} alt="image" />
+      {/* <img src={image} alt="image" /> */}
+      <ShimmerImage
+        src={image || "bannerImg"}
+        alt="Contact Us Banner"
+        width={1200}
+        height={400}
+        loading="eager"
+        style={{
+          width: "100%",
+          height: "auto",
+          maxHeight: "400px",
+          objectFit: "cover",
+          display: "block",
+        }}
+      />
     </Container>
   );
 };
@@ -111,25 +123,23 @@ export default ContactUsCover;
 //   }
 // `;
 
-
 const Container = styled.div`
   margin-top: 85px;
   width: 100%;
   height: auto;
   overflow: hidden;
- 
 
-  img{
-     width: 100%;
-  height: auto;
-  max-height: 500px; /* optional limit */
-  /* object-fit: cover; */
-  /* display: block; */
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 500px; /* optional limit */
+    /* object-fit: cover; */
+    /* display: block; */
   }
 
-  @media (max-width:768px) {
-    img{
-       max-height: 300px; /* adjust for smaller screens */
+  @media (max-width: 768px) {
+    img {
+      max-height: 300px; /* adjust for smaller screens */
     }
   }
 `;
