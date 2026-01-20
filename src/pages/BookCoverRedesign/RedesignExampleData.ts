@@ -1,6 +1,6 @@
-import package1 from "../../assets/redisgn image 1.png";
-import package2 from "../../assets/redesign image 2.png";
-import package3 from "../../assets/redesign image 3.png";
+import package1 from "../../assets/redisgn image 1.webp";
+import package2 from "../../assets/redesign image 2.webp";
+import package3 from "../../assets/redesign image 3.webp";
 export const examples = [
   {
     before: package1,

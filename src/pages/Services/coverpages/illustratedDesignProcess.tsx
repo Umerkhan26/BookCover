@@ -9,8 +9,8 @@ import {
   Step,
   Title,
 } from "./illustratedDesignProcess.styles";
-import image1 from "../../../assets/pacakge1.jpeg"; // Replace with actual images
-import image2 from "../../../assets/package2.png";
+import image1 from "../../../assets/pacakge1.webp";
+import image2 from "../../../assets/package2.webp";
 // import Packages from "../../ourPackages/packages";
 import Reviews from "../../reviews/reviews";
 // import { myPackagesData } from "../../ourPackages/packagesData";

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import cover1 from "../../assets/NonFictional.png";
-import cover2 from "../../assets/fictionCover.png";
-import cover3 from "../../assets/AudioBookCover.png";
-import cover4 from "../../assets/BookCoverRedesign.png";
-import cover5 from "../../assets/premiumbookcover.jpg";
-import cover6 from "../../assets/illustratedBookcover.jpg";
-import cover7 from "../../assets/logobrandingcover.jpg";
+import cover1 from "../../assets/NonFictional.webp";
+import cover2 from "../../assets/fictionCover.webp";
+import cover3 from "../../assets/AudioBookCover.webp";
+import cover4 from "../../assets/BookCoverRedesign.webp";
+import cover5 from "../../assets/premiumbookcover.webp";
+import cover6 from "../../assets/illustratedBookcover.webp";
+import cover7 from "../../assets/logobrandingcover.webp";
 import "aos/dist/aos.css";
 
 import {

@@ -5,12 +5,12 @@ import {
   AddOnCard,
   OrderButton,
 } from "./SpecialEditionAddOns.styles";
-import specialadd1 from "../../assets/specialadd1.png";
-import specialadd2 from "../../assets/specialadd2.png";
-import specialadd3 from "../../assets/specialadd3.png";
-import specialadd4 from "../../assets/specialadd4.png";
+import specialadd1 from "../../assets/specialadd1.webp";
+import specialadd2 from "../../assets/specialadd2.webp";
+import specialadd3 from "../../assets/specialadd3.webp";
+import specialadd4 from "../../assets/specialadd4.webp";
 import { useNavigate } from "react-router-dom";
-import LoginModal from "../../components/Login/LoginModel"; // Import the modal
+import LoginModal from "../../components/Login/LoginModel";
 import { useState } from "react";
 import "aos/dist/aos.css";
 const addOns = [
@@ -77,11 +77,13 @@ const SpecialEditionAddOns = () => {
       </Title>
       <AddOnsGrid>
         {addOns.map((item, index) => (
-          <AddOnCard key={index}
+          <AddOnCard
+            key={index}
             data-aos="fade-up"
             data-aos-delay={index * 200} // Stagger the animations
             data-aos-duration="1000"
-            data-aos-once="false">
+            data-aos-once="false"
+          >
             <img src={item.image} alt={item.title} />
             <p>{item.title}</p>
             <OrderButton onClick={() => handleOrderNow(item.packageId)}>

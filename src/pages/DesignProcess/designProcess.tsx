@@ -10,13 +10,12 @@ import {
   StepDescription,
   RightContent,
   Button,
-} from "./designProcess.styles"; // Importing styled components
-import coverprocess1 from "../../assets/coverprocess1.png";
-import coverprocess2 from "../../assets/coverprocess2.png";
-import coverprocess3 from "../../assets/coverprocess3.png";
-import coverprocess4 from "../../assets/coverprocess4.png";
+} from "./designProcess.styles";
+import coverprocess1 from "../../assets/coverprocess1.webp";
+import coverprocess2 from "../../assets/coverprocess2.webp";
+import coverprocess3 from "../../assets/coverprocess3.webp";
+import coverprocess4 from "../../assets/coverprocess4.webp";
 
-// Type for each step in the process
 interface Step {
   id: number;
   title: string;
@@ -24,7 +23,6 @@ interface Step {
   imgSrc: string;
 }
 
-// Sample data for the steps
 const steps: Step[] = [
   {
     id: 1,
@@ -72,7 +70,8 @@ const DesignProcess = () => {
   return (
     <ProcessContainer>
       <Title>
-        Our Book Cover Design <span className="text-[#6dc7d1]">Process</span>{" "}
+        Our Book Cover Design{" "}
+        <span className="text-[#6dc7d1]">Process</span>{" "}
       </Title>
 
       {/* Steps container */}
@@ -88,7 +87,6 @@ const DesignProcess = () => {
         ))}
       </StepsContainer>
 
-      {/* Content wrapper for left and right content */}
       <ContentWrapper>
         <LeftContent>
           <StepTitle>{activeStepData.title}</StepTitle>

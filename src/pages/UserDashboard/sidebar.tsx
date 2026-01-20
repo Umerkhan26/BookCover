@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import logo from "../../assets/logo/Lumestudio-1.png";
+import logo from "../../assets/logo/Lumestudio-1.webp";
 import { Helmet } from "react-helmet-async";
 
 interface CollapsibleProps {

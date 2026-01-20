@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo/Lumestudio-1.png";
+import logo from "../../assets/logo/Lumestudio-1.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import userlogo from "../../assets//userlogo.png";

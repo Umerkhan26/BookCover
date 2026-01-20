@@ -1,6 +1,6 @@
 // src/data/packagesData.ts
-import package1 from '../../assets/pacakge1.jpeg';
-import package2 from '../../assets/package2.png';
+import package1 from "../../assets/pacakge1.webp";
+import package2 from "../../assets/package2.webp";
 
 // Define the structure for each package object
 export const myPackagesData = [
@@ -13,13 +13,9 @@ export const myPackagesData = [
       "Concept delivered within 7 b/d",
       "Unlimited revisions",
       "You can pay by installments",
-      "Layered source file"
+      "Layered source file",
     ],
-    freeAddons: [
-      "3D book image",
-      "Title page",
-      "Bonus image for marketing"
-    ],
+    freeAddons: ["3D book image", "Title page", "Bonus image for marketing"],
   },
   {
     title: "Ebook + Print",
@@ -29,13 +25,9 @@ export const myPackagesData = [
       "Everything in the ebook package",
       "High resolution JPG and print-ready PDF",
       "Barcode generated from your ISBN",
-      "Print cover formatting"
+      "Print cover formatting",
     ],
-    freeAddons: [
-      "3D book image",
-      "Title page",
-      "Bonus image for marketing"
-    ],
+    freeAddons: ["3D book image", "Title page", "Bonus image for marketing"],
   },
   {
     title: "Ebook + Print",
@@ -45,13 +37,9 @@ export const myPackagesData = [
       "Everything in the ebook package",
       "High resolution JPG and print-ready PDF",
       "Barcode generated from your ISBN",
-      "Print cover formatting"
+      "Print cover formatting",
     ],
-    freeAddons: [
-      "3D book image",
-      "Title page",
-      "Bonus image for marketing"
-    ],
+    freeAddons: ["3D book image", "Title page", "Bonus image for marketing"],
   },
   {
     title: "Ebook + Print",
@@ -61,13 +49,9 @@ export const myPackagesData = [
       "Everything in the ebook package",
       "High resolution JPG and print-ready PDF",
       "Barcode generated from your ISBN",
-      "Print cover formatting"
+      "Print cover formatting",
     ],
-    freeAddons: [
-      "3D book image",
-      "Title page",
-      "Bonus image for marketing"
-    ],
+    freeAddons: ["3D book image", "Title page", "Bonus image for marketing"],
   },
   {
     title: "Ebook + Print",
@@ -77,12 +61,8 @@ export const myPackagesData = [
       "Everything in the ebook package",
       "High resolution JPG and print-ready PDF",
       "Barcode generated from your ISBN",
-      "Print cover formatting"
+      "Print cover formatting",
     ],
-    freeAddons: [
-      "3D book image",
-      "Title page",
-      "Bonus image for marketing"
-    ],
+    freeAddons: ["3D book image", "Title page", "Bonus image for marketing"],
   },
 ];

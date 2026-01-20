@@ -7,7 +7,7 @@ import {
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaLinkedin, FaThreads } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/logo/Lumestudio-1.png";
+import logo from "../../assets/logo/Lumestudio-1.webp";
 
 // Interfaces
 interface IFooterLink {
