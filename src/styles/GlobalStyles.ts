@@ -1,50 +1,33 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-  /* Archeron Font */
   @font-face {
-    font-family: 'ArcheronProBook';
-    src: url('/src/assets/fonts/Archeron/Archeron Pro Book.otf') format('opentype');
-    font-weight: normal;
+    font-family: 'Manrope';
+    src: url('/fonts/Manrope-VariableFont_wght.woff2') format('woff2'),
+         url('/fonts/Manrope-VariableFont_wght. ttf') format('truetype');
+    font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
   }
 
-  /* Konnect Fonts */
-  @font-face {
-    font-family: 'KonnectBlack';
-    src: url('/src/assets/fonts/Konnect/KonnectBlack.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'KonnectBold';
-    src: url('/src/assets/fonts/Konnect/KonnectBold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'KonnectItalic';
-    src: url('/src/assets/fonts/Konnect/KonnectItalic.otf') format('opentype');
-    font-weight: normal;
-    font-style: italic;
-  }
-@font-face {
-    font-family: 'KonnectLight';
-    src: url('/src/assets/fonts/Konnect/KonnectLight.otf') format('opentype');
-    font-weight: normal;
-    font-style: italic;
-  }
-
-  /* Add other @font-face rules for the rest of the Konnect font variations */
-
-  body {
+  * {
     margin: 0;
     padding: 0;
-    font-family: ${({ theme }) => theme.fonts.main}, sans-serif;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 `;
 
