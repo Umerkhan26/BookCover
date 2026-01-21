@@ -30,6 +30,14 @@ export const BannerImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+  }
+  @media (max-width: 768px) {
+    min-height: 250px;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 200px;
   }
 `;
 
@@ -194,7 +202,7 @@ export const Wrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 20px 10px; // Adjusted padding for smaller screens
+    padding: 20px 10px;
   }
 
   @media (max-width: 480px) {
@@ -234,11 +242,16 @@ export const Card = styled.a`
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 
+  min-height: 260px;
+  display: block;
+  background-color: #f0f0f0;
+
   img {
     width: 100%;
     height: auto;
     min-height: 260px;
     display: block;
+    aspect-ratio: 155 / 260;
   }
 
   &:hover {
@@ -250,11 +263,18 @@ export const Card = styled.a`
     flex: 0 0 calc(33.333% - 10px);
     max-width: calc(33.333% - 10px);
     min-height: 240px;
+    img {
+      min-height: 240px;
+      aspect-ratio: 155 / 240;
+    }
   }
 
   @media (max-width: 480px) {
     flex: 0 0 calc(33.333% - 10px);
     max-width: calc(33.333% - 10px);
-    min-height: 220px;
+    img {
+      min-height: 220px;
+      aspect-ratio: 155 / 220;
+    }
   }
 `;

@@ -244,7 +244,7 @@ export const HamburgerMenu = styled.div`
   @media (max-width: 1024px) {
     display: flex;
     position: absolute;
-    top: 18px;
+    top: 16px;
     right: 18px;
     z-index: 1100;
   }
@@ -252,7 +252,7 @@ export const HamburgerMenu = styled.div`
   @media (max-width: 768px) {
     display: flex;
     position: absolute;
-    top: 18px;
+    top: 16px;
     right: 18px;
     z-index: 1100;
   }
@@ -301,7 +301,9 @@ export const NavNBtn = styled.nav<NavNBtnProps>`
   /* flex-grow: 1; */
   justify-content: flex-start;
   background-color: white;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 
   @media (max-width: 1024px) {
     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
@@ -388,7 +390,9 @@ export const DropdownMenu = styled.div`
   flex-wrap: wrap;
   width: 100vw;
   margin-left: -15vw;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
   opacity: 0;
   pointer-events: none;
   gap: 6px;

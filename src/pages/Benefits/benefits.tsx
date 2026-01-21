@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import AOS from "aos";
 import "aos/dist/aos.css";
 import {
   BenefitsWrap,
@@ -38,15 +37,6 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
     const timer = setTimeout(() => setIsLoaded(true), 1000);
     return () => clearTimeout(timer);
   }, []);
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      easing: "ease-in-out",
-      offset: 150,
-    });
-    AOS.refresh();
-  }, []);
 
   const firstTwoCards = benefits.slice(0, 2);
   const remainingCards = benefits.slice(2);
@@ -83,7 +73,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
 
   return (
     <BenefitsWrap>
-      <Container>
+      <Container className={isLoaded ? "loaded" : ""}>
         {/* First row with text and the first two cards */}
         <FirstRow>
           <TextContainer>

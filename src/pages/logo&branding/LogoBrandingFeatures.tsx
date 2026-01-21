@@ -1,7 +1,10 @@
 import { features } from "../../services/LogoBrandingFeatures";
-import { FeatureContainer, FeatureItem, FeatureIcon, FeatureText } from "./LogoBrandingFeatures.styles";
-
-
+import {
+  FeatureContainer,
+  FeatureItem,
+  FeatureIcon,
+  FeatureText,
+} from "./LogoBrandingFeatures.styles";
 
 const LogoBrandingFeatures = () => {
   return (

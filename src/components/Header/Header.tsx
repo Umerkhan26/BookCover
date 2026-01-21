@@ -259,7 +259,7 @@ function Header() {
             <NavButton to="/get-a-cover">Get a Cover</NavButton>
           </NavNBtn>
           <NavText onClick={handleNavigation}>
-            <UserLogo src={userlogo} alt="User Logo" />
+            <UserLogo src={userlogo} alt="User Logo" width="90" height="90" />
           </NavText>
 
           {/* Conditional Rendering of Login Modal */}
