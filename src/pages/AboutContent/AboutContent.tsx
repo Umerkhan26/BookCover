@@ -31,9 +31,9 @@ const AboutContent: React.FC<AboutContentProps> = ({
   }
   return (
     <div className="text-center max-w-[90%] md:max-w-2xl mx-auto  md:px-0 mt-8">
-      <h3 className="text-[clamp(24px, 6vw, 32px)] font-semibold text-black leading-snug pb-8 ">
+      <h2 className="text-[clamp(24px, 6vw, 32px)] font-semibold text-black leading-snug pb-8 mt-4">
         {title} <span className="text-[#6dc7d1]">{highlightedText}</span>
-      </h3>
+      </h2>
 
       <p className="text-gray-500  text-[clamp(14px,2vw,18px)] leading-relaxed break-words">
         {description}
