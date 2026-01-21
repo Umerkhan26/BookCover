@@ -1,6 +1,6 @@
 // src/data/packagesData.ts
-import package1 from "../../assets/pacakge1.webp";
-import package2 from "../../assets/package2.webp";
+import package1 from "../../assets/pacakge1.jpeg";
+import package2 from "../../assets/package2.png";
 
 // Define the structure for each package object
 export const myPackagesData = [
