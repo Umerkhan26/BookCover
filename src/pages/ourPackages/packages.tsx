@@ -285,19 +285,11 @@ const Packages: React.FC = () => {
       }
 
       try {
-        console.log("🔍 URL pathname:", location.pathname);
-        console.log("🔍 Extracted page name:", pageName);
-
         const response = await getPackagesByPageAPI(pageName);
 
         if (!response || !Array.isArray(response)) {
           throw new Error("Invalid API response: Expected an array");
         }
-
-        console.log("📦 All packages from API:", response);
-        console.log("📦 Unique page values:", [
-          ...new Set(response.map((pkg) => pkg.page)),
-        ]);
 
         const mappedPackages = response
           .filter((pkg) => pkg.page === pageName)
