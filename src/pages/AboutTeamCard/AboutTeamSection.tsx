@@ -3,7 +3,7 @@ import TeamCard from "./TeamCard";
 // import shahid from "../../assets/shahid.jpeg";
 // import Umer from "../../assets/Umer.jpg";
 // import packag1 from "../../assets/pacakge1.jpeg";
-import UserIcon from "../../assets/user.png";
+import UserIcon from "../../assets/user.webp";
 // import User from "../../components/AdminDashboard/user";
 
 const teamMembers = [
