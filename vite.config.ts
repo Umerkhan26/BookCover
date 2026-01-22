@@ -15,25 +15,14 @@ export default defineConfig({
         chunkFileNames: "assets/[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash].[ext]",
         manualChunks: (id) => {
-          // Critical: Keep React and React-DOM together to prevent duplicate instances
-          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
-            return "vendor-react-core";
-          }
+          // Only split React core - let Vite handle the rest automatically to avoid circular deps
           if (id.includes("node_modules")) {
-            if (id.includes("react-router")) {
-              return "vendor-react-router";
+            // Critical: Keep React and React-DOM together
+            if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
+              return "vendor-react";
             }
-            if (id.includes("redux") || id.includes("@reduxjs")) {
-              return "vendor-redux";
-            }
-            if (id.includes("styled-components") || id.includes("framer-motion")) {
-              return "vendor-ui";
-            }
-            if (id.includes("slick") || id.includes("carousel")) {
-              return "vendor-carousel";
-            }
-            // Other node_modules
-            return "vendor";
+            // Let Vite automatically chunk the rest to avoid initialization order issues
+            // This prevents circular dependencies in the vendor chunk
           }
         },
       },
@@ -41,16 +30,20 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000,
     reportCompressedSize: false,
-    // Ensure proper chunk loading
-    commonjsOptions: {
-      include: [/node_modules/],
+    // Ensure proper module resolution and chunk loading
+    modulePreload: {
+      polyfill: true,
     },
   },
   optimizeDeps: {
-    include: ["react", "react-dom", "react-router-dom"],
+    include: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "react-redux",
+      "styled-components",
+    ],
     exclude: ["@fortawesome/fontawesome-svg-core"],
-    // Force pre-bundling to avoid duplicate React instances
-    force: false,
   },
   // Ensure base path is correct for production
   base: "/",
