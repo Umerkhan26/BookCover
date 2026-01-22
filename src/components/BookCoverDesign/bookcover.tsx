@@ -13,13 +13,6 @@ const Container = styled.div`
   background-color: #f9f9f9;
 `;
 
-const BannerImage = styled.img`
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-`;
-
 const CoverPortfolio: React.FC = () => {
   return (
     <Container className="inner-header orbit-wrap">

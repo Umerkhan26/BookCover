@@ -88,25 +88,22 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 100%;
-  max-width: 200px;
-  height: 280px;
+  width: 200px;
+  height: 300px;
   object-fit: cover;
   border-radius: 8px;
   margin: 0 10px;
+  aspect-ratio: 2 / 3;
 
   @media (max-width: 768px) {
-    width: auto;
-    height: 280px;
-    -o-object-fit: cover;
-    object-fit: cover;
+    width: 180px;
+    height: 270px;
     margin: 0 auto;
   }
 
   @media (max-width: 480px) {
-    width: auto;
-    height: 280px;
-    object-fit: cover;
+    width: 160px;
+    height: 240px;
     margin: 0 auto;
   }
 `;

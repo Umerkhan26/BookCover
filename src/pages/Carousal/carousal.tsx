@@ -164,8 +164,12 @@ const Carousel = () => {
               <ImageWrapper onClick={() => handleImageClick(index)}>
                 <Image
                   src={image.src}
-                  alt={`Slide ${index}`}
+                  alt={`Slide ${index + 1}`}
+                  width={200}
+                  height={300}
+                  loading="lazy"
                   style={{ cursor: "pointer" }}
+                  decoding="async"
                 />
               </ImageWrapper>
             </div>

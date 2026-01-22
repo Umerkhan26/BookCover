@@ -51,6 +51,8 @@ interface ShimmerImageProps {
   width?: number;
   height?: number;
   loading?: "lazy" | "eager";
+  fetchPriority?: "high" | "low" | "auto";
+  decoding?: "sync" | "async" | "auto";
   className?: string;
   style?: React.CSSProperties;
 }
@@ -61,6 +63,8 @@ export const ShimmerImage: React.FC<ShimmerImageProps> = ({
   width,
   height,
   loading = "lazy",
+  fetchPriority,
+  decoding,
   className,
   style,
 }) => {
@@ -82,9 +86,15 @@ export const ShimmerImage: React.FC<ShimmerImageProps> = ({
         width={width}
         height={height}
         loading={loading}
+        fetchPriority={fetchPriority}
+        decoding={decoding}
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(true)}
-        style={{ ...style, display: loaded ? "block" : "none" }}
+        style={{ 
+          ...style, 
+          display: loaded ? "block" : "none",
+          contentVisibility: "auto"
+        }}
         className={className}
       />
     </>

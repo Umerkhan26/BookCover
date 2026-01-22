@@ -33,6 +33,8 @@ const TopBanner: React.FC = () => {
           width={1263}
           height={651}
           loading="eager"
+          fetchPriority="high"
+          decoding="sync"
         />
         <BannerContent>
           <Title>

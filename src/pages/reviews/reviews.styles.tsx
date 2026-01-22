@@ -6,10 +6,11 @@ export const Button = styled.a`
   padding: 10px 30px;
   font-size: 16px;
   font-weight: bold;
-  margin: 0 auto; /* Center the button horizontally */
+  margin: 0 auto;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: white;
+  margin-bottom: 8px;
   border: 2px solid;
   background: #6dc7d1;
   text-align: center;
@@ -32,7 +33,7 @@ export const Button = styled.a`
 `;
 
 export const ReviewsWrapper = styled.div`
-/* border: 2px solid red; */
+  /* border: 2px solid red; */
   width: 100%;
   font-family: "Manrope", sans-serif;
   overflow: hidden; /* Ensures no horizontal scrolling */

@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Shimmer,
-  ShimmerCard,
   ShimmerImage,
   ShimmerText,
 } from "../../components/Shimmer/Shimmer";
@@ -38,7 +37,9 @@ const Home: React.FC = () => {
     return (
       <>
         <Helmet>
-          <title>Professional Book Cover Design Services | Lumeart Studio</title>
+          <title>
+            Professional Book Cover Design Services | Lumeart Studio
+          </title>
           <meta
             name="description"
             content="Elevate your manuscript with Lumeart Studio. Custom book cover design for indie authors, specializing in fiction, non-fiction, and bespoke illustrations."
@@ -64,7 +65,9 @@ const Home: React.FC = () => {
             fontFamily: "Manrope, sans-serif",
           }}
         >
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}>
+          <div
+            style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}
+          >
             <div
               style={{
                 display: "flex",
@@ -117,7 +120,11 @@ const Home: React.FC = () => {
                       />
                       <Shimmer height="20px" width="60%" rounded />
                     </div>
-                    <ShimmerText lines={2} width="90%" style={{ marginTop: "10px" }} />
+                    <ShimmerText
+                      lines={2}
+                      width="90%"
+                      style={{ marginTop: "10px" }}
+                    />
                   </div>
                 </div>
               ))}
@@ -165,7 +172,11 @@ const Home: React.FC = () => {
                       />
                       <Shimmer height="20px" width="60%" rounded />
                     </div>
-                    <ShimmerText lines={2} width="90%" style={{ marginTop: "10px" }} />
+                    <ShimmerText
+                      lines={2}
+                      width="90%"
+                      style={{ marginTop: "10px" }}
+                    />
                   </div>
                 </div>
               ))}
@@ -173,7 +184,7 @@ const Home: React.FC = () => {
           </div>
         </div>
         {/* Carousel Shimmer - Already handled by Carousal component */}
-        
+
         {/* Design Process Shimmer - Matches actual structure */}
         <div
           style={{
@@ -225,10 +236,19 @@ const Home: React.FC = () => {
                       width="33px"
                       height="33px"
                       rounded
-                      style={{ marginRight: "40px", position: "absolute", left: "-60px" }}
+                      style={{
+                        marginRight: "40px",
+                        position: "absolute",
+                        left: "-60px",
+                      }}
                     />
                     <div style={{ flex: 1 }}>
-                      <Shimmer height="20px" width="80%" rounded style={{ marginBottom: "5px" }} />
+                      <Shimmer
+                        height="20px"
+                        width="80%"
+                        rounded
+                        style={{ marginBottom: "5px" }}
+                      />
                       <ShimmerText lines={2} width="90%" />
                     </div>
                   </div>

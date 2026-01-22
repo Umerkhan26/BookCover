@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import {
   Shimmer,
-  ShimmerCard,
   ShimmerImage,
   ShimmerText,
 } from "../../../components/Shimmer/Shimmer";
@@ -92,10 +91,19 @@ const Illustrated = () => {
                       width="33px"
                       height="33px"
                       rounded
-                      style={{ marginRight: "40px", position: "absolute", left: "-60px" }}
+                      style={{
+                        marginRight: "40px",
+                        position: "absolute",
+                        left: "-60px",
+                      }}
                     />
                     <div style={{ flex: 1 }}>
-                      <Shimmer height="20px" width="80%" rounded style={{ marginBottom: "5px" }} />
+                      <Shimmer
+                        height="20px"
+                        width="80%"
+                        rounded
+                        style={{ marginBottom: "5px" }}
+                      />
                       <ShimmerText lines={2} width="90%" />
                     </div>
                   </div>

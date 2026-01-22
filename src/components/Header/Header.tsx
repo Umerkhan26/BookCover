@@ -131,12 +131,6 @@ function Header() {
             </MobileContactButton>
           </ContactUsWrapper>
 
-          <div ref={menuRef}>
-            <HamburgerMenu onClick={toggleMenu}>
-              {isMenuOpen ? <MenuIcon>✖</MenuIcon> : <MenuIcon>☰</MenuIcon>}
-            </HamburgerMenu>
-          </div>
-
           {/* Main Menu */}
           <NavNBtn
             ref={navNBtnRef}
@@ -258,9 +252,16 @@ function Header() {
 
             <NavButton to="/get-a-cover">Get a Cover</NavButton>
           </NavNBtn>
+          
           <NavText onClick={handleNavigation}>
-            <UserLogo src={userlogo} alt="User Logo" width="90" height="90" />
+            <UserLogo src={userlogo} alt="User Logo" />
           </NavText>
+
+          <div ref={menuRef}>
+            <HamburgerMenu onClick={toggleMenu}>
+              {isMenuOpen ? <MenuIcon>✖</MenuIcon> : <MenuIcon>☰</MenuIcon>}
+            </HamburgerMenu>
+          </div>
 
           {/* Conditional Rendering of Login Modal */}
           {showLoginModal && (

@@ -11,7 +11,6 @@ import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import {
   Shimmer,
-  ShimmerCard,
   ShimmerImage,
   ShimmerText,
 } from "../../components/Shimmer/Shimmer";
@@ -134,7 +133,9 @@ const AudioBookCover = () => {
             fontFamily: "Manrope, sans-serif",
           }}
         >
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}>
+          <div
+            style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}
+          >
             <div
               style={{
                 display: "flex",
@@ -187,7 +188,11 @@ const AudioBookCover = () => {
                       />
                       <Shimmer height="20px" width="60%" rounded />
                     </div>
-                    <ShimmerText lines={2} width="90%" style={{ marginTop: "10px" }} />
+                    <ShimmerText
+                      lines={2}
+                      width="90%"
+                      style={{ marginTop: "10px" }}
+                    />
                   </div>
                 </div>
               ))}
@@ -235,7 +240,11 @@ const AudioBookCover = () => {
                       />
                       <Shimmer height="20px" width="60%" rounded />
                     </div>
-                    <ShimmerText lines={2} width="90%" style={{ marginTop: "10px" }} />
+                    <ShimmerText
+                      lines={2}
+                      width="90%"
+                      style={{ marginTop: "10px" }}
+                    />
                   </div>
                 </div>
               ))}

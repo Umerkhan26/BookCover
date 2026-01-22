@@ -121,8 +121,9 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredItems }) => {
                 src={item.src}
                 alt={item.alt}
                 loading="lazy"
-                srcSet={`${item.src.replace(".png", "-small.webp")} 480w, ${item.src.replace(".png", "-large.webp")} 1200w`}
-                sizes="(max-width: 768px) 50vw, 25vw"
+                width={206}
+                height={60}
+                decoding="async"
               />
             </FeaturedItem>
           ))}

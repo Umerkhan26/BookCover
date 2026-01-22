@@ -100,7 +100,10 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
                     <img
                       src={benefit.image}
                       alt={benefit.title}
+                      width={50}
+                      height={50}
                       loading="lazy"
+                      decoding="async"
                     />
                   </BenefitImage>
                   <BenefitTitle
@@ -131,7 +134,10 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
                     <img
                       src={benefit.image}
                       alt={benefit.title}
+                      width={50}
+                      height={50}
                       loading="lazy"
+                      decoding="async"
                     />
                   </BenefitImage>
                   <BenefitTitle

@@ -20,6 +20,36 @@ export const Section = styled.section`
   background: unset !important;
 `;
 
+// export const BannerImage = styled.div`
+//   width: 100%;
+//   max-height: 450px;
+//   min-height: 450px;
+//   position: relative;
+//   overflow: hidden;
+//   aspect-ratio: 1263 / 651;
+//   contain: layout style paint;
+//   will-change: contents;
+
+//   img {
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     display: block;
+//     content-visibility: auto;
+//   }
+
+//   @media (max-width: 768px) {
+//     min-height: 300px;
+//     max-height: 300px;
+//     aspect-ratio: 16 / 9;
+//   }
+
+//   @media (max-width: 480px) {
+//     min-height: 250px;
+//     max-height: 250px;
+//     aspect-ratio: 16 / 9;
+//   }
+// `;
 export const BannerImage = styled.div`
   width: 100%;
   max-height: 450px;
@@ -40,7 +70,6 @@ export const BannerImage = styled.div`
     min-height: 200px;
   }
 `;
-
 export const BannerContent = styled.div`
   position: absolute;
   top: 50%;

@@ -37,10 +37,26 @@ export const Nav = styled.nav`
   width: 100%;
   z-index: 1000;
   height: 85px;
+  box-sizing: border-box;
   /* border: 2px solid red; */
 
   @media (max-width: 1024px) {
     padding: 15px 20px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 15px 20px;
+    height: 75px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 16px;
+    height: 70px;
+  }
+
+  @media (max-width: 390px) {
+    padding: 12px 16px;
+    height: 70px;
   }
 `;
 
@@ -50,6 +66,7 @@ export const Logo = styled.img`
   display: block;
   vertical-align: middle;
   max-width: 100%;
+  flex-shrink: 0;
   /* border: 2px solid red; */
 
   @media (max-width: 768px) {
@@ -57,11 +74,15 @@ export const Logo = styled.img`
   }
 
   @media (max-width: 480px) {
-    width: 180px;
+    height: 40px;
+    width: auto;
+    max-width: 160px;
   }
 
-  @media (max-width: 385px) {
-    width: 140px;
+  @media (max-width: 390px) {
+    height: 38px;
+    width: auto;
+    max-width: 140px;
   }
 `;
 
@@ -69,6 +90,15 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 5px 0;
+  flex-shrink: 0;
+
+  @media (max-width: 480px) {
+    padding: 3px 0;
+  }
+
+  @media (max-width: 390px) {
+    padding: 2px 0;
+  }
 `;
 
 export const NavLinkButton = styled(NavLink)`
@@ -143,6 +173,7 @@ export const NavText = styled.div`
   text-align: left;
   text-decoration: none;
   margin: 0;
+  flex-shrink: 0;
   /* border: 2px solid blue; */
 
   &:hover {
@@ -150,8 +181,8 @@ export const NavText = styled.div`
   }
 
   @media (max-width: 1024px) {
-    padding: 15px 47px;
-    font-size: 28px;
+    padding: 8px 20px;
+    font-size: 16px;
 
     img {
       max-width: 200px;
@@ -162,8 +193,8 @@ export const NavText = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 15px 42px;
-    font-size: 22px;
+    padding: 6px 12px;
+    font-size: 14px;
 
     img {
       max-width: 200px;
@@ -174,15 +205,28 @@ export const NavText = styled.div`
   }
 
   @media (max-width: 480px) {
-    padding: 6px 12px;
-    font-size: 16px;
-    margin-right: 5px;
+    padding: 4px 8px;
+    font-size: 12px;
+    margin-right: 0;
 
     img {
       max-width: 200px;
-      height: 60px;
-      padding-right: 20px;
-      margin-top: 10px;
+      height: 50px;
+      padding-right: 10px;
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 390px) {
+    padding: 4px 6px;
+    font-size: 11px;
+    margin-right: 0;
+
+    img {
+      max-width: 200px;
+      height: 45px;
+      padding-right: 8px;
+      margin-top: 0;
     }
   }
 `;
@@ -194,13 +238,25 @@ export const HeaderContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  gap: 10px;
 
   @media (max-width: 1024px) {
     justify-content: space-between;
     width: 100%;
+    gap: 8px;
   }
+  
   @media (max-width: 768px) {
     width: 100%;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 6px;
+  }
+
+  @media (max-width: 390px) {
+    gap: 4px;
   }
 `;
 
@@ -240,21 +296,34 @@ export const HamburgerMenu = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  flex-shrink: 0;
 
   @media (max-width: 1024px) {
     display: flex;
-    position: absolute;
-    top: 16px;
-    right: 18px;
+    position: relative;
+    top: 0;
+    right: 0;
     z-index: 1100;
   }
 
   @media (max-width: 768px) {
     display: flex;
-    position: absolute;
-    top: 16px;
-    right: 18px;
+    position: relative;
+    top: 0;
+    right: 0;
     z-index: 1100;
+    width: 36px;
+    height: 36px;
+  }
+
+  @media (max-width: 480px) {
+    width: 32px;
+    height: 32px;
+  }
+
+  @media (max-width: 390px) {
+    width: 30px;
+    height: 30px;
   }
 `;
 
@@ -266,31 +335,43 @@ export const MenuIcon = styled.span`
   justify-content: center;
   width: 100%;
   height: 100%;
-  margin-top: 12px;
+  margin-top: 0;
 
   @media (max-width: 1024px) {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 50;
-    margin-top: 23px;
+    margin-top: 0;
   }
 
   @media (max-width: 768px) {
-    font-size: 32px;
+    font-size: 26px;
     font-weight: 50;
-    margin-top: 23px;
+    margin-top: 0;
   }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+    margin-top: 0;
+  }
+
   @media (max-width: 390px) {
-    margin-left: 20px;
+    font-size: 22px;
+    margin-top: 0;
   }
 `;
 
 export const ContactUsWrapper = styled.div`
   display: flex;
+  flex-shrink: 0;
 
   @media (max-width: 768px) {
-    width: 100%;
+    width: auto;
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 0;
+  }
+
+  @media (max-width: 480px) {
+    margin: 0;
   }
 `;
 
@@ -336,9 +417,23 @@ export const NavNBtn = styled.nav<NavNBtnProps>`
 export const MobileContactButton = styled(NavButton)`
   display: none;
   padding: 6px 16px;
+  font-size: 12px;
+  white-space: nowrap;
 
   @media (max-width: 768px) {
     display: inline-block;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 390px) {
+    padding: 6px 10px;
+    font-size: 11px;
   }
 `;
 
@@ -444,19 +539,30 @@ export const DropdownContainer = styled.div`
 
 export const UserLogo = styled.img`
   height: 60px;
-  min-height: 60px;
+  width: 60px;
   cursor: pointer;
   margin-top: 4px;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
 
   /* Media queries */
   @media (max-width: 768px) {
     height: 50px;
-    padding-right: 15px;
+    width: 50px;
+    margin-top: 0;
   }
 
   @media (max-width: 480px) {
-    height: 50px;
-    padding-right: 30px;
+    height: 45px;
+    width: 45px;
+    margin-top: 0;
+  }
+
+  @media (max-width: 390px) {
+    height: 40px;
+    width: 40px;
+    margin-top: 0;
   }
 `;

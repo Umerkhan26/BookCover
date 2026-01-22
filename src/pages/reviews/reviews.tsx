@@ -26,23 +26,23 @@ const Reviews = () => {
       id="reviews"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-        {/* Removed data-aos from this div */}
-        <div className="mb-10 space-y-4 px-6 md:px-0 text-center md:text-left">
-          <h2 className="text-2xl font-bold text-black text-center md:text-left lg:text-left xl:text-left dark:text-white md:text-4xl">
+        <div className="mb-10 space-y-4 px-6 md:px-0 text-center">
+          <h2 className="text-2xl mt-10 mb-10 font-bold text-black text-center dark:text-white md:text-4xl">
             <span className="text-black">What Do Our</span>{" "}
             <span className="text-[#6dc7d1]">Clients Say</span>
           </h2>
         </div>
 
-        <div>
-          {/* Removed data-aos from this anchor tag */}
+        <div className="flex justify-center mb-12">
           <a
             href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <Button className="mb-4">Leave A Review</Button>
+            <Button className="mb-4 inline-flex w-auto px-8">
+              Leave A Review
+            </Button>
           </a>
         </div>
 

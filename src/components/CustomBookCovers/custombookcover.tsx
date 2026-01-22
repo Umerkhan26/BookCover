@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 import { motion, Variants } from "framer-motion";
-import { Shimmer, ShimmerCard } from "../Shimmer/Shimmer";
+import { ShimmerCard } from "../Shimmer/Shimmer";
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 60 },
@@ -23,8 +23,8 @@ const images = Object.entries(
     "../../assets/CustomBookCovers/*.{jpg,jpeg,png,webp}",
     {
       eager: true,
-    }
-  )
+    },
+  ),
 )
   .map(([path, mod]) => ({
     id: parseInt(path.match(/\d+/)?.[0] || "0"), // Extract number from filename
