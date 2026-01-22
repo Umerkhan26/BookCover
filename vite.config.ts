@@ -15,10 +15,13 @@ export default defineConfig({
         chunkFileNames: "assets/[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash].[ext]",
         manualChunks: (id) => {
-          // Separate vendor chunks for better caching
+          // Critical: Keep React and React-DOM together to prevent duplicate instances
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
+            return "vendor-react-core";
+          }
           if (id.includes("node_modules")) {
-            if (id.includes("react") || id.includes("react-dom") || id.includes("react-router")) {
-              return "vendor-react";
+            if (id.includes("react-router")) {
+              return "vendor-react-router";
             }
             if (id.includes("redux") || id.includes("@reduxjs")) {
               return "vendor-redux";
@@ -37,10 +40,18 @@ export default defineConfig({
     },
     assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000,
-    reportCompressedSize: false, // Faster builds
+    reportCompressedSize: false,
+    // Ensure proper chunk loading
+    commonjsOptions: {
+      include: [/node_modules/],
+    },
   },
   optimizeDeps: {
     include: ["react", "react-dom", "react-router-dom"],
-    exclude: ["@fortawesome/fontawesome-svg-core"], // Tree-shake FontAwesome
+    exclude: ["@fortawesome/fontawesome-svg-core"],
+    // Force pre-bundling to avoid duplicate React instances
+    force: false,
   },
+  // Ensure base path is correct for production
+  base: "/",
 });
