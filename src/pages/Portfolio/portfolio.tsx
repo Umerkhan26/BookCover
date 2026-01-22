@@ -21,7 +21,9 @@ const PortfolioWrapperWithTabs = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const seoData: { [key: string]: { title: string; description: string } } = {
+  const seoData: {
+    [key: string]: { title: string; description: string; canonical?: string };
+  } = {
     "/portfolio": {
       title: "Book Cover Design Portfolio | Award-Winning Gallery",
       description:
@@ -76,8 +78,19 @@ const PortfolioWrapperWithTabs = () => {
   };
   const currentSEO = seoData[location.pathname] || seoData["/portfolio"];
 
-  const canonicalBase = "https://lumeartstudio.com";
-  const canonicalUrl = canonicalBase + location.pathname;
+  const getCanonicalUrl = () => {
+    const baseUrl = "https://lumeartstudio.com";
+
+    const path = location.pathname.replace(/\/$/, "");
+
+    if (currentSEO.canonical) {
+      return currentSEO.canonical;
+    }
+
+    return `${baseUrl}${path}`;
+  };
+
+  const canonicalUrl = getCanonicalUrl();
 
   const customCoverPaths = [
     "/portfolio",

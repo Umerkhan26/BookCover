@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 import { motion, Variants } from "framer-motion";
+import { Shimmer, ShimmerCard } from "../Shimmer/Shimmer";
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 60 },
@@ -177,6 +178,13 @@ const NextPreviewButton = styled(PreviewNavButton)`
 const CustomCover: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Wait for images to load
+    const timer = setTimeout(() => setIsLoaded(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const openModal = (imageUrl: string) => {
     const index = images.findIndex((img) => img.imageUrl === imageUrl);
@@ -199,6 +207,25 @@ const CustomCover: React.FC = () => {
     setCurrentIndex(newIndex);
     setSelectedImage(images[newIndex].imageUrl);
   };
+
+  if (!isLoaded) {
+    return (
+      <>
+        <Helmet>
+          <title>Customs Book Covers</title>
+          <meta
+            name="description"
+            content="Explore our diverse collection of book cover designs."
+          />
+        </Helmet>
+        <PortfolioContainer>
+          {Array.from({ length: 12 }).map((_, i) => (
+            <ShimmerCard key={i} height="350px" width="250px" />
+          ))}
+        </PortfolioContainer>
+      </>
+    );
+  }
 
   return (
     <>

@@ -111,7 +111,89 @@ export const ShimmerText: React.FC<{
   </div>
 );
 
-export const ShimmerCard: React.FC<{ height?: string; width?: string }> = ({
+export const ShimmerCard: React.FC<{ 
+  height?: string; 
+  width?: string;
+  border?: boolean;
+  padding?: string;
+  style?: React.CSSProperties;
+}> = ({
   height = "200px",
   width = "100%",
-}) => <Shimmer width={width} height={height} rounded />;
+  border = false,
+  padding,
+  style,
+}) => (
+  <Shimmer 
+    width={width} 
+    height={height} 
+    rounded 
+    style={{
+      border: border ? "2px solid #6dc7d1" : undefined,
+      padding: padding,
+      backgroundColor: border ? "#fff" : undefined,
+      ...style,
+    }}
+  />
+);
+
+// Enhanced Benefit Card Shimmer
+export const ShimmerBenefitCard: React.FC = () => (
+  <div
+    style={{
+      background: "#fff",
+      padding: "40px 25px",
+      borderRadius: "10px",
+      border: "2px solid #6dc7d1",
+      minHeight: "190px",
+      display: "flex",
+      flexDirection: "column",
+    }}
+  >
+    <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+      <Shimmer width="50px" height="50px" rounded style={{ marginRight: "15px" }} />
+      <Shimmer height="20px" width="60%" rounded />
+    </div>
+    <ShimmerText lines={2} width="90%" style={{ marginTop: "10px" }} />
+  </div>
+);
+
+// Enhanced Package Card Shimmer
+export const ShimmerPackageCard: React.FC = () => (
+  <div
+    style={{
+      background: "#fff",
+      padding: "30px",
+      borderRadius: "10px",
+      border: "1px solid #e0e0e0",
+      minHeight: "400px",
+      display: "flex",
+      flexDirection: "column",
+    }}
+  >
+    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+      <Shimmer height="22px" width="40%" rounded />
+      <Shimmer height="26px" width="30%" rounded />
+    </div>
+    <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+      <div style={{ flex: 1 }}>
+        <ShimmerText lines={5} width="100%" />
+      </div>
+      <div
+        style={{
+          flex: 1,
+          background: "#f5f5f5",
+          padding: "15px",
+          borderRadius: "8px",
+        }}
+      >
+        <Shimmer height="16px" width="60%" rounded style={{ marginBottom: "8px" }} />
+        <ShimmerText lines={4} width="100%" />
+      </div>
+    </div>
+    <div style={{ marginBottom: "20px" }}>
+      <ShimmerText lines={3} width="100%" />
+    </div>
+    <Shimmer height="48px" width="100%" rounded />
+  </div>
+);

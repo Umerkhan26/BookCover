@@ -87,7 +87,14 @@ const AboutUs = () => {
   return (
     <div>
       <Helmet>
-        <title>About Us</title>
+        <title>
+          About Lumeart Studio | Creative Book Cover Designers & Illustrators
+        </title>
+        <meta
+          name="description"
+          content="Learn about Lumeart Studio, a creative book cover design and illustration studio helping authors stand out with custom fiction and non-fiction covers, branding, and visual storytelling."
+        />
+        <link rel="canonical" href="https://lumeartstudio.com/about-us" />
       </Helmet>
       <div>
         <ContactUsCover

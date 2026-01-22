@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import bannerImg from "../../assets/PageBanners/PortfolioLUMEARTPORTFOLIOWEBCOVERS-01.webp";
+import { ShimmerImage } from "../Shimmer/Shimmer";
 
 // Updated Styled Components
 const Container = styled.div`
@@ -22,11 +23,18 @@ const BannerImage = styled.img`
 const CoverPortfolio: React.FC = () => {
   return (
     <Container className="inner-header orbit-wrap">
-      <BannerImage
+      <ShimmerImage
         src={bannerImg}
-        loading="eager"
-        decoding="async"
         alt="Custom Book Cover Portfolio Banner"
+        width={1200}
+        height={400}
+        loading="eager"
+        style={{
+          width: "100%",
+          height: "auto",
+          display: "block",
+          objectFit: "cover",
+        }}
       />
     </Container>
   );
