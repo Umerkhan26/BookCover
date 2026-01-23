@@ -35,7 +35,6 @@ const TopBanner: React.FC = () => {
           loading="eager"
           fetchPriority="high"
           decoding="sync"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
         <BannerContent>
           <Title>
