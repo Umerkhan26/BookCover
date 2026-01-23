@@ -71,27 +71,13 @@ export const ShimmerImage: React.FC<ShimmerImageProps> = ({
   const [loaded, setLoaded] = React.useState(false);
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: width ? `${width}px` : "100%",
-        height: height ? `${height}px` : "auto",
-        minHeight: height ? `${height}px` : undefined,
-      }}
-      className={className}
-    >
+    <>
       {!loaded && (
         <Shimmer
-          width="100%"
-          height="100%"
+          width={width ? `${width}px` : "100%"}
+          height={height ? `${height}px` : "100%"}
           rounded
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-          }}
+          className={className}
         />
       )}
       <img
@@ -106,14 +92,12 @@ export const ShimmerImage: React.FC<ShimmerImageProps> = ({
         onError={() => setLoaded(true)}
         style={{ 
           ...style, 
-          opacity: loaded ? 1 : 0,
-          transition: "opacity 0.3s ease-in",
-          width: "100%",
-          height: "auto",
-          display: "block",
+          display: loaded ? "block" : "none",
+          contentVisibility: "auto"
         }}
+        className={className}
       />
-    </div>
+    </>
   );
 };
 
