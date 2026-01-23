@@ -12,7 +12,8 @@
   <!-- Preload critical resources -->
   <link rel="preload" href="/fonts/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
   
-  <!-- Note: LCP image preload handled by component with fetchPriority="high" -->
+  <!-- LCP image preload - path will be resolved by Vite build -->
+  <!-- The component already uses fetchPriority="high" for optimal loading -->
   
   <!-- Critical CSS inline - Mobile optimized -->
   <style>
@@ -76,6 +77,12 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  
+  <!-- DNS Prefetch for external resources -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  
+  <!-- Resource Hints for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 </head>
 
 <body>

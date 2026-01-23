@@ -9,6 +9,8 @@ export default defineConfig({
     minify: "esbuild",
     cssMinify: true,
     cssCodeSplit: true,
+    // Optimize chunk size for better loading
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         entryFileNames: "assets/[name]-[hash].js",
@@ -25,15 +27,18 @@ export default defineConfig({
             // This prevents circular dependencies in the vendor chunk
           }
         },
+            // Better tree shaking and code splitting
+        experimentalMinChunkSize: 20000,
       },
     },
     assetsInlineLimit: 4096,
-    chunkSizeWarningLimit: 1000,
     reportCompressedSize: false,
     // Ensure proper module resolution and chunk loading
     modulePreload: {
       polyfill: true,
     },
+    // Enable source maps only in dev
+    sourcemap: false,
   },
   optimizeDeps: {
     include: [
