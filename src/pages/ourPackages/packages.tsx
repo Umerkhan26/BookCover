@@ -242,6 +242,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getPackagesByPageAPI } from "../../apis/apis";
 import LoginModal from "../../components/Login/LoginModel"; // Import the modal
+import RegisterModal from "../../components/register/RegisterModal";
 import {
   PackageCard,
   PackageContainer,
@@ -273,6 +274,7 @@ const Packages: React.FC = () => {
   }>({});
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   const pageName = location.pathname.split("/").pop() || "";
 
@@ -520,7 +522,23 @@ const Packages: React.FC = () => {
         onClose={() => setShowLoginModal(false)}
         onLoginSuccess={handleLoginSuccess}
         disableRedirect={true}
+        onRegisterClick={() => {
+          setShowLoginModal(false);
+          setShowRegisterModal(true);
+        }}
       />
+
+      {/* Show register modal if necessary */}
+      {showRegisterModal && (
+        <RegisterModal
+          show={showRegisterModal}
+          onClose={() => setShowRegisterModal(false)}
+          onLoginClick={() => {
+            setShowRegisterModal(false);
+            setShowLoginModal(true);
+          }}
+        />
+      )}
     </PackageContainer>
   );
 };

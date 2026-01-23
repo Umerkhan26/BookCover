@@ -11,6 +11,7 @@ import specialadd3 from "../../assets/specialadd3.webp";
 import specialadd4 from "../../assets/specialadd4.webp";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../../components/Login/LoginModel";
+import RegisterModal from "../../components/register/RegisterModal";
 import { useState } from "react";
 import "aos/dist/aos.css";
 const addOns = [
@@ -39,6 +40,7 @@ const addOns = [
 const SpecialEditionAddOns = () => {
   const navigate = useNavigate();
   const [showLoginModal, setShowLoginModal] = useState(false); // State for showing login modal
+  const [showRegisterModal, setShowRegisterModal] = useState(false); // State for showing register modal
 
   const handleLoginSuccess = (token: string) => {
     localStorage.setItem("token", token);
@@ -98,7 +100,23 @@ const SpecialEditionAddOns = () => {
         show={showLoginModal}
         onClose={() => setShowLoginModal(false)}
         onLoginSuccess={handleLoginSuccess}
+        onRegisterClick={() => {
+          setShowLoginModal(false);
+          setShowRegisterModal(true);
+        }}
       />
+
+      {/* Show register modal if necessary */}
+      {showRegisterModal && (
+        <RegisterModal
+          show={showRegisterModal}
+          onClose={() => setShowRegisterModal(false)}
+          onLoginClick={() => {
+            setShowRegisterModal(false);
+            setShowLoginModal(true);
+          }}
+        />
+      )}
     </AddOnsContainer>
   );
 };
