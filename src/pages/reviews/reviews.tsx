@@ -1,58 +1,48 @@
-import { useEffect } from "react";
 import {
   Button,
   CardsWrapper,
   ReviewCard,
   ReviewsWrapper,
 } from "./reviews.styles";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 const Reviews = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 700, // Animation duration in milliseconds
-      easing: "ease-out-cubic", // Easing function for animation
-      once: false, // Animation plays only once per element
-      offset: 50, // Trigger animation when element is 150px from viewport bottom
-    });
-
-    AOS.refresh();
-  }, []);
 
   return (
     <div
-      className=" bg-gray-100 text-gray-600 dark:text-gray-300 pt-8 dark: mb-32 md:mb-[-5px]"
+      className="bg-gray-100 text-gray-600 dark:text-gray-300 py-12 md:py-16"
       id="reviews"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-        <div className="mb-10 space-y-4 px-6 md:px-0 text-center">
-          <h2 className="text-2xl mt-10 mb-10 font-bold text-black text-center dark:text-white md:text-4xl">
-            <span className="text-black">What Do Our</span>{" "}
-            <span className="text-[#6dc7d1]">Clients Say</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+          <h2
+            style={{
+              fontSize: "clamp(28px, 4vw, 40px)",
+              fontWeight: 700,
+              color: "#000",
+              textAlign: "center",
+              marginBottom: "24px",
+            }}
+          >
+            <span style={{ color: "#000" }}>What Do Our</span>{" "}
+            <span style={{ color: "#6dc7d1" }}>Clients Say</span>
           </h2>
         </div>
 
-        <div className="flex justify-center mb-12">
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "40px" }}>
           <a
             href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <Button className="mb-4 inline-flex w-auto px-8">
-              Leave A Review
-            </Button>
+            <Button>Leave A Review</Button>
           </a>
         </div>
 
         <ReviewsWrapper>
           <CardsWrapper>
             {/* Card 1 */}
-            <ReviewCard
-              data-aos="fade-up" // Simple down-to-up animation
-              data-aos-delay="0" // No delay for the first card
-            >
+            <ReviewCard>
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -81,16 +71,13 @@ const Reviews = () => {
               <p className="mt-8 text-black">
                 Lumeart Studio turned my idea into a clean, professional cover
                 that matched my vision perfectly. Communication was smooth, and
-                revisions were handled quickly. I’m very pleased with the final
+                revisions were handled quickly. I'm very pleased with the final
                 design and the overall experience.
               </p>
             </ReviewCard>
 
             {/* Card 2 */}
-            <ReviewCard
-              data-aos="fade-up" // Simple down-to-up animation
-              data-aos-delay="200" // Delay for staggered effect
-            >
+            <ReviewCard>
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -125,10 +112,7 @@ const Reviews = () => {
             </ReviewCard>
 
             {/* Card 3 */}
-            <ReviewCard
-              data-aos="fade-up" // Simple down-to-up animation
-              data-aos-delay="400" // Delay for staggered effect
-            >
+            <ReviewCard>
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -163,10 +147,7 @@ const Reviews = () => {
             </ReviewCard>
 
             {/* Card 4 - New Review */}
-            <ReviewCard
-              data-aos="fade-up" // Simple down-to-up animation
-              data-aos-delay="600" // Delay for staggered effect
-            >
+            <ReviewCard>
               <div className="flex gap-4 text-black">
                 <img
                   className="w-12 h-12 rounded-full"
@@ -195,7 +176,7 @@ const Reviews = () => {
               <p className="mt-8 text-black">
                 Stunning work by Lumeart Studio! The cover design I received was
                 modern, sharp, and exactly what I had imagined. Their attention
-                to detail and unique design style really set them apart. I’ll
+                to detail and unique design style really set them apart. I'll
                 definitely be coming back for future projects!
               </p>
             </ReviewCard>

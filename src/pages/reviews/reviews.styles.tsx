@@ -1,34 +1,37 @@
-import styled from "styled-components";
+﻿import styled from "styled-components";
 
 export const Button = styled.a`
-  display: flex; /* Use flex for both small and large screens */
-  width: 220px;
-  padding: 10px 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 200px;
+  padding: 12px 32px;
   font-size: 16px;
   font-weight: bold;
-  margin: 0 auto;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: white;
-  margin-bottom: 8px;
-  border: 2px solid;
+  border: 2px solid #6dc7d1;
   background: #6dc7d1;
   text-align: center;
-  position: relative;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   text-decoration: none;
   font-family: "Manrope", sans-serif;
 
-  /* Make the button responsive */
+  &:hover {
+    background: #5ab8c2;
+    border-color: #5ab8c2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(109, 199, 209, 0.3);
+  }
+
   @media (max-width: 768px) {
-    width: 220px;
-    padding: 12px 20px;
-    font-size: 16px;
-    text-align: center;
-    justify-content: center;
-    text-decoration: none; /* Remove the underline */
+    min-width: 180px;
+    padding: 10px 24px;
+    font-size: 14px;
   }
 `;
 
@@ -41,7 +44,7 @@ export const ReviewsWrapper = styled.div`
 
 export const CardsWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap; /* Wrap cards on smaller screens */
+  flex-wrap: wrap; 
   justify-content: space-between;
   gap: 2rem;
   width: 100%; /* Make sure it takes full width */

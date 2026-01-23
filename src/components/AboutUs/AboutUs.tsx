@@ -22,7 +22,7 @@ const AboutUs = () => {
         </Helmet>
         <div
           style={{
-            marginTop: "85px",
+            marginTop: "50px",
             width: "100%",
             height: "auto",
             overflow: "hidden",

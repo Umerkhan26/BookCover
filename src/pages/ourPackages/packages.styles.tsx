@@ -27,7 +27,7 @@ const float = keyframes`
 // Styled components
 export const PackageContainer = styled.div`
   text-align: center;
-  padding: 5rem 2rem;
+  padding: 2.5rem 2rem;
   margin: 0 auto;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
   position: relative;
@@ -71,7 +71,6 @@ export const PackageTitle = styled.h2`
   font-size: 2.5rem;
   font-weight: 600;
   color: #2d3748;
-  margin-bottom: 2rem;
   position: relative;
   display: inline-block;
   text-transform: uppercase;
@@ -104,7 +103,7 @@ export const PackageTitle = styled.h2`
     content: "✦";
     position: absolute;
     left: -50px;
-    top: 50%;
+    top: 30%;
     transform: translateY(-50%);
     color: #6dc7d1;
     font-size: 2rem;

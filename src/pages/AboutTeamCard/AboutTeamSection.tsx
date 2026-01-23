@@ -18,18 +18,59 @@ const teamMembers = [
 
 const TeamSection: React.FC = () => {
   return (
-    <section className="py-20 px-6">
-      {/* Section Heading */}
-      <h2 className="text-center mb-14">
-        <span className="text-2xl font-semibold text-black">Our </span>
-        <span className="text-3xl font-bold text-[#6dc7d1]">Team</span>
-      </h2>
+    <section
+      style={{
+        width: "100%",
+        paddingTop: "10px",
+        paddingBottom: "40px",
+        backgroundColor: "#ffffff",
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          paddingLeft: "clamp(16px, 4vw, 64px)",
+          paddingRight: "clamp(16px, 4vw, 64px)",
+        }}
+      >
+        {/* Section Heading */}
+        <h2 style={{ textAlign: "center" as const, marginBottom: "48px" }}>
+          <span
+            style={{
+              fontSize: "clamp(28px, 4vw, 40px)",
+              fontWeight: 600,
+              color: "#000",
+            }}
+          >
+            Our{" "}
+          </span>
+          <span
+            style={{
+              fontSize: "clamp(28px, 4vw, 40px)",
+              fontWeight: 700,
+              color: "#6dc7d1",
+            }}
+          >
+            Team
+          </span>
+        </h2>
 
-      {/* Team Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-        {teamMembers.map((member, index) => (
-          <TeamCard key={index} {...member} />
-        ))}
+        {/* Team Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "24px",
+            justifyContent: "center",
+          }}
+        >
+          {teamMembers.map((member, index) => (
+            <TeamCard key={index} {...member} />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -302,7 +302,7 @@ export const Card = styled.a`
     flex: 0 0 calc(33.333% - 10px);
     max-width: calc(33.333% - 10px);
     img {
-      min-height: 220px;
+      min-height: 260px;
       aspect-ratio: 155 / 220;
     }
   }
