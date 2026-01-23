@@ -52,9 +52,11 @@ export const Section = styled.section`
 // `;
 export const BannerImage = styled.div`
   width: 100%;
-  max-height: 450px;
   position: relative;
   overflow: hidden;
+  aspect-ratio: 1263 / 651;
+  min-height: 450px;
+  max-height: 650px;
 
   img {
     width: 100%;
@@ -62,12 +64,17 @@ export const BannerImage = styled.div`
     object-fit: cover;
     display: block;
   }
+  
   @media (max-width: 768px) {
-    min-height: 250px;
+    aspect-ratio: 16 / 9;
+    min-height: 300px;
+    max-height: 400px;
   }
 
   @media (max-width: 480px) {
-    min-height: 200px;
+    aspect-ratio: 16 / 9;
+    min-height: 250px;
+    max-height: 300px;
   }
 `;
 export const BannerContent = styled.div`
