@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import userlogo from "../../assets//userlogo.webp";
+import userlogo from "../../assets//userlogo (1).webp";
 import LoginModal from "../Login/LoginModel";
 import RegisterModal from "../register/RegisterModal";
 
@@ -252,7 +252,7 @@ function Header() {
 
             <NavButton to="/get-a-cover">Get a Cover</NavButton>
           </NavNBtn>
-          
+
           <NavText onClick={handleNavigation}>
             <UserLogo src={userlogo} alt="User Logo" />
           </NavText>
