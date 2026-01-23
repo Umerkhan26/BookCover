@@ -18,18 +18,20 @@ const teamMembers = [
 
 const TeamSection: React.FC = () => {
   return (
-    <div className="mt-10 mb-20 px-10">
-      <h2 className="text-xl font-semibold text-center mt-32 -mb-6">
-        <span className="text-black">Our</span>
-        <span className="font-bold text-3xl text-[#6dc7d1] "> Team</span>
+    <section className="py-20 px-6">
+      {/* Section Heading */}
+      <h2 className="text-center mb-14">
+        <span className="text-2xl font-semibold text-black">Our </span>
+        <span className="text-3xl font-bold text-[#6dc7d1]">Team</span>
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-16 w-full max-w-screen-xl mx-auto">
+      {/* Team Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {teamMembers.map((member, index) => (
           <TeamCard key={index} {...member} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

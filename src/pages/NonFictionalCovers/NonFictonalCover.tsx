@@ -26,14 +26,14 @@ const NonFictonalCover: React.FC = () => {
         image={nonFictionImg}
         bookCoversText=""
         benefitsComponent={
-          <BenefitsSection
-            title={
-              <>
+      <BenefitsSection
+        title={
+          <>
                 Here's What Benefits <span>You Get</span>
-              </>
-            }
-            benefits={benefitsData}
-          />
+          </>
+        }
+        benefits={benefitsData}
+      />
         }
         designProcessComponent={<DesignProcess />}
         packagesComponent={<Packages />}

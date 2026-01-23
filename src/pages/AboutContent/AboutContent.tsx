@@ -30,7 +30,7 @@ const AboutContent: React.FC<AboutContentProps> = ({
     );
   }
   return (
-    <div className="text-center max-w-[90%] md:max-w-2xl mx-auto  md:px-0 mt-8">
+    <div className="text-center max-w-[90%] md:max-w-3xl mx-auto px-4 mt-16">
       <h2 className="text-[clamp(24px, 6vw, 32px)] font-semibold text-black leading-snug pb-8 mt-4">
         {title} <span className="text-[#6dc7d1]">{highlightedText}</span>
       </h2>
