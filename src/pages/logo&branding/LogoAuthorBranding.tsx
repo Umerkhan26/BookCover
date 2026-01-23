@@ -21,7 +21,7 @@ import {
 
 import img1 from "../../assets/banner/TheButterflySpell.webp";
 import img2 from "../../assets/banner/TheLastDefenderCover.webp";
-import img3 from "../../assets/banner/Stormborn (1).webp";
+import img3 from "../../assets/banner/Stormborn.webp";
 import img4 from "../../assets/banner/MurderMelodycover.webp";
 import img5 from "../../assets/banner/ArchersAscent.webp";
 import img6 from "../../assets/banner/Dustanddestinycover.webp";
@@ -103,7 +103,7 @@ const LogoAuthorBranding = () => {
     setPreviewIndex((prev) =>
       prev !== null
         ? (prev - 1 + images.length) % images.length
-        : images.length - 1
+        : images.length - 1,
     );
   };
 
