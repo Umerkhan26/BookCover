@@ -40,6 +40,13 @@ export const ReviewsWrapper = styled.div`
   width: 100%;
   font-family: "Manrope", sans-serif;
   overflow: hidden; /* Ensures no horizontal scrolling */
+  display: flex;
+  justify-content: center;
+  
+  /* Desktop: Ensure proper centering */
+  @media (min-width: 1200px) {
+    justify-content: center;
+  }
 `;
 
 export const CardsWrapper = styled.div`
@@ -51,6 +58,18 @@ export const CardsWrapper = styled.div`
   box-sizing: border-box;
   padding-left: 0;
   padding-right: 0;
+
+  /* Desktop: Align cards to the start (left) */
+  @media (min-width: 1200px) {
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Laptop: Keep space-between */
+  @media (min-width: 769px) and (max-width: 1199px) {
+    justify-content: space-between;
+  }
 
   @media (max-width: 768px) {
     gap: 1.5rem; /* Maintain gap on mobile */
@@ -87,6 +106,13 @@ export const ReviewCard = styled.div`
   box-shadow: 0 3px 12px rgba(212, 167, 89, 0.3);
   transition: 0.3s;
   box-sizing: border-box;
+
+  /* Desktop: Ensure cards don't stretch too much */
+  @media (min-width: 1200px) {
+    flex: 0 1 auto; /* Don't grow, just use natural width */
+    min-width: 280px;
+    max-width: 320px;
+  }
 
   /* Responsive card adjustments */
   @media (max-width: 768px) {

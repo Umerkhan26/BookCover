@@ -6,6 +6,25 @@ import {
   ReviewsWrapper,
 } from "./reviews.styles";
 
+const ReviewsContainer = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-left: clamp(20px, 5vw, 0px);
+  padding-right: clamp(20px, 5vw, 0px);
+
+  @media (min-width: 1200px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @media (max-width: 1199px) {
+    padding-left: clamp(20px, 5vw, 32px);
+    padding-right: clamp(20px, 5vw, 32px);
+  }
+`;
+
 const Reviews = () => {
   return (
     <div
@@ -13,15 +32,7 @@ const Reviews = () => {
       id="reviews"
       style={{ width: "100%", overflowX: "hidden" }}
     >
-      <div
-        className="max-w-7xl mx-auto"
-        style={{
-          paddingLeft: "clamp(20px, 5vw, 64px)",
-          paddingRight: "clamp(20px, 5vw, 64px)",
-          width: "100%",
-          boxSizing: "border-box",
-        }}
-      >
+      <ReviewsContainer>
         <ReviewsHeadingWrapper>
           <h2
             style={{
@@ -211,7 +222,7 @@ const Reviews = () => {
             </ReviewCard>
           </CardsWrapper>
         </ReviewsWrapper>
-      </div>
+      </ReviewsContainer>
     </div>
   );
 };

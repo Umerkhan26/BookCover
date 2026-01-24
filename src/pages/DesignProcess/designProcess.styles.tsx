@@ -161,5 +161,6 @@ export const Button = styled.a`
     padding: 12px 50px;
     font-size: 16px;
     min-width: 150px;
+    margin-bottom: 25px;
   }
 `;
