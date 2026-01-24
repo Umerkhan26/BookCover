@@ -12,7 +12,8 @@ import specialadd4 from "../../assets/specialadd4.webp";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../../components/Login/LoginModel";
 import RegisterModal from "../../components/register/RegisterModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AOS from "aos";
 import "aos/dist/aos.css";
 const addOns = [
   {
@@ -41,6 +42,11 @@ const SpecialEditionAddOns = () => {
   const navigate = useNavigate();
   const [showLoginModal, setShowLoginModal] = useState(false); // State for showing login modal
   const [showRegisterModal, setShowRegisterModal] = useState(false); // State for showing register modal
+
+  useEffect(() => {
+    // Refresh AOS when component mounts to ensure animations work on refresh
+    AOS.refresh();
+  }, []);
 
   const handleLoginSuccess = (token: string) => {
     localStorage.setItem("token", token);

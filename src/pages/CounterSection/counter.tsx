@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import CountUp from "react-countup"; // Import CountUp
-import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 // Styled Components
 const CounterSectionWrapper = styled.section`
@@ -126,11 +125,6 @@ interface CounterSectionProps {
 const CounterSection: React.FC<CounterSectionProps> = ({ data }) => {
   const counterRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 900);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -154,25 +148,6 @@ const CounterSection: React.FC<CounterSectionProps> = ({ data }) => {
       }
     };
   }, []);
-
-  if (!isLoaded) {
-    return (
-      <CounterSectionWrapper ref={counterRef}>
-        <Container>
-          <WrapCounter>
-            {data.map((_, index) => (
-              <ColCount key={index}>
-                <Top>
-                  <Shimmer height="122px" width="110px" rounded={false} />
-                </Top>
-                <ShimmerText lines={1} width="100px" />
-              </ColCount>
-            ))}
-          </WrapCounter>
-        </Container>
-      </CounterSectionWrapper>
-    );
-  }
 
   return (
     <CounterSectionWrapper ref={counterRef}>

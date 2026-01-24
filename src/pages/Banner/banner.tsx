@@ -19,7 +19,6 @@ import img3 from "../../assets/banner/Stormborn.webp";
 import img4 from "../../assets/banner/MurderMelodycover.webp";
 import img5 from "../../assets/banner/ArchersAscent.webp";
 import img6 from "../../assets/banner/Dustanddestinycover.webp";
-import { ShimmerImage } from "../../components/Shimmer/Shimmer";
 
 // React functional component
 const TopBanner: React.FC = () => {
@@ -27,7 +26,7 @@ const TopBanner: React.FC = () => {
   return (
     <Section>
       <BannerImage>
-        <ShimmerImage
+        <img
           src={bannerImg}
           alt="Custom book cover design examples by Lumeart Studio"
           width={1263}
@@ -84,7 +83,7 @@ const TopBanner: React.FC = () => {
         </TopBannerR>
         <CardSection>
           <Card>
-            <ShimmerImage
+            <img
               src={img1}
               alt="Cover Image"
               width={155}
@@ -93,7 +92,7 @@ const TopBanner: React.FC = () => {
             />
           </Card>
           <Card>
-            <ShimmerImage
+            <img
               src={img2}
               alt="Cover Image"
               width={155}
@@ -102,7 +101,7 @@ const TopBanner: React.FC = () => {
             />
           </Card>
           <Card>
-            <ShimmerImage
+            <img
               src={img3}
               alt="Cover Image"
               width={155}
@@ -111,7 +110,7 @@ const TopBanner: React.FC = () => {
             />
           </Card>
           <Card>
-            <ShimmerImage
+            <img
               src={img4}
               alt="Cover Image"
               width={155}
@@ -120,7 +119,7 @@ const TopBanner: React.FC = () => {
             />
           </Card>
           <Card>
-            <ShimmerImage
+            <img
               src={img5}
               alt="Cover Image"
               width={155}
@@ -129,7 +128,7 @@ const TopBanner: React.FC = () => {
             />
           </Card>
           <Card>
-            <ShimmerImage
+            <img
               src={img6}
               alt="Cover Image"
               width={155}

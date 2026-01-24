@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 // Styled Components
 const FeaturedSectionWrapper = styled.section`
@@ -82,27 +81,6 @@ interface FeaturedSectionProps {
 
 // Main Component
 const FeaturedSection: React.FC<FeaturedSectionProps> = ({ featuredItems }) => {
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 700);
-    return () => clearTimeout(timer);
-  }, []);
-  if (!isLoaded) {
-    return (
-      <FeaturedSectionWrapper>
-        <Container>
-          <ShimmerText lines={1} width="200px" />
-          <FeaturedList>
-            {Array.from({ length: featuredItems.length }).map((_, index) => (
-              <FeaturedItem key={index}>
-                <Shimmer height="80px" width="100%" rounded />
-              </FeaturedItem>
-            ))}
-          </FeaturedList>
-        </Container>
-      </FeaturedSectionWrapper>
-    );
-  }
   return (
     <FeaturedSectionWrapper>
       <Container>

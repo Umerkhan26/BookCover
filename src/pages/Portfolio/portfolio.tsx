@@ -4,22 +4,9 @@ import styled from "styled-components";
 import Tabs from "../../components/Tabs/tabs";
 import SubCategoryTabs from "../../components/Tabs/subcatagory";
 import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
-import {
-  Shimmer,
-  ShimmerCard,
-  ShimmerImage,
-  ShimmerText,
-} from "../../components/Shimmer/Shimmer";
 
 const PortfolioWrapperWithTabs = () => {
   const location = useLocation();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const seoData: {
     [key: string]: { title: string; description: string; canonical?: string };
@@ -108,115 +95,6 @@ const PortfolioWrapperWithTabs = () => {
   ];
 
   const isCustomBookCovers = customCoverPaths.includes(location.pathname);
-
-  if (!isLoaded) {
-    return (
-      <>
-        <Helmet>
-          <title>{currentSEO.title}</title>
-          <meta name="description" content={currentSEO.description} />
-          <link rel="canonical" href={canonicalUrl} />
-        </Helmet>
-        <PortfolioWrapper>
-          {/* Shimmer for CoverPortfolio banner */}
-          <div
-            style={{ width: "100%", height: "400px", background: "#f9f9f9" }}
-          >
-            <ShimmerImage
-              src="placeholder-banner"
-              alt="Portfolio Banner Shimmer"
-              width={1200}
-              height={400}
-              loading="eager"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-
-          {/* Shimmer for Tabs */}
-          <div
-            style={{
-              padding: "36px 20px",
-              maxWidth: "1200px",
-              margin: "0 auto",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "20px",
-                flexWrap: "wrap",
-              }}
-            >
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Shimmer key={i} height="40px" width="150px" rounded />
-              ))}
-            </div>
-            <div
-              style={{ height: "1px", background: "#ddd", marginTop: "10px" }}
-            />
-          </div>
-
-          {isCustomBookCovers && (
-            <div
-              style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}
-            >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                  gap: "10px",
-                }}
-              >
-                {Array.from({ length: 11 }).map(
-                  (
-                    _,
-                    i, // 11 subcategories
-                  ) => (
-                    <Shimmer key={i} height="30px" width="100%" rounded />
-                  ),
-                )}
-              </div>
-              <div
-                style={{ height: "2px", background: "#ddd", marginTop: "10px" }}
-              />
-            </div>
-          )}
-
-          {/* Shimmer placeholder for Outlet (portfolio grid) */}
-          <div
-            style={{
-              padding: "40px 20px",
-              maxWidth: "1200px",
-              margin: "0 auto",
-            }}
-          >
-            <ShimmerText
-              lines={1}
-              width="200px"
-              style={{ marginBottom: "20px" }}
-            />
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "20px",
-              }}
-            >
-              {Array.from({ length: 12 }).map(
-                (
-                  _,
-                  i, // Assume ~12 portfolio items
-                ) => (
-                  <ShimmerCard key={i} height="350px" />
-                ),
-              )}
-            </div>
-          </div>
-        </PortfolioWrapper>
-      </>
-    );
-  }
 
   return (
     <>

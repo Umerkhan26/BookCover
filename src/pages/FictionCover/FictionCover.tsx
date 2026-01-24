@@ -8,7 +8,6 @@ import {
   Container,
   BenifitsComponent,
 } from "./FictionCover.styles";
-import { ShimmerImage } from "../../components/Shimmer/Shimmer";
 
 // interface BookCoversTextProps {
 //   text: string;
@@ -68,7 +67,7 @@ const FictionCover = ({
           <BookCoversText text={bookCoversText} />
         </SectionFiction> */}
         {image && (
-          <ShimmerImage
+          <img
             src={image}
             alt="Book Cover Banner"
             width={1200}

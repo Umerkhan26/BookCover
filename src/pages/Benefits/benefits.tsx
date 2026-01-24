@@ -1,5 +1,6 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect } from "react";
 import "aos/dist/aos.css";
+import AOS from "aos";
 import {
   BenefitsWrap,
   Container,
@@ -14,8 +15,6 @@ import {
   FirstRow,
   TextContainer,
 } from "./benefits.styles";
-import { ShimmerCard, ShimmerText } from "../../components/Shimmer/Shimmer";
-
 type BenefitItem = {
   image: string;
   title: string;
@@ -32,48 +31,20 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
   title,
   benefits,
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const firstTwoCards = benefits.slice(0, 2);
   const remainingCards = benefits.slice(2);
 
   const baseDelay = 0;
   const delayIncrement = 200;
 
-  if (!isLoaded) {
-    return (
-      <BenefitsWrap>
-        <Container>
-          <FirstRow>
-            <TextContainer>
-              <ShimmerText lines={2} width="80%" />
-            </TextContainer>
-            <BenefitItemWrap>
-              <ShimmerCard height="190px" />
-            </BenefitItemWrap>
-            <BenefitItemWrap>
-              <ShimmerCard height="190px" />
-            </BenefitItemWrap>
-          </FirstRow>
-          <Row>
-            {remainingCards.map((_, index) => (
-              <BenefitItemWrap key={index}>
-                <ShimmerCard height="190px" />
-              </BenefitItemWrap>
-            ))}
-          </Row>
-        </Container>
-      </BenefitsWrap>
-    );
-  }
+  useEffect(() => {
+    // Refresh AOS when component mounts to ensure animations work on refresh
+    AOS.refresh();
+  }, []);
 
   return (
     <BenefitsWrap>
-      <Container className={isLoaded ? "loaded" : ""}>
+      <Container className="loaded">
         {/* First row with text and the first two cards */}
         <FirstRow>
           <TextContainer>

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import bannerImg from "../../assets/PageBanners/PortfolioLUMEARTPORTFOLIOWEBCOVERS-01.webp";
-import { ShimmerImage } from "../Shimmer/Shimmer";
 
 // Updated Styled Components
 const Container = styled.div`
@@ -16,7 +15,7 @@ const Container = styled.div`
 const CoverPortfolio: React.FC = () => {
   return (
     <Container className="inner-header orbit-wrap">
-      <ShimmerImage
+      <img
         src={bannerImg}
         alt="Custom Book Cover Portfolio Banner"
         width={1200}

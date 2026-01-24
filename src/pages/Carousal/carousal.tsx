@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -26,7 +26,6 @@ import img4 from "../../assets/banner/MurderMelodycover.webp";
 import img5 from "../../assets/banner/ArchersAscent.webp";
 import img6 from "../../assets/banner/Dustanddestinycover.webp";
 import { useNavigate } from "react-router-dom";
-import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 const images = [
   { src: img1, title: "INGLED", subtitle: "OUT" },
@@ -92,7 +91,6 @@ const settings = {
 
 const Carousel = () => {
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleImageClick = (index: number) => {
     setPreviewIndex(index);
@@ -119,35 +117,6 @@ const Carousel = () => {
   const handleGoToPortfolio = () => {
     navigate("/portfolio");
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isLoaded) {
-    return (
-      <MainContainer>
-        <TitleContainer>
-          <ShimmerText lines={1} width="60%" />
-        </TitleContainer>
-        <SliderContainer>
-          <Slider {...settings}>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <div key={index}>
-                <ImageWrapper>
-                  <Shimmer width="200px" height="280px" rounded />
-                </ImageWrapper>
-              </div>
-            ))}
-          </Slider>
-        </SliderContainer>
-        <ButtonContainer>
-          <Shimmer height="40px" width="150px" rounded />
-        </ButtonContainer>
-      </MainContainer>
-    );
-  }
 
   return (
     <MainContainer>

@@ -24,12 +24,10 @@ import {
   Dot,
 } from "./testimonial.styles";
 import "aos/dist/aos.css";
-import { Shimmer, ShimmerText } from "../../components/Shimmer/Shimmer";
 
 const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsToShow, setCardsToShow] = useState(4);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const testimonials = [
     {
@@ -118,38 +116,6 @@ const Testimonials: React.FC = () => {
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 1200);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isLoaded) {
-    return (
-      <SectionTestimonials>
-        <WrapTestimonials>
-          <Container>
-            <MainScreen>
-              <Shimmer height="12px" width="48px" rounded />
-              <ShimmerText lines={1} width="40%" />
-              <ShimmerText lines={2} width="60%" />
-            </MainScreen>
-            <CarouselContainer>
-              <CarouselTrack>
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <TestimonialCard key={index} cardsToShow={4}>
-                    <ShimmerText lines={3} width="90%" />
-                  </TestimonialCard>
-                ))}
-              </CarouselTrack>
-            </CarouselContainer>
-            <ButtonWrapper>
-              <Shimmer height="40px" width="150px" rounded />
-            </ButtonWrapper>
-          </Container>
-        </WrapTestimonials>
-      </SectionTestimonials>
-    );
-  }
   return (
     <SectionTestimonials>
       <WrapTestimonials>

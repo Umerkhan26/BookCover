@@ -1,6 +1,5 @@
 // import React from "react";
 import styled from "styled-components";
-import { ShimmerImage } from "../../components/Shimmer/Shimmer";
 
 interface ContactUsCoverProps {
   title?: string;
@@ -21,7 +20,7 @@ const ContactUsCover: React.FC<ContactUsCoverProps> = ({ image }) => {
         </Subtitle>
       </Section> */}
       {/* <img src={image} alt="image" /> */}
-      <ShimmerImage
+      <img
         src={image || "bannerImg"}
         alt="Contact Us Banner"
         width={1200}
