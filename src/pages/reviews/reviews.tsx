@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import {
   Button,
   CardsWrapper,
@@ -6,29 +7,57 @@ import {
 } from "./reviews.styles";
 
 const Reviews = () => {
-
   return (
     <div
       className="bg-gray-100 text-gray-600 dark:text-gray-300 py-12 md:py-16"
       id="reviews"
+      style={{ width: "100%", overflowX: "hidden" }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+      <div
+        className="max-w-7xl mx-auto"
+        style={{
+          paddingLeft: "clamp(20px, 5vw, 64px)",
+          paddingRight: "clamp(20px, 5vw, 64px)",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        <ReviewsHeadingWrapper>
           <h2
             style={{
-              fontSize: "clamp(28px, 4vw, 40px)",
+              fontSize: "clamp(22px, 5vw, 40px)",
               fontWeight: 700,
               color: "#000",
               textAlign: "center",
-              marginBottom: "24px",
+              marginBottom: "4px",
+              padding: "0",
+              display: "block",
+              visibility: "visible",
+              width: "100%",
+              maxWidth: "100%",
+              lineHeight: "1.3",
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              boxSizing: "border-box",
             }}
+            className="mt-10 md:mt-0"
           >
-            <span style={{ color: "#000" }}>What Do Our</span>{" "}
-            <span style={{ color: "#6dc7d1" }}>Clients Say</span>
+            <span style={{ color: "#000", display: "inline" }}>
+              What Do Our
+            </span>{" "}
+            <span style={{ color: "#6dc7d1", display: "inline" }}>
+              Clients Say
+            </span>
           </h2>
-        </div>
+        </ReviewsHeadingWrapper>
 
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "40px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "40px",
+          }}
+        >
           <a
             href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
             target="_blank"
@@ -188,3 +217,18 @@ const Reviews = () => {
 };
 
 export default Reviews;
+
+export const ReviewsHeadingWrapper = styled.div`
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+
+  /* MOBILE ONLY */
+  margin-top: 50px;
+
+  /* DESKTOP & UP */
+  @media (min-width: 768px) {
+    margin-top: 20px;
+  }
+`;

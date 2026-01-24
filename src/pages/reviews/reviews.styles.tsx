@@ -44,10 +44,33 @@ export const ReviewsWrapper = styled.div`
 
 export const CardsWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 2rem;
   width: 100%; /* Make sure it takes full width */
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0;
+
+  @media (max-width: 768px) {
+    gap: 1.5rem; /* Maintain gap on mobile */
+    padding-left: clamp(12px, 3vw, 20px); /* Left padding on mobile */
+    padding-right: clamp(12px, 3vw, 20px); /* Right padding on mobile */
+  }
+
+  @media (max-width: 480px) {
+    gap: 1.25rem; /* Slightly smaller gap on very small screens */
+    padding-left: clamp(
+      10px,
+      2.5vw,
+      16px
+    ); /* Left padding on very small screens */
+    padding-right: clamp(
+      10px,
+      2.5vw,
+      16px
+    ); /* Right padding on very small screens */
+  }
 `;
 
 export const ReviewCard = styled.div`
@@ -56,15 +79,29 @@ export const ReviewCard = styled.div`
   flex: 1 1 100%; /* Allow the card to grow and shrink */
   margin-bottom: 2rem;
   padding: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   border: 2px solid rgba(109, 199, 209, 0.6);
   border-radius: 1rem;
   background: #fff;
   box-shadow: 0 3px 12px rgba(212, 167, 89, 0.3);
   transition: 0.3s;
+  box-sizing: border-box;
 
   /* Responsive card adjustments */
   @media (max-width: 768px) {
     min-width: 100%; /* Full width on smaller screens */
+    padding-left: 1.5rem; /* Internal left padding on mobile */
+    padding-right: 1.5rem; /* Internal right padding on mobile */
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding-left: 1.25rem; /* Internal padding on very small screens */
+    padding-right: 1.25rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
   }
 
   .flex {
