@@ -47,7 +47,7 @@ export const Section = styled.section`
 
 export const BannerImage = styled.div`
   width: 100%;
-  max-height: 440px;
+  max-height: 480px;
   position: relative;
   overflow: hidden;
 
