@@ -1,4 +1,3 @@
-import FictionCover from "../FictionCover/FictionCover";
 import BookCoverRedesaign from "../../assets/PageBanners/redesignLUMEARTWEBPAGEFICTIONCOVER-03-mNMnK2is.webp";
 import Packages from "../ourPackages/packages";
 // import { myPackagesData } from "../ourPackages/packagesData";
@@ -7,6 +6,7 @@ import RedesignExamples from "./RedesignExamples";
 import RedesignForm from "./RedesignForm";
 import { examples } from "./RedesignExampleData";
 import { Helmet } from "react-helmet-async"; // Correct import for async version
+import FictionsCover from "../FictionCover/FictionCoverPage";
 
 const BookCoverRedesign = () => {
   return (
@@ -26,10 +26,10 @@ const BookCoverRedesign = () => {
           href="https://lumeartstudio.com/book-cover-redesign"
         />
       </Helmet>
-      <FictionCover
+      <FictionsCover
         title="Book Cover Redesign"
         subtitle=""
-        image={BookCoverRedesaign} // Can be dynamic as well
+        image={BookCoverRedesaign}
         bookCoversText=""
       />
       <Packages />

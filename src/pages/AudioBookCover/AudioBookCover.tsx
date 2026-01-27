@@ -1,4 +1,3 @@
-import FictionCover from "../FictionCover/FictionCover";
 import AudioCover from "../../assets/PageBanners/audiobookLUMEARTWEBPAGEFICTIONCOVER-06.webp";
 import BenefitsSection from "../Benefits/benefits";
 import { benefitsData } from "../../services/benefits";
@@ -8,6 +7,7 @@ import Reviews from "../reviews/reviews";
 // import AudioBookCoverAnimationSection from "./AudioBookCoverAnimationSection";
 import Packages from "../ourPackages/packages";
 import { Helmet } from "react-helmet-async";
+import FictionsCover from "../FictionCover/FictionCoverPage";
 
 const AudioBookCover = () => {
   return (
@@ -23,7 +23,7 @@ const AudioBookCover = () => {
           href="https://lumeartstudio.com/audio-book-cover"
         />
       </Helmet>
-      <FictionCover
+      <FictionsCover
         title="Custom Audiobook Cover Design"
         subtitle="Pay only when you're satisfied with the final result"
         image={AudioCover}

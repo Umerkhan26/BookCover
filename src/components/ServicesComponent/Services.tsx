@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import GetACover from "../GetACover/GetACover";
+import GetCover from "../GetACover/GetCover";
 
 const Services = () => {
   return (
@@ -12,7 +12,7 @@ const Services = () => {
         />
         <link rel="canonical" href="https://lumeartstudio.com/services" />
       </Helmet>
-      <GetACover />
+      <GetCover />
     </div>
   );
 };

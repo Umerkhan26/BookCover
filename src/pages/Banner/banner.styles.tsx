@@ -15,44 +15,39 @@ export const Section = styled.section`
   box-sizing: border-box;
   display: block;
   min-height: 310px;
-  padding-top: 72px;
+  padding-top: 85px;
   padding-bottom: 40px;
   background: unset !important;
+
+  @media (min-width: 1440px) {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    min-height: 520px;
+  }
+
+  /* Tablets */
+  @media (max-width: 1024px) {
+    padding-top: 80px;
+    padding-bottom: 35px;
+    min-height: 380px;
+  }
+
+  @media (max-width: 768px) {
+    padding-top: 75px;
+    padding-bottom: 30px;
+    min-height: 250px;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 70px;
+    padding-bottom: 25px;
+    min-height: 160px;
+  }
 `;
 
-// export const BannerImage = styled.div`
-//   width: 100%;
-//   max-height: 450px;
-//   min-height: 450px;
-//   position: relative;
-//   overflow: hidden;
-//   aspect-ratio: 1263 / 651;
-//   contain: layout style paint;
-//   will-change: contents;
-
-//   img {
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//     display: block;
-//     content-visibility: auto;
-//   }
-
-//   @media (max-width: 768px) {
-//     min-height: 300px;
-//     max-height: 300px;
-//     aspect-ratio: 16 / 9;
-//   }
-
-//   @media (max-width: 480px) {
-//     min-height: 250px;
-//     max-height: 250px;
-//     aspect-ratio: 16 / 9;
-//   }
-// `;
 export const BannerImage = styled.div`
   width: 100%;
-  max-height: 450px;
+  max-height: 440px;
   position: relative;
   overflow: hidden;
 
@@ -67,7 +62,7 @@ export const BannerImage = styled.div`
   }
 
   @media (max-width: 480px) {
-    min-height: 200px;
+    min-height: 160px;
   }
 `;
 export const BannerContent = styled.div`
@@ -132,7 +127,7 @@ export const Title = styled.h1`
   }
 
   @media (max-width: 480px) {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     line-height: 0.9;
     white-space: nowrap;
 
@@ -164,7 +159,7 @@ export const Subtitle = styled.p`
 
   @media (max-width: 480px) {
     font-size: 0.9rem; /* Adjusted for small screens */
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     line-height: 1.2;
   }
 `;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
-import { Helmet } from "react-helmet-async";
 import { motion, Variants } from "framer-motion";
 
 const variants: Variants = {
@@ -202,13 +201,6 @@ const CustomCover: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Customs Book Covers</title>
-        <meta
-          name="description"
-          content="Explore our diverse collection of book cover designs."
-        />
-      </Helmet>
       <PortfolioContainer>
         {images.map((img) => (
           <PortfolioItemCard

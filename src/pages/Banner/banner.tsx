@@ -1,5 +1,5 @@
 import React from "react";
-import bannerImg from "../../assets/logo/WebsiteCover1263651px2.webp";
+import bannerImg from "../../assets/logo/Website Cover 2569 × 949 px.webp";
 import {
   Section,
   BannerImage,
