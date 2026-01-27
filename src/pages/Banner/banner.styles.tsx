@@ -20,7 +20,7 @@ export const Section = styled.section`
   background: unset !important;
 
   @media (min-width: 1440px) {
-    padding-top: 100px;
+    padding-top: 85px;
     padding-bottom: 50px;
     min-height: 520px;
   }
