@@ -80,7 +80,6 @@ function Header() {
     if (window.innerWidth <= 1024) {
       setIsServicesOpen((prev) => !prev);
     }
-    // On desktop, we don't need to handle click as hover will handle it
   };
 
   const closeServicesMenu = () => {

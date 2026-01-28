@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
-import ContactUsCover from "../../pages/ContactUsCover/ContactUsCover";
 import ContactUsForm from "../../pages/ContactUsForm/ContactUsForm";
-import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-05.webp";
+import bannerImg from "../../assets/PageBanner/6.webp";
+import FictionsCover from "../../pages/FictionCover/FictionCoverPage";
 
 const ContactUs = () => {
   return (
@@ -17,7 +17,21 @@ const ContactUs = () => {
         <link rel="canonical" href="https://lumeartstudio.com/contact-us" />
       </Helmet>
       <div className="w-full">
-        <ContactUsCover image={bannerImg} />
+        <FictionsCover
+          title="Contact Us"
+          subtitle={
+            <>
+              If you have any questions or simply want to say 'Hi', just do it!
+              You may fill out the form below or mail us at lumeart.com
+              <br />
+              Drop us a line and we will contact you within 24 hours
+            </>
+          }
+          image={bannerImg}
+          bookCoversText=""
+          showCircles={false}
+          formatSubtitle={false}
+        />
       </div>
       <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
         <ContactUsForm />

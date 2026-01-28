@@ -1,26 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import bannerImg from "../../assets/PageBanners/TermsAndConditions-B5POMQkF.webp";
-
-const Container = styled.div`
-  margin-top: 85px;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    /* display: block; */
-  }
-
-  @media (max-width: 768px) {
-    img {
-      max-height: 300px; /* adjust for smaller screens */
-    }
-  }
-`;
+import bannerImg from "../../assets/PageBanner/6.webp";
+import FictionsCover from "../../pages/FictionCover/FictionCoverPage";
 
 const colors = {
   primary: "#6dc7d1",
@@ -408,9 +389,14 @@ const TermsAndConditions: React.FC = () => {
 
   return (
     <>
-      <Container>
-        <img src={bannerImg} alt="Terms And Condition Img" />
-      </Container>
+      <FictionsCover
+        title="Terms And Conditions"
+        subtitle="CLEAR TERMS. CREATIVE COVERS. TRUSTED PARTNERSHIP."
+        image={bannerImg}
+        bookCoversText=""
+        showCircles={false}
+        formatSubtitle={false}
+      />
       <PageContainer className="page-content page-content-terms">
         <ContentWrapper className="container">
           <MainContent className="content-term">

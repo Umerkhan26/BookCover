@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import nonFictionImg from "../../assets/PageBanners/indieLUMEARTWEBPAGEFICTIONCOVER-01.webp";
+import nonFictionImg from "../../assets/PageBanner/3.webp";
 import BenefitsSection from "../Benefits/benefits";
 import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../DesignProcess/designProcess";

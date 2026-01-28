@@ -1,10 +1,10 @@
 import DesignProcess from "../../pages/HowWeDesign/design";
-import PartnerCover from "../../pages/Partner/partnerCover";
 import AffiliateBenefits from "./AffiliateBenefits";
 import benfits1 from "../../assets/benifits1.jpg";
 import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
-import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-06.webp";
+import bannerImg from "../../assets/PageBanner/6.webp";
+import FictionsCover from "../../pages/FictionCover/FictionCoverPage";
 
 const Partner = () => {
   return (
@@ -19,12 +19,13 @@ const Partner = () => {
         />
         <link rel="canonical" href="https://lumeartstudio.com/partner" />
       </Helmet>
-      <PartnerCover
-        title2={<>Partner With Lumeart Studio</>}
-        title=""
-        subtitle="Let's cooperate to make the self-publishing industry better!"
-        bookCoversText=""
+      <FictionsCover
+        title="Partner With Lume Art Studio"
+        subtitle="If you Let's cooperate to make the self-publishing industry better!"
         image={bannerImg}
+        bookCoversText=""
+        showCircles={false}
+        formatSubtitle={false}
       />
 
       <DesignProcess

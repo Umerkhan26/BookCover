@@ -1,8 +1,8 @@
-import ContactUsCover from "../../pages/ContactUsCover/ContactUsCover";
 import TeamSection from "../../pages/AboutTeamCard/AboutTeamSection";
 import AboutContent from "../../pages/AboutContent/AboutContent";
 import { Helmet } from "react-helmet-async";
-import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-02.webp";
+import bannerImg from "../../assets/PageBanner/6.webp";
+import FictionsCover from "../../pages/FictionCover/FictionCoverPage";
 
 const AboutUs = () => {
   return (
@@ -15,14 +15,14 @@ const AboutUs = () => {
         />
         <link rel="canonical" href="https://lumeartstudio.com/about-us" />
       </Helmet>
-      <div>
-        <ContactUsCover
-          title="Meet Our Team"
-          subtitle="Meet the minds that drive our vision forward."
-          email=""
-          image={bannerImg}
-        />
-      </div>
+      <FictionsCover
+        title="Meet Our Team"
+        subtitle="THE FACES BEHIND THE PIXELS - MEET THE LUMEART CREATORS"
+        image={bannerImg}
+        bookCoversText=""
+        showCircles={false}
+        formatSubtitle={false}
+      />
       <AboutContent />
       <TeamSection />
     </div>

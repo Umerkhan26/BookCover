@@ -15,17 +15,11 @@ import {
   Title,
   RequestCount,
   InfoButton,
-  ClickableLink,
   SeriesBadge,
 } from "./AdminCoverIdea.styles";
 import { fetchAllBookRequests } from "../../apis/apis";
 import { Helmet } from "react-helmet-async";
-import {
-  TableSkeleton,
-  LoadingSpinner,
-  ErrorMessage,
-  EmptyState,
-} from "../../components/DashboardLoading/DashboardLoading";
+import { TableSkeleton } from "../../components/DashboardLoading/DashboardLoading";
 import styled from "styled-components";
 
 const AdminCoverIdea: React.FC = () => {
@@ -33,7 +27,7 @@ const AdminCoverIdea: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedBookRequest, setSelectedBookRequest] = useState<any | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -72,10 +66,14 @@ const AdminCoverIdea: React.FC = () => {
                 <TableHeader className="header-id">ID</TableHeader>
                 <TableHeader className="header-username">User Name</TableHeader>
                 <TableHeader className="header-email">Email</TableHeader>
-                <TableHeader className="header-booktitle">Book Title</TableHeader>
+                <TableHeader className="header-booktitle">
+                  Book Title
+                </TableHeader>
                 <TableHeader className="header-genre">Genre</TableHeader>
                 <TableHeader className="header-series">Is Series?</TableHeader>
-                <TableHeader className="header-cover">Cover Preference</TableHeader>
+                <TableHeader className="header-cover">
+                  Cover Preference
+                </TableHeader>
                 <TableHeader className="header-moreinfo">More Info</TableHeader>
               </tr>
             </thead>
@@ -122,14 +120,19 @@ const AdminCoverIdea: React.FC = () => {
               <TableHeader className="header-booktitle">Book Title</TableHeader>
               <TableHeader className="header-genre">Genre</TableHeader>
               <TableHeader className="header-series">Is Series?</TableHeader>
-              <TableHeader className="header-cover">Cover Preference</TableHeader>
+              <TableHeader className="header-cover">
+                Cover Preference
+              </TableHeader>
               <TableHeader className="header-moreinfo">More Info</TableHeader>
             </tr>
           </thead>
           <tbody>
             {error ? (
               <TableRow>
-                <TableData colSpan={8} style={{ textAlign: "center", padding: "40px" }}>
+                <TableData
+                  colSpan={8}
+                  style={{ textAlign: "center", padding: "40px" }}
+                >
                   <ErrorMessageText>Error: {error}</ErrorMessageText>
                 </TableData>
               </TableRow>
@@ -168,7 +171,10 @@ const AdminCoverIdea: React.FC = () => {
               ))
             ) : (
               <TableRow>
-                <TableData colSpan={8} style={{ textAlign: "center", padding: "40px" }}>
+                <TableData
+                  colSpan={8}
+                  style={{ textAlign: "center", padding: "40px" }}
+                >
                   <EmptyMessage>No cover ideas found</EmptyMessage>
                 </TableData>
               </TableRow>
@@ -252,7 +258,7 @@ const AdminCoverIdea: React.FC = () => {
                             alt={`Comparable Cover ${index + 1}`}
                             loading="lazy"
                           />
-                        )
+                        ),
                       )}
                     </CoverImages>
                   </InfoSection>
@@ -270,12 +276,7 @@ export default AdminCoverIdea;
 const TitleSkeleton = styled.div`
   height: 32px;
   width: 250px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;

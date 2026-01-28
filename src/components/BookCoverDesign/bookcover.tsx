@@ -1,34 +1,17 @@
 import React from "react";
-import styled from "styled-components";
-import bannerImg from "../../assets/PageBanners/PortfolioLUMEARTPORTFOLIOWEBCOVERS-01.webp";
-
-// Updated Styled Components
-const Container = styled.div`
-  width: 100%;
-  margin: 85px 0 0 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  background-color: #f9f9f9;
-`;
+import bannerImg from "../../assets/PageBanner/6.webp";
+import FictionsCover from "../../pages/FictionCover/FictionCoverPage";
 
 const CoverPortfolio: React.FC = () => {
   return (
-    <Container className="inner-header orbit-wrap">
-      <img
-        src={bannerImg}
-        alt="Custom Book Cover Portfolio Banner"
-        width={1200}
-        height={400}
-        loading="eager"
-        style={{
-          width: "100%",
-          height: "auto",
-          display: "block",
-          objectFit: "cover",
-        }}
-      />
-    </Container>
+    <FictionsCover
+      title="Custom Book Cover Design Portfolio"
+      subtitle="CHECK OUT OUR EXAMPLES OF BOOK COVERS FOR DIFFERENT GENRES."
+      image={bannerImg}
+      bookCoversText=""
+      showCircles={false}
+      formatSubtitle={false}
+    />
   );
 };
 

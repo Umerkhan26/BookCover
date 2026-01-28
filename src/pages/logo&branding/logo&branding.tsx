@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import FictionCover from "../FictionCover/FictionCover";
-import logoBrandingImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-06.webp";
+import logoBrandingImg from "../../assets/PageBanner/6.webp";
 import BenefitsSection from "../Benefits/benefits";
 import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../DesignProcess/designProcess";
@@ -26,10 +26,12 @@ const LogoBranding: React.FC = () => {
         <link rel="canonical" href="https://lumeartstudio.com/logo-branding" />
       </Helmet>
       <FictionCover
-        title="Logo & Branding Design"
-        subtitle="Create a memorable brand identity"
+        title="Partner With Lume Art Studio"
+        subtitle="If you Let's cooperate to make the self-publishing industry better!"
         image={logoBrandingImg}
         bookCoversText=""
+        showCircles={false}
+        formatSubtitle={false}
         benefitsComponent={
           <BenefitsSection
             title={

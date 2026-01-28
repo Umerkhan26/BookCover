@@ -1,4 +1,4 @@
-import illustratedCover from "../../../assets/PageBanners/illustrateLUMEARTWEBPAGEFICTIONCOVER-02.webp";
+import illustratedCover from "../../../assets/PageBanner/4.webp";
 import IllusratedDesignProcess from "./illustratedDesignProcess";
 import { Helmet } from "react-helmet-async";
 import FictionsCover from "../../FictionCover/FictionCoverPage";
@@ -16,7 +16,7 @@ const Illustrated = () => {
         <link rel="canonical" href="https://lumeartstudio.com/illustrated" />
       </Helmet>
       <FictionsCover
-        title="Illustrated book cover design from scratch"
+        title="Illustrated Book Cover Design From Scratch"
         subtitle="Immerse readers into your world"
         image={illustratedCover} // Can be dynamic as well
         bookCoversText=""

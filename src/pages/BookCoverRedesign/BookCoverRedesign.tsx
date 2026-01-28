@@ -1,11 +1,10 @@
-import BookCoverRedesaign from "../../assets/PageBanners/redesignLUMEARTWEBPAGEFICTIONCOVER-03-mNMnK2is.webp";
+import BookCoverRedesaign from "../../assets/PageBanner/7.webp";
 import Packages from "../ourPackages/packages";
-// import { myPackagesData } from "../ourPackages/packagesData";
 import SpecialEditionAddOns from "../SpecialEditionAddOns/SpecialEditionAddOns";
 import RedesignExamples from "./RedesignExamples";
 import RedesignForm from "./RedesignForm";
 import { examples } from "./RedesignExampleData";
-import { Helmet } from "react-helmet-async"; // Correct import for async version
+import { Helmet } from "react-helmet-async";
 import FictionsCover from "../FictionCover/FictionCoverPage";
 
 const BookCoverRedesign = () => {
@@ -31,6 +30,7 @@ const BookCoverRedesign = () => {
         subtitle=""
         image={BookCoverRedesaign}
         bookCoversText=""
+        showCircles={true}
       />
       <Packages />
       <SpecialEditionAddOns />

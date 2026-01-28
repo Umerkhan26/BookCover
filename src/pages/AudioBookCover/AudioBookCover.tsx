@@ -1,4 +1,4 @@
-import AudioCover from "../../assets/PageBanners/audiobookLUMEARTWEBPAGEFICTIONCOVER-06.webp";
+import AudioCover from "../../assets/PageBanner/5.webp";
 import BenefitsSection from "../Benefits/benefits";
 import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../HowWeDesign/design";
@@ -25,7 +25,7 @@ const AudioBookCover = () => {
       </Helmet>
       <FictionsCover
         title="Custom Audiobook Cover Design"
-        subtitle="Pay only when you're satisfied with the final result"
+        subtitle="Pay Only When You're Satisfied With The Final Result"
         image={AudioCover}
         bookCoversText=""
       />

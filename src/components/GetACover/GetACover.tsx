@@ -1,10 +1,10 @@
 import { Helmet } from "react-helmet-async";
 import Carousel from "../../pages/Carousal/carousal";
 import BookCoverDesigns from "../../pages/GetACover/BookCovers";
-import PartnerCover from "../../pages/Partner/partnerCover";
 import Reviews from "../../pages/reviews/reviews";
 import SpecialEditionAddOns from "../../pages/SpecialEditionAddOns/SpecialEditionAddOns";
-import bannerImg from "../../assets/PageBanners/LUMEARTPORTFOLIOWEBCOVERS-03.webp";
+import bannerImg from "../../assets/PageBanner/6.webp";
+import FictionsCover from "../../pages/FictionCover/FictionCoverPage";
 
 const GetACover = () => {
   return (
@@ -18,16 +18,13 @@ const GetACover = () => {
 
         <link rel="canonical" href="https://lumeartstudio.com/get-a-cover" />
       </Helmet>
-      <PartnerCover
-        bookCoversText=""
-        title2=""
-        title={
-          <>
-            We Help Authors Make Book Cover Design <br />
-            Their Best Marketing Tool
-          </>
-        }
+      <FictionsCover
+        title="Welcome to Lume Art Studio"
+        subtitle="A place full of free learning materials for indie authors"
         image={bannerImg}
+        bookCoversText=""
+        showCircles={false}
+        formatSubtitle={false}
       />
 
       <BookCoverDesigns />

@@ -138,53 +138,199 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Title = styled.h1`
-  font-size: 3rem;
-  font-weight: bold;
-  color: #212529;
-  text-align: left;
-
-  @media (max-width: 1200px) {
-    font-size: 2.7rem;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 2.5rem;
-    text-align: left;
-  }
+export const BannerSection = styled.section`
+  position: relative;
+  width: 100%;
+  margin-top: 85px;
+  overflow: hidden;
 
   @media (max-width: 768px) {
-    font-size: 34px;
-    max-width: 554px;
-    text-align: center;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 28px;
-    max-width: 554px;
-    text-align: center;
+    margin-top: 70px;
   }
 `;
 
-export const Subtitle = styled.p`
-  font-size: 1rem;
-  color: #000000;
-  text-align: left;
+export const BannerImage = styled.div`
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+`;
+
+export const BannerContent = styled.div<{ alignCenter?: boolean }>`
+  position: absolute;
+  top: 50%;
+  left: ${({ alignCenter }) => (alignCenter ? "50%" : "0")};
+  transform: ${({ alignCenter }) =>
+    alignCenter ? "translate(-50%, -50%)" : "translateY(-50%)"};
+  padding-left: ${({ alignCenter }) =>
+    alignCenter
+      ? "0"
+      : "40px"}; /* Match header Nav padding on desktop when left-aligned */
+  z-index: 2;
+  max-width: ${({ alignCenter }) => (alignCenter ? "90%" : "50%")};
+  width: ${({ alignCenter }) => (alignCenter ? "auto" : "auto")};
+  display: flex;
+  flex-direction: column;
+  align-items: ${({ alignCenter }) => (alignCenter ? "center" : "flex-start")};
+  text-align: ${({ alignCenter }) => (alignCenter ? "center" : "left")};
+
+  /* On very large screens, match the centered header container (max-width: 1200px) */
+  @media (min-width: 1280px) {
+    padding-left: ${({ alignCenter }) =>
+      alignCenter ? "0" : "max(40px, calc((100% - 1200px) / 2))"};
+  }
 
   @media (max-width: 1024px) {
-    font-size: 16px;
-    text-align: center;
+    max-width: ${({ alignCenter }) => (alignCenter ? "100%" : "55%")};
+    padding-left: ${({ alignCenter }) =>
+      alignCenter ? "0" : "20px"}; /* Match header Nav padding on tablet */
   }
 
   @media (max-width: 768px) {
-    font-size: 16px;
-    margin-right: 0;
-    text-align: center;
+    max-width: ${({ alignCenter }) => (alignCenter ? "100%" : "50%")};
+    padding-left: ${({ alignCenter }) =>
+      alignCenter ? "0" : "20px"}; /* Match header Nav padding on mobile */
+    text-align: ${({ alignCenter }) => (alignCenter ? "center" : "left")};
   }
 
   @media (max-width: 480px) {
-    font-size: 16px;
-    text-align: center;
+    max-width: ${({ alignCenter }) => (alignCenter ? "100%" : "45%")};
+    padding-left: ${({ alignCenter }) =>
+      alignCenter
+        ? "0"
+        : "16px"}; /* Match header Nav padding on small mobile - moved right to align with logo */
+  }
+
+  @media (max-width: 390px) {
+    padding-left: ${({ alignCenter }) =>
+      alignCenter
+        ? "0"
+        : "16px"}; /* Match header Nav padding on very small mobile */
+  }
+`;
+
+export const CirclesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+`;
+
+export const Circle = styled.div`
+  width: 8px;
+  height: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  background: transparent;
+
+  @media (max-width: 768px) {
+    width: 6px;
+    height: 6px;
+    border-width: 1.5px;
+  }
+
+  @media (max-width: 480px) {
+    width: 5px;
+    height: 5px;
+    border-width: 1px;
+  }
+`;
+
+export const Title = styled.h1<{ singleLine?: boolean }>`
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: inherit;
+  line-height: 1.2;
+  margin: 0;
+  margin-bottom: 16px;
+  font-family: "Manrope", sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+
+  @media (max-width: 768px) {
+    white-space: normal;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: clamp(28px, 4.5vw, 42px);
+  }
+
+  @media (max-width: 1024px) {
+    font-size: clamp(24px, 4vw, 36px);
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: clamp(18px, 4vw, 24px);
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(14px, 3.5vw, 20px);
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+`;
+
+export const Subtitle = styled.p<{ singleLine?: boolean }>`
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: inherit;
+  margin: 0;
+  line-height: 1.5;
+  font-family: "Manrope", sans-serif;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+  overflow: ${({ singleLine }) => (singleLine ? "hidden" : "visible")};
+  text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
+  /* Keep long subtitles (like Contact Us) readable + centered, without overflowing */
+  max-width: 1120px;
+  padding: 0 8px;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 768px) {
+    white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+    overflow: ${({ singleLine }) => (singleLine ? "hidden" : "visible")};
+    text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
+  }
+
+  @media (max-width: 1024px) {
+    font-size: clamp(13px, 1.8vw, 16px);
+  }
+
+  @media (max-width: 768px) {
+    font-size: clamp(10px, 1.8vw, 12px);
+    line-height: 1.4;
+    white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(8px, 1.5vw, 10px);
+    line-height: 1.3;
+    white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
   }
 `;
 

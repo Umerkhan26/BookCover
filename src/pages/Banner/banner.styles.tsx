@@ -99,7 +99,6 @@ export const BannerContent = styled.div`
 export const Title = styled.h1`
   font-weight: 800;
   color: #e2f3f4;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 52px;
   line-height: 56px;
   text-transform: uppercase;
