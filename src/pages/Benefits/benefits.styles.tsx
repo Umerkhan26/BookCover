@@ -18,7 +18,7 @@ export const BenefitItems = styled.div`
   }
 `;
 
-export const SectionTitle = styled.h1`
+export const SectionTitle = styled.h2`
   font-size: 34px;
   font-weight: bold;
   color: #25293f;
@@ -46,7 +46,7 @@ export const BenefitsWrap = styled.section`
   font-family: "Manrope", sans-serif;
   background-color: #f8f8f8;
   contain: layout;
-  
+
   @media (max-width: 768px) {
     margin-bottom: -30px;
     padding: 40px 0;

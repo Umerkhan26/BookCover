@@ -7,7 +7,7 @@ import UserIcon from "../../assets/user.webp";
 // import User from "../../components/AdminDashboard/user";
 
 const teamMembers = [
-  { name: "Shoib", role: "Head of Customer Success", imageSrc: UserIcon },
+  { name: "Shoaib", role: "Head of Customer Success", imageSrc: UserIcon },
   { name: "Anas Ahmad", role: "CEO, Co-Founder", imageSrc: UserIcon },
   { name: "Shahid Khan", role: "Developer", imageSrc: UserIcon },
   { name: "Shamroz Khan", role: "Senior Graphic Designer", imageSrc: UserIcon },

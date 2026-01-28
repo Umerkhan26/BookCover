@@ -14,7 +14,7 @@ export const FullWidthContainer = styled.div`
   }
 `;
 
-export const Heading = styled.h1`
+export const Heading = styled.h2`
   font-size: 2.5rem;
   font-weight: bold;
   color: #333;

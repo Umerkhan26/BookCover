@@ -93,9 +93,9 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-black-700 dark:">
+                  <h3 className="text-lg font-medium text-black-700 dark:">
                     Daniella Doe
-                  </h6>
+                  </h3>
                   <p className="text-sm text-black-500 dark:text-black-300">
                     Mobile dev
                   </p>
@@ -128,9 +128,9 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-black-700 dark:">
+                  <h3 className="text-lg font-medium text-black-700 dark:">
                     Jane doe
-                  </h6>
+                  </h3>
                   <p className="text-sm text-black-500 dark:text-black-300">
                     Marketing
                   </p>
@@ -163,9 +163,9 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-black-700 dark:">
+                  <h3 className="text-lg font-medium text-black-700 dark:">
                     Yanick Doe
-                  </h6>
+                  </h3>
                   <p className="text-sm text-black-500 dark:text-black-300">
                     Developer
                   </p>
@@ -198,9 +198,9 @@ const Reviews = () => {
                   loading="lazy"
                 />
                 <div>
-                  <h6 className="text-lg font-medium text-black-700 dark:">
+                  <h3 className="text-lg font-medium text-black-700 dark:">
                     John Smith
-                  </h6>
+                  </h3>
                   <p className="text-sm text-black-500 dark:text-black-300">
                     Designer
                   </p>

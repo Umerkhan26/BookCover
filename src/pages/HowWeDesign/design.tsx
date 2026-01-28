@@ -49,7 +49,7 @@ const RightColumn = styled.div`
   }
 `;
 
-const SectionTitle = styled.h1`
+const SectionTitle = styled.h2`
   font-size: clamp(24px, 4vw, 34px);
   font-weight: bold;
   color: #212121;
@@ -267,7 +267,7 @@ const DesignProcess = ({
           <Subtitle
             data-aos="fade-right"
             data-aos-duration="1000"
-            data-aos-delay={initialDelay + 200} // A little after the title
+            data-aos-delay={initialDelay + 200}
             data-aos-once="true"
           >
             {subtitle}

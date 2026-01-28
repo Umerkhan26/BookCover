@@ -61,7 +61,7 @@ export const AddOnCard = styled.div`
 `;
 
 export const OrderButton = styled.button`
-  background-color: #6dc7d1; /* Theme color */
+  background-color: #6dc7d1;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -69,6 +69,7 @@ export const OrderButton = styled.button`
   cursor: pointer;
   border-radius: 5px;
   transition: 0.3s;
+  margin-bottom: 10px;
 
   &:hover {
     background-color: #5ab3bc;

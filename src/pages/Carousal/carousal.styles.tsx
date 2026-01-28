@@ -27,7 +27,7 @@ export const TitleContainer = styled.div`
   }
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h2`
   font-size: 34px;
   font-weight: bold;
   color: #25293f;

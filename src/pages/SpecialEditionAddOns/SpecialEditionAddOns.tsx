@@ -34,17 +34,16 @@ const addOns = [
   {
     title: "Chapter header & breaker design",
     image: specialadd4,
-    packageId: "Chapter-header-breaker-design", // Unique ID
+    packageId: "Chapter-header-breaker-design",
   },
 ];
 
 const SpecialEditionAddOns = () => {
   const navigate = useNavigate();
-  const [showLoginModal, setShowLoginModal] = useState(false); // State for showing login modal
-  const [showRegisterModal, setShowRegisterModal] = useState(false); // State for showing register modal
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   useEffect(() => {
-    // Refresh AOS when component mounts to ensure animations work on refresh
     AOS.refresh();
   }, []);
 
@@ -59,12 +58,12 @@ const SpecialEditionAddOns = () => {
   };
 
   const handleOrderNow = (packageId: string | undefined) => {
-    const token = localStorage.getItem("token"); // Check if token exists
+    const token = localStorage.getItem("token");
 
     if (!token) {
       console.warn("🚨 No token found! Redirecting to login...");
-      localStorage.setItem("redirectAfterLogin", `/order/${packageId}`); // Store intended URL
-      setShowLoginModal(true); // Show login modal
+      localStorage.setItem("redirectAfterLogin", `/order/${packageId}`);
+      setShowLoginModal(true);
       return;
     }
 
@@ -88,7 +87,7 @@ const SpecialEditionAddOns = () => {
           <AddOnCard
             key={index}
             data-aos="fade-up"
-            data-aos-delay={index * 200} // Stagger the animations
+            data-aos-delay={index * 200}
             data-aos-duration="1000"
             data-aos-once="false"
           >
