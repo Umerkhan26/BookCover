@@ -3,26 +3,47 @@ import styled from "styled-components";
 // Container and other styles remain the same
 export const Container = styled.div`
   width: 100%;
-  padding: 20px;
+  padding: 30px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Manrope", sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
 
   @media (max-width: 768px) {
-    padding: 15px;
-    margin-left: 65px;
+    padding: 20px 15px;
   }
+`;
 
-  @media (max-width: 480px) {
-    padding: 10px;
-    margin-left: 65px;
-  }
+export const HeaderSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+`;
+
+export const Title = styled.h1`
+  font-size: clamp(24px, 4vw, 32px);
+  color: #212121;
+  margin: 0;
+  font-weight: 700;
+`;
+
+export const RequestCount = styled.span`
+  color: #6dc7d1;
+  font-size: 18px;
+  font-weight: 600;
 `;
 
 export const Table = styled.table`
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -36,10 +57,12 @@ export const Table = styled.table`
 export const TableHeader = styled.th`
   background-color: #f9f8fa;
   text-align: left;
-  padding: 10px;
+  padding: 10px 16px;
   font-size: 14px;
-  color: black;
-  font-weight: bold;
+  color: #212121;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 
   &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
     display: table-cell;
@@ -71,12 +94,11 @@ export const TableHeader = styled.th`
 `;
 
 export const TableData = styled.td`
-  padding: 12px;
+  padding: 8px 16px;
   text-align: left;
   font-size: 14px;
-  color: black;
-  margin-top: 18px;
-  border-bottom: 1px solid #ececec;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
 
   &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover {
     display: table-cell;
@@ -108,13 +130,14 @@ export const TableData = styled.td`
 `;
 
 export const TableRow = styled.tr`
+  transition: background-color 0.2s ease;
+
   &:nth-child(even) {
-    background-color: #fafafa;
+    background-color: #f9fafb;
   }
 
   &:hover {
-    background-color: #f0f8ff;
-    cursor: pointer;
+    background-color: #f3f4f6;
   }
 
   @media (max-width: 768px) {
@@ -144,23 +167,61 @@ export const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const ModalContent = styled.div`
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 600px;
-  width: 100%;
+  padding: 0;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 90%;
   max-height: 80vh;
   overflow-y: auto;
   z-index: 10000;
   position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #6dc7d1;
+    border-radius: 8px;
+  }
 
   @media (max-width: 768px) {
     max-width: 90%;
@@ -175,20 +236,26 @@ export const ModalContent = styled.div`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
   cursor: pointer;
-  background: none;
+  background: rgba(255, 255, 255, 0.2);
   border: none;
-  color: black;
-  font-weight: bold;
-  padding: 5px 10px;
-  transition: all 0.3s ease;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+  z-index: 10001;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
   }
 
   @media (max-width: 768px) {
@@ -201,11 +268,10 @@ export const CloseButton = styled.button`
 `;
 
 export const ModalTitle = styled.h2`
-  text-align: center;
-  color: black;
+  margin: 0;
+  color: white;
   font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
+  font-weight: 700;
 
   @media (max-width: 768px) {
     font-size: 20px;
@@ -220,20 +286,7 @@ export const ModalBody = styled.div`
   font-size: 16px;
   color: #333;
   line-height: 1.6;
-  padding: 10px;
-
-  p {
-    margin: 8px 0;
-  }
-
-  strong {
-    font-weight: bold;
-  }
-
-  img {
-    max-width: 100%;
-    margin: 5px;
-  }
+  padding: 24px;
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -248,15 +301,21 @@ export const InfoButton = styled.button`
   padding: 8px 16px;
   background-color: #6dc7d1;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   color: white;
   cursor: pointer;
-  font-weight: bold;
-  margin-top: 10px;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
 
   &:hover {
-    background-color: #4aa0b5;
+    background-color: #5ab8c2;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(109, 199, 209, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   @media (max-width: 768px) {
@@ -268,4 +327,28 @@ export const InfoButton = styled.button`
     font-size: 12px;
     padding: 4px 8px;
   }
+`;
+
+export const ClickableLink = styled.span`
+  color: #6dc7d1;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+
+  &:hover {
+    color: #5ab8c2;
+    text-decoration-color: #5ab8c2;
+  }
+`;
+
+export const SeriesBadge = styled.span<{ isSeries: boolean }>`
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: ${(props) => (props.isSeries ? "#d1fae5" : "#e5e7eb")};
+  color: ${(props) => (props.isSeries ? "#065f46" : "#374151")};
 `;

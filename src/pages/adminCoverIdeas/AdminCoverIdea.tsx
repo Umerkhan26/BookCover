@@ -11,43 +11,81 @@ import {
   CloseButton,
   ModalTitle,
   ModalBody,
-} from "./AdminCoverIdea.styles"; // Assuming these are styled-components
-import { fetchAllBookRequests } from "../../apis/apis"; // Assuming the fetch function is in the apis folder
+  HeaderSection,
+  Title,
+  RequestCount,
+  InfoButton,
+  ClickableLink,
+  SeriesBadge,
+} from "./AdminCoverIdea.styles";
+import { fetchAllBookRequests } from "../../apis/apis";
 import { Helmet } from "react-helmet-async";
-
-// Importing Modal Styled Components
+import {
+  TableSkeleton,
+  LoadingSpinner,
+  ErrorMessage,
+  EmptyState,
+} from "../../components/DashboardLoading/DashboardLoading";
+import styled from "styled-components";
 
 const AdminCoverIdea: React.FC = () => {
-  const [bookRequests, setBookRequests] = useState<any[]>([]); // State to store fetched book requests
-  const [loading, setLoading] = useState<boolean>(true); // State to manage loading state
-  const [error, setError] = useState<string | null>(null); // State to manage error
-
+  const [bookRequests, setBookRequests] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedBookRequest, setSelectedBookRequest] = useState<any | null>(
     null
-  ); // State to manage the selected book request for modal
+  );
 
   useEffect(() => {
-    // Function to load book requests
     const loadBookRequests = async () => {
       try {
-        const data = await fetchAllBookRequests(); // Fetching the data
-        setBookRequests(data); // Storing data in state
-      } catch (err) {
-        setError("Failed to load book requests"); // Error handling
+        setLoading(true);
+        const data = await fetchAllBookRequests();
+        setBookRequests(data || []);
+      } catch (err: any) {
+        setError(err.message || "Failed to load book requests");
       } finally {
-        setLoading(false); // Setting loading to false after data is fetched or failed
+        setLoading(false);
       }
     };
 
-    loadBookRequests(); // Call the function to load book requests on component mount
+    loadBookRequests();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading message while fetching data
-  }
-
-  if (error) {
-    return <div>{error}</div>; // Show error message if fetch fails
+    return (
+      <Container>
+        <Helmet>
+          <title>Cover Ideas</title>
+          <meta
+            name="description"
+            content="Manage and view cover ideas submitted by users."
+          />
+        </Helmet>
+        <HeaderSection>
+          <TitleSkeleton />
+        </HeaderSection>
+        <TableContainer>
+          <Table>
+            <thead>
+              <tr>
+                <TableHeader className="header-id">ID</TableHeader>
+                <TableHeader className="header-username">User Name</TableHeader>
+                <TableHeader className="header-email">Email</TableHeader>
+                <TableHeader className="header-booktitle">Book Title</TableHeader>
+                <TableHeader className="header-genre">Genre</TableHeader>
+                <TableHeader className="header-series">Is Series?</TableHeader>
+                <TableHeader className="header-cover">Cover Preference</TableHeader>
+                <TableHeader className="header-moreinfo">More Info</TableHeader>
+              </tr>
+            </thead>
+            <tbody>
+              <TableSkeleton rows={8} cols={8} />
+            </tbody>
+          </Table>
+        </TableContainer>
+      </Container>
+    );
   }
 
   // Function to show the modal with the full details of a book request
@@ -69,7 +107,11 @@ const AdminCoverIdea: React.FC = () => {
           content="Manage and view cover ideas submitted by users."
         />
       </Helmet>
-      <h1 className="text-black mb-4">Book Cover Ideas</h1>
+      <HeaderSection>
+        <Title>Book Cover Ideas</Title>
+        {!error && <RequestCount>({bookRequests.length} total)</RequestCount>}
+      </HeaderSection>
+
       <TableContainer>
         <Table>
           <thead>
@@ -77,116 +119,144 @@ const AdminCoverIdea: React.FC = () => {
               <TableHeader className="header-id">ID</TableHeader>
               <TableHeader className="header-username">User Name</TableHeader>
               <TableHeader className="header-email">Email</TableHeader>
-
               <TableHeader className="header-booktitle">Book Title</TableHeader>
               <TableHeader className="header-genre">Genre</TableHeader>
               <TableHeader className="header-series">Is Series?</TableHeader>
-              <TableHeader className="header-cover">
-                Cover Preference
-              </TableHeader>
+              <TableHeader className="header-cover">Cover Preference</TableHeader>
               <TableHeader className="header-moreinfo">More Info</TableHeader>
             </tr>
           </thead>
           <tbody>
-            {/* Render rows dynamically from bookRequests */}
-            {bookRequests.length > 0 ? (
+            {error ? (
+              <TableRow>
+                <TableData colSpan={8} style={{ textAlign: "center", padding: "40px" }}>
+                  <ErrorMessageText>Error: {error}</ErrorMessageText>
+                </TableData>
+              </TableRow>
+            ) : bookRequests.length > 0 ? (
               bookRequests.map((bookRequest) => (
                 <TableRow key={bookRequest._id}>
-                  <TableData className="book-id">{bookRequest._id}</TableData>
+                  <TableData className="book-id">
+                    <RequestId>{bookRequest._id.slice(-8)}</RequestId>
+                  </TableData>
                   <TableData className="user-name">
-                    {bookRequest.name}
+                    <UserName>{bookRequest.name || "N/A"}</UserName>
                   </TableData>
                   <TableData className="book-email">
-                    {bookRequest.email}
+                    {bookRequest.email || "N/A"}
                   </TableData>
-
                   <TableData className="book-title">
-                    {bookRequest.title}
+                    <BookTitle>{bookRequest.title || "N/A"}</BookTitle>
                   </TableData>
                   <TableData className="book-genre">
-                    {bookRequest.genre}
+                    {bookRequest.genre || "N/A"}
                   </TableData>
                   <TableData className="book-series">
-                    {bookRequest.isSeries ? "Yes" : "No"}
+                    <SeriesBadge isSeries={bookRequest.isSeries}>
+                      {bookRequest.isSeries ? "Yes" : "No"}
+                    </SeriesBadge>
                   </TableData>
                   <TableData className="book-cover">
-                    {bookRequest.coverPreference?.join(", ")}
+                    {bookRequest.coverPreference?.join(", ") || "N/A"}
                   </TableData>
                   <TableData className="book-button">
-                    <button
-                      className="font-bold text-green-600 text-lg"
-                      onClick={() => handleInfoClick(bookRequest)}
-                    >
-                      Info
-                    </button>
+                    <InfoButton onClick={() => handleInfoClick(bookRequest)}>
+                      View Info
+                    </InfoButton>
                   </TableData>
                 </TableRow>
               ))
             ) : (
-              <tr>
-                <TableData colSpan={7}>No orders found</TableData>
-              </tr>
+              <TableRow>
+                <TableData colSpan={8} style={{ textAlign: "center", padding: "40px" }}>
+                  <EmptyMessage>No cover ideas found</EmptyMessage>
+                </TableData>
+              </TableRow>
             )}
           </tbody>
         </Table>
       </TableContainer>
 
-      {/* Modal to show more details */}
+      {/* Enhanced Modal */}
       {selectedBookRequest && (
-        <ModalOverlay>
-          <ModalContent>
-            <CloseButton onClick={closeModal}>×</CloseButton>
-            <ModalTitle>Book Request Details</ModalTitle>
+        <ModalOverlay onClick={closeModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <ModalHeader>
+              <ModalTitle>Book Request Details</ModalTitle>
+              <CloseButton onClick={closeModal}>×</CloseButton>
+            </ModalHeader>
             <ModalBody>
-              <div>
-                <p>
-                  <strong>Email:</strong>
-                </p>
-                <p>{selectedBookRequest.email}</p>
-              </div>
-
-              <div>
-                <p>
-                  <strong>Description:</strong>
-                </p>
-                <p>{selectedBookRequest.description}</p>
-              </div>
-
-              <div>
-                <p>
-                  <strong>Main Characters:</strong>
-                </p>
-                <p>{selectedBookRequest.mainCharacters}</p>
-              </div>
-
-              <div>
-                <p>
-                  <strong>Book Cover Setting:</strong>
-                </p>
-                <p>{selectedBookRequest.setting}</p>
-              </div>
-
-              <div>
-                <p>
-                  <strong>Comparable Covers:</strong>
-                </p>
-                <div>
-                  {selectedBookRequest.comparableCovers?.map(
-                    (cover: string, index: number) => (
-                      <img
-                        key={index}
-                        src={cover}
-                        alt="Comparable Cover"
-                        style={{
-                          width: "300px",
-                          height: "auto",
-                          margin: "5px",
-                        }}
-                      />
-                    )
-                  )}
-                </div>
-              </div>
+              <InfoRow>
+                <InfoLabel>User Name:</InfoLabel>
+                <InfoValue>{selectedBookRequest.name || "N/A"}</InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Email:</InfoLabel>
+                <InfoValue>{selectedBookRequest.email || "N/A"}</InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Book Title:</InfoLabel>
+                <InfoValue>{selectedBookRequest.title || "N/A"}</InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Genre:</InfoLabel>
+                <InfoValue>{selectedBookRequest.genre || "N/A"}</InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Is Series:</InfoLabel>
+                <InfoValue>
+                  <SeriesBadge isSeries={selectedBookRequest.isSeries}>
+                    {selectedBookRequest.isSeries ? "Yes" : "No"}
+                  </SeriesBadge>
+                </InfoValue>
+              </InfoRow>
+              {selectedBookRequest.description && (
+                <InfoRow>
+                  <InfoLabel>Description:</InfoLabel>
+                  <InfoValue style={{ whiteSpace: "pre-wrap" }}>
+                    {selectedBookRequest.description}
+                  </InfoValue>
+                </InfoRow>
+              )}
+              {selectedBookRequest.mainCharacters && (
+                <InfoRow>
+                  <InfoLabel>Main Characters:</InfoLabel>
+                  <InfoValue>{selectedBookRequest.mainCharacters}</InfoValue>
+                </InfoRow>
+              )}
+              {selectedBookRequest.setting && (
+                <InfoRow>
+                  <InfoLabel>Book Cover Setting:</InfoLabel>
+                  <InfoValue>{selectedBookRequest.setting}</InfoValue>
+                </InfoRow>
+              )}
+              {selectedBookRequest.coverPreference &&
+                selectedBookRequest.coverPreference.length > 0 && (
+                  <InfoRow>
+                    <InfoLabel>Cover Preferences:</InfoLabel>
+                    <InfoValue>
+                      {selectedBookRequest.coverPreference.join(", ")}
+                    </InfoValue>
+                  </InfoRow>
+                )}
+              {selectedBookRequest.comparableCovers &&
+                selectedBookRequest.comparableCovers.length > 0 && (
+                  <InfoSection>
+                    <SectionLabel>Comparable Covers:</SectionLabel>
+                    <CoverImages>
+                      {selectedBookRequest.comparableCovers.map(
+                        (cover: string, index: number) => (
+                          <CoverImage
+                            key={index}
+                            src={cover}
+                            alt={`Comparable Cover ${index + 1}`}
+                            loading="lazy"
+                          />
+                        )
+                      )}
+                    </CoverImages>
+                  </InfoSection>
+                )}
             </ModalBody>
           </ModalContent>
         </ModalOverlay>
@@ -196,3 +266,128 @@ const AdminCoverIdea: React.FC = () => {
 };
 
 export default AdminCoverIdea;
+
+const TitleSkeleton = styled.div`
+  height: 32px;
+  width: 250px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0px,
+    #e0e0e0 40px,
+    #f0f0f0 80px
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+`;
+
+const RequestId = styled.span`
+  font-family: monospace;
+  color: #6dc7d1;
+  font-weight: 600;
+  font-size: 13px;
+`;
+
+const UserName = styled.span`
+  font-weight: 600;
+  color: #212121;
+`;
+
+const BookTitle = styled.span`
+  font-weight: 600;
+  color: #212121;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #6dc7d1 0%, #5ab8c2 100%);
+  border-radius: 16px 16px 0 0;
+  position: relative;
+`;
+
+const InfoRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f3f4f6;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+`;
+
+const InfoLabel = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+`;
+
+const InfoValue = styled.span`
+  font-size: 16px;
+  color: #212121;
+  font-weight: 500;
+`;
+
+const InfoSection = styled.div`
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+`;
+
+const SectionLabel = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 12px;
+`;
+
+const CoverImages = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+`;
+
+const CoverImage = styled.img`
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const EmptyMessage = styled.div`
+  color: #6b7280;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const ErrorMessageText = styled.div`
+  color: #dc2626;
+  font-size: 16px;
+  font-weight: 500;
+`;

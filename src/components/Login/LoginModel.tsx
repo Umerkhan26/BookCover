@@ -37,11 +37,11 @@ const LoginModal: React.FC<LoginModalProps> = ({
     switch (role) {
       case "admin":
         toast.success("Redirecting to Admin Dashboard...");
-        setTimeout(() => navigate("/Admin/users"), 1000);
+        navigate("/admin/users", { replace: true });
         break;
       case "client":
         toast.success("Redirecting to client Dashboard...");
-        setTimeout(() => navigate("/portal/orders"), 1000);
+        navigate("/portal/orders", { replace: true });
         break;
       case "designer":
         toast.success("You are logged in as a User.");
@@ -49,7 +49,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
         break;
       default:
         toast.success("Redirecting to Home...");
-        setTimeout(() => navigate(redirectPath), 1000);
+        navigate(redirectPath, { replace: true });
     }
   };
 
@@ -69,11 +69,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
       onLoginSuccess(data.token);
       toast.success("Logged in successfully!");
 
-      if (!disableRedirect) {
-        setTimeout(() => navigateUser(data.user.role), 1500);
-      } else {
-        onClose();
-      }
+      if (!disableRedirect) navigateUser(data.user.role);
+      else onClose();
     } catch (err: any) {
       setError(err.message || "An error occurred during login.");
       toast.error(err.message || "An error occurred during login.");

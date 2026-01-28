@@ -46,16 +46,16 @@ const Login: React.FC<LoginProps> = ({
     switch (role) {
       case "admin":
         toast.success("Redirecting to Admin Dashboard...");
-        setTimeout(() => navigate("/Admin/users"), 1000);
+        navigate("/admin/users", { replace: true });
         break;
       case "client":
         toast.success("Redirecting to Portal...");
-        setTimeout(() => navigate("/portal/orders"), 1000);
+        navigate("/portal/orders", { replace: true });
         break;
       case "designer":
       default:
         toast.success("Redirecting to Home...");
-        setTimeout(() => navigate("/"), 1000);
+        navigate("/", { replace: true });
     }
   };
 
@@ -80,9 +80,7 @@ const Login: React.FC<LoginProps> = ({
         onLoginSuccess(data.token, data.user);
       }
 
-      if (!disableRedirect) {
-        setTimeout(() => navigateUser(data.user.role), 1500);
-      }
+      if (!disableRedirect) navigateUser(data.user.role);
     } catch (err: any) {
       const message = err?.message || "An error occurred during login.";
       setError(message);

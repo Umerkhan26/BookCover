@@ -169,19 +169,38 @@ interface ButtonProps {
 export const Button = styled.button<ButtonProps>`
   background-color: ${(props) => props.bgColor || "gray"};
   color: white;
-  padding: 7px 15px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
 
-  &:hover {
-    opacity: 0.8;
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   @media (max-width: 768px) {
-    padding: 3px 10px;
-    display: flex;
-    align-items: center;
+    padding: 6px 12px;
+    font-size: 12px;
+    min-height: 32px;
   }
 `;
 
