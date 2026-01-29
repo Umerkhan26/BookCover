@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { fetchOrdersByUserId } from "../../apis/apis";
 import {
   StatCardsSkeleton,
   TableSkeleton,
-  LoadingSpinner,
   EmptyState,
   ErrorMessage,
 } from "../../components/DashboardLoading/DashboardLoading";
@@ -33,10 +32,10 @@ const DashboardContent = () => {
         const orders = await fetchOrdersByUserId();
         const openOrders = orders.filter(
           (order: any) =>
-            order.status === "Pending" || order.status === "In Progress"
+            order.status === "Pending" || order.status === "In Progress",
         ).length;
         const completedOrders = orders.filter(
-          (order: any) => order.status === "Completed"
+          (order: any) => order.status === "Completed",
         ).length;
 
         setStats({
@@ -49,7 +48,7 @@ const DashboardContent = () => {
         const sortedOrders = orders
           .sort(
             (a: any, b: any) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
           )
           .slice(0, 5);
         setRecentOrders(sortedOrders);
@@ -209,12 +208,7 @@ const WelcomeMessage = styled.h1`
 const WelcomeMessageSkeleton = styled.div`
   height: 40px;
   width: 300px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 8px;
@@ -233,12 +227,7 @@ const WelcomeMessageSkeleton = styled.div`
 const SectionTitleSkeleton = styled.div`
   height: 28px;
   width: 200px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;
@@ -280,7 +269,9 @@ const StatBox = styled.div<{ variant?: "success" | "info" }>`
   gap: 20px;
   color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-4px);

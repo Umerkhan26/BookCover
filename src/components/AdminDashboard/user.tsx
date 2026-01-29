@@ -18,10 +18,7 @@ import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import {
   TableSkeleton,
-  LoadingSpinner,
   ErrorMessage,
-  EmptyState,
-  ButtonLoading,
 } from "../DashboardLoading/DashboardLoading";
 import styled from "styled-components";
 
@@ -42,7 +39,7 @@ interface User {
 const User: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<null | Error>(null);
+  const [error, setError] = useState<string | null>(null);
   const [editingStatusUserId, setEditingStatusUserId] = useState<string | null>(
     null,
   );
@@ -92,7 +89,7 @@ const User: React.FC = () => {
   if (error) {
     return (
       <Container>
-        <ErrorMessage>Error loading users: {error.message}</ErrorMessage>
+        <ErrorMessage>Error loading users: {error}</ErrorMessage>
       </Container>
     );
   }
@@ -119,7 +116,7 @@ const User: React.FC = () => {
       toast.success(`User status updated to ${status}`);
     } catch (error: any) {
       toast.error(
-        error.response?.data?.message || "Failed to update user status"
+        error.response?.data?.message || "Failed to update user status",
       );
       console.error(
         "Failed to update user status:",
@@ -131,7 +128,11 @@ const User: React.FC = () => {
   };
 
   const handleDeleteUser = async (user: User) => {
-    if (!window.confirm(`Are you sure you want to delete ${user.firstName} ${user.lastName}?`)) {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete ${user.firstName} ${user.lastName}?`,
+      )
+    ) {
       return;
     }
 
@@ -215,8 +216,11 @@ const User: React.FC = () => {
         <tbody>
           {error ? (
             <TableRow>
-              <TableData colSpan={5} style={{ textAlign: "center", padding: "40px" }}>
-                <ErrorMessageText>Error: {error.message}</ErrorMessageText>
+              <TableData
+                colSpan={5}
+                style={{ textAlign: "center", padding: "40px" }}
+              >
+                {error && <ErrorMessageText>Error: {error}</ErrorMessageText>}
               </TableData>
             </TableRow>
           ) : users.length > 0 ? (
@@ -260,7 +264,9 @@ const User: React.FC = () => {
                     <ActionButtons>
                       <Button
                         onClick={() => toggleStatusButtons(user.userId)}
-                        bgColor={user.status === "active" ? "#6dc7d1" : "#dc3545"}
+                        bgColor={
+                          user.status === "active" ? "#6dc7d1" : "#dc3545"
+                        }
                       >
                         {user.status === "active" ? "Active" : "Blocked"}
                       </Button>
@@ -277,7 +283,10 @@ const User: React.FC = () => {
             ))
           ) : (
             <TableRow>
-              <TableData colSpan={5} style={{ textAlign: "center", padding: "40px" }}>
+              <TableData
+                colSpan={5}
+                style={{ textAlign: "center", padding: "40px" }}
+              >
                 <EmptyMessage>No users found</EmptyMessage>
               </TableData>
             </TableRow>
@@ -291,12 +300,7 @@ const User: React.FC = () => {
 const TitleSkeleton = styled.div`
   height: 32px;
   width: 200px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;

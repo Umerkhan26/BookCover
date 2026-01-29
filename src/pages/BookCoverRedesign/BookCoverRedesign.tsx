@@ -30,7 +30,7 @@ const BookCoverRedesign = () => {
         subtitle=""
         image={BookCoverRedesaign}
         bookCoversText=""
-        showCircles={true}
+        showCircles={false}
       />
       <Packages />
       <SpecialEditionAddOns />

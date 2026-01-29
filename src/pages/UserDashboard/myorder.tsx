@@ -208,12 +208,7 @@ import React, { useEffect, useState } from "react";
 import { fetchOrdersByUserId } from "../../apis/apis";
 import { Helmet } from "react-helmet-async";
 import styled from "styled-components";
-import {
-  TableSkeleton,
-  LoadingSpinner,
-  ErrorMessage,
-  EmptyState,
-} from "../../components/DashboardLoading/DashboardLoading";
+import { TableSkeleton } from "../../components/DashboardLoading/DashboardLoading";
 
 const OrdersTable: React.FC = () => {
   const [orders, setOrders] = useState<any[]>([]);
@@ -242,7 +237,7 @@ const OrdersTable: React.FC = () => {
   }, []);
 
   const filteredOrders = orders.filter((order) =>
-    order.package?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    order.package?.name?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   if (loading) {
@@ -263,7 +258,9 @@ const OrdersTable: React.FC = () => {
             <tr>
               <TableHeader className="hidden md:table-cell">ID</TableHeader>
               <TableHeader>Title</TableHeader>
-              <TableHeader className="hidden md:table-cell">Created</TableHeader>
+              <TableHeader className="hidden md:table-cell">
+                Created
+              </TableHeader>
               <TableHeader>Status</TableHeader>
             </tr>
           </thead>
@@ -301,7 +298,10 @@ const OrdersTable: React.FC = () => {
         <tbody>
           {error ? (
             <TableRow>
-              <TableCell colSpan={4} style={{ textAlign: "center", padding: "40px" }}>
+              <TableCell
+                colSpan={4}
+                style={{ textAlign: "center", padding: "40px" }}
+              >
                 <ErrorMessageText>{error}</ErrorMessageText>
               </TableCell>
             </TableRow>
@@ -326,7 +326,10 @@ const OrdersTable: React.FC = () => {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} style={{ textAlign: "center", padding: "40px" }}>
+              <TableCell
+                colSpan={4}
+                style={{ textAlign: "center", padding: "40px" }}
+              >
                 <EmptyMessage>No orders found</EmptyMessage>
               </TableCell>
             </TableRow>
@@ -367,12 +370,7 @@ const Title = styled.h1`
 const TitleSkeleton = styled.div`
   height: 32px;
   width: 150px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;

@@ -214,6 +214,10 @@ export const BannerContent = styled.div<{ alignCenter?: boolean }>`
         ? "0"
         : "16px"}; /* Match header Nav padding on very small mobile */
   }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    max-width: 90%;
+  }
 `;
 
 export const CirclesContainer = styled.div`
@@ -308,8 +312,19 @@ export const Subtitle = styled.p<{ singleLine?: boolean }>`
   padding: 0 8px;
   overflow-wrap: anywhere;
   text-wrap: balance;
-  margin-left: auto;
-  margin-right: auto;
+  // margin-left: auto;
+  // margin-right: auto;
+
+  margin-left: 0;
+  margin-right: 0;
+  width: max-content;
+  max-width: 100%;
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   @media (max-width: 768px) {
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};

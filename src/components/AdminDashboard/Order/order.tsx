@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllOrders } from "../../../apis/apis"; // Ensure you have the correct path to fetchAllOrders function
+
+import { fetchAllOrders } from "../../../apis/apis";
 import {
   Container,
   Table,
   TableData,
   TableHeader,
   TableRow,
-} from "../user.styles"; // Adjust your imports accordingly
+} from "../user.styles";
 import { Helmet } from "react-helmet-async";
 import {
   TableSkeleton,
-  LoadingSpinner,
   ErrorMessage,
   EmptyState,
 } from "../../DashboardLoading/DashboardLoading";
 import styled from "styled-components";
 
-// Define the IOrder interface
 interface IOrder {
   _id: string;
-  user: any; // Full user object from API
-  package: any; // Full package object from API
-  addOns: any[]; // Full addOns array from API
+  user: any;
+  package: any;
+  addOns: any[];
   totalPrice: number;
   status: "Pending" | "Completed" | "Cancelled";
   paymentStatus: "Unpaid" | "Paid";
@@ -45,18 +44,15 @@ const Order: React.FC = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Modal states
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
   const [selectedOtherInfo, setSelectedOtherInfo] = useState<any | null>(null);
 
-  // Fetch orders on component mount
   useEffect(() => {
     const loadOrders = async () => {
       try {
-        const fetchedOrders = await fetchAllOrders(); // Using the existing fetchAllOrders function
-        setOrders(fetchedOrders || []); // Ensure we always set an array
+        const fetchedOrders = await fetchAllOrders();
+        setOrders(fetchedOrders || []);
       } catch (err) {
         setError("Failed to load orders");
       } finally {
@@ -67,17 +63,16 @@ const Order: React.FC = () => {
     loadOrders();
   }, []);
 
-  // Handle opening modals for user, package, and other info
   const handleUserClick = (user: any) => {
     setSelectedUser(user);
   };
 
   const handlePackageClick = (pkg: any, addOns: any[]) => {
-    setSelectedPackage({ ...pkg, addOns }); // Pass both the package and addOns to the modal
+    setSelectedPackage({ ...pkg, addOns });
   };
 
   const handleOtherInfoClick = (order: any) => {
-    setSelectedOtherInfo(order); // Pass the order to display remaining details in the modal
+    setSelectedOtherInfo(order);
   };
 
   // Close modals
@@ -115,6 +110,14 @@ const Order: React.FC = () => {
     );
   }
 
+  if (error) {
+    return (
+      <Container>
+        <ErrorMessage>Error: {error}</ErrorMessage>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <Helmet>
@@ -126,29 +129,28 @@ const Order: React.FC = () => {
       </Helmet>
       <HeaderSection>
         <Title>Orders</Title>
-        {!error && <OrderCount>({orders.length} total)</OrderCount>}
+        <OrderCount>({orders.length} total)</OrderCount>
       </HeaderSection>
 
-      <Table>
-        <thead>
-          <tr>
-            <TableHeader>ID</TableHeader>
-            <TableHeader>User</TableHeader>
-            <TableHeader>Package</TableHeader>
-            <TableHeader>Total Price</TableHeader>
-            <TableHeader>Status</TableHeader>
-            <TableHeader>Form Data</TableHeader>
-          </tr>
-        </thead>
-        <tbody>
-          {error ? (
-            <TableRow>
-              <TableData colSpan={6} style={{ textAlign: "center", padding: "40px" }}>
-                <ErrorMessageText>Error: {error}</ErrorMessageText>
-              </TableData>
-            </TableRow>
-          ) : orders.length > 0 ? (
-            orders.map((order) => (
+      {orders.length === 0 ? (
+        <EmptyState>
+          <h3>No orders found</h3>
+          <p>There are no orders in the system yet.</p>
+        </EmptyState>
+      ) : (
+        <Table>
+          <thead>
+            <tr>
+              <TableHeader>ID</TableHeader>
+              <TableHeader>User</TableHeader>
+              <TableHeader>Package</TableHeader>
+              <TableHeader>Total Price</TableHeader>
+              <TableHeader>Status</TableHeader>
+              <TableHeader>Form Data</TableHeader>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
               <TableRow key={order._id}>
                 <TableData>
                   <OrderId>{order._id.slice(-8)}</OrderId>
@@ -183,16 +185,10 @@ const Order: React.FC = () => {
                   </ClickableLink>
                 </TableData>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableData colSpan={6} style={{ textAlign: "center", padding: "40px" }}>
-                <EmptyMessage>No orders found</EmptyMessage>
-              </TableData>
-            </TableRow>
-          )}
-        </tbody>
-      </Table>
+            ))}
+          </tbody>
+        </Table>
+      )}
 
       {/* User Modal */}
       {selectedUser && (
@@ -240,7 +236,10 @@ const Order: React.FC = () => {
       {/* Package Modal */}
       {selectedPackage && (
         <ModalOverlay onClick={closePackageModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()} style={{ maxWidth: "600px" }}>
+          <ModalContent
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: "600px" }}
+          >
             <ModalHeader>
               <ModalTitle>Package Details</ModalTitle>
               <CloseButton onClick={closePackageModal}>×</CloseButton>
@@ -254,28 +253,32 @@ const Order: React.FC = () => {
                 <InfoLabel>Price:</InfoLabel>
                 <Price>${selectedPackage.price}</Price>
               </InfoRow>
-              {selectedPackage.features && selectedPackage.features.length > 0 && (
-                <InfoSection>
-                  <SectionLabel>Features:</SectionLabel>
-                  <FeatureList>
-                    {selectedPackage.features.map((feature: string, idx: number) => (
-                      <FeatureItem key={idx}>✓ {feature}</FeatureItem>
-                    ))}
-                  </FeatureList>
-                </InfoSection>
-              )}
-              {selectedPackage.freeFeatures && selectedPackage.freeFeatures.length > 0 && (
-                <InfoSection>
-                  <SectionLabel>Free Features:</SectionLabel>
-                  <FeatureList>
-                    {selectedPackage.freeFeatures.map(
-                      (freeFeature: string, idx: number) => (
-                        <FeatureItem key={idx}>✓ {freeFeature}</FeatureItem>
-                      )
-                    )}
-                  </FeatureList>
-                </InfoSection>
-              )}
+              {selectedPackage.features &&
+                selectedPackage.features.length > 0 && (
+                  <InfoSection>
+                    <SectionLabel>Features:</SectionLabel>
+                    <FeatureList>
+                      {selectedPackage.features.map(
+                        (feature: string, idx: number) => (
+                          <FeatureItem key={idx}>✓ {feature}</FeatureItem>
+                        ),
+                      )}
+                    </FeatureList>
+                  </InfoSection>
+                )}
+              {selectedPackage.freeFeatures &&
+                selectedPackage.freeFeatures.length > 0 && (
+                  <InfoSection>
+                    <SectionLabel>Free Features:</SectionLabel>
+                    <FeatureList>
+                      {selectedPackage.freeFeatures.map(
+                        (freeFeature: string, idx: number) => (
+                          <FeatureItem key={idx}>✓ {freeFeature}</FeatureItem>
+                        ),
+                      )}
+                    </FeatureList>
+                  </InfoSection>
+                )}
               {selectedPackage.addOns && selectedPackage.addOns.length > 0 && (
                 <InfoSection>
                   <SectionLabel>AddOns:</SectionLabel>
@@ -294,7 +297,10 @@ const Order: React.FC = () => {
       {/* OtherInfo Modal */}
       {selectedOtherInfo && (
         <ModalOverlay onClick={closeOtherInfoModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()} style={{ maxWidth: "700px" }}>
+          <ModalContent
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: "700px" }}
+          >
             <ModalHeader>
               <ModalTitle>Form Data</ModalTitle>
               <CloseButton onClick={closeOtherInfoModal}>×</CloseButton>
@@ -373,12 +379,7 @@ export default Order;
 const TitleSkeleton = styled.div`
   height: 32px;
   width: 150px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;
@@ -469,6 +470,42 @@ const StatusBadge = styled.span<{ status: string }>`
         return "#92400e";
       case "cancelled":
         return "#991b1b";
+      default:
+        return "#374151";
+    }
+  }};
+`;
+
+const RoleBadge = styled.span<{ role: string }>`
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  background-color: ${(props) => {
+    switch (props.role?.toLowerCase()) {
+      case "admin":
+        return "#e0f2fe";
+      case "user":
+        return "#ecfeff";
+      case "manager":
+        return "#fef3c7";
+      default:
+        return "#e5e7eb";
+    }
+  }};
+
+  color: ${(props) => {
+    switch (props.role?.toLowerCase()) {
+      case "admin":
+        return "#075985";
+      case "user":
+        return "#155e75";
+      case "manager":
+        return "#92400e";
       default:
         return "#374151";
     }
@@ -650,29 +687,4 @@ const Badge = styled.span<{ success?: boolean }>`
   font-weight: 600;
   background-color: ${(props) => (props.success ? "#d1fae5" : "#e5e7eb")};
   color: ${(props) => (props.success ? "#065f46" : "#374151")};
-`;
-
-const RoleBadge = styled.span<{ role: string }>`
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background-color: ${(props) =>
-    props.role === "admin" ? "#dbeafe" : "#e0e7ff"};
-  color: ${(props) => (props.role === "admin" ? "#1e40af" : "#4338ca")};
-`;
-
-const EmptyMessage = styled.div`
-  color: #6b7280;
-  font-size: 16px;
-  font-weight: 500;
-`;
-
-const ErrorMessageText = styled.div`
-  color: #dc2626;
-  font-size: 16px;
-  font-weight: 500;
 `;
