@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
-import { getBlogPostBySlug } from "../../apis/apis";
+import { getBlogPostBySlug, getBlogPosts } from "../../apis/apis";
 import { Helmet } from "react-helmet-async";
 import { theme } from "../../theme";
 import blogCover from "../../assets/blogs/blogCover.webp";
@@ -138,31 +138,33 @@ const PostContainer = styled.div`
   min-height: 100vh;
 `;
 
+const SECTION_GAP = "28px";
+
 const ContentWrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  padding: 0 20px 60px;
+  margin-top: ${SECTION_GAP};
+  padding: 0 20px ${SECTION_GAP};
 
   @media (max-width: 768px) {
-    padding: 0 15px 40px;
+    padding: 0 15px ${SECTION_GAP};
   }
 `;
 
-
-
 const PostHeader = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: ${SECTION_GAP};
   padding: 0 20px;
 `;
 
-const PostTitle = styled.h1`
+const PostTitle = styled.h1<{ alignment?: string }>`
   font-size: 32px;
   font-weight: 800;
   color: ${theme.colors.primary};
-  margin-bottom: 16px;
+  margin-bottom: 0;
   line-height: 1.2;
   scroll-margin-top: 120px;
+  text-align: ${(props) => props.alignment || "left"};
 
   @media (max-width: 768px) {
     font-size: 24px;
@@ -171,8 +173,8 @@ const PostTitle = styled.h1`
 `;
 
 const PostFooter = styled.div`
-  margin-top: 60px;
-  padding-top: 30px;
+  margin-top: ${SECTION_GAP};
+  padding-top: 20px;
   border-top: 1px solid #e0e0e0;
   display: flex;
   justify-content: space-between;
@@ -183,8 +185,8 @@ const PostFooter = styled.div`
   color: #888;
 
   @media (max-width: 768px) {
-    margin-top: 40px;
-    padding-top: 20px;
+    margin-top: ${SECTION_GAP};
+    padding-top: 16px;
     flex-direction: column;
     align-items: flex-start;
   }
@@ -205,7 +207,7 @@ const PostFooterDate = styled.div`
 const FeaturedImageWrapper = styled.div`
   width: 100%;
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: ${SECTION_GAP};
 `;
 
 const FeaturedImage = styled.div<{ imageUrl?: string }>`
@@ -248,6 +250,7 @@ const PostContent = styled.div`
   font-size: 16px;
   line-height: 1.7;
   color: #333;
+  margin-bottom: ${SECTION_GAP};
 
   h1,
   h2,
@@ -274,9 +277,19 @@ const PostContent = styled.div`
       border-radius: 2px;
     }
 
+    &[data-alignment="center"]::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &[data-alignment="right"]::after {
+      left: auto;
+      right: 0;
+    }
+
     @media (max-width: 768px) {
       scroll-margin-top: 100px;
-      margin-top: 20px;
+      margin-top: ${SECTION_GAP};
     }
   }
 
@@ -305,7 +318,7 @@ const PostContent = styled.div`
   }
 
   p {
-    margin-bottom: 16px;
+    margin-bottom: ${SECTION_GAP};
     color: #444;
     line-height: 1.7;
   }
@@ -314,7 +327,7 @@ const PostContent = styled.div`
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    margin: 20px 0;
+    margin: ${SECTION_GAP} 0;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     display: block;
   }
@@ -322,7 +335,7 @@ const PostContent = styled.div`
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: ${SECTION_GAP} 0;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     overflow: hidden;
@@ -354,7 +367,7 @@ const PostContent = styled.div`
 
   ul,
   ol {
-    margin: 16px 0;
+    margin: ${SECTION_GAP} 0;
     padding-left: 30px;
   }
 
@@ -367,7 +380,7 @@ const PostContent = styled.div`
   blockquote {
     border-left: 4px solid ${theme.colors.secondary};
     padding: 16px 20px;
-    margin: 20px 0;
+    margin: ${SECTION_GAP} 0;
     font-style: italic;
     color: #555;
     background: rgba(26, 135, 151, 0.05);
@@ -407,7 +420,7 @@ const PostContent = styled.div`
     padding: 16px;
     border-radius: 8px;
     overflow-x: auto;
-    margin: 20px 0;
+    margin: ${SECTION_GAP} 0;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 
     code {
@@ -449,16 +462,16 @@ const ImageWrapper = styled.div<{ alignment?: string }>`
   margin: 20px 0;
 `;
 
-const ImageCaption = styled.p`
+const ImageCaption = styled.p<{ alignment?: string }>`
   font-style: italic;
   color: #666;
   margin-top: 8px;
   font-size: 13px;
-  text-align: center;
+  text-align: ${(props) => props.alignment || "center"};
 `;
 
 const TOCSection = styled.div`
-  margin-top: 60px;
+  margin-top: ${SECTION_GAP};
   padding: 30px;
   background: #f9f9f9;
   border-radius: 8px;
@@ -506,7 +519,68 @@ const TOCSection = styled.div`
 
   @media (max-width: 768px) {
     padding: 20px;
-    margin-top: 40px;
+    margin-top: ${SECTION_GAP};
+
+    h3 {
+      font-size: 20px;
+    }
+
+    a {
+      font-size: 14px;
+    }
+  }
+`;
+
+const RecentPostsSection = styled.div`
+  margin-top: ${SECTION_GAP};
+  padding: 30px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+
+  h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: ${theme.colors.primary};
+    margin-bottom: 20px;
+    border-bottom: 2px solid ${theme.colors.secondary};
+    padding-bottom: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 12px;
+    padding-left: 20px;
+    position: relative;
+
+    &::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: ${theme.colors.secondary};
+    }
+  }
+
+  a {
+    color: ${theme.colors.secondary};
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: ${theme.colors.primary};
+      text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin-top: ${SECTION_GAP};
 
     h3 {
       font-size: 20px;
@@ -526,12 +600,14 @@ const renderContentBlock = (block: any, index: number) => {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "")}`;
+      const alignment = block.data.alignment || "left";
       return (
         <HeadingTag
           key={index}
           id={headingSlug}
+          data-alignment={alignment}
           style={{
-            textAlign: block.data.alignment || "left",
+            textAlign: alignment,
             ...block.styles,
           }}
         >
@@ -552,26 +628,45 @@ const renderContentBlock = (block: any, index: number) => {
         </p>
       );
 
-    case "image":
+    case "image": {
+      const alignment = block.data.alignment || "center";
+      const size = block.data.size || "large";
+      const customW = block.data.customWidth ? parseInt(block.data.customWidth, 10) : null;
+      const widthValue =
+        size === "custom" && customW && customW > 0
+          ? `${customW}px`
+          : size === "full"
+          ? "100%"
+          : size === "large"
+          ? "75%"
+          : size === "medium"
+          ? "50%"
+          : size === "thumbnail"
+          ? "25%"
+          : block.data.width
+          ? `${block.data.width}px`
+          : "100%";
       return (
-        <ImageWrapper
-          key={index}
-          alignment={block.data.alignment || "center"}
-        >
+        <ImageWrapper key={index} alignment={alignment}>
           <img
             src={block.data.url}
             alt={block.data.alt || ""}
             style={{
-              maxWidth: block.data.width ? `${block.data.width}px` : "100%",
+              maxWidth: widthValue,
+              width: widthValue,
               height: block.data.height ? `${block.data.height}px` : "auto",
+              display: "block",
+              marginLeft: alignment === "right" ? "auto" : alignment === "center" ? "auto" : "0",
+              marginRight: alignment === "left" ? "auto" : alignment === "center" ? "auto" : "0",
               ...block.styles,
             }}
           />
           {block.data.caption && (
-            <ImageCaption>{block.data.caption}</ImageCaption>
+            <ImageCaption alignment={alignment}>{block.data.caption}</ImageCaption>
           )}
         </ImageWrapper>
       );
+    }
 
     case "table":
       return (
@@ -667,6 +762,7 @@ const renderContentBlock = (block: any, index: number) => {
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<any>(null);
+  const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -676,6 +772,25 @@ const BlogPost: React.FC = () => {
       fetchPost();
     }
   }, [slug]);
+
+  useEffect(() => {
+    const fetchRecentPosts = async () => {
+      try {
+        const response = await getBlogPosts({
+          status: "published",
+          limit: 6,
+          sortBy: "createdAt",
+          sortOrder: "desc",
+        });
+        const posts = response.posts || [];
+        const filtered = posts.filter((p: any) => p.slug && p.slug !== slug);
+        setRecentPosts(filtered.slice(0, 5));
+      } catch {
+        setRecentPosts([]);
+      }
+    };
+    if (post?.slug) fetchRecentPosts();
+  }, [post?.slug, slug]);
 
   useEffect(() => {
     // Scroll to top when post loads
@@ -761,13 +876,23 @@ const BlogPost: React.FC = () => {
     (a, b) => a.order - b.order
   );
 
+  // Extract title alignment from postMetadata block (stored in content for persistence)
+  const metadataBlock = sortedContent.find((block: any) => block.type === "postMetadata");
+  const titleAlignment =
+    metadataBlock?.data?.titleAlignment ||
+    post.titleAlignment ||
+    post.seoMeta?.titleAlignment ||
+    "left";
+
   // Check if there's a TOC block
   const tocBlock = sortedContent.find((block: any) => block.type === "tableOfContents");
   const hasTOC = !!tocBlock;
   const tocHeadings = tocBlock?.data?.headings || tocBlock?.data?.selectedHeadings || [];
 
-  // Filter out TOC block from content (it will be rendered in sidebar)
-  const contentWithoutTOC = sortedContent.filter((block: any) => block.type !== "tableOfContents");
+  // Filter out TOC and postMetadata blocks from content (TOC rendered in sidebar, postMetadata is hidden)
+  const contentWithoutTOC = sortedContent.filter(
+    (block: any) => block.type !== "tableOfContents" && block.type !== "postMetadata"
+  );
 
   // Find all actual heading blocks in the content
   const actualHeadings = contentWithoutTOC
@@ -862,7 +987,7 @@ const BlogPost: React.FC = () => {
         <ContentWrapper>
           {/* Post Header - Title Only */}
           <PostHeader>
-            <PostTitle>{post.title || "Untitled Post"}</PostTitle>
+            <PostTitle alignment={titleAlignment}>{post.title || "Untitled Post"}</PostTitle>
           </PostHeader>
 
           {/* Main Content */}
@@ -879,23 +1004,23 @@ const BlogPost: React.FC = () => {
               <h3>{tocBlock?.data?.title || "Table of Contents"}</h3>
               <ul>
                 {matchedTOCHeadings.map((heading: any, idx: number) => {
-                  const slug = heading.slug;
+                  const headingSlug = heading.slug;
                   return (
                     <li key={heading.id}>
                       <a
-                        href={slug ? `#${slug}` : "#"}
+                        href={headingSlug ? `#${headingSlug}` : "#"}
                         onClick={(e: React.MouseEvent) => {
                           e.preventDefault();
-                          if (slug) {
-                            const element = document.getElementById(slug);
+                          if (headingSlug) {
+                            const element = document.getElementById(headingSlug);
                             if (element) {
                               element.scrollIntoView({ behavior: "smooth", block: "start" });
                             }
                           }
                         }}
                         style={{
-                          color: slug ? theme.colors.secondary : "#999",
-                          cursor: slug ? "pointer" : "default",
+                          color: headingSlug ? theme.colors.secondary : "#999",
+                          cursor: headingSlug ? "pointer" : "default",
                         }}
                       >
                         {tocBlock?.data?.showNumbers ? `${idx + 1}. ` : ""}
@@ -906,6 +1031,22 @@ const BlogPost: React.FC = () => {
                 })}
               </ul>
             </TOCSection>
+          )}
+
+          {/* Recent Posts */}
+          {recentPosts.length > 0 && (
+            <RecentPostsSection>
+              <h3>Recent Posts</h3>
+              <ul>
+                {recentPosts.map((recentPost: any) => (
+                  <li key={recentPost._id}>
+                    <Link to={`/blog/${recentPost.slug}`}>
+                      {recentPost.title || "Untitled Post"}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </RecentPostsSection>
           )}
 
           {/* Post Footer with Date */}
