@@ -57,6 +57,10 @@ const TermsAndConditions = lazy(() => import("../components/TermsAndConditions/T
 const AdminCoverIdea = lazy(() => import("../pages/adminCoverIdeas/AdminCoverIdea"));
 const MarketingMaterial = lazy(() => import("../components/Marketing Material/marketing"));
 const PrivacyPolicy = lazy(() => import("../components/TermsAndConditions/PrivacyPolicy"));
+const BlogList = lazy(() => import("../pages/Blog/BlogList"));
+const BlogPost = lazy(() => import("../pages/Blog/BlogPost"));
+const BlogManagement = lazy(() => import("../components/AdminDashboard/Blog/BlogManagement"));
+const BlogEditor = lazy(() => import("../pages/Admin/BlogEditor"));
 
 // import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
@@ -168,6 +172,8 @@ const AppRoutes: React.FC = () => {
           <Route path="marketing-materials" element={<Suspense fallback={null}><MarketingMaterial /></Suspense>} />
         </Route>
         <Route path="/about-us" element={<Suspense fallback={null}><AboutUs /></Suspense>} />
+        <Route path="/blog" element={<Suspense fallback={null}><BlogList /></Suspense>} />
+        <Route path="/blog/:slug" element={<Suspense fallback={null}><BlogPost /></Suspense>} />
       </Route>
       {/* <Route path="/login" element={<Login />} /> */}
 
@@ -195,6 +201,9 @@ const AppRoutes: React.FC = () => {
         <Route path="users" element={<Suspense fallback={null}><User /></Suspense>} />
         <Route path="orders" element={<Suspense fallback={null}><Order /></Suspense>} />
         <Route path="coverIdeas" element={<Suspense fallback={null}><AdminCoverIdea /></Suspense>} />
+        <Route path="blog" element={<Suspense fallback={null}><BlogManagement /></Suspense>} />
+        <Route path="blog/edit/:id" element={<Suspense fallback={null}><BlogEditor /></Suspense>} />
+        <Route path="blog/new" element={<Suspense fallback={null}><BlogEditor /></Suspense>} />
       </Route>
       <Route path="/book-cover-form" element={<Suspense fallback={null}><BookCoverForm /></Suspense>} />
     </Routes>

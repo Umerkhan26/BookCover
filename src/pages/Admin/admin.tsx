@@ -338,6 +338,12 @@ const UserDashboard: React.FC = () => {
             </NavLink>
           </NavItem>
           <NavItem>
+            <NavLink as={Link} to="/admin/blog" aria-label="Blog Management">
+              <Icon icon={faFileAlt} collapsed={collapsed} />
+              <LinkText collapsed={collapsed}>Blog</LinkText>
+            </NavLink>
+          </NavItem>
+          <NavItem>
             <NavLink as={Link} to="/">
               <Icon icon={faReplyAll} collapsed={collapsed} />
               <LinkText collapsed={collapsed}>Back to site</LinkText>
