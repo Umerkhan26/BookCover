@@ -6,23 +6,23 @@ interface NavNBtnProps {
 }
 
 export const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: "Manrope", sans-serif;
-  }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Manrope", sans-serif;
+    }
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .scrollable-menu::-webkit-scrollbar {
-    display: none;
-  }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .scrollable-menu::-webkit-scrollbar {
+      display: none;
+    }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .scrollable-menu {
-    -ms-overflow-style: none;  
-    scrollbar-width: none; 
-  }
-`;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .scrollable-menu {
+      -ms-overflow-style: none;  
+      scrollbar-width: none; 
+    }
+  `;
 
 export const Nav = styled.nav`
   display: flex;
@@ -245,7 +245,7 @@ export const HeaderContainer = styled.div`
     width: 100%;
     gap: 8px;
   }
-  
+
   @media (max-width: 768px) {
     width: 100%;
     gap: 8px;
