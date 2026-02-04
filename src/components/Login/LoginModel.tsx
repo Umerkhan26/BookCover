@@ -39,6 +39,10 @@ const LoginModal: React.FC<LoginModalProps> = ({
         toast.success("Redirecting to Admin Dashboard...");
         navigate("/admin/users", { replace: true });
         break;
+      case "seo":
+        toast.success("Redirecting to Blog...");
+        navigate("/admin/blog", { replace: true });
+        break;
       case "client":
         toast.success("Redirecting to client Dashboard...");
         navigate("/portal/orders", { replace: true });

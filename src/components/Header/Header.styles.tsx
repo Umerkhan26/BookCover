@@ -389,28 +389,32 @@ export const NavNBtn = styled.nav<NavNBtnProps>`
   @media (max-width: 1024px) {
     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
     position: absolute;
-    top: 75px;
+    top: 85px; /* match Nav height at 1024px */
     left: 0;
-    width: 100vw;
-    height: calc(100vh - 75px);
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 85px);
     flex-direction: column;
     gap: 15px;
     font-size: 22px;
-    padding: 15px 0px;
+    padding: 8px 0 15px; /* less top padding = no visible gap under header */
     overflow-y: auto;
   }
 
   @media (max-width: 768px) {
-    display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};
-    position: absolute;
-    top: 75px;
-    left: 0;
-    width: 100vw;
+    top: 75px; /* match Nav height at 768px */
     height: calc(100vh - 75px);
-    flex-direction: column;
-    gap: 15px;
-    font-size: 22px;
-    padding: 15px 0px;
+    padding: 8px 0 15px;
+  }
+
+  @media (max-width: 480px) {
+    top: 70px; /* match Nav height at 480px */
+    height: calc(100vh - 70px);
+  }
+
+  @media (max-width: 390px) {
+    top: 70px;
+    height: calc(100vh - 70px);
   }
 `;
 

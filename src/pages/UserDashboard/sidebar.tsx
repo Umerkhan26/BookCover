@@ -163,7 +163,14 @@ const LinkText = styled.span<CollapsibleProps>`
 const UserDashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(true); // Collapse the sidebar by default on mobile
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+
+  // SEO users must use /admin/blog only; never show portal (orders, etc.)
+  useEffect(() => {
+    if (user?.role === "seo") {
+      navigate("/admin/blog", { replace: true });
+    }
+  }, [user, navigate]);
 
   // Update the sidebar state based on screen width
   useEffect(() => {

@@ -280,9 +280,12 @@ const UserDashboard: React.FC = () => {
   const isSeo = user?.role === "seo";
   const isAdmin = user?.role === "admin";
 
-  // Only admin and seo can use admin dashboard; others redirect to portal
+  // No user (e.g. signing out): redirect to home immediately so we don't flash other dashboard
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      navigate("/", { replace: true });
+      return;
+    }
     if (user.role !== "admin" && user.role !== "seo") {
       navigate("/portal/orders", { replace: true });
     }
@@ -325,20 +328,20 @@ const UserDashboard: React.FC = () => {
   const toggleCollapse = () => setCollapsed(!collapsed);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/");
-    logout();
+    logout(); // clear auth state and navigate to / ; avoids flashing other dashboard
   };
+
+  // Don't render admin UI when no user (signing out or session expired) – prevents flash of wrong dashboard
+  if (!user) {
+    return null;
+  }
 
   return (
     <DashboardContainer>
       <SidebarContainer collapsed={collapsed}>
         <SidebarHeader>
           <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />
-          <BrandName collapsed={collapsed}>
-            {isSeo ? "SEO" : "Lumeart Studio"}
-          </BrandName>
+          <BrandName collapsed={collapsed}>Lumeart Studio</BrandName>
           <CollapseButton onClick={toggleCollapse}>
             <FontAwesomeIcon icon={faArrowLeft} />
           </CollapseButton>

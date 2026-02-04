@@ -37,7 +37,8 @@ const Login: React.FC<LoginProps> = ({
     const redirectPath = localStorage.getItem("redirectAfterLogin");
     localStorage.removeItem("redirectAfterLogin");
 
-    if (redirectPath) {
+    // SEO and admin always go to their dashboard, never to /portal
+    if (redirectPath && role !== "seo" && role !== "admin") {
       toast.success("Redirecting...");
       setTimeout(() => navigate(redirectPath), 1000);
       return;
