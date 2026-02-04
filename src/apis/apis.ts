@@ -20,7 +20,7 @@ export const registerUser = async (userData: {
 
 export const verifyEmailWithOTP = async (email: string, otp: string) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/verify-email`, {
+    const response = await axios.get(`${API_BASE_URL}/verify-email`, {
       email,
       otp,
     });
@@ -312,9 +312,7 @@ export const createBlogPost = async (postData: any) => {
     const response = await axios.post(
       `${API_BASE_URL}/blog/posts`,
       postData,
-      token
-        ? { headers: { Authorization: `Bearer ${token}` } }
-        : undefined,
+      token ? { headers: { Authorization: `Bearer ${token}` } } : undefined,
     );
     return response.data;
   } catch (error: any) {
@@ -343,7 +341,7 @@ export const getBlogPosts = async (filters?: {
       });
     }
     const response = await axios.get(
-      `${API_BASE_URL}/blog/posts?${params.toString()}`
+      `${API_BASE_URL}/blog/posts?${params.toString()}`,
     );
     return response.data;
   } catch (error: any) {
@@ -379,7 +377,7 @@ export const updateBlogPost = async (postId: string, postData: any) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
@@ -397,7 +395,7 @@ export const updateBlogPostContent = async (postId: string, content: any[]) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
@@ -408,11 +406,14 @@ export const updateBlogPostContent = async (postId: string, content: any[]) => {
 export const deleteBlogPost = async (postId: string) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.delete(`${API_BASE_URL}/blog/posts/${postId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await axios.delete(
+      `${API_BASE_URL}/blog/posts/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     return response.data;
   } catch (error: any) {
     throw error.response?.data?.message || "Failed to delete blog post";
@@ -421,7 +422,7 @@ export const deleteBlogPost = async (postId: string) => {
 
 export const publishBlogPost = async (
   postId: string,
-  status: "draft" | "published" | "archived"
+  status: "draft" | "published" | "archived",
 ) => {
   try {
     const token = localStorage.getItem("token");
@@ -432,7 +433,7 @@ export const publishBlogPost = async (
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
@@ -464,7 +465,7 @@ export const createCategory = async (categoryData: {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
@@ -489,7 +490,7 @@ export const uploadBlogImage = async (file: File) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     return response.data as { message: string; url: string };
