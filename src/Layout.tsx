@@ -29,7 +29,7 @@ const footerData: FooterProps = {
     {
       name: "Learn",
       links: [
-        { href: "", text: "Blog" },
+        { href: "/blog", text: "Blog" },
         { href: "", text: "Career" },
         { href: "/privacy-policy", text: "Privacy Policy" },
       ],

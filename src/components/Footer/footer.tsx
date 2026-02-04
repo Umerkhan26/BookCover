@@ -155,6 +155,21 @@ const FooterAnchor = styled.a`
   }
 `;
 
+const FooterNavLink = styled(NavLink)`
+  color: #000000;
+  text-decoration: none;
+  font-size: 15px;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const FooterNote = styled.p`
   text-align: center;
   margin-top: 1rem;
@@ -303,9 +318,15 @@ const Footer: React.FC<FooterProps> = ({
                   <FooterList>
                     {category.links.map((link, idx) => (
                       <FooterItem key={idx}>
-                        <FooterAnchor href={link.href}>
-                          {link.text}
-                        </FooterAnchor>
+                        {link.href.startsWith("/") || link.href === "" ? (
+                          <FooterNavLink to={link.href || "#"}>
+                            {link.text}
+                          </FooterNavLink>
+                        ) : (
+                          <FooterAnchor href={link.href} target="_blank" rel="noopener noreferrer">
+                            {link.text}
+                          </FooterAnchor>
+                        )}
                       </FooterItem>
                     ))}
                   </FooterList>

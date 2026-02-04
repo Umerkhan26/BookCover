@@ -42,18 +42,23 @@ const RegisterModal = ({
 
     try {
       const response = await registerUser(formData);
-      setRegisteredEmail(response.data.email);
+      // Backend returns { success, message, data: { userId, email, role, isVerified } }
+      const email = response?.data?.email ?? formData.email;
+      setRegisteredEmail(email);
       toast.success(
         "Registration successful! Please check your email for OTP."
       );
       setShowVerifyModal(true);
-    } catch (error) {
-      console.error("Registration error:", error);
-      if (error instanceof Error) {
-        toast.error(error.message || "Registration failed. Please try again.");
-      } else {
-        toast.error("Registration failed. Please try again.");
-      }
+    } catch (err: unknown) {
+      console.error("Registration error:", err);
+      const message =
+        err instanceof Error
+          ? err.message
+          : typeof err === "string"
+            ? err
+            : "Registration failed. Please try again.";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -123,6 +128,7 @@ const RegisterModal = ({
               <option value="">Select Role</option>
               <option value="designer">Designer</option>
               <option value="client">User</option>
+              <option value="seo">SEO</option>
               {/* <option value="admin">Admin</option> */}
             </Select>
             {error && <ErrorText>{error}</ErrorText>}

@@ -304,3 +304,204 @@ export const fetchAllBookRequests = async (): Promise<any> => {
     throw new Error("Failed to fetch book requests");
   }
 };
+
+// Blog API Functions
+export const createBlogPost = async (postData: any) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      `${API_BASE_URL}/blog/posts`,
+      postData,
+      token ? { headers: { Authorization: `Bearer ${token}` } } : undefined,
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to create blog post";
+  }
+};
+
+export const getBlogPosts = async (filters?: {
+  status?: string;
+  author?: string;
+  category?: string;
+  tag?: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}) => {
+  try {
+    const params = new URLSearchParams();
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          params.append(key, value.toString());
+        }
+      });
+    }
+    const response = await axios.get(
+      `${API_BASE_URL}/blog/posts?${params.toString()}`,
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to fetch blog posts";
+  }
+};
+
+export const getBlogPostById = async (postId: string) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/blog/posts/${postId}`);
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to fetch blog post";
+  }
+};
+
+export const getBlogPostBySlug = async (slug: string) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/blog/posts/slug/${slug}`);
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to fetch blog post";
+  }
+};
+
+export const updateBlogPost = async (postId: string, postData: any) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.put(
+      `${API_BASE_URL}/blog/posts/${postId}`,
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to update blog post";
+  }
+};
+
+export const updateBlogPostContent = async (postId: string, content: any[]) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.patch(
+      `${API_BASE_URL}/blog/posts/${postId}/content`,
+      { content },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to update blog post content";
+  }
+};
+
+export const deleteBlogPost = async (postId: string) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(
+      `${API_BASE_URL}/blog/posts/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to delete blog post";
+  }
+};
+
+export const publishBlogPost = async (
+  postId: string,
+  status: "draft" | "published" | "archived",
+) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.patch(
+      `${API_BASE_URL}/blog/posts/${postId}/publish`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to update blog post status";
+  }
+};
+
+// Category API Functions
+export const getCategories = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/blog/categories`);
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to fetch categories";
+  }
+};
+
+export const createCategory = async (categoryData: {
+  name: string;
+  slug?: string;
+  description?: string;
+}) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      `${API_BASE_URL}/blog/categories`,
+      categoryData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data?.message || "Failed to create category";
+  }
+};
+
+export const uploadBlogImage = async (file: File) => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Not logged in (missing token)");
+    }
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await axios.post(
+      `${API_BASE_URL}/blog/upload-image`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+
+    return response.data as { message: string; url: string };
+  } catch (error: any) {
+    const serverMsg = error.response?.data?.message;
+    const status = error.response?.status;
+    const detail = serverMsg
+      ? `${serverMsg}${status ? ` (HTTP ${status})` : ""}`
+      : status
+        ? `Upload failed (HTTP ${status})`
+        : "Failed to upload image";
+    throw new Error(detail);
+  }
+};

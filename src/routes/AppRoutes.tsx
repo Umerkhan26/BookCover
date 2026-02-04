@@ -48,23 +48,117 @@ import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditi
 import PrivacyPolicy from "../components/TermsAndConditions/PrivacyPolicy";
 
 import ProtectedRoute from "./ProtectedRoute";
-import UserDashboard from "../pages/UserDashboard/sidebar";
-import DashboardContent from "../pages/UserDashboard/dashboard";
-import OrdersTable from "../pages/UserDashboard/myorder";
-import ProfilePage from "../pages/UserDashboard/Profile/profile";
-import InvoiceTable from "../pages/UserDashboard/Invoices/invoices";
-import FormOrder from "../pages/UserDashboard/Form/form";
-import PreviewPage from "../pages/UserDashboard/Form/preview";
-import OrderSubmittedPage from "../pages/UserDashboard/Form/ordersubmitted";
+// Lazy load components for code splitting
+const FictionCover = lazy(() => import("../pages/FictionCover/FictionCover"));
+const Illustrated = lazy(
+  () => import("../pages/Services/coverpages/illustrated"),
+);
+const BookCoverRedesign = lazy(
+  () => import("../pages/BookCoverRedesign/BookCoverRedesign"),
+);
+const LogoBranding = lazy(() => import("../pages/logo&branding/logo&branding"));
+const NonFictonalCover = lazy(
+  () => import("../pages/NonFictionalCovers/NonFictonalCover"),
+);
+const AudioBookCover = lazy(
+  () => import("../pages/AudioBookCover/AudioBookCover"),
+);
+const ContactUs = lazy(() => import("../components/ContactUs/ContactUs"));
+const AboutUs = lazy(() => import("../components/AboutUs/AboutUs"));
+const PremiumCover = lazy(
+  () => import("../components/PremiumCover/premiumcovers"),
+);
+const KindleVellaCover = lazy(
+  () => import("../components/KindleVellaCover/kindleVellacover"),
+);
+const IllustratedCover = lazy(
+  () => import("../components/IllustratedCovers/illustratedcover"),
+);
+const LogoDesign = lazy(() => import("../components/LogoDesign/logodesign"));
+const CustomCover = lazy(
+  () => import("../components/CustomBookCovers/custombookcover"),
+);
+const Romance = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/romance"),
+);
+const Fantasy = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/fantasy"),
+);
+const UrbanFantasy = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/urbanfantasy"),
+);
+const Fiction = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/fiction"),
+);
+const Horror = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/horror"),
+);
+const MysteryThrillerSuspense = lazy(
+  () =>
+    import("../components/CustomBookCovers/SubCatagories/mysterythrillersuspense"),
+);
+const NonFiction = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/nonfiction"),
+);
+const Paranormal = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/paranormal"),
+);
+const SciFi = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/sciFi"),
+);
+const YoungAdult = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/youngadult"),
+);
+const CozyMystery = lazy(
+  () => import("../components/CustomBookCovers/SubCatagories/cozymystery"),
+);
+const UserDashboard = lazy(() => import("../pages/UserDashboard/sidebar"));
+const Partner = lazy(() => import("../components/Partner/Partner"));
+const FAQ = lazy(() => import("../components/FAQs/FAQs"));
+const GetACover = lazy(() => import("../components/GetACover/GetACover"));
+const Services = lazy(() => import("../components/ServicesComponent/Services"));
+const OrderForm = lazy(() => import("../pages/OrderForm/orderform"));
+const OrdersTable = lazy(() => import("../pages/UserDashboard/myorder"));
+const DashboardContent = lazy(() => import("../pages/UserDashboard/dashboard"));
+const ProfilePage = lazy(
+  () => import("../pages/UserDashboard/Profile/profile"),
+);
+const InvoiceTable = lazy(
+  () => import("../pages/UserDashboard/Invoices/invoices"),
+);
+const FormOrder = lazy(() => import("../pages/UserDashboard/Form/form"));
+const PreviewPage = lazy(() => import("../pages/UserDashboard/Form/preview"));
+const OrderSubmittedPage = lazy(
+  () => import("../pages/UserDashboard/Form/ordersubmitted"),
+);
+const BookCoverForm = lazy(() => import("../pages/GetACover/cover"));
+const Admin = lazy(() => import("../pages/Admin/admin"));
+const User = lazy(() => import("../components/AdminDashboard/user"));
+const Order = lazy(() => import("../components/AdminDashboard/Order/order"));
+const PortfolioWrapperWithTabs = lazy(
+  () => import("../pages/Portfolio/portfolio"),
+);
+const TermsAndConditions = lazy(
+  () => import("../components/TermsAndConditions/TermsAndConditions"),
+);
+const AdminCoverIdea = lazy(
+  () => import("../pages/adminCoverIdeas/AdminCoverIdea"),
+);
+const MarketingMaterial = lazy(
+  () => import("../components/Marketing Material/marketing"),
+);
+const PrivacyPolicy = lazy(
+  () => import("../components/TermsAndConditions/PrivacyPolicy"),
+);
+const BlogList = lazy(() => import("../pages/Blog/BlogList"));
+const BlogPost = lazy(() => import("../pages/Blog/BlogPost"));
+const BlogManagement = lazy(
+  () => import("../components/AdminDashboard/Blog/BlogManagement"),
+);
+const BlogEditor = lazy(() => import("../pages/Admin/BlogEditor"));
 
-import BookCoverForm from "../pages/GetACover/cover";
-import OrderForm from "../pages/OrderForm/orderform";
-
-import Admin from "../pages/Admin/admin";
-import User from "../components/AdminDashboard/user";
-import Order from "../components/AdminDashboard/Order/order";
-import AdminCoverIdea from "../pages/adminCoverIdeas/AdminCoverIdea";
-
+// import TopBar from "../components/TopBar/TopBar";
+// import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -132,8 +226,30 @@ const AppRoutes: React.FC = () => {
           <Route path="logo-design" element={<LogoDesign />} />
           <Route path="marketing-materials" element={<MarketingMaterial />} />
         </Route>
-
-        <Route path="/about-us" element={<AboutUs />} />
+        <Route
+          path="/about-us"
+          element={
+            <Suspense fallback={null}>
+              <AboutUs />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/blog"
+          element={
+            <Suspense fallback={null}>
+              <BlogList />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={
+            <Suspense fallback={null}>
+              <BlogPost />
+            </Suspense>
+          }
+        />
       </Route>
 
       <Route element={<ProtectedRoute />}>
@@ -150,10 +266,65 @@ const AppRoutes: React.FC = () => {
 
       <Route path="/order/:packageId" element={<OrderForm />} />
 
-      <Route path="/admin" element={<Admin />}>
-        <Route path="users" element={<User />} />
-        <Route path="orders" element={<Order />} />
-        <Route path="coverIdeas" element={<AdminCoverIdea />} />
+      {/* <Route path="/order/illustration" element={<IllustrationOrderForm />} /> */}
+
+      <Route
+        path="/admin"
+        element={
+          <Suspense fallback={null}>
+            <Admin />
+          </Suspense>
+        }
+      >
+        {/* Use relative path for nested routes */}
+        <Route
+          path="users"
+          element={
+            <Suspense fallback={null}>
+              <User />
+            </Suspense>
+          }
+        />
+        <Route
+          path="orders"
+          element={
+            <Suspense fallback={null}>
+              <Order />
+            </Suspense>
+          }
+        />
+        <Route
+          path="coverIdeas"
+          element={
+            <Suspense fallback={null}>
+              <AdminCoverIdea />
+            </Suspense>
+          }
+        />
+        <Route
+          path="blog"
+          element={
+            <Suspense fallback={null}>
+              <BlogManagement />
+            </Suspense>
+          }
+        />
+        <Route
+          path="blog/edit/:id"
+          element={
+            <Suspense fallback={null}>
+              <BlogEditor />
+            </Suspense>
+          }
+        />
+        <Route
+          path="blog/new"
+          element={
+            <Suspense fallback={null}>
+              <BlogEditor />
+            </Suspense>
+          }
+        />
       </Route>
 
       <Route path="/book-cover-form" element={<BookCoverForm />} />

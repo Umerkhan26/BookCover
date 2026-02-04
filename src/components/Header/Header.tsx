@@ -61,6 +61,8 @@ function Header() {
       const userRole = userData.role;
       if (userRole === "admin") {
         navigate("/admin/users");
+      } else if (userRole === "seo") {
+        navigate("/admin/blog");
       } else {
         navigate("/portal/orders");
       }

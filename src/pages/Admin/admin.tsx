@@ -115,10 +115,11 @@ import {
   faStar,
   faUser,
   faFileAlt,
+  faNewspaper,
   faArrowLeft,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import logo from "../../assets/logo/Lumestudio-1.webp";
 
@@ -274,30 +275,54 @@ const LinkText = styled.span<CollapsibleProps>`
 const UserDashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const location = useLocation();
+  const { logout, user } = useAuth();
+  const isSeo = user?.role === "seo";
+  const isAdmin = user?.role === "admin";
+
+  // Only admin and seo can use admin dashboard; others redirect to portal
+  useEffect(() => {
+    if (!user) return;
+    if (user.role !== "admin" && user.role !== "seo") {
+      navigate("/portal/orders", { replace: true });
+    }
+  }, [user, navigate]);
+
+  // SEO: only allow /admin/blog (and blog edit/new); redirect everything else to /admin/blog
+  useEffect(() => {
+    if (!user) return;
+    if (user.role === "seo") {
+      const path = location.pathname;
+      const allowed = path === "/admin/blog" || path.startsWith("/admin/blog/");
+      if (!allowed) {
+        navigate("/admin/blog", { replace: true });
+      }
+    }
+  }, [user, location.pathname, navigate]);
+
+  // Index redirect: /admin -> admin goes to users, seo goes to blog
+  useEffect(() => {
+    if (!user) return;
+    if (location.pathname === "/admin" || location.pathname === "/admin/") {
+      if (user.role === "admin") navigate("/admin/users", { replace: true });
+      else if (user.role === "seo") navigate("/admin/blog", { replace: true });
+    }
+  }, [user, location.pathname, navigate]);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setCollapsed(false); // Open sidebar on large screens
+        setCollapsed(false);
       } else {
-        setCollapsed(true); // Collapse sidebar on small screens
+        setCollapsed(true);
       }
     };
-
-    // Listen for window resize events
     window.addEventListener("resize", handleResize);
-
-    // Set initial state based on window size
     handleResize();
-
-    // Clean up the event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleCollapse = () => {
-    setCollapsed(!collapsed);
-  };
+  const toggleCollapse = () => setCollapsed(!collapsed);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -311,32 +336,49 @@ const UserDashboard: React.FC = () => {
       <SidebarContainer collapsed={collapsed}>
         <SidebarHeader>
           <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />
-          <BrandName collapsed={collapsed}>Lumeart Studio</BrandName>
+          <BrandName collapsed={collapsed}>
+            {isSeo ? "SEO" : "Lumeart Studio"}
+          </BrandName>
           <CollapseButton onClick={toggleCollapse}>
             <FontAwesomeIcon icon={faArrowLeft} />
           </CollapseButton>
         </SidebarHeader>
 
         <NavList>
-          <NavTitle collapsed={collapsed}>Activity</NavTitle>
-          <NavItem>
-            <NavLink as={Link} to="/admin/users" aria-label="My Orders">
-              <Icon icon={faListAlt} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>All Users</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink as={Link} to="/admin/orders" aria-label="My Orders">
-              <Icon icon={faUser} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>Orders</LinkText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink as={Link} to="/admin/coverIdeas" aria-label="My Invoices">
-              <Icon icon={faFileAlt} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>Cover Ideas</LinkText>
-            </NavLink>
-          </NavItem>
+          {!isSeo && (
+            <>
+              <NavTitle collapsed={collapsed}>Activity</NavTitle>
+              <NavItem>
+                <NavLink as={Link} to="/admin/users" aria-label="All Users">
+                  <Icon icon={faListAlt} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>All Users</LinkText>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink as={Link} to="/admin/orders" aria-label="Orders">
+                  <Icon icon={faUser} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Orders</LinkText>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink as={Link} to="/admin/coverIdeas" aria-label="Cover Ideas">
+                  <Icon icon={faFileAlt} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Cover Ideas</LinkText>
+                </NavLink>
+              </NavItem>
+            </>
+          )}
+
+          {/* Blog: visible for admin and seo only */}
+          {(isAdmin || isSeo) && (
+            <NavItem>
+              <NavLink as={Link} to="/admin/blog" aria-label="Blog Management">
+                <Icon icon={faNewspaper} collapsed={collapsed} />
+                <LinkText collapsed={collapsed}>Blog</LinkText>
+              </NavLink>
+            </NavItem>
+          )}
+
           <NavItem>
             <NavLink as={Link} to="/">
               <Icon icon={faReplyAll} collapsed={collapsed} />
@@ -344,16 +386,20 @@ const UserDashboard: React.FC = () => {
             </NavLink>
           </NavItem>
 
-          <NavTitle collapsed={collapsed}>Reviews and tips</NavTitle>
-          <NavItem>
-            <NavLink
-              href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
-              target="_blank"
-            >
-              <Icon icon={faStar} collapsed={collapsed} />
-              <LinkText collapsed={collapsed}>Post a review</LinkText>
-            </NavLink>
-          </NavItem>
+          {!isSeo && (
+            <NavTitle collapsed={collapsed}>Reviews and tips</NavTitle>
+          )}
+          {!isSeo && (
+            <NavItem>
+              <NavLink
+                href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
+                target="_blank"
+              >
+                <Icon icon={faStar} collapsed={collapsed} />
+                <LinkText collapsed={collapsed}>Post a review</LinkText>
+              </NavLink>
+            </NavItem>
+          )}
 
           <NavItem>
             <NavLink as="button" onClick={handleLogout}>

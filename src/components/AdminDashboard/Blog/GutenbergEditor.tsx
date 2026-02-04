@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { FaParagraph, FaHeading, FaList, FaQuoteLeft, FaCode, FaTable, FaImage, FaImages, FaSave, FaEye, FaTimes, FaBars, FaListOl } from "react-icons/fa";
@@ -767,6 +767,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
 
   const [title, setTitle] = useState(post?.title || "");
+  const [titleAlignment, setTitleAlignment] = useState(
+    post?.titleAlignment || post?.seoMeta?.titleAlignment || "left"
+  );
   const [slug, setSlug] = useState(post?.slug || "");
   const [excerpt, setExcerpt] = useState(post?.excerpt || "");
   const [featuredImage, setFeaturedImage] = useState(post?.featuredImage || "");
@@ -782,11 +785,29 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
     ogImage: "",
     canonicalUrl: "",
   });
-  const [blocks, setBlocks] = useState<ContentBlock[]>(
-    post?.content || []
+  const getVisibleBlocks = (content: ContentBlock[] | undefined) =>
+    (content || []).filter((b) => b.type !== "postMetadata");
+  const getMetadataFromContent = (content: ContentBlock[] | undefined) =>
+    (content || []).find((b) => b.type === "postMetadata");
+
+  const [blocks, setBlocks] = useState<ContentBlock[]>(() =>
+    getVisibleBlocks(post?.content)
   );
 
   const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (post?.content) {
+      const meta = getMetadataFromContent(post.content);
+      const alignment =
+        meta?.data?.titleAlignment ||
+        post.titleAlignment ||
+        post.seoMeta?.titleAlignment ||
+        "left";
+      setTitleAlignment(alignment);
+      setBlocks(getVisibleBlocks(post.content));
+    }
+  }, [post]);
 
   const handleImageUpload = async (blockId: string, file: File) => {
     try {
@@ -808,7 +829,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       case "paragraph":
         return { text: "", alignment: "left" };
       case "image":
-        return { url: "", alt: "", caption: "", alignment: "center" };
+        return { url: "", alt: "", caption: "", alignment: "center", size: "large", customWidth: "" };
       case "table":
         return { headers: ["Header 1", "Header 2"], rows: [["", ""]], hasHeaderRow: true, style: "default" };
       case "html":
@@ -873,8 +894,20 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   };
 
   const handleSave = () => {
+    const metadataBlock: ContentBlock = {
+      id: "post-metadata",
+      type: "postMetadata",
+      order: -1,
+      data: { titleAlignment },
+      styles: {},
+    };
+    const contentWithMetadata = [
+      metadataBlock,
+      ...blocks.map((b, i) => ({ ...b, order: i })),
+    ];
     const postData = {
       title,
+      titleAlignment,
       slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
       excerpt,
       featuredImage,
@@ -884,8 +917,8 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
         .split(",")
         .map((tag: string) => tag.trim())
         .filter((tag: string) => tag),
-      seoMeta,
-      content: blocks,
+      seoMeta: { ...seoMeta, titleAlignment },
+      content: contentWithMetadata,
     };
 
     onSave(postData);
@@ -923,7 +956,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
             value={block.data.text}
             onChange={(e) => updateBlock(block.id, { text: e.target.value })}
             placeholder="Start writing..."
-            style={{ textAlign: block.data.alignment }}
+            style={{ textAlign: block.data.alignment || "left" }}
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
               target.style.height = 'auto';
@@ -932,28 +965,57 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           />
         );
       case "image":
-        return block.data.url ? (
-          <div>
-            <img
-              src={block.data.url}
-              alt={block.data.alt}
-              style={{ maxWidth: "100%", display: "block" }}
-            />
-            {block.data.caption && (
-              <p
+        return block.data.url ? (() => {
+          const alignment = block.data.alignment || "center";
+          const size = block.data.size || "large";
+          const customW = block.data.customWidth ? parseInt(block.data.customWidth, 10) : null;
+          const widthValue =
+            size === "custom" && customW && customW > 0
+              ? `${customW}px`
+              : size === "full"
+              ? "100%"
+              : size === "large"
+              ? "75%"
+              : size === "medium"
+              ? "50%"
+              : size === "thumbnail"
+              ? "25%"
+              : "100%";
+          return (
+            <div
+              style={{
+                textAlign: alignment,
+                marginTop: "8px",
+                marginBottom: "8px",
+              }}
+            >
+              <img
+                src={block.data.url}
+                alt={block.data.alt}
                 style={{
-                  marginTop: "8px",
-                  fontSize: "14px",
-                  color: "#50575e",
-                  fontStyle: "italic",
-                  textAlign: "center",
+                  maxWidth: widthValue,
+                  width: widthValue,
+                  display: "block",
+                  marginLeft: alignment === "right" ? "auto" : alignment === "center" ? "auto" : "0",
+                  marginRight: alignment === "left" ? "auto" : alignment === "center" ? "auto" : "0",
                 }}
-              >
-                {block.data.caption}
-              </p>
-            )}
-          </div>
-        ) : (
+              />
+              {block.data.caption && (
+                <p
+                  style={{
+                    marginTop: "8px",
+                    fontSize: "14px",
+                    color: "#50575e",
+                    fontStyle: "italic",
+                    textAlign: alignment,
+                  }}
+                >
+                  {block.data.caption}
+                </p>
+              )}
+            </div>
+          );
+        })() : (
           <ImageDropZone
             isDraggingOver={uploadingBlockId === block.id}
             onClick={() => {
@@ -1282,6 +1344,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               <option value="left" style={{ color: "#1e1e1e" }}>Left</option>
               <option value="center" style={{ color: "#1e1e1e" }}>Center</option>
               <option value="right" style={{ color: "#1e1e1e" }}>Right</option>
+              <option value="justify" style={{ color: "#1e1e1e" }}>Justify</option>
             </SettingSelect>
           </SettingField>
         );
@@ -1331,6 +1394,43 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                 <InlineSpinner>Uploading…</InlineSpinner>
               )}
             </SettingField>
+            <SettingField>
+              <SettingLabel>Alignment</SettingLabel>
+              <SettingSelect
+                value={block.data.alignment || "center"}
+                onChange={(e) => updateBlock(block.id, { alignment: e.target.value })}
+              >
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
+              </SettingSelect>
+            </SettingField>
+            <SettingField>
+              <SettingLabel>Size</SettingLabel>
+              <SettingSelect
+                value={block.data.size || "large"}
+                onChange={(e) => updateBlock(block.id, { size: e.target.value, customWidth: "" })}
+              >
+                <option value="thumbnail">Thumbnail (25%)</option>
+                <option value="medium">Medium (50%)</option>
+                <option value="large">Large (75%)</option>
+                <option value="full">Full Width (100%)</option>
+                <option value="custom">Custom</option>
+              </SettingSelect>
+            </SettingField>
+            {(block.data.size || "large") === "custom" && (
+              <SettingField>
+                <SettingLabel>Custom Width (px)</SettingLabel>
+                <SettingInput
+                  type="number"
+                  min={50}
+                  max={1200}
+                  value={block.data.customWidth || ""}
+                  onChange={(e) => updateBlock(block.id, { customWidth: e.target.value })}
+                  placeholder="e.g. 400"
+                />
+              </SettingField>
+            )}
             <SettingField>
               <SettingLabel>Alt Text</SettingLabel>
               <SettingInput
@@ -1565,6 +1665,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               placeholder="Add title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              style={{ textAlign: titleAlignment }}
             />
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="blocks">
@@ -1624,6 +1725,17 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               <>
                 <SettingsSection>
                   <SettingsTitle>Post Settings</SettingsTitle>
+                  <SettingField>
+                    <SettingLabel>Title Alignment</SettingLabel>
+                    <SettingSelect
+                      value={titleAlignment}
+                      onChange={(e) => setTitleAlignment(e.target.value)}
+                    >
+                      <option value="left">Left</option>
+                      <option value="center">Center</option>
+                      <option value="right">Right</option>
+                    </SettingSelect>
+                  </SettingField>
                   <SettingField>
                     <SettingLabel>Slug</SettingLabel>
                     <SettingInput

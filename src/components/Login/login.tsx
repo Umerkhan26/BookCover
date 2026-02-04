@@ -46,7 +46,11 @@ const Login: React.FC<LoginProps> = ({
     switch (role) {
       case "admin":
         toast.success("Redirecting to Admin Dashboard...");
-        navigate("/admin/users", { replace: true });
+        setTimeout(() => navigate("/admin/users"), 1000);
+        break;
+      case "seo":
+        toast.success("Redirecting to Blog...");
+        setTimeout(() => navigate("/admin/blog"), 1000);
         break;
       case "client":
         toast.success("Redirecting to Portal...");
