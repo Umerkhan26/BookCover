@@ -5,15 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#6dc7d1">
+  <meta name="google-site-verification" content="ylkKyyM7sG4q34U0AqST1Y3GgQJ1zSALy9RKHCwo6oI" />
 
-
-  <!-- Preload critical resources -->
   <link rel="preload" href="/fonts/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Preload LCP image - This will be replaced by Vite with actual hashed path -->
-  <!-- Note: After build, manually update this with the actual hashed filename from dist/assets/ -->
-
-  <!-- Critical CSS inline - Mobile optimized -->
   <style>
     @font-face {
       font-family: "Manrope";
@@ -46,20 +41,17 @@
       overflow-x: hidden;
     }
 
-    /* Prevent FOUC (Flash of Unstyled Content) */
     #root {
       min-height: 100vh;
       display: block;
     }
 
-    /* Mobile-specific optimizations */
     @media (max-width: 768px) {
       body {
         -webkit-overflow-scrolling: touch;
       }
     }
 
-    /* Loading state */
     .loading {
       opacity: 0;
       transition: opacity 0.3s ease-in;
