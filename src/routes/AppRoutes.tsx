@@ -1,53 +1,16 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import fictonCoverImg from "../assets/PageBanner/1 (1).webp";
-
-import FictionCover from "../pages/FictionCover/FictionCover";
-import Illustrated from "../pages/Services/coverpages/illustrated";
-import BookCoverRedesign from "../pages/BookCoverRedesign/BookCoverRedesign";
-import LogoBranding from "../pages/logo&branding/logo&branding";
-import NonFictonalCover from "../pages/NonFictionalCovers/NonFictonalCover";
-import AudioBookCover from "../pages/AudioBookCover/AudioBookCover";
-
-import ContactUs from "../components/ContactUs/ContactUs";
-import AboutUs from "../components/AboutUs/AboutUs";
-import Partner from "../components/Partner/Partner";
-import FAQ from "../components/FAQs/FAQs";
-import GetACover from "../components/GetACover/GetACover";
-import Services from "../components/ServicesComponent/Services";
-
 import BenefitsSection from "../pages/Benefits/benefits";
 import { benefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";
 import DesignProcess from "../pages/DesignProcess/designProcess";
 import Packages from "../pages/ourPackages/packages";
 import SpecialEditionAddOns from "../pages/SpecialEditionAddOns/SpecialEditionAddOns";
-
-import PortfolioWrapperWithTabs from "../pages/Portfolio/portfolio";
-import CustomCover from "../components/CustomBookCovers/custombookcover";
-import Romance from "../components/CustomBookCovers/SubCatagories/romance";
-import Fantasy from "../components/CustomBookCovers/SubCatagories/fantasy";
-import UrbanFantasy from "../components/CustomBookCovers/SubCatagories/urbanfantasy";
-import Fiction from "../components/CustomBookCovers/SubCatagories/fiction";
-import Horror from "../components/CustomBookCovers/SubCatagories/horror";
-import MysteryThrillerSuspense from "../components/CustomBookCovers/SubCatagories/mysterythrillersuspense";
-import NonFiction from "../components/CustomBookCovers/SubCatagories/nonfiction";
-import Paranormal from "../components/CustomBookCovers/SubCatagories/paranormal";
-import SciFi from "../components/CustomBookCovers/SubCatagories/sciFi";
-import YoungAdult from "../components/CustomBookCovers/SubCatagories/youngadult";
-import CozyMystery from "../components/CustomBookCovers/SubCatagories/cozymystery";
-
-import PremiumCover from "../components/PremiumCover/premiumcovers";
-import KindleVellaCover from "../components/KindleVellaCover/kindleVellacover";
-import IllustratedCover from "../components/IllustratedCovers/illustratedcover";
-import LogoDesign from "../components/LogoDesign/logodesign";
-import MarketingMaterial from "../components/Marketing Material/marketing";
-
-import TermsAndConditions from "../components/TermsAndConditions/TermsAndConditions";
-import PrivacyPolicy from "../components/TermsAndConditions/PrivacyPolicy";
-
 import ProtectedRoute from "./ProtectedRoute";
+
 // Lazy load components for code splitting
 const FictionCover = lazy(() => import("../pages/FictionCover/FictionCover"));
 const Illustrated = lazy(
@@ -161,7 +124,8 @@ const BlogEditor = lazy(() => import("../pages/Admin/BlogEditor"));
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
 const AppRoutes: React.FC = () => {
   return (
-    <Routes>
+    <Suspense fallback={null}>
+      <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
 
@@ -328,7 +292,8 @@ const AppRoutes: React.FC = () => {
       </Route>
 
       <Route path="/book-cover-form" element={<BookCoverForm />} />
-    </Routes>
+      </Routes>
+    </Suspense>
   );
 };
 
