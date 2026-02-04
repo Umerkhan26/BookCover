@@ -20,7 +20,7 @@ export const registerUser = async (userData: {
 
 export const verifyEmailWithOTP = async (email: string, otp: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/verify-email`, {
+    const response = await axios.post(`${API_BASE_URL}/verify-email`, {
       email,
       otp,
     });
