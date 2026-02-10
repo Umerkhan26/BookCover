@@ -30,7 +30,7 @@ const RegisterModal = ({
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -46,7 +46,7 @@ const RegisterModal = ({
       const email = response?.data?.email ?? formData.email;
       setRegisteredEmail(email);
       toast.success(
-        "Registration successful! Please check your email for OTP."
+        "Registration successful! Please check your email for OTP.",
       );
       setShowVerifyModal(true);
     } catch (err: unknown) {
@@ -128,7 +128,6 @@ const RegisterModal = ({
               <option value="">Select Role</option>
               <option value="designer">Designer</option>
               <option value="client">User</option>
-              <option value="seo">SEO</option>
               {/* <option value="admin">Admin</option> */}
             </Select>
             {error && <ErrorText>{error}</ErrorText>}
