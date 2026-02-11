@@ -1,7 +1,26 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
-import { FaParagraph, FaHeading, FaList, FaQuoteLeft, FaCode, FaTable, FaImage, FaImages, FaSave, FaEye, FaTimes, FaBars, FaListOl } from "react-icons/fa";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
+import {
+  FaParagraph,
+  FaHeading,
+  FaList,
+  FaQuoteLeft,
+  FaCode,
+  FaTable,
+  FaImage,
+  FaImages,
+  FaSave,
+  FaEye,
+  FaTimes,
+  FaBars,
+  FaListOl,
+} from "react-icons/fa";
 import { uploadBlogImage } from "../../../apis/apis";
 
 // Main Container - Three Panel Layout
@@ -43,7 +62,7 @@ const ToolbarButton = styled.button<{ primary?: boolean }>`
   gap: 6px;
   padding: 6px 12px;
   border: none;
-  background: ${props => props.primary ? '#2271b1' : 'transparent'};
+  background: ${(props) => (props.primary ? "#2271b1" : "transparent")};
   color: #fff;
   border-radius: 2px;
   cursor: pointer;
@@ -51,7 +70,8 @@ const ToolbarButton = styled.button<{ primary?: boolean }>`
   transition: background 0.2s;
 
   &:hover {
-    background: ${props => props.primary ? '#135e96' : 'rgba(255,255,255,0.1)'};
+    background: ${(props) =>
+      props.primary ? "#135e96" : "rgba(255,255,255,0.1)"};
   }
 `;
 
@@ -72,7 +92,7 @@ const MainContent = styled.div`
 
 // Left Sidebar - Block Library
 const LeftSidebar = styled.div<{ isOpen: boolean }>`
-  width: ${props => props.isOpen ? '280px' : '0'};
+  width: ${(props) => (props.isOpen ? "280px" : "0")};
   background: #fff;
   border-right: 1px solid #ddd;
   transition: width 0.3s;
@@ -108,12 +128,13 @@ const Tab = styled.button<{ active: boolean }>`
   flex: 1;
   padding: 12px;
   border: none;
-  background: ${props => props.active ? '#fff' : '#f6f7f7'};
-  border-bottom: ${props => props.active ? '2px solid #2271b1' : '2px solid transparent'};
+  background: ${(props) => (props.active ? "#fff" : "#f6f7f7")};
+  border-bottom: ${(props) =>
+    props.active ? "2px solid #2271b1" : "2px solid transparent"};
   cursor: pointer;
   font-size: 13px;
-  font-weight: ${props => props.active ? '600' : '400'};
-  color: ${props => props.active ? '#1e1e1e' : '#50575e'};
+  font-weight: ${(props) => (props.active ? "600" : "400")};
+  color: ${(props) => (props.active ? "#1e1e1e" : "#50575e")};
 `;
 
 const BlockCategories = styled.div`
@@ -214,13 +235,14 @@ const ContentBlock = styled.div<{ isSelected: boolean; isDragging: boolean }>`
   position: relative;
   margin: 4px 0;
   padding: 8px;
-  border: ${props => props.isSelected ? '2px solid #2271b1' : '2px solid transparent'};
+  border: ${(props) =>
+    props.isSelected ? "2px solid #2271b1" : "2px solid transparent"};
   border-radius: 2px;
-  background: ${props => props.isDragging ? '#f0f0f1' : 'transparent'};
+  background: ${(props) => (props.isDragging ? "#f0f0f1" : "transparent")};
   transition: all 0.2s;
 
   &:hover {
-    border-color: ${props => props.isSelected ? '#2271b1' : '#ddd'};
+    border-color: ${(props) => (props.isSelected ? "#2271b1" : "#ddd")};
   }
 `;
 
@@ -245,9 +267,9 @@ const BlockToolbar = styled.div<{ hidden?: boolean }>`
   background: #1e1e1e;
   padding: 4px;
   border-radius: 2px;
-  opacity: ${props => props.hidden ? 0 : 1};
+  opacity: ${(props) => (props.hidden ? 0 : 1)};
   transition: opacity 0.2s;
-  pointer-events: ${props => props.hidden ? 'none' : 'auto'};
+  pointer-events: ${(props) => (props.hidden ? "none" : "auto")};
 `;
 
 const BlockToolbarButton = styled.button`
@@ -260,7 +282,7 @@ const BlockToolbarButton = styled.button`
   border-radius: 2px;
 
   &:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
   }
 `;
 
@@ -275,9 +297,16 @@ const EditableHeading = styled.div<{ level: number }>`
   background: transparent;
   direction: ltr;
   unicode-bidi: plaintext;
-  font-size: ${props => {
-    const sizes = { 1: '2em', 2: '1.5em', 3: '1.17em', 4: '1em', 5: '0.83em', 6: '0.67em' };
-    return sizes[props.level as keyof typeof sizes] || '1.5em';
+  font-size: ${(props) => {
+    const sizes = {
+      1: "2em",
+      2: "1.5em",
+      3: "1.17em",
+      4: "1em",
+      5: "0.83em",
+      6: "0.67em",
+    };
+    return sizes[props.level as keyof typeof sizes] || "1.5em";
   }};
   font-weight: 600;
   color: #1e1e1e;
@@ -350,7 +379,7 @@ const EditableCode = styled.textarea`
   margin: 0;
   resize: vertical;
   min-height: 100px;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   border-radius: 2px;
 
   &:focus {
@@ -397,8 +426,8 @@ const EditableListItem = styled.input`
 `;
 
 const ImageDropZone = styled.div<{ isDraggingOver?: boolean }>`
-  border: 2px dashed ${props => props.isDraggingOver ? "#2271b1" : "#ddd"};
-  background: ${props => props.isDraggingOver ? "#e8f4ff" : "#f6f7f7"};
+  border: 2px dashed ${(props) => (props.isDraggingOver ? "#2271b1" : "#ddd")};
+  background: ${(props) => (props.isDraggingOver ? "#e8f4ff" : "#f6f7f7")};
   border-radius: 2px;
   padding: 18px;
   text-align: center;
@@ -466,20 +495,20 @@ const TOCList = styled.ul`
   margin: 0;
   max-height: 400px;
   overflow-y: auto;
-  
+
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 3px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 3px;
-    
+
     &:hover {
       background: #555;
     }
@@ -489,22 +518,45 @@ const TOCList = styled.ul`
 const TOCItem = styled.li<{ level: number }>`
   margin: 8px 0;
   padding: 8px 12px;
-  font-size: ${props => {
-    const sizes: { [key: number]: string } = { 1: '16px', 2: '15px', 3: '14px', 4: '13px', 5: '12px', 6: '12px' };
-    return sizes[props.level] || '14px';
+  font-size: ${(props) => {
+    const sizes: { [key: number]: string } = {
+      1: "16px",
+      2: "15px",
+      3: "14px",
+      4: "13px",
+      5: "12px",
+      6: "12px",
+    };
+    return sizes[props.level] || "14px";
   }};
-  font-weight: ${props => props.level <= 2 ? '600' : props.level <= 4 ? '500' : '400'};
+  font-weight: ${(props) =>
+    props.level <= 2 ? "600" : props.level <= 4 ? "500" : "400"};
   color: #1e1e1e;
-  background: ${props => props.level <= 2 ? 'rgba(34, 113, 177, 0.05)' : 'transparent'};
-  border-left: ${props => {
-    const colors: { [key: number]: string } = { 1: '4px solid #2271b1', 2: '3px solid #4a90e2', 3: '2px solid #6ba3e8', 4: '2px solid #8bb5ed', 5: '1px solid #aac7f2', 6: '1px solid #c0d4f7' };
-    return colors[props.level] || '2px solid #e0e0e0';
+  background: ${(props) =>
+    props.level <= 2 ? "rgba(34, 113, 177, 0.05)" : "transparent"};
+  border-left: ${(props) => {
+    const colors: { [key: number]: string } = {
+      1: "4px solid #2271b1",
+      2: "3px solid #4a90e2",
+      3: "2px solid #6ba3e8",
+      4: "2px solid #8bb5ed",
+      5: "1px solid #aac7f2",
+      6: "1px solid #c0d4f7",
+    };
+    return colors[props.level] || "2px solid #e0e0e0";
   }};
   border-radius: 4px;
   transition: all 0.2s ease;
-  padding-left: ${props => {
-    const padding: { [key: number]: string } = { 1: '16px', 2: '20px', 3: '24px', 4: '28px', 5: '32px', 6: '36px' };
-    return padding[props.level] || '20px';
+  padding-left: ${(props) => {
+    const padding: { [key: number]: string } = {
+      1: "16px",
+      2: "20px",
+      3: "24px",
+      4: "28px",
+      5: "32px",
+      6: "36px",
+    };
+    return padding[props.level] || "20px";
   }};
 
   &:hover {
@@ -630,7 +682,7 @@ const TOCRemoveButton = styled.button`
 
 // Right Sidebar - Settings
 const RightSidebar = styled.div<{ isOpen: boolean }>`
-  width: ${props => props.isOpen ? '280px' : '0'};
+  width: ${(props) => (props.isOpen ? "280px" : "0")};
   background: #fff;
   border-left: 1px solid #ddd;
   transition: width 0.3s;
@@ -680,6 +732,7 @@ const SettingInput = styled.input`
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 2px;
+  color: black;
   font-size: 13px;
 
   &:focus {
@@ -693,6 +746,7 @@ const SettingTextarea = styled.textarea`
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 2px;
+  color: black;
   font-size: 13px;
   min-height: 80px;
   resize: vertical;
@@ -727,12 +781,22 @@ const SettingSelect = styled.select`
 // Block Types Configuration
 const blockTypes = [
   { type: "heading", label: "Heading", icon: FaHeading, category: "TEXT" },
-  { type: "paragraph", label: "Paragraph", icon: FaParagraph, category: "TEXT" },
+  {
+    type: "paragraph",
+    label: "Paragraph",
+    icon: FaParagraph,
+    category: "TEXT",
+  },
   { type: "list", label: "List", icon: FaList, category: "TEXT" },
   { type: "quote", label: "Quote", icon: FaQuoteLeft, category: "TEXT" },
   { type: "code", label: "Code", icon: FaCode, category: "TEXT" },
   { type: "table", label: "Table", icon: FaTable, category: "TEXT" },
-  { type: "tableOfContents", label: "Table of Contents", icon: FaListOl, category: "TEXT" },
+  {
+    type: "tableOfContents",
+    label: "Table of Contents",
+    icon: FaListOl,
+    category: "TEXT",
+  },
   { type: "image", label: "Image", icon: FaImage, category: "MEDIA" },
   { type: "gallery", label: "Gallery", icon: FaImages, category: "MEDIA" },
   { type: "html", label: "HTML", icon: FaCode, category: "TEXT" },
@@ -748,14 +812,14 @@ interface ContentBlock {
 
 interface GutenbergEditorProps {
   post?: any;
-  categories?: any[];
+  // categories?: any[];
   onSave: (postData: any) => void;
   onCancel: () => void;
 }
 
 const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   post,
-  categories = [],
+  // categories = [],
   onSave,
   onCancel,
 }) => {
@@ -768,30 +832,32 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
 
   const [title, setTitle] = useState(post?.title || "");
   const [titleAlignment, setTitleAlignment] = useState(
-    post?.titleAlignment || post?.seoMeta?.titleAlignment || "left"
+    post?.titleAlignment || post?.seoMeta?.titleAlignment || "left",
   );
   const [slug, setSlug] = useState(post?.slug || "");
   const [excerpt, setExcerpt] = useState(post?.excerpt || "");
   const [featuredImage, setFeaturedImage] = useState(post?.featuredImage || "");
   const [status, setStatus] = useState(post?.status || "draft");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    post?.categories?.map((c: any) => c._id || c) || []
-  );
+  // const [selectedCategories, setSelectedCategories] = useState<string[]>(
+  //   post?.categories?.map((c: any) => c._id || c) || [],
+  // );
   const [tags, setTags] = useState(post?.tags?.join(", ") || "");
-  const [seoMeta, setSeoMeta] = useState(post?.seoMeta || {
-    metaTitle: "",
-    metaDescription: "",
-    keywords: [],
-    ogImage: "",
-    canonicalUrl: "",
-  });
+  const [seoMeta, setSeoMeta] = useState(
+    post?.seoMeta || {
+      metaTitle: "",
+      metaDescription: "",
+      keywords: [],
+      ogImage: "",
+      canonicalUrl: "",
+    },
+  );
   const getVisibleBlocks = (content: ContentBlock[] | undefined) =>
     (content || []).filter((b) => b.type !== "postMetadata");
   const getMetadataFromContent = (content: ContentBlock[] | undefined) =>
     (content || []).find((b) => b.type === "postMetadata");
 
   const [blocks, setBlocks] = useState<ContentBlock[]>(() =>
-    getVisibleBlocks(post?.content)
+    getVisibleBlocks(post?.content),
   );
 
   const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
@@ -829,9 +895,21 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       case "paragraph":
         return { text: "", alignment: "left" };
       case "image":
-        return { url: "", alt: "", caption: "", alignment: "center", size: "large", customWidth: "" };
+        return {
+          url: "",
+          alt: "",
+          caption: "",
+          alignment: "center",
+          size: "large",
+          customWidth: "",
+        };
       case "table":
-        return { headers: ["Header 1", "Header 2"], rows: [["", ""]], hasHeaderRow: true, style: "default" };
+        return {
+          headers: ["Header 1", "Header 2"],
+          rows: [["", ""]],
+          hasHeaderRow: true,
+          style: "default",
+        };
       case "html":
         return { rawHtml: "" };
       case "list":
@@ -863,18 +941,24 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   };
 
   const removeBlock = (blockId: string) => {
-    setBlocks(blocks.filter((block) => block.id !== blockId).map((block, index) => ({
-      ...block,
-      order: index,
-    })));
+    setBlocks(
+      blocks
+        .filter((block) => block.id !== blockId)
+        .map((block, index) => ({
+          ...block,
+          order: index,
+        })),
+    );
     setSelectedBlock(null);
   };
 
   const updateBlock = (blockId: string, data: any) => {
     setBlocks(
       blocks.map((block) =>
-        block.id === blockId ? { ...block, data: { ...block.data, ...data } } : block
-      )
+        block.id === blockId
+          ? { ...block, data: { ...block.data, ...data } }
+          : block,
+      ),
     );
   };
 
@@ -894,17 +978,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   };
 
   const handleSave = () => {
-    const metadataBlock: ContentBlock = {
-      id: "post-metadata",
-      type: "postMetadata",
-      order: -1,
-      data: { titleAlignment },
-      styles: {},
-    };
-    const contentWithMetadata = [
-      metadataBlock,
-      ...blocks.map((b, i) => ({ ...b, order: i })),
-    ];
+    // Do not send postMetadata block — backend content type enum doesn't include it.
+    // titleAlignment is sent at top level and in seoMeta instead.
+    const contentToSave = blocks.map((b, i) => ({ ...b, order: i }));
     const postData = {
       title,
       titleAlignment,
@@ -912,24 +988,24 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       excerpt,
       featuredImage,
       status,
-      categories: selectedCategories,
+      // categories: selectedCategories,
       tags: tags
         .split(",")
         .map((tag: string) => tag.trim())
         .filter((tag: string) => tag),
       seoMeta: { ...seoMeta, titleAlignment },
-      content: contentWithMetadata,
+      content: contentToSave,
     };
 
     onSave(postData);
   };
 
-  const filteredBlocks = blockTypes.filter(block =>
-    block.label.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredBlocks = blockTypes.filter((block) =>
+    block.label.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const textBlocks = filteredBlocks.filter(b => b.category === "TEXT");
-  const mediaBlocks = filteredBlocks.filter(b => b.category === "MEDIA");
+  const textBlocks = filteredBlocks.filter((b) => b.category === "TEXT");
+  const mediaBlocks = filteredBlocks.filter((b) => b.category === "MEDIA");
 
   const renderBlockContent = (block: ContentBlock) => {
     switch (block.type) {
@@ -943,7 +1019,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
             dir="ltr"
             data-placeholder={`Heading (H${Number(block.data.level) || 2})`}
             onInput={(e: React.FormEvent<HTMLDivElement>) =>
-              updateBlock(block.id, { text: (e.currentTarget.textContent || "").trimEnd() })
+              updateBlock(block.id, {
+                text: (e.currentTarget.textContent || "").trimEnd(),
+              })
             }
             style={{ textAlign: block.data.alignment || "left" }}
           >
@@ -959,68 +1037,82 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
             style={{ textAlign: block.data.alignment || "left" }}
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = 'auto';
-              target.style.height = target.scrollHeight + 'px';
+              target.style.height = "auto";
+              target.style.height = target.scrollHeight + "px";
             }}
           />
         );
       case "image":
-        return block.data.url ? (() => {
-          const alignment = block.data.alignment || "center";
-          const size = block.data.size || "large";
-          const customW = block.data.customWidth ? parseInt(block.data.customWidth, 10) : null;
-          const widthValue =
-            size === "custom" && customW && customW > 0
-              ? `${customW}px`
-              : size === "full"
-              ? "100%"
-              : size === "large"
-              ? "75%"
-              : size === "medium"
-              ? "50%"
-              : size === "thumbnail"
-              ? "25%"
-              : "100%";
-          return (
-            <div
-              style={{
-                textAlign: alignment,
-                marginTop: "8px",
-                marginBottom: "8px",
-              }}
-            >
-              <img
-                src={block.data.url}
-                alt={block.data.alt}
+        return block.data.url ? (
+          (() => {
+            const alignment = block.data.alignment || "center";
+            const size = block.data.size || "large";
+            const customW = block.data.customWidth
+              ? parseInt(block.data.customWidth, 10)
+              : null;
+            const widthValue =
+              size === "custom" && customW && customW > 0
+                ? `${customW}px`
+                : size === "full"
+                  ? "100%"
+                  : size === "large"
+                    ? "75%"
+                    : size === "medium"
+                      ? "50%"
+                      : size === "thumbnail"
+                        ? "25%"
+                        : "100%";
+            return (
+              <div
                 style={{
-                  maxWidth: widthValue,
-                  width: widthValue,
-                  display: "block",
-                  marginLeft: alignment === "right" ? "auto" : alignment === "center" ? "auto" : "0",
-                  marginRight: alignment === "left" ? "auto" : alignment === "center" ? "auto" : "0",
+                  textAlign: alignment,
+                  marginTop: "8px",
+                  marginBottom: "8px",
                 }}
-              />
-              {block.data.caption && (
-                <p
+              >
+                <img
+                  src={block.data.url}
+                  alt={block.data.alt}
                   style={{
-                    marginTop: "8px",
-                    fontSize: "14px",
-                    color: "#50575e",
-                    fontStyle: "italic",
-                    textAlign: alignment,
+                    maxWidth: widthValue,
+                    width: widthValue,
+                    display: "block",
+                    marginLeft:
+                      alignment === "right"
+                        ? "auto"
+                        : alignment === "center"
+                          ? "auto"
+                          : "0",
+                    marginRight:
+                      alignment === "left"
+                        ? "auto"
+                        : alignment === "center"
+                          ? "auto"
+                          : "0",
                   }}
-                >
-                  {block.data.caption}
-                </p>
-              )}
-            </div>
-          );
-        })() : (
+                />
+                {block.data.caption && (
+                  <p
+                    style={{
+                      marginTop: "8px",
+                      fontSize: "14px",
+                      color: "#50575e",
+                      fontStyle: "italic",
+                      textAlign: alignment,
+                    }}
+                  >
+                    {block.data.caption}
+                  </p>
+                )}
+              </div>
+            );
+          })()
+        ) : (
           <ImageDropZone
             isDraggingOver={uploadingBlockId === block.id}
             onClick={() => {
               const input = document.getElementById(
-                `img-input-${block.id}`
+                `img-input-${block.id}`,
               ) as HTMLInputElement | null;
               input?.click();
             }}
@@ -1055,12 +1147,27 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       case "table":
         return (
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", color: "#1e1e1e" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                color: "#1e1e1e",
+              }}
+            >
               {block.data.hasHeaderRow && (
                 <thead>
                   <tr>
                     {block.data.headers.map((header: string, i: number) => (
-                      <th key={i} style={{ border: "1px solid #ddd", padding: "8px", backgroundColor: "#f6f7f7", fontWeight: 600, color: "#1e1e1e" }}>
+                      <th
+                        key={i}
+                        style={{
+                          border: "1px solid #ddd",
+                          padding: "8px",
+                          backgroundColor: "#f6f7f7",
+                          fontWeight: 600,
+                          color: "#1e1e1e",
+                        }}
+                      >
                         <input
                           type="text"
                           value={header}
@@ -1069,7 +1176,13 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                             newHeaders[i] = e.target.value;
                             updateBlock(block.id, { headers: newHeaders });
                           }}
-                          style={{ border: "none", background: "transparent", width: "100%", color: "#1e1e1e", fontWeight: 600 }}
+                          style={{
+                            border: "none",
+                            background: "transparent",
+                            width: "100%",
+                            color: "#1e1e1e",
+                            fontWeight: 600,
+                          }}
                           placeholder="Header"
                         />
                       </th>
@@ -1081,7 +1194,14 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                 {block.data.rows.map((row: string[], i: number) => (
                   <tr key={i}>
                     {row.map((cell: string, j: number) => (
-                      <td key={j} style={{ border: "1px solid #ddd", padding: "8px", color: "#1e1e1e" }}>
+                      <td
+                        key={j}
+                        style={{
+                          border: "1px solid #ddd",
+                          padding: "8px",
+                          color: "#1e1e1e",
+                        }}
+                      >
                         <input
                           type="text"
                           value={cell}
@@ -1090,7 +1210,12 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                             newRows[i][j] = e.target.value;
                             updateBlock(block.id, { rows: newRows });
                           }}
-                          style={{ border: "none", background: "transparent", width: "100%", color: "#1e1e1e" }}
+                          style={{
+                            border: "none",
+                            background: "transparent",
+                            width: "100%",
+                            color: "#1e1e1e",
+                          }}
                           placeholder="Cell"
                         />
                       </td>
@@ -1106,7 +1231,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           <EditableList>
             {block.data.items.map((item: string, i: number) => (
               <ListItem key={i}>
-                <ListBullet>{block.data.ordered ? `${i + 1}.` : "•"}</ListBullet>
+                <ListBullet>
+                  {block.data.ordered ? `${i + 1}.` : "•"}
+                </ListBullet>
                 <EditableListItem
                   type="text"
                   value={item}
@@ -1120,13 +1247,17 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               </ListItem>
             ))}
             <ListItem>
-              <ListBullet>{block.data.ordered ? `${block.data.items.length + 1}.` : "•"}</ListBullet>
+              <ListBullet>
+                {block.data.ordered ? `${block.data.items.length + 1}.` : "•"}
+              </ListBullet>
               <EditableListItem
                 type="text"
                 value=""
                 onChange={(e) => {
                   if (e.target.value) {
-                    updateBlock(block.id, { items: [...block.data.items, e.target.value] });
+                    updateBlock(block.id, {
+                      items: [...block.data.items, e.target.value],
+                    });
                     e.target.value = "";
                   }
                 }}
@@ -1151,17 +1282,27 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               placeholder="Quote text"
               onInput={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = 'auto';
-                target.style.height = target.scrollHeight + 'px';
+                target.style.height = "auto";
+                target.style.height = target.scrollHeight + "px";
               }}
             />
             {block.data.author && (
               <input
                 type="text"
                 value={block.data.author}
-                onChange={(e) => updateBlock(block.id, { author: e.target.value })}
+                onChange={(e) =>
+                  updateBlock(block.id, { author: e.target.value })
+                }
                 placeholder="Author (optional)"
-                style={{ marginTop: "8px", border: "none", background: "transparent", fontSize: "14px", color: "#757575", fontStyle: "italic", width: "100%" }}
+                style={{
+                  marginTop: "8px",
+                  border: "none",
+                  background: "transparent",
+                  fontSize: "14px",
+                  color: "#757575",
+                  fontStyle: "italic",
+                  width: "100%",
+                }}
               />
             )}
           </div>
@@ -1198,10 +1339,13 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           });
         };
 
-        const updateHeading = (headingId: string, updates: { level?: number; text?: string }) => {
+        const updateHeading = (
+          headingId: string,
+          updates: { level?: number; text?: string },
+        ) => {
           const currentData = block.data || {};
           const updatedHeadings = headings.map((h: any) =>
-            h.id === headingId ? { ...h, ...updates } : h
+            h.id === headingId ? { ...h, ...updates } : h,
           );
           updateBlock(block.id, {
             ...currentData,
@@ -1223,14 +1367,16 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               contentEditable
               suppressContentEditableWarning
               onInput={(e: React.FormEvent<HTMLDivElement>) =>
-                updateBlock(block.id, { title: (e.currentTarget.textContent || "").trim() })
+                updateBlock(block.id, {
+                  title: (e.currentTarget.textContent || "").trim(),
+                })
               }
               data-placeholder="Table of Contents"
               style={{ marginBottom: "16px" }}
             >
               {block.data.title || ""}
             </EditableTOCTitle>
-            
+
             {headings.length > 0 && (
               <TOCList>
                 {headings.map((heading: any, idx: number) => (
@@ -1242,7 +1388,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                       <TOCLevelSelect
                         value={heading.level || 2}
                         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                          updateHeading(heading.id, { level: parseInt(e.target.value) })
+                          updateHeading(heading.id, {
+                            level: parseInt(e.target.value),
+                          })
                         }
                       >
                         {[1, 2, 3, 4, 5, 6].map((level) => (
@@ -1257,11 +1405,18 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                         suppressContentEditableWarning
                         dir="ltr"
                         onInput={(e: React.FormEvent<HTMLSpanElement>) => {
-                          const newText = (e.currentTarget.textContent || "").trim();
-                          updateHeading(heading.id, { text: newText || "New Heading" });
+                          const newText = (
+                            e.currentTarget.textContent || ""
+                          ).trim();
+                          updateHeading(heading.id, {
+                            text: newText || "New Heading",
+                          });
                         }}
                         onBlur={(e: React.FocusEvent<HTMLSpanElement>) => {
-                          if (!e.currentTarget.textContent || !e.currentTarget.textContent.trim()) {
+                          if (
+                            !e.currentTarget.textContent ||
+                            !e.currentTarget.textContent.trim()
+                          ) {
                             e.currentTarget.textContent = "New Heading";
                             updateHeading(heading.id, { text: "New Heading" });
                           }
@@ -1298,10 +1453,20 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       case "heading":
         return (
           <SettingField>
-            <SettingLabel style={{ fontWeight: "600", color: "#1e1e1e", marginBottom: "8px" }}>Heading Level</SettingLabel>
+            <SettingLabel
+              style={{
+                fontWeight: "600",
+                color: "#1e1e1e",
+                marginBottom: "8px",
+              }}
+            >
+              Heading Level
+            </SettingLabel>
             <SettingSelect
               value={block.data.level || 2}
-              onChange={(e) => updateBlock(block.id, { level: parseInt(e.target.value) })}
+              onChange={(e) =>
+                updateBlock(block.id, { level: parseInt(e.target.value) })
+              }
               style={{
                 fontSize: "14px",
                 fontWeight: "500",
@@ -1319,17 +1484,37 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                 </option>
               ))}
             </SettingSelect>
-            <SettingLabel style={{ fontWeight: "600", color: "#1e1e1e", marginTop: "16px", marginBottom: "8px" }}>Text</SettingLabel>
+            <SettingLabel
+              style={{
+                fontWeight: "600",
+                color: "#1e1e1e",
+                marginTop: "16px",
+                marginBottom: "8px",
+              }}
+            >
+              Text
+            </SettingLabel>
             <SettingInput
               value={block.data.text || ""}
               onChange={(e) => updateBlock(block.id, { text: e.target.value })}
               placeholder="Enter heading text"
               style={{ color: "#1e1e1e" }}
             />
-            <SettingLabel style={{ fontWeight: "600", color: "#1e1e1e", marginTop: "16px", marginBottom: "8px" }}>Alignment</SettingLabel>
+            <SettingLabel
+              style={{
+                fontWeight: "600",
+                color: "#1e1e1e",
+                marginTop: "16px",
+                marginBottom: "8px",
+              }}
+            >
+              Alignment
+            </SettingLabel>
             <SettingSelect
               value={block.data.alignment || "left"}
-              onChange={(e) => updateBlock(block.id, { alignment: e.target.value })}
+              onChange={(e) =>
+                updateBlock(block.id, { alignment: e.target.value })
+              }
               style={{
                 fontSize: "14px",
                 fontWeight: "500",
@@ -1341,10 +1526,18 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                 cursor: "pointer",
               }}
             >
-              <option value="left" style={{ color: "#1e1e1e" }}>Left</option>
-              <option value="center" style={{ color: "#1e1e1e" }}>Center</option>
-              <option value="right" style={{ color: "#1e1e1e" }}>Right</option>
-              <option value="justify" style={{ color: "#1e1e1e" }}>Justify</option>
+              <option value="left" style={{ color: "#1e1e1e" }}>
+                Left
+              </option>
+              <option value="center" style={{ color: "#1e1e1e" }}>
+                Center
+              </option>
+              <option value="right" style={{ color: "#1e1e1e" }}>
+                Right
+              </option>
+              <option value="justify" style={{ color: "#1e1e1e" }}>
+                Justify
+              </option>
             </SettingSelect>
           </SettingField>
         );
@@ -1360,7 +1553,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
             <SettingLabel>Alignment</SettingLabel>
             <SettingSelect
               value={block.data.alignment || "left"}
-              onChange={(e) => updateBlock(block.id, { alignment: e.target.value })}
+              onChange={(e) =>
+                updateBlock(block.id, { alignment: e.target.value })
+              }
             >
               <option value="left">Left</option>
               <option value="center">Center</option>
@@ -1398,7 +1593,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               <SettingLabel>Alignment</SettingLabel>
               <SettingSelect
                 value={block.data.alignment || "center"}
-                onChange={(e) => updateBlock(block.id, { alignment: e.target.value })}
+                onChange={(e) =>
+                  updateBlock(block.id, { alignment: e.target.value })
+                }
               >
                 <option value="left">Left</option>
                 <option value="center">Center</option>
@@ -1409,7 +1606,12 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               <SettingLabel>Size</SettingLabel>
               <SettingSelect
                 value={block.data.size || "large"}
-                onChange={(e) => updateBlock(block.id, { size: e.target.value, customWidth: "" })}
+                onChange={(e) =>
+                  updateBlock(block.id, {
+                    size: e.target.value,
+                    customWidth: "",
+                  })
+                }
               >
                 <option value="thumbnail">Thumbnail (25%)</option>
                 <option value="medium">Medium (50%)</option>
@@ -1426,7 +1628,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                   min={50}
                   max={1200}
                   value={block.data.customWidth || ""}
-                  onChange={(e) => updateBlock(block.id, { customWidth: e.target.value })}
+                  onChange={(e) =>
+                    updateBlock(block.id, { customWidth: e.target.value })
+                  }
                   placeholder="e.g. 400"
                 />
               </SettingField>
@@ -1443,7 +1647,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
               <SettingLabel>Caption</SettingLabel>
               <SettingInput
                 value={block.data.caption || ""}
-                onChange={(e) => updateBlock(block.id, { caption: e.target.value })}
+                onChange={(e) =>
+                  updateBlock(block.id, { caption: e.target.value })
+                }
                 placeholder="Optional caption"
               />
             </SettingField>
@@ -1451,31 +1657,51 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
         );
       case "tableOfContents": {
         const headings = block.data.headings || [];
-        
+
         return (
           <>
             <SettingField>
-              <SettingLabel style={{ fontWeight: "600", color: "#1e1e1e", marginBottom: "8px" }}>Title</SettingLabel>
+              <SettingLabel
+                style={{
+                  fontWeight: "600",
+                  color: "#1e1e1e",
+                  marginBottom: "8px",
+                }}
+              >
+                Title
+              </SettingLabel>
               <SettingInput
                 value={block.data.title || ""}
-                onChange={(e) => updateBlock(block.id, { title: e.target.value })}
+                onChange={(e) =>
+                  updateBlock(block.id, { title: e.target.value })
+                }
                 placeholder="Table of Contents"
                 style={{ color: "#1e1e1e" }}
               />
             </SettingField>
             <SettingField>
-              <SettingLabel style={{ fontWeight: "600", color: "#1e1e1e", marginBottom: "8px" }}>Headings ({headings.length})</SettingLabel>
+              <SettingLabel
+                style={{
+                  fontWeight: "600",
+                  color: "#1e1e1e",
+                  marginBottom: "8px",
+                }}
+              >
+                Headings ({headings.length})
+              </SettingLabel>
               {headings.length > 0 ? (
-                <div style={{ 
-                  maxHeight: "200px", 
-                  overflowY: "auto", 
-                  border: "1px solid #ddd", 
-                  borderRadius: "4px", 
-                  padding: "8px",
-                  background: "#f9f9f9"
-                }}>
+                <div
+                  style={{
+                    maxHeight: "200px",
+                    overflowY: "auto",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px",
+                    padding: "8px",
+                    background: "#f9f9f9",
+                  }}
+                >
                   {headings.map((h: any) => (
-                    <div 
+                    <div
                       key={h.id}
                       style={{
                         padding: "6px 8px",
@@ -1486,18 +1712,23 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                         color: "#1e1e1e",
                         display: "flex",
                         justifyContent: "space-between",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       <span>
-                        <strong>H{h.level || 2}</strong>: {h.text && h.text.length > 30 ? h.text.substring(0, 30) + "..." : (h.text || "New Heading")}
+                        <strong>H{h.level || 2}</strong>:{" "}
+                        {h.text && h.text.length > 30
+                          ? h.text.substring(0, 30) + "..."
+                          : h.text || "New Heading"}
                       </span>
                       <button
                         onClick={() => {
                           const currentData = block.data || {};
                           updateBlock(block.id, {
                             ...currentData,
-                            headings: headings.filter((heading: any) => heading.id !== h.id),
+                            headings: headings.filter(
+                              (heading: any) => heading.id !== h.id,
+                            ),
                           });
                         }}
                         style={{
@@ -1507,7 +1738,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                           borderRadius: "3px",
                           padding: "2px 6px",
                           cursor: "pointer",
-                          fontSize: "11px"
+                          fontSize: "11px",
                         }}
                       >
                         Remove
@@ -1516,31 +1747,45 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                   ))}
                 </div>
               ) : (
-                <div style={{ 
-                  padding: "12px", 
-                  background: "#f6f7f7", 
-                  borderRadius: "4px", 
-                  border: "1px dashed #ddd",
-                  textAlign: "center",
-                  color: "#666",
-                  fontSize: "13px"
-                }}>
-                  No headings added yet. Click the "+ Add Heading" button in the TOC block to add headings.
+                <div
+                  style={{
+                    padding: "12px",
+                    background: "#f6f7f7",
+                    borderRadius: "4px",
+                    border: "1px dashed #ddd",
+                    textAlign: "center",
+                    color: "#666",
+                    fontSize: "13px",
+                  }}
+                >
+                  No headings added yet. Click the "+ Add Heading" button in the
+                  TOC block to add headings.
                 </div>
               )}
               <SmallHelp style={{ marginTop: "8px", color: "#666" }}>
-                Use the "+ Add Heading" button in the TOC block to add new headings
+                Use the "+ Add Heading" button in the TOC block to add new
+                headings
               </SmallHelp>
             </SettingField>
             <SettingField>
-              <SettingLabel style={{ fontWeight: "600", color: "#1e1e1e", marginBottom: "8px" }}>Display Options</SettingLabel>
+              <SettingLabel
+                style={{
+                  fontWeight: "600",
+                  color: "#1e1e1e",
+                  marginBottom: "8px",
+                }}
+              >
+                Display Options
+              </SettingLabel>
               <label
                 style={{
                   display: "flex",
                   alignItems: "center",
                   cursor: "pointer",
                   padding: "12px",
-                  background: block.data.showNumbers ? "rgba(34, 113, 177, 0.1)" : "#f6f7f7",
+                  background: block.data.showNumbers
+                    ? "rgba(34, 113, 177, 0.1)"
+                    : "#f6f7f7",
                   borderRadius: "4px",
                   border: `2px solid ${block.data.showNumbers ? "#2271b1" : "#ddd"}`,
                   transition: "all 0.2s ease",
@@ -1552,18 +1797,27 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                   onChange={(e) =>
                     updateBlock(block.id, { showNumbers: e.target.checked })
                   }
-                  style={{ 
-                    marginRight: "12px", 
-                    width: "18px", 
-                    height: "18px", 
+                  style={{
+                    marginRight: "12px",
+                    width: "18px",
+                    height: "18px",
                     cursor: "pointer",
-                    accentColor: "#2271b1"
+                    accentColor: "#2271b1",
                   }}
                 />
-                <span style={{ fontSize: "14px", color: "#1e1e1e", fontWeight: "600" }}>Show Numbers</span>
+                <span
+                  style={{
+                    fontSize: "14px",
+                    color: "#1e1e1e",
+                    fontWeight: "600",
+                  }}
+                >
+                  Show Numbers
+                </span>
               </label>
               <SmallHelp style={{ marginTop: "8px", color: "#666" }}>
-                Enable to display numbered list (1., 2., 3., etc.) for each heading
+                Enable to display numbered list (1., 2., 3., etc.) for each
+                heading
               </SmallHelp>
             </SettingField>
           </>
@@ -1574,7 +1828,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
     }
   };
 
-  const selectedBlockData = blocks.find(b => b.id === selectedBlock);
+  const selectedBlockData = blocks.find((b) => b.id === selectedBlock);
 
   return (
     <EditorWrapper>
@@ -1612,13 +1866,22 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
             />
           </SidebarHeader>
           <SidebarTabs>
-            <Tab active={activeLeftTab === "Blocks"} onClick={() => setActiveLeftTab("Blocks")}>
+            <Tab
+              active={activeLeftTab === "Blocks"}
+              onClick={() => setActiveLeftTab("Blocks")}
+            >
               Blocks
             </Tab>
-            <Tab active={activeLeftTab === "Patterns"} onClick={() => setActiveLeftTab("Patterns")}>
+            <Tab
+              active={activeLeftTab === "Patterns"}
+              onClick={() => setActiveLeftTab("Patterns")}
+            >
               Patterns
             </Tab>
-            <Tab active={activeLeftTab === "Media"} onClick={() => setActiveLeftTab("Media")}>
+            <Tab
+              active={activeLeftTab === "Media"}
+              onClick={() => setActiveLeftTab("Media")}
+            >
               Media
             </Tab>
           </SidebarTabs>
@@ -1631,8 +1894,13 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                     {textBlocks.map((blockType) => {
                       const Icon = blockType.icon;
                       return (
-                        <BlockItem key={blockType.type} onClick={() => addBlock(blockType.type)}>
-                          <BlockIcon><Icon /></BlockIcon>
+                        <BlockItem
+                          key={blockType.type}
+                          onClick={() => addBlock(blockType.type)}
+                        >
+                          <BlockIcon>
+                            <Icon />
+                          </BlockIcon>
                           <BlockName>{blockType.label}</BlockName>
                         </BlockItem>
                       );
@@ -1645,8 +1913,13 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                     {mediaBlocks.map((blockType) => {
                       const Icon = blockType.icon;
                       return (
-                        <BlockItem key={blockType.type} onClick={() => addBlock(blockType.type)}>
-                          <BlockIcon><Icon /></BlockIcon>
+                        <BlockItem
+                          key={blockType.type}
+                          onClick={() => addBlock(blockType.type)}
+                        >
+                          <BlockIcon>
+                            <Icon />
+                          </BlockIcon>
                           <BlockName>{blockType.label}</BlockName>
                         </BlockItem>
                       );
@@ -1672,10 +1945,16 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
                     {blocks.length === 0 ? (
-                      <BlockPlaceholder>Type / to choose a block</BlockPlaceholder>
+                      <BlockPlaceholder>
+                        Type / to choose a block
+                      </BlockPlaceholder>
                     ) : (
                       blocks.map((block, index) => (
-                        <Draggable key={block.id} draggableId={block.id} index={index}>
+                        <Draggable
+                          key={block.id}
+                          draggableId={block.id}
+                          index={index}
+                        >
                           {(provided, snapshot) => (
                             <ContentBlock
                               ref={provided.innerRef}
@@ -1687,11 +1966,14 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                                 setActiveRightTab("Block");
                               }}
                             >
-                              {block.type === "heading" && selectedBlock === block.id && (
-                                <LevelBadge>{`H${Number(block.data.level) || 2}`}</LevelBadge>
-                              )}
+                              {block.type === "heading" &&
+                                selectedBlock === block.id && (
+                                  <LevelBadge>{`H${Number(block.data.level) || 2}`}</LevelBadge>
+                                )}
                               <BlockToolbar hidden={selectedBlock !== block.id}>
-                                <BlockToolbarButton onClick={() => removeBlock(block.id)}>
+                                <BlockToolbarButton
+                                  onClick={() => removeBlock(block.id)}
+                                >
                                   Delete
                                 </BlockToolbarButton>
                               </BlockToolbar>
@@ -1713,10 +1995,16 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
 
         <RightSidebar isOpen={rightSidebarOpen}>
           <SettingsTabs>
-            <Tab active={activeRightTab === "Post"} onClick={() => setActiveRightTab("Post")}>
+            <Tab
+              active={activeRightTab === "Post"}
+              onClick={() => setActiveRightTab("Post")}
+            >
               Post
             </Tab>
-            <Tab active={activeRightTab === "Block"} onClick={() => setActiveRightTab("Block")}>
+            <Tab
+              active={activeRightTab === "Block"}
+              onClick={() => setActiveRightTab("Block")}
+            >
               Block
             </Tab>
           </SettingsTabs>
@@ -1762,12 +2050,16 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                   </SettingField>
                   <SettingField>
                     <SettingLabel>Status</SettingLabel>
-                    <SettingSelect value={status} onChange={(e) => setStatus(e.target.value)}>
+                    <SettingSelect
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
                       <option value="draft">Draft</option>
                       <option value="published">Published</option>
                       <option value="archived">Archived</option>
                     </SettingSelect>
                   </SettingField>
+                  {/* Categories section commented out — enable when backend provides categories
                   <SettingField>
                     <SettingLabel>Categories</SettingLabel>
                     <SettingSelect
@@ -1775,7 +2067,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                       value={selectedCategories}
                       onChange={(e) =>
                         setSelectedCategories(
-                          Array.from(e.target.selectedOptions, (o) => o.value)
+                          Array.from(e.target.selectedOptions, (o) => o.value),
                         )
                       }
                       style={{ minHeight: "110px" }}
@@ -1787,6 +2079,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                       ))}
                     </SettingSelect>
                   </SettingField>
+                  */}
                   <SettingField>
                     <SettingLabel>Tags (comma-separated)</SettingLabel>
                     <SettingInput
@@ -1800,7 +2093,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                     <SettingLabel>Meta Title</SettingLabel>
                     <SettingInput
                       value={seoMeta.metaTitle || ""}
-                      onChange={(e) => setSeoMeta({ ...seoMeta, metaTitle: e.target.value })}
+                      onChange={(e) =>
+                        setSeoMeta({ ...seoMeta, metaTitle: e.target.value })
+                      }
                     />
                   </SettingField>
                   <SettingField>
@@ -1808,7 +2103,10 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                     <SettingTextarea
                       value={seoMeta.metaDescription || ""}
                       onChange={(e) =>
-                        setSeoMeta({ ...seoMeta, metaDescription: e.target.value })
+                        setSeoMeta({
+                          ...seoMeta,
+                          metaDescription: e.target.value,
+                        })
                       }
                     />
                   </SettingField>
