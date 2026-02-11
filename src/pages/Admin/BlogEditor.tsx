@@ -91,7 +91,9 @@ const BlogEditor: React.FC = () => {
   if (loading) {
     return (
       <EditorContainer>
-        <EditorContent style={{ justifyContent: "center", alignItems: "center" }}>
+        <EditorContent
+          style={{ justifyContent: "center", alignItems: "center" }}
+        >
           <div>Loading...</div>
         </EditorContent>
       </EditorContainer>

@@ -812,7 +812,7 @@ interface ContentBlock {
 
 interface GutenbergEditorProps {
   post?: any;
-  // categories?: any[];
+  categories?: any[];
   onSave: (postData: any) => void;
   onCancel: () => void;
 }
