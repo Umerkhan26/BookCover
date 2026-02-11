@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 import {
   getBlogPosts,
   deleteBlogPost,
   publishBlogPost,
 } from "../../../apis/apis";
+import { TableSkeleton } from "../../DashboardLoading/DashboardLoading";
+import ConfirmModal from "../../ConfirmModal/ConfirmModal";
 
 const Container = styled.div`
   padding: 20px;
@@ -153,6 +156,7 @@ const BlogManagement: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModal, setDeleteModal] = useState<{ postId: string } | null>(null);
 
   useEffect(() => {
     fetchPosts();
@@ -183,15 +187,20 @@ const BlogManagement: React.FC = () => {
     navigate(`/admin/blog/edit/${postId}`);
   };
 
-  const handleDelete = async (postId: string) => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
-      try {
-        await deleteBlogPost(postId);
-        fetchPosts();
-      } catch (error) {
-        console.error("Error deleting post:", error);
-        alert("Failed to delete post");
-      }
+  const handleDeleteClick = (postId: string) => {
+    setDeleteModal({ postId });
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteModal) return;
+    try {
+      await deleteBlogPost(deleteModal.postId);
+      setDeleteModal(null);
+      fetchPosts();
+      toast.success("Post deleted successfully");
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      toast.error("Failed to delete post");
     }
   };
 
@@ -201,19 +210,56 @@ const BlogManagement: React.FC = () => {
         currentStatus === "published" ? "draft" : "published";
       await publishBlogPost(postId, newStatus);
       fetchPosts();
+      toast.success(
+        newStatus === "published" ? "Post published" : "Post unpublished",
+      );
     } catch (error) {
       console.error("Error updating status:", error);
-      alert("Failed to update post status");
+      toast.error("Failed to update post status");
     }
   };
 
 
   if (loading) {
-    return <Container>Loading...</Container>;
+    return (
+      <Container>
+        <Header>
+          <TitleSkeleton />
+          <div style={{ width: 160 }} />
+        </Header>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderCell>Title</TableHeaderCell>
+              <TableHeaderCell>Status</TableHeaderCell>
+              <TableHeaderCell>Author</TableHeaderCell>
+              <TableHeaderCell>Created</TableHeaderCell>
+              <TableHeaderCell>Actions</TableHeaderCell>
+            </TableRow>
+          </TableHeader>
+          <tbody>
+            <tr>
+              <td colSpan={5} style={{ padding: 0, border: 0 }}>
+                <TableSkeleton rows={8} />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </Container>
+    );
   }
 
   return (
     <Container>
+      <ConfirmModal
+        open={!!deleteModal}
+        title="Delete post"
+        message="Are you sure you want to delete this post? This cannot be undone."
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => setDeleteModal(null)}
+      />
       <Header>
         <Title>Blog Management</Title>
         <Button onClick={handleCreateNew}>+ Create New Post</Button>
@@ -263,7 +309,7 @@ const BlogManagement: React.FC = () => {
                     </ActionButton>
                     <ActionButton
                       variant="delete"
-                      onClick={() => handleDelete(post._id)}
+                      onClick={() => handleDeleteClick(post._id)}
                     >
                       Delete
                     </ActionButton>
@@ -277,5 +323,23 @@ const BlogManagement: React.FC = () => {
     </Container>
   );
 };
+
+const TitleSkeleton = styled.div`
+  height: 32px;
+  width: 200px;
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
+  background-size: 1000px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 6px;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+`;
 
 export default BlogManagement;

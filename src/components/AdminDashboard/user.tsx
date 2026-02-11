@@ -20,6 +20,7 @@ import {
   TableSkeleton,
   ErrorMessage,
 } from "../DashboardLoading/DashboardLoading";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import styled from "styled-components";
 
 interface User {
@@ -44,6 +45,7 @@ const User: React.FC = () => {
     null,
   );
   const [actionLoading, setActionLoading] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -127,23 +129,21 @@ const User: React.FC = () => {
     }
   };
 
-  const handleDeleteUser = async (user: User) => {
-    if (
-      !window.confirm(
-        `Are you sure you want to delete ${user.firstName} ${user.lastName}?`,
-      )
-    ) {
-      return;
-    }
+  const handleDeleteUserClick = (user: User) => {
+    setUserToDelete(user);
+  };
 
+  const handleDeleteUserConfirm = async () => {
+    if (!userToDelete) return;
     try {
       setActionLoading(true);
-      await deleteUser(user.userId);
-
+      await deleteUser(userToDelete.userId);
       setUsers((prevUsers) =>
-        prevUsers.filter((existingUser) => existingUser.userId !== user.userId),
+        prevUsers.filter(
+          (existingUser) => existingUser.userId !== userToDelete.userId,
+        ),
       );
-
+      setUserToDelete(null);
       toast.success("User deleted successfully");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to delete user");
@@ -189,6 +189,19 @@ const User: React.FC = () => {
 
   return (
     <Container>
+      <ConfirmModal
+        open={!!userToDelete}
+        title="Delete user"
+        message={
+          userToDelete
+            ? `Are you sure you want to delete ${userToDelete.firstName} ${userToDelete.lastName}? This cannot be undone.`
+            : ""
+        }
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleDeleteUserConfirm}
+        onCancel={() => setUserToDelete(null)}
+      />
       <Helmet>
         <title>Manage Users</title>
         <meta
@@ -254,7 +267,7 @@ const User: React.FC = () => {
                         Block
                       </Button>
                       <Button
-                        onClick={() => handleDeleteUser(user)}
+                        onClick={() => handleDeleteUserClick(user)}
                         bgColor="#dc3545"
                       >
                         Delete
@@ -271,7 +284,7 @@ const User: React.FC = () => {
                         {user.status === "active" ? "Active" : "Blocked"}
                       </Button>
                       <Button
-                        onClick={() => handleDeleteUser(user)}
+                        onClick={() => handleDeleteUserClick(user)}
                         bgColor="#dc3545"
                       >
                         Delete
