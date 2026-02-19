@@ -203,34 +203,31 @@ export const createOrderAPI = async (orderData: {
     throw error.response?.data?.message || "Failed to create order";
   }
 };
-
-export const fetchOrdersByUserId = async (): Promise<any> => {
+export const fetchOrdersByUserId = async (): Promise<any[]> => {
   try {
-    // Retrieve the entire user object from localStorage
     const user = localStorage.getItem("user");
 
     if (!user) {
-      throw new Error("User not logged in");
+      console.warn("User not logged in");
+      return [];
     }
 
-    // Parse the user object
     const userObject = JSON.parse(user);
-
-    // Extract the userId from the parsed object
     const userId = userObject.userId;
 
     if (!userId) {
-      throw new Error("User ID not found in localStorage");
+      console.warn("User ID not found in localStorage");
+      return [];
     }
 
-    // Make the GET request to the API to fetch orders by userId
     const response = await axios.get(
       `${API_BASE_URL}/getOrderByUserId/${userId}`,
     );
-    return response.data.orders;
+
+    return response.data?.orders || [];
   } catch (error) {
     console.error("Error fetching orders:", error);
-    throw new Error("Failed to fetch orders");
+    return [];
   }
 };
 
