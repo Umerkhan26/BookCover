@@ -120,7 +120,7 @@ interface ShareIdeasSectionProps {
   subtitle: string;
   buttonText: string;
   buttonLink?: string;
-  onButtonClick?: () => void; // Made optional
+  onButtonClick?: () => void;
 }
 
 // Component

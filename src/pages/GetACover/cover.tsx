@@ -3,6 +3,7 @@ import styled from "styled-components";
 import BannerSection from "../Banner/getcoverbaner";
 import HowItWorksSection from "../../components/HowItsWork/howitwork";
 import { createBookRequest } from "../../apis/apis"; // Adjust the path to your API function
+import { submitToGoogleSheet } from "../../services/googleSheets";
 import { toast, ToastContainer } from "react-toastify"; // Import react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for Toast
 import { Helmet } from "react-helmet-async";
@@ -157,7 +158,6 @@ const BookCoverForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Prepare the data for API call
     const bookRequestData = {
       name: formData.name,
       title: formData.title,
@@ -175,8 +175,47 @@ const BookCoverForm: React.FC = () => {
     try {
       const response = await createBookRequest(bookRequestData);
       console.log("submitted successfully", response);
+
+      await submitToGoogleSheet({
+        formType: "getACover",
+        name: formData.name,
+        title: formData.title,
+        genre: formData.genre || "",
+        isSeries: formData.isSeries,
+        description: formData.description,
+        coverPreference: formData.coverPreference,
+        mainCharacters: formData.mainCharacters || "",
+        keyObjects: formData.keyObjects || "",
+        setting: formData.setting || "",
+        email: formData.email,
+        comparableCoversCount: formData.comparableCovers?.length ?? 0,
+      });
+
       toast.success("Book cover request submitted successfully!");
-      // Reset the form or show success message here
+
+      // Reset the form to empty values
+      setFormData({
+        name: "",
+        title: "",
+        genre: "",
+        isSeries: false,
+        description: "",
+        coverPreference: [],
+        mainCharacters: "",
+        keyObjects: "",
+        setting: "",
+        comparableCovers: [],
+        email: "",
+        privacyPolicy: false,
+      });
+
+      // Optional: Reset file input
+      const fileInput = document.querySelector(
+        'input[type="file"]',
+      ) as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = "";
+      }
     } catch (err) {
       toast.error(
         "Failed to submit the book cover request. Please try again later.",

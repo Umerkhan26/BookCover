@@ -19,7 +19,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleButtonClick = () => {
-    navigate("/book-cover-form"); // Navigate to the form route
+    navigate("/book-cover-form");
   };
 
   return (

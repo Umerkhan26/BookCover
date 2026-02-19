@@ -15,6 +15,7 @@ import {
 } from "./ContactUsForm.styles";
 
 import { submitContactFormAPI } from "../../apis/apis";
+import { submitToGoogleSheet } from "../../services/googleSheets";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -81,6 +82,14 @@ const ContactUsForm: React.FC = () => {
     try {
       const response = await submitContactFormAPI(formData);
       console.log("API Response:", response);
+      submitToGoogleSheet({
+        formType: "contact",
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        referral: formData.referral || "",
+        message: formData.message,
+      });
       toast.success("Your message has been sent successfully!");
 
       setFormData({

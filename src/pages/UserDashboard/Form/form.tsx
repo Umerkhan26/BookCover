@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createOrderAPI } from "../../../apis/apis";
+import { submitToGoogleSheet } from "../../../services/googleSheets";
 import styled from "styled-components"; // Ensure correct import for your API function
 import { toast, ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -75,6 +76,25 @@ const FormOrder: React.FC = () => {
 
     try {
       const response = await createOrderAPI(formData);
+      submitToGoogleSheet({
+        formType: "portalOrder",
+        userId: formData.userId,
+        packageId: formData.packageId,
+        addOnIds: formData.addOnIds,
+        name: formData.name,
+        bookTitle: formData.bookTitle,
+        bookSubtitle: formData.bookSubtitle,
+        narratorName: formData.narratorName,
+        genre: formData.genre,
+        seriesContinuation: formData.seriesContinuation,
+        summary: formData.summary,
+        prefferedCoverStyle: formData.prefferedCoverStyle,
+        likeToSeeOnCover: formData.likeToSeeOnCover,
+        status: formData.status,
+        userContacts: formData.userContacts || [],
+        firstOrder: formData.firstOrder,
+        shareOnPortfolio: formData.shareOnPortfolio,
+      });
       toast.success("Order created successfully!");
 
       // Delay navigation until after toast

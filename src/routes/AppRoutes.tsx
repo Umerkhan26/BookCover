@@ -126,172 +126,175 @@ const AppRoutes: React.FC = () => {
   return (
     <Suspense fallback={null}>
       <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
 
-        <Route
-          path="/fiction-cover"
-          element={
-            <FictionCover
-              title="Book Cover Design For Indie Authors"
-              subtitle="Pay Only When You are Satisfied With The final result"
-              image={fictonCoverImg}
-              bookCoversText=""
-              benefitsComponent={
-                <BenefitsSection
-                  title={
-                    <>
-                      Here's What Benefits <span>You Get</span>
-                    </>
-                  }
-                  benefits={benefitsData}
-                />
-              }
-              designProcessComponent={<DesignProcess />}
-              packagesComponent={<Packages />}
-              reviewsComponent={<Reviews />}
-              specialEditionAddOnsComponent={<SpecialEditionAddOns />}
-            />
-          }
-        />
-
-        <Route path="/illustrated" element={<Illustrated />} />
-        <Route path="/book-cover-redesign" element={<BookCoverRedesign />} />
-        <Route path="/logo-branding" element={<LogoBranding />} />
-        <Route path="/non-fiction-cover" element={<NonFictonalCover />} />
-        <Route path="/audio-book-cover" element={<AudioBookCover />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/partner" element={<Partner />} />
-        <Route path="/faqs" element={<FAQ />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/get-a-cover" element={<GetACover />} />
-        <Route path="/services" element={<Services />} />
-
-        <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
-          <Route index element={<CustomCover />} />
-          <Route path="fantasy" element={<Fantasy />} />
-          <Route path="romance" element={<Romance />} />
-          <Route path="urban-fantasy" element={<UrbanFantasy />} />
-          <Route path="young-adult" element={<YoungAdult />} />
-          <Route path="cozy-mystery" element={<CozyMystery />} />
-          <Route path="paranormal" element={<Paranormal />} />
           <Route
-            path="mystery-thriller-suspense"
-            element={<MysteryThrillerSuspense />}
+            path="/fiction-cover"
+            element={
+              <FictionCover
+                title="Book Cover Design For Indie Authors"
+                subtitle="Pay Only When You are Satisfied With The final result"
+                image={fictonCoverImg}
+                bookCoversText=""
+                benefitsComponent={
+                  <BenefitsSection
+                    title={
+                      <>
+                        Here's What Benefits <span>You Get</span>
+                      </>
+                    }
+                    benefits={benefitsData}
+                  />
+                }
+                designProcessComponent={<DesignProcess />}
+                packagesComponent={<Packages />}
+                reviewsComponent={<Reviews />}
+                specialEditionAddOnsComponent={<SpecialEditionAddOns />}
+              />
+            }
           />
-          <Route path="horror" element={<Horror />} />
-          <Route path="sci-fi" element={<SciFi />} />
-          <Route path="non-fiction" element={<NonFiction />} />
-          <Route path="fiction" element={<Fiction />} />
-          <Route path="premium-covers" element={<PremiumCover />} />
-          <Route path="kindle-vella-covers" element={<KindleVellaCover />} />
-          <Route path="illustrated-covers" element={<IllustratedCover />} />
-          <Route path="logo-design" element={<LogoDesign />} />
-          <Route path="marketing-materials" element={<MarketingMaterial />} />
+
+          <Route path="/illustrated" element={<Illustrated />} />
+          <Route path="/book-cover-redesign" element={<BookCoverRedesign />} />
+          <Route path="/logo-branding" element={<LogoBranding />} />
+          <Route path="/non-fiction-cover" element={<NonFictonalCover />} />
+          <Route path="/audio-book-cover" element={<AudioBookCover />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/partner" element={<Partner />} />
+          <Route path="/faqs" element={<FAQ />} />
+          <Route
+            path="/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/get-a-cover" element={<GetACover />} />
+          <Route path="/services" element={<Services />} />
+
+          <Route path="/book-cover-form" element={<BookCoverForm />} />
+
+          <Route path="/portfolio/*" element={<PortfolioWrapperWithTabs />}>
+            <Route index element={<CustomCover />} />
+            <Route path="fantasy" element={<Fantasy />} />
+            <Route path="romance" element={<Romance />} />
+            <Route path="urban-fantasy" element={<UrbanFantasy />} />
+            <Route path="young-adult" element={<YoungAdult />} />
+            <Route path="cozy-mystery" element={<CozyMystery />} />
+            <Route path="paranormal" element={<Paranormal />} />
+            <Route
+              path="mystery-thriller-suspense"
+              element={<MysteryThrillerSuspense />}
+            />
+            <Route path="horror" element={<Horror />} />
+            <Route path="sci-fi" element={<SciFi />} />
+            <Route path="non-fiction" element={<NonFiction />} />
+            <Route path="fiction" element={<Fiction />} />
+            <Route path="premium-covers" element={<PremiumCover />} />
+            <Route path="kindle-vella-covers" element={<KindleVellaCover />} />
+            <Route path="illustrated-covers" element={<IllustratedCover />} />
+            <Route path="logo-design" element={<LogoDesign />} />
+            <Route path="marketing-materials" element={<MarketingMaterial />} />
+          </Route>
+          <Route
+            path="/about-us"
+            element={
+              <Suspense fallback={null}>
+                <AboutUs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <Suspense fallback={null}>
+                <BlogList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog/:slug"
+            element={
+              <Suspense fallback={null}>
+                <BlogPost />
+              </Suspense>
+            }
+          />
         </Route>
-        <Route
-          path="/about-us"
-          element={
-            <Suspense fallback={null}>
-              <AboutUs />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/blog"
-          element={
-            <Suspense fallback={null}>
-              <BlogList />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/blog/:slug"
-          element={
-            <Suspense fallback={null}>
-              <BlogPost />
-            </Suspense>
-          }
-        />
-      </Route>
 
-      <Route element={<ProtectedRoute />}>
-        <Route path="/portal" element={<UserDashboard />}>
-          <Route index element={<DashboardContent />} />
-          <Route path="orders" element={<OrdersTable />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="invoices" element={<InvoiceTable />} />
-          <Route path="orders/form" element={<FormOrder />} />
-          <Route path="orders/preview" element={<PreviewPage />} />
-          <Route path="orders/submitted" element={<OrderSubmittedPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/portal" element={<UserDashboard />}>
+            <Route index element={<DashboardContent />} />
+            <Route path="orders" element={<OrdersTable />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="invoices" element={<InvoiceTable />} />
+            <Route path="orders/form" element={<FormOrder />} />
+            <Route path="orders/preview" element={<PreviewPage />} />
+            <Route path="orders/submitted" element={<OrderSubmittedPage />} />
+          </Route>
         </Route>
-      </Route>
 
-      <Route path="/order/:packageId" element={<OrderForm />} />
+        <Route path="/order/:packageId" element={<OrderForm />} />
 
-      {/* <Route path="/order/illustration" element={<IllustrationOrderForm />} /> */}
+        {/* <Route path="/order/illustration" element={<IllustrationOrderForm />} /> */}
 
-      <Route
-        path="/admin"
-        element={
-          <Suspense fallback={null}>
-            <Admin />
-          </Suspense>
-        }
-      >
-        {/* Use relative path for nested routes */}
         <Route
-          path="users"
+          path="/admin"
           element={
             <Suspense fallback={null}>
-              <User />
+              <Admin />
             </Suspense>
           }
-        />
-        <Route
-          path="orders"
-          element={
-            <Suspense fallback={null}>
-              <Order />
-            </Suspense>
-          }
-        />
-        <Route
-          path="coverIdeas"
-          element={
-            <Suspense fallback={null}>
-              <AdminCoverIdea />
-            </Suspense>
-          }
-        />
-        <Route
-          path="blog"
-          element={
-            <Suspense fallback={null}>
-              <BlogManagement />
-            </Suspense>
-          }
-        />
-        <Route
-          path="blog/edit/:id"
-          element={
-            <Suspense fallback={null}>
-              <BlogEditor />
-            </Suspense>
-          }
-        />
-        <Route
-          path="blog/new"
-          element={
-            <Suspense fallback={null}>
-              <BlogEditor />
-            </Suspense>
-          }
-        />
-      </Route>
-
-      <Route path="/book-cover-form" element={<BookCoverForm />} />
+        >
+          {/* Use relative path for nested routes */}
+          <Route
+            path="users"
+            element={
+              <Suspense fallback={null}>
+                <User />
+              </Suspense>
+            }
+          />
+          <Route
+            path="orders"
+            element={
+              <Suspense fallback={null}>
+                <Order />
+              </Suspense>
+            }
+          />
+          <Route
+            path="coverIdeas"
+            element={
+              <Suspense fallback={null}>
+                <AdminCoverIdea />
+              </Suspense>
+            }
+          />
+          <Route
+            path="blog"
+            element={
+              <Suspense fallback={null}>
+                <BlogManagement />
+              </Suspense>
+            }
+          />
+          <Route
+            path="blog/edit/:id"
+            element={
+              <Suspense fallback={null}>
+                <BlogEditor />
+              </Suspense>
+            }
+          />
+          <Route
+            path="blog/new"
+            element={
+              <Suspense fallback={null}>
+                <BlogEditor />
+              </Suspense>
+            }
+          />
+        </Route>
       </Routes>
     </Suspense>
   );

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.section`
   padding: 60px 0px;
@@ -238,6 +239,7 @@ const DesignProcess = ({
   buttonText = "Order Design",
   buttonLink = "/services",
 }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     AOS.init({
       once: true,
@@ -247,6 +249,10 @@ const DesignProcess = ({
     });
     AOS.refresh();
   }, []);
+
+  const handleButtonClick = () => {
+    navigate(buttonLink);
+  };
 
   const initialDelay = 200;
   const staggerDelay = 150;
@@ -295,7 +301,7 @@ const DesignProcess = ({
             ))}
           </StepsContainer>
           <Button
-            href={buttonLink}
+            onClick={handleButtonClick}
             data-aos="fade-up"
             data-aos-duration="1000"
             // Delay after the last step
