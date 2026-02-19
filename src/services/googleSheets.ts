@@ -73,7 +73,7 @@ export async function submitToGoogleSheet(
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(withTimestamp),
     });
-    // With no-cors we cannot read res.ok; the sheet still receives the data
+    console.log("first", res);
   } catch (err) {
     console.warn("Google Sheets submit failed:", err);
   }
