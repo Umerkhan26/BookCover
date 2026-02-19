@@ -20,7 +20,7 @@ const RegisterModal = ({
     lastName: "",
     email: "",
     password: "",
-    role: "",
+    // role: "",
   });
   const [loading, setLoading] = useState(false);
   const [showVerifyModal, setShowVerifyModal] = useState(false);
@@ -41,8 +41,9 @@ const RegisterModal = ({
     setError("");
 
     try {
-      const response = await registerUser(formData);
-      // Backend returns { success, message, data: { userId, email, role, isVerified } }
+      const dataToSend = { ...formData, role: "client" };
+
+      const response = await registerUser(dataToSend);
       const email = response?.data?.email ?? formData.email;
       setRegisteredEmail(email);
       toast.success(
@@ -119,7 +120,7 @@ const RegisterModal = ({
               </TogglePasswordButton>
             </PasswordWrapper>
 
-            <Select
+            {/* <Select
               name="role"
               value={formData.role}
               onChange={handleChange}
@@ -128,8 +129,7 @@ const RegisterModal = ({
               <option value="">Select Role</option>
               <option value="designer">Designer</option>
               <option value="client">User</option>
-              {/* <option value="admin">Admin</option> */}
-            </Select>
+            </Select> */}
             {error && <ErrorText>{error}</ErrorText>}
             <SubmitButton type="submit" disabled={loading}>
               {loading ? "Registering..." : "Register"}
@@ -150,7 +150,7 @@ const RegisterModal = ({
           email={registeredEmail}
           onClose={() => setShowVerifyModal(false)}
           onVerified={() => {
-            // Optional: auto-open login modal after verification
+            onClose();
             window.dispatchEvent(new Event("showLoginModal"));
           }}
         />
@@ -159,16 +159,15 @@ const RegisterModal = ({
   );
 };
 
-// Styled components
-const Select = styled.select`
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  color: black;
-  width: 100%;
-`;
+// const Select = styled.select`
+//   padding: 10px;
+//   font-size: 14px;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+//   margin-bottom: 10px;
+//   color: black;
+//   width: 100%;
+// `;
 
 const LoginLink = styled.a`
   color: #000;
