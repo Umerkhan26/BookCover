@@ -26,133 +26,240 @@ export const EbookContainer = styled.div`
   font-family: "Manrope", sans-serif;
 `;
 
-export const HeroSection = styled.section`
-  position: relative;
-  background-color: #6dc7d1;
-  padding: 140px 20px 80px;
-  text-align: center;
-  color: #fff;
-  overflow: hidden;
-  margin-top: 85px;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 1024px) {
-    padding: 120px 20px 60px;
-    margin-top: 80px;
-    min-height: 350px;
-  }
-
-  @media (max-width: 768px) {
-    padding: 100px 20px 50px;
-    margin-top: 75px;
-    min-height: 300px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 80px 15px 40px;
-    margin-top: 70px;
-    min-height: 250px;
-  }
-`;
-
-export const HeroContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  z-index: 2;
+export const EbookBannerSection = styled.section`
   position: relative;
   width: 100%;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  margin-top: 85px;
+  overflow: hidden;
 
   @media (max-width: 768px) {
-    padding: 0 15px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0 10px;
+    margin-top: 70px;
   }
 `;
 
-export const HeroTitle = styled.h1`
-  font-size: 48px;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 24px;
-  color: #ffffff;
-  text-align: center;
+export const EbookBannerImage = styled.div`
+  position: relative;
+  width: 100%;
+  max-height: 480px;
+  height: 480px;
+  overflow: hidden;
 
-  span {
-    color: #ffffff;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
   }
 
   @media (max-width: 1024px) {
-    font-size: 40px;
+    height: 380px;
+    max-height: 380px;
   }
 
   @media (max-width: 768px) {
-    font-size: 32px;
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+  }
+
+  @media (max-width: 480px) {
+    height: 160px;
+    min-height: 160px;
+    max-height: 160px;
+  }
+`;
+
+export const EbookBannerContent = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  padding-left: 40px;
+  z-index: 2;
+  max-width: 50%;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+
+  @media (min-width: 1280px) {
+    padding-left: max(40px, calc((100% - 1200px) / 2));
+  }
+
+  @media (max-width: 1024px) {
+    max-width: 55%;
+    padding-left: 20px;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 50%;
+    padding-left: 20px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 45%;
+    padding-left: 16px;
+  }
+`;
+
+export const EbookBannerTitle = styled.h1`
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: inherit;
+  line-height: 1.2;
+  margin: 0;
+  margin-bottom: 16px;
+  font-family: "Manrope", sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 1200px) {
+    font-size: clamp(28px, 4.5vw, 42px);
+  }
+
+  @media (max-width: 1024px) {
+    font-size: clamp(24px, 4vw, 36px);
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: clamp(18px, 4vw, 24px);
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(14px, 3.5vw, 20px);
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+`;
+
+export const EbookBannerSubtitle = styled.p`
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: inherit;
+  margin: 0;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  font-family: "Manrope", sans-serif;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 1024px) {
+    font-size: clamp(13px, 1.8vw, 16px);
     margin-bottom: 20px;
   }
 
-  @media (max-width: 480px) {
-    font-size: 26px;
+  @media (max-width: 768px) {
+    font-size: clamp(10px, 1.8vw, 12px);
+    line-height: 1.4;
     margin-bottom: 16px;
   }
-`;
-
-export const HeroSubtitle = styled.p`
-  font-size: 20px;
-  line-height: 1.6;
-  margin-bottom: 32px;
-  color: #ffffff;
-  max-width: 800px;
-  text-align: center;
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-    margin-bottom: 28px;
-  }
 
   @media (max-width: 480px) {
-    font-size: 16px;
-    margin-bottom: 24px;
+    font-size: clamp(8px, 1.5vw, 10px);
+    line-height: 1.3;
+    margin-bottom: 12px;
   }
 `;
 
-export const HeroButton = styled.button`
-  display: inline-block;
-  padding: 16px 40px;
-  font-size: 18px;
-  font-weight: 600;
+export const EbookBannerButton = styled.button`
+  background: #ffffff;
   color: #6dc7d1;
-  background-color: #ffffff;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 700;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-family: "Manrope", sans-serif;
 
   &:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: #f8f8f8;
   }
 
   @media (max-width: 768px) {
-    padding: 14px 32px;
-    font-size: 16px;
+    padding: 12px 24px;
+    font-size: 14px;
   }
 
   @media (max-width: 480px) {
-    padding: 12px 28px;
-    font-size: 14px;
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+`;
+
+export const EbookCoversContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 2;
+  align-items: center;
+
+  @media (min-width: 1280px) {
+    right: max(40px, calc((100% - 1200px) / 2));
+  }
+
+  @media (max-width: 1024px) {
+    right: 20px;
+    gap: 15px;
+  }
+
+  @media (max-width: 768px) {
+    right: 15px;
+    gap: 10px;
+    display: none; /* Hide on mobile for better text visibility */
+  }
+`;
+
+export const EbookCoverCard = styled.div`
+  position: relative;
+  transform: rotate(-5deg);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+
+  &:nth-child(1) {
+    transform: rotate(-8deg);
+    z-index: 1;
+  }
+
+  &:nth-child(2) {
+    transform: rotate(0deg);
+    z-index: 2;
+    margin-top: -20px;
+  }
+
+  &:nth-child(3) {
+    transform: rotate(8deg);
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-10px) rotate(0deg) !important;
+    z-index: 3;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  img {
+    width: 140px;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+
+    @media (max-width: 1024px) {
+      width: 110px;
+    }
   }
 `;
 
@@ -228,66 +335,120 @@ export const SectionTitle = styled.h2`
 
 export const ServicesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
-  margin-top: 40px;
+  margin-top: 50px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 40px;
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 20px;
   }
 `;
 
 export const ServiceCard = styled.div`
   background: #fff;
-  border: 2px solid #6dc7d1;
-  border-radius: 10px;
-  padding: 40px 25px;
-  text-align: center;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 35px 30px;
+  text-align: left;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  min-height: 190px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  min-height: 280px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(109, 199, 209, 0.15);
-    border-color: #4fa3a2;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #6dc7d1, #4aa5b0);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
   }
 
-  p {
-    color: #6b7280;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-top: 12px;
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(109, 199, 209, 0.2);
+    border-color: #6dc7d1;
+
+    &::before {
+      transform: scaleX(1);
+    }
   }
 
   @media (max-width: 768px) {
-    padding: 24px 16px;
+    padding: 28px 20px;
+    min-height: auto;
   }
 `;
 
 export const ServiceIcon = styled.div`
   font-size: 48px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   display: block;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
 `;
 
 export const ServiceName = styled.h3`
-  font-size: 20px;
-  font-weight: 700;
-  color: #212121;
-  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #25293f;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
 
   @media (max-width: 768px) {
-    font-size: 18px;
+    font-size: 20px;
+  }
+`;
+
+export const ServiceCategory = styled.span`
+  font-size: 13px;
+  font-weight: 600;
+  color: #6dc7d1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  text-align: center;
+  display: block;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+`;
+
+export const ServiceDescription = styled.p`
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-top: 0;
+  flex-grow: 1;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 1.6;
   }
 `;
 
@@ -698,9 +859,6 @@ export const PricingCard = styled.div`
   }
 
   .title-price {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px dashed #e0e0e0;
@@ -713,7 +871,6 @@ export const PricingCard = styled.div`
       text-align: left;
       position: relative;
       padding-left: 2rem;
-      flex: 1;
       font-family: "Montserrat", sans-serif;
       letter-spacing: 0.5px;
 
@@ -814,17 +971,25 @@ export const PricingCard = styled.div`
 `;
 
 export const Price = styled.span`
-  font-size: 2rem;
-  font-weight: 800;
-  color: #212121;
-  background: linear-gradient(to right, #f5f5f5, #fff);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6dc7d1;
+  background: linear-gradient(to right, #f8fcfd, #fff);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  min-width: 120px;
+  min-width: 180px;
   text-align: center;
-  border: 1px solid #e0e0e0;
+  border: 2px solid #6dc7d1;
   position: relative;
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    min-width: 160px;
+    padding: 0.6rem 1.2rem;
+  }
 `;
 
 export const AddOns = styled.div`
@@ -943,5 +1108,470 @@ export const OrderButton = styled.button`
 
   &:active {
     transform: translateY(2px);
+  }
+`;
+
+export const WhyChooseUsSection = styled.section`
+  background-color: #fff;
+  padding: 50px 0;
+
+  @media (max-width: 768px) {
+    padding: 40px 0;
+  }
+`;
+
+export const WhyChooseUsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 30px;
+  }
+`;
+
+export const WhyChooseUsItem = styled.div`
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 30px 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(109, 199, 209, 0.15);
+    border-color: #6dc7d1;
+    background: #fff;
+  }
+
+  @media (max-width: 768px) {
+    padding: 24px 20px;
+  }
+`;
+
+export const WhyChooseUsIcon = styled.div`
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  line-height: 1;
+
+  @media (max-width: 768px) {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+`;
+
+export const WhyChooseUsTitle = styled.h3`
+  font-size: 20px;
+  font-weight: 700;
+  color: #25293f;
+  margin-bottom: 12px;
+  font-family: "Montserrat", sans-serif;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+`;
+
+export const WhyChooseUsText = styled.p`
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+export const ContactSection = styled.section`
+  background: linear-gradient(135deg, #6dc7d1 0%, #4aa5b0 100%);
+  padding: 60px 0;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 50px 0;
+  }
+`;
+
+export const ContactContent = styled.div`
+  max-width: 700px;
+  margin: 0 auto;
+`;
+
+export const ContactTitle = styled.h2`
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16px;
+  font-family: "Montserrat", sans-serif;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+`;
+
+export const ContactText = styled.p`
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 30px;
+  opacity: 0.95;
+  line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+`;
+
+export const ContactInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+`;
+
+export const ContactPhone = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+
+  .contact-icon {
+    font-size: 24px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    padding: 10px 20px;
+  }
+`;
+
+export const ContactEmail = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+
+  .contact-icon {
+    font-size: 24px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    padding: 10px 20px;
+  }
+`;
+
+export const ContactButton = styled.button`
+  background: #fff;
+  color: #6dc7d1;
+  padding: 16px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: #f8f8f8;
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+`;
+
+export const ContactTeamGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 40px 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 30px 0;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+`;
+
+export const ContactTeamItem = styled.div`
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px 12px;
+  }
+`;
+
+export const ContactTeamIcon = styled.div`
+  font-size: 32px;
+  margin-bottom: 10px;
+  display: block;
+  line-height: 1;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+`;
+
+export const ContactTeamText = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+`;
+
+export const StoryJourneySection = styled.section`
+  background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(to right, #6dc7d1, #4aa5b0, #6dc7d1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 0;
+  }
+`;
+
+export const StoryJourneyTitle = styled.h2`
+  font-size: 48px;
+  font-weight: 800;
+  color: #25293f;
+  text-align: center;
+  margin-bottom: 16px;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.2;
+
+  span {
+    color: #6dc7d1;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 28px;
+  }
+`;
+
+export const StoryJourneySubtitle = styled.h3`
+  font-size: 32px;
+  font-weight: 600;
+  color: #4b5563;
+  text-align: center;
+  margin-bottom: 24px;
+  font-family: "Montserrat", sans-serif;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
+`;
+
+export const StoryJourneyDescription = styled.p`
+  font-size: 18px;
+  color: #4b5563;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 60px;
+  line-height: 1.7;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 50px;
+    padding: 0 20px;
+  }
+`;
+
+export const StoryStepsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+  position: relative;
+  padding-top: 20px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, #6dc7d1, #4aa5b0, #6dc7d1);
+    z-index: 0;
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 50px;
+  }
+`;
+
+export const StoryStep = styled.div`
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 28px;
+  text-align: left;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(109, 199, 209, 0.15);
+    border-color: #6dc7d1;
+  }
+
+  @media (max-width: 768px) {
+    padding: 28px 24px;
+  }
+`;
+
+export const StoryStepNumber = styled.div`
+  font-size: 11px;
+  font-weight: 700;
+  color: #6dc7d1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-family: "Montserrat", sans-serif;
+  display: block;
+`;
+
+export const StoryStepIcon = styled.div`
+  font-size: 56px;
+  margin-bottom: 20px;
+  display: block;
+  line-height: 1;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+`;
+
+export const StoryStepTitle = styled.h3`
+  font-size: 20px;
+  font-weight: 700;
+  color: #25293f;
+  margin-bottom: 12px;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.3;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+`;
+
+export const StoryStepDescription = styled.p`
+  font-size: 15px;
+  color: #4b5563;
+  line-height: 1.7;
+  margin: 0;
+  flex-grow: 1;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 1.6;
   }
 `;
