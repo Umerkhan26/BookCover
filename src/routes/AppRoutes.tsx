@@ -119,6 +119,7 @@ const BlogManagement = lazy(
   () => import("../components/AdminDashboard/Blog/BlogManagement"),
 );
 const BlogEditor = lazy(() => import("../pages/Admin/BlogEditor"));
+const Ebook = lazy(() => import("../pages/Ebook/Ebook"));
 
 // import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
@@ -170,6 +171,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/get-a-cover" element={<GetACover />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/ebook" element={<Ebook />} />
 
           <Route path="/book-cover-form" element={<BookCoverForm />} />
 

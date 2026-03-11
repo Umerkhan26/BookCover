@@ -91,13 +91,17 @@ export const LogoContainer = styled.div`
   align-items: center;
   padding: 5px 0;
   flex-shrink: 0;
+  min-width: fit-content;
+  margin-right: 20px;
 
   @media (max-width: 480px) {
     padding: 3px 0;
+    margin-right: 10px;
   }
 
   @media (max-width: 390px) {
     padding: 2px 0;
+    margin-right: 8px;
   }
 `;
 
@@ -107,12 +111,12 @@ export const NavLinkButton = styled(NavLink)`
   font-size: 16px;
   font-weight: 500;
   text-transform: capitalize;
-  padding: 8px 20px;
+  padding: 8px 16px;
   white-space: nowrap;
   text-align: left;
   text-decoration: none;
   border-radius: 5px;
-  margin: 0 8px;
+  margin: 0 4px;
   background: rgba(255, 255, 255, 0.4);
   /* border: 2px solid red; */
 
@@ -140,12 +144,13 @@ export const NavButton = styled(NavLink)`
   background-color: #6dc7d1;
   font-weight: 600;
   font-size: 14px;
-  padding: 9px 25px;
+  padding: 9px 20px;
   white-space: nowrap;
   border-radius: 4px;
   text-align: left;
   text-decoration: none;
-  margin: 0 8px;
+  margin: 0 4px;
+  flex-shrink: 0;
   /* border: 2px solid red; */
 
   &:hover {
@@ -236,14 +241,15 @@ export const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  gap: 10px;
+  gap: 15px;
 
   @media (max-width: 1024px) {
     justify-content: space-between;
     width: 100%;
     gap: 8px;
+    max-width: 100%;
   }
 
   @media (max-width: 768px) {
@@ -379,12 +385,13 @@ export const NavNBtn = styled.nav<NavNBtnProps>`
   display: flex;
   /* border: 2px solid pink; */
   align-items: start;
-  /* flex-grow: 1; */
+  flex: 1;
   justify-content: flex-start;
   background-color: white;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
+  min-width: 0;
 
   @media (max-width: 1024px) {
     display: ${({ isMenuOpen }) => (isMenuOpen ? "flex" : "none")};

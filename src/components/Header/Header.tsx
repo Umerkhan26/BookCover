@@ -229,6 +229,12 @@ function Header() {
               Portfolio
             </NavLinkButton>
             <NavLinkButton
+              to="/ebook"
+              onClick={() => navigate("/ebook")}
+            >
+              Ebook
+            </NavLinkButton>
+            <NavLinkButton
               to="/about-us"
               onClick={() => navigate("/about-us  ")}
             >

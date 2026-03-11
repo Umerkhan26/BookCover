@@ -24,6 +24,7 @@ import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
+  FaPhone,
 } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
 
@@ -124,12 +125,12 @@ const ContactUsForm: React.FC = () => {
               www.lumeart.com
             </a>
           </ContactDetail> */}
-          {/* <ContactDetail>
+          <ContactDetail>
             <FaPhone className="icon" />
-            <a href="tel:+1234567890">
-              +1 234 567 890 (Dummy)
+            <a href="tel:+13153332077">
+              +1 (315) 333-2077
             </a>
-          </ContactDetail> */}
+          </ContactDetail>
           <ContactDetail>
             <FaEnvelope className="icon" />
             <a href="mailto:contact@lumeart.com">studioslumeart@gmail.com</a>
