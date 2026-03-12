@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import fictonCoverImg from "../assets/PageBanner/1 (1).webp";
@@ -297,6 +297,9 @@ const AppRoutes: React.FC = () => {
             }
           />
         </Route>
+
+        {/* Catch-all route: redirect any unmatched URLs to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
   );

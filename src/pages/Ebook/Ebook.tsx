@@ -5,9 +5,9 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaPhone, FaEnvelope, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import bannerImg from "../../assets/PageBanner/6.webp";
-import cover1 from "../../assets/banner/TheLastDefenderCover.webp";
-import cover2 from "../../assets/banner/Stormborn.webp";
-import cover3 from "../../assets/banner/TheButterflySpell.webp";
+// import cover1 from "../../assets/banner/TheLastDefenderCover.webp";
+// import cover2 from "../../assets/banner/Stormborn.webp";
+// import cover3 from "../../assets/banner/TheButterflySpell.webp";
 import {
   EbookContainer,
   ServicesSection,
@@ -32,16 +32,7 @@ import {
   GhostwritingText,
   GhostwritingFeatures,
   FeatureItem,
-  PricingSection,
-  PricingTitle,
-  PricingGrid,
   PricingCard,
-  PricingHeader,
-  PricingName,
-  PricingPrice,
-  PricingFeatures,
-  PricingFeature,
-  PricingButton,
   SectionWrapper,
   GhostwritingWrapper,
   ProcessWrapper,
@@ -73,8 +64,8 @@ import {
   EbookBannerTitle,
   EbookBannerSubtitle,
   EbookBannerButton,
-  EbookCoversContainer,
-  EbookCoverCard,
+  // EbookCoversContainer,
+  // EbookCoverCard,
 } from "./Ebook.styles";
 import {
   SectionTestimonials,
@@ -96,8 +87,8 @@ import {
   SvgLeftBottom,
   SvgRightTop,
   SvgRightBottom,
-  ButtonWrapper,
-  ButtonGreen,
+  // ButtonWrapper,
+  // ButtonGreen,
 } from "../Testimonial/testimonial.styles";
 
 const Ebook: React.FC = () => {
