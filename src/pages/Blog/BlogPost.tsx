@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { getBlogPostBySlug, getBlogPosts } from "../../apis/apis";
+import { BLOG_PREVIEW_STORAGE_KEY } from "../../constants/blogPreviewStorage";
 import { Helmet } from "react-helmet-async";
 import { theme } from "../../theme";
 import blogCover from "../../assets/blogs/blogCover.webp";
@@ -130,6 +131,20 @@ const BannerTitle = styled.h1`
     line-height: 1.8rem;
     letter-spacing: 0.5px;
   }
+`;
+
+const PreviewBanner = styled.div`
+  background: #1e1e1e;
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Manrope", ${theme.fonts.main};
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
 `;
 
 const PostContainer = styled.div`
@@ -446,17 +461,6 @@ const LoadingState = styled.div`
   padding: 100px 20px;
   font-size: 18px;
   color: #666;
-`;
-
-const ErrorState = styled.div`
-  text-align: center;
-  padding: 100px 20px;
-`;
-
-const ErrorText = styled.p`
-  font-size: 20px;
-  color: #e74c3c;
-  margin-bottom: 20px;
 `;
 
 const ImageWrapper = styled.div<{ alignment?: string }>`
@@ -784,6 +788,8 @@ const renderContentBlock = (block: any, index: number) => {
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
+  const isPreview = location.pathname === "/blog/preview";
   const [post, setPost] = useState<any>(null);
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -791,10 +797,34 @@ const BlogPost: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (isPreview) {
+      setLoading(true);
+      setError(null);
+      try {
+        const raw = localStorage.getItem(BLOG_PREVIEW_STORAGE_KEY);
+        if (!raw) {
+          setError(
+            "No preview data. Use Preview in the admin blog editor, then try again.",
+          );
+          setPost(null);
+          setLoading(false);
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        setPost(parsed);
+        setRecentPosts([]);
+      } catch {
+        setError("Could not read preview data.");
+        setPost(null);
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     if (slug) {
       fetchPost();
     }
-  }, [slug]);
+  }, [slug, isPreview]);
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
@@ -812,8 +842,8 @@ const BlogPost: React.FC = () => {
         setRecentPosts([]);
       }
     };
-    if (post?.slug) fetchRecentPosts();
-  }, [post?.slug, slug]);
+    if (post?.slug && !isPreview) fetchRecentPosts();
+  }, [post?.slug, slug, isPreview]);
 
   useEffect(() => {
     // Scroll to top when post loads
@@ -827,9 +857,15 @@ const BlogPost: React.FC = () => {
       setLoading(true);
       setError(null);
       const response = await getBlogPostBySlug(slug!);
+      if (!response?.post) {
+        setPost(null);
+        setError("not_found");
+        return;
+      }
       setPost(response.post);
     } catch (err: any) {
       setError(err.message || "Failed to load blog post");
+      setPost(null);
     } finally {
       setLoading(false);
     }
@@ -869,29 +905,7 @@ const BlogPost: React.FC = () => {
   }
 
   if (error || !post) {
-    return (
-      <>
-        <BlogBanner>
-          <BannerImage>
-            <img
-              src={blogCover}
-              alt="Blog Cover"
-              width={1263}
-              height={651}
-              loading="eager"
-            />
-            <BannerContent>
-              <BannerTitle>Blog Post</BannerTitle>
-            </BannerContent>
-          </BannerImage>
-        </BlogBanner>
-        <PostContainer>
-          <ErrorState>
-            <ErrorText>{error || "Blog post not found"}</ErrorText>
-          </ErrorState>
-        </PostContainer>
-      </>
-    );
+    return <Navigate to="/" replace />;
   }
 
   // Sort content blocks by order
@@ -981,8 +995,15 @@ const BlogPost: React.FC = () => {
 
   return (
     <>
+      {isPreview && (
+        <PreviewBanner>
+          Draft preview — this is how the post will look. It is not published
+          until you save in the editor.
+        </PreviewBanner>
+      )}
       <Helmet>
         <title>
+          {isPreview ? "Preview: " : ""}
           {post.seoMeta?.metaTitle || post.title || "Untitled Post"} | Lumeart
           Studio
         </title>

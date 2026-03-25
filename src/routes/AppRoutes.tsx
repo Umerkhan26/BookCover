@@ -214,6 +214,14 @@ const AppRoutes: React.FC = () => {
             }
           />
           <Route
+            path="/blog/preview"
+            element={
+              <Suspense fallback={null}>
+                <BlogPost />
+              </Suspense>
+            }
+          />
+          <Route
             path="/blog/:slug"
             element={
               <Suspense fallback={null}>
@@ -237,8 +245,6 @@ const AppRoutes: React.FC = () => {
 
         <Route path="/order/:packageId" element={<OrderForm />} />
 
-        {/* <Route path="/order/illustration" element={<IllustrationOrderForm />} /> */}
-
         <Route
           path="/admin"
           element={
@@ -247,7 +253,6 @@ const AppRoutes: React.FC = () => {
             </Suspense>
           }
         >
-          {/* Use relative path for nested routes */}
           <Route
             path="users"
             element={

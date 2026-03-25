@@ -22,6 +22,8 @@ import {
   FaListOl,
 } from "react-icons/fa";
 import { uploadBlogImage } from "../../../apis/apis";
+import { BLOG_PREVIEW_STORAGE_KEY } from "../../../constants/blogPreviewStorage";
+import ConfirmModal from "../../ConfirmModal/ConfirmModal";
 
 // Main Container - Three Panel Layout
 const EditorWrapper = styled.div`
@@ -425,6 +427,29 @@ const EditableListItem = styled.input`
   }
 `;
 
+const ListItemRemoveBtn = styled.button`
+  flex-shrink: 0;
+  align-self: center;
+  border: none;
+  background: transparent;
+  color: #b32d2e;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: "Manrope", sans-serif;
+
+  &:hover {
+    background: #fce8e8;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+`;
+
 const ImageDropZone = styled.div<{ isDraggingOver?: boolean }>`
   border: 2px dashed ${(props) => (props.isDraggingOver ? "#2271b1" : "#ddd")};
   background: ${(props) => (props.isDraggingOver ? "#e8f4ff" : "#f6f7f7")};
@@ -810,6 +835,81 @@ interface ContentBlock {
   styles?: any;
 }
 
+/** Draft row commits on Enter/blur — avoids creating a new item on every keystroke */
+const ListBlockCanvas: React.FC<{
+  block: ContentBlock;
+  updateBlock: (blockId: string, data: Record<string, unknown>) => void;
+}> = ({ block, updateBlock }) => {
+  const [newItemDraft, setNewItemDraft] = useState("");
+
+  const commitNewItem = () => {
+    const trimmed = newItemDraft.trim();
+    if (!trimmed) {
+      return;
+    }
+    updateBlock(block.id, {
+      items: [...block.data.items, trimmed],
+    });
+    setNewItemDraft("");
+  };
+
+  return (
+    <EditableList>
+      {block.data.items.map((item: string, i: number) => (
+        <ListItem key={i}>
+          <ListBullet>
+            {block.data.ordered ? `${i + 1}.` : "•"}
+          </ListBullet>
+          <EditableListItem
+            type="text"
+            value={item}
+            onChange={(e) => {
+              const newItems = [...block.data.items];
+              newItems[i] = e.target.value;
+              updateBlock(block.id, { items: newItems });
+            }}
+            placeholder="List item"
+          />
+          <ListItemRemoveBtn
+            type="button"
+            title="Remove this list item"
+            aria-label="Remove this list item"
+            onClick={(e) => {
+              e.stopPropagation();
+              const next = block.data.items.filter(
+                (_: string, j: number) => j !== i,
+              );
+              updateBlock(block.id, {
+                items: next.length > 0 ? next : [""],
+              });
+            }}
+          >
+            ×
+          </ListItemRemoveBtn>
+        </ListItem>
+      ))}
+      <ListItem>
+        <ListBullet>
+          {block.data.ordered ? `${block.data.items.length + 1}.` : "•"}
+        </ListBullet>
+        <EditableListItem
+          type="text"
+          value={newItemDraft}
+          onChange={(e) => setNewItemDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              commitNewItem();
+            }
+          }}
+          onBlur={commitNewItem}
+          placeholder="Add list item — press Enter when done"
+        />
+      </ListItem>
+    </EditableList>
+  );
+};
+
 interface GutenbergEditorProps {
   post?: any;
   categories?: any[];
@@ -998,6 +1098,38 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
     };
 
     onSave(postData);
+  };
+
+  const buildPostPayloadForPreview = () => {
+    const contentToSave = blocks.map((b, i) => ({ ...b, order: i }));
+    return {
+      title,
+      titleAlignment,
+      slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "preview",
+      excerpt,
+      featuredImage,
+      status,
+      tags: tags
+        .split(",")
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag),
+      seoMeta: { ...seoMeta, titleAlignment },
+      content: contentToSave,
+      createdAt: new Date().toISOString(),
+      publishedAt: null,
+    };
+  };
+
+  const handlePreview = () => {
+    try {
+      const payload = buildPostPayloadForPreview();
+      localStorage.setItem(BLOG_PREVIEW_STORAGE_KEY, JSON.stringify(payload));
+      const url = `${window.location.origin}/blog/preview`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    } catch (e) {
+      console.error(e);
+      window.alert("Could not save preview data. Check that storage is allowed.");
+    }
   };
 
   const filteredBlocks = blockTypes.filter((block) =>
@@ -1228,50 +1360,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
         );
       case "list":
         return (
-          <EditableList>
-            {block.data.items.map((item: string, i: number) => (
-              <ListItem key={i}>
-                <ListBullet>
-                  {block.data.ordered ? `${i + 1}.` : "•"}
-                </ListBullet>
-                <EditableListItem
-                  type="text"
-                  value={item}
-                  onChange={(e) => {
-                    const newItems = [...block.data.items];
-                    newItems[i] = e.target.value;
-                    updateBlock(block.id, { items: newItems });
-                  }}
-                  placeholder="List item"
-                />
-              </ListItem>
-            ))}
-            <ListItem>
-              <ListBullet>
-                {block.data.ordered ? `${block.data.items.length + 1}.` : "•"}
-              </ListBullet>
-              <EditableListItem
-                type="text"
-                value=""
-                onChange={(e) => {
-                  if (e.target.value) {
-                    updateBlock(block.id, {
-                      items: [...block.data.items, e.target.value],
-                    });
-                    e.target.value = "";
-                  }
-                }}
-                placeholder="Add list item"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    const newItems = [...block.data.items, ""];
-                    updateBlock(block.id, { items: newItems });
-                  }
-                }}
-              />
-            </ListItem>
-          </EditableList>
+          <ListBlockCanvas block={block} updateBlock={updateBlock} />
         );
       case "quote":
         return (
@@ -1823,6 +1912,167 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           </>
         );
       }
+      case "table": {
+        const headers = block.data.headers || [];
+        const rows = block.data.rows || [];
+        const normalizeTableData = () => {
+          let h = [...headers];
+          let r = rows.map((row: string[]) => [...row]);
+          const nc = Math.max(
+            h.length,
+            ...r.map((x) => x.length),
+            1,
+          );
+          while (h.length < nc) {
+            h.push(`Header ${h.length + 1}`);
+          }
+          h = h.slice(0, nc);
+          r = r.map((row) => thePad(row, nc));
+          if (r.length === 0) {
+            r = [Array(nc).fill("")];
+          }
+          return { headers: h, rows: r };
+        };
+        const thePad = (row: string[], nc: number) => {
+          const x = [...row];
+          while (x.length < nc) {
+            x.push("");
+          }
+          return x.slice(0, nc);
+        };
+
+        const tableActionBtn = {
+          flex: 1,
+          padding: "8px 10px",
+          fontSize: "13px",
+          fontWeight: 600,
+          borderRadius: "4px",
+          border: "1px solid #8c8f94",
+          background: "#fff",
+          color: "#1e1e1e",
+          cursor: "pointer" as const,
+        };
+
+        const addRow = () => {
+          const { headers: h, rows: r } = normalizeTableData();
+          const nc = h.length;
+          updateBlock(block.id, {
+            headers: h,
+            rows: [...r, Array(nc).fill("")],
+          });
+        };
+
+        const removeLastRow = () => {
+          const { headers: h, rows: r } = normalizeTableData();
+          if (r.length <= 1) {
+            return;
+          }
+          updateBlock(block.id, { headers: h, rows: r.slice(0, -1) });
+        };
+
+        const addColumn = () => {
+          const { headers: h, rows: r } = normalizeTableData();
+          const nh = [...h, `Header ${h.length + 1}`];
+          const nr = r.map((row) => [...row, ""]);
+          updateBlock(block.id, { headers: nh, rows: nr });
+        };
+
+        const removeLastColumn = () => {
+          const { headers: h, rows: r } = normalizeTableData();
+          if (h.length <= 1) {
+            return;
+          }
+          const nh = h.slice(0, -1);
+          const nr = r.map((row) => row.slice(0, -1));
+          updateBlock(block.id, { headers: nh, rows: nr });
+        };
+
+        const { headers: nh, rows: nr } = normalizeTableData();
+
+        return (
+          <>
+            <SettingField>
+              <SettingLabel>Table structure</SettingLabel>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "8px",
+                  marginBottom: "10px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <button type="button" style={tableActionBtn} onClick={addRow}>
+                  + Add row
+                </button>
+                <button
+                  type="button"
+                  style={{
+                    ...tableActionBtn,
+                    opacity: nr.length <= 1 ? 0.5 : 1,
+                    cursor: nr.length <= 1 ? "not-allowed" : "pointer",
+                  }}
+                  onClick={removeLastRow}
+                  disabled={nr.length <= 1}
+                >
+                  − Remove row
+                </button>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "8px",
+                  marginBottom: "12px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <button type="button" style={tableActionBtn} onClick={addColumn}>
+                  + Add column
+                </button>
+                <button
+                  type="button"
+                  style={{
+                    ...tableActionBtn,
+                    opacity: nh.length <= 1 ? 0.5 : 1,
+                    cursor: nh.length <= 1 ? "not-allowed" : "pointer",
+                  }}
+                  onClick={removeLastColumn}
+                  disabled={nh.length <= 1}
+                >
+                  − Remove column
+                </button>
+              </div>
+              <SmallHelp style={{ color: "#666", marginBottom: "12px" }}>
+                {nh.length} column{nh.length !== 1 ? "s" : ""}, {nr.length} data
+                row{nr.length !== 1 ? "s" : ""}
+                {block.data.hasHeaderRow ? " (+ header row)" : ""}
+              </SmallHelp>
+            </SettingField>
+            <SettingField>
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  gap: "10px",
+                  fontSize: "14px",
+                  color: "#1e1e1e",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={!!block.data.hasHeaderRow}
+                  onChange={(e) =>
+                    updateBlock(block.id, {
+                      hasHeaderRow: e.target.checked,
+                    })
+                  }
+                />
+                Show header row
+              </label>
+            </SettingField>
+          </>
+        );
+      }
       default:
         return <div>Settings for {block.type}</div>;
     }
@@ -1843,7 +2093,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           <SaveStatus>✔ Saved</SaveStatus>
         </ToolbarLeft>
         <ToolbarRight>
-          <ToolbarButton>
+          <ToolbarButton type="button" onClick={handlePreview}>
             <FaEye /> Preview
           </ToolbarButton>
           <ToolbarButton primary onClick={handleSave}>

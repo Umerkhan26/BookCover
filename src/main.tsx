@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom/client";
+import "./apis/setupAxios";
 import App from "./App.tsx";
 import "./index.css";
 import { theme } from "./theme.tsx";
