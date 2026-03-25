@@ -23,7 +23,8 @@ import {
 } from "react-icons/fa";
 import { uploadBlogImage } from "../../../apis/apis";
 import { BLOG_PREVIEW_STORAGE_KEY } from "../../../constants/blogPreviewStorage";
-import ConfirmModal from "../../ConfirmModal/ConfirmModal";
+import { buildPublicPostUrl } from "../../../utils/blogPermalink";
+import PermalinkModal from "./PermalinkModal";
 
 // Main Container - Three Panel Layout
 const EditorWrapper = styled.div`
@@ -857,9 +858,7 @@ const ListBlockCanvas: React.FC<{
     <EditableList>
       {block.data.items.map((item: string, i: number) => (
         <ListItem key={i}>
-          <ListBullet>
-            {block.data.ordered ? `${i + 1}.` : "•"}
-          </ListBullet>
+          <ListBullet>{block.data.ordered ? `${i + 1}.` : "•"}</ListBullet>
           <EditableListItem
             type="text"
             value={item}
@@ -913,8 +912,10 @@ const ListBlockCanvas: React.FC<{
 interface GutenbergEditorProps {
   post?: any;
   categories?: any[];
-  onSave: (postData: any) => void;
+  onSave: (postData: any) => Promise<unknown>;
   onCancel: () => void;
+  /** Called after save, when the permalink modal is dismissed (e.g. navigate to list). */
+  onAfterSaveNavigate?: () => void;
 }
 
 const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
@@ -922,6 +923,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   // categories = [],
   onSave,
   onCancel,
+  onAfterSaveNavigate,
 }) => {
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(true);
   const [rightSidebarOpen, setRightSidebarOpen] = useState(true);
@@ -961,6 +963,52 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   );
 
   const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
+  const [uploadingFeatured, setUploadingFeatured] = useState(false);
+  const [saveBusy, setSaveBusy] = useState(false);
+  const [permalinkModalOpen, setPermalinkModalOpen] = useState(false);
+  const [permalinkModalUrl, setPermalinkModalUrl] = useState("");
+  const navigateAfterPermalinkClose = React.useRef(false);
+
+  const computeDerivedSlug = () =>
+    slug.trim() ||
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+  const openPermalinkModal = (url: string, navigateAfterClose: boolean) => {
+    navigateAfterPermalinkClose.current = navigateAfterClose;
+    setPermalinkModalUrl(url);
+    setPermalinkModalOpen(true);
+  };
+
+  const closePermalinkModal = () => {
+    setPermalinkModalOpen(false);
+    setPermalinkModalUrl("");
+    if (navigateAfterPermalinkClose.current) {
+      navigateAfterPermalinkClose.current = false;
+      onAfterSaveNavigate?.();
+    }
+  };
+
+  useEffect(() => {
+    if (!post) return;
+    setTitle(post.title || "");
+    setSlug(post.slug || "");
+    setExcerpt(post.excerpt || "");
+    setFeaturedImage(post.featuredImage || "");
+    setStatus(post.status || "draft");
+    setTags(post.tags?.join(", ") || "");
+    setSeoMeta(
+      post.seoMeta || {
+        metaTitle: "",
+        metaDescription: "",
+        keywords: [],
+        ogImage: "",
+        canonicalUrl: "",
+      },
+    );
+  }, [post?._id]);
 
   useEffect(() => {
     if (post?.content) {
@@ -985,6 +1033,19 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       alert(e?.message || "Failed to upload image");
     } finally {
       setUploadingBlockId(null);
+    }
+  };
+
+  const handleFeaturedImageUpload = async (file: File) => {
+    try {
+      setUploadingFeatured(true);
+      const res = await uploadBlogImage(file);
+      setFeaturedImage(res.url);
+    } catch (e: any) {
+      // eslint-disable-next-line no-alert
+      alert(e?.message || "Failed to upload featured image");
+    } finally {
+      setUploadingFeatured(false);
     }
   };
 
@@ -1077,14 +1138,14 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
     setBlocks(reorderedBlocks);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Do not send postMetadata block — backend content type enum doesn't include it.
     // titleAlignment is sent at top level and in seoMeta instead.
     const contentToSave = blocks.map((b, i) => ({ ...b, order: i }));
     const postData = {
       title,
       titleAlignment,
-      slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      slug: computeDerivedSlug(),
       excerpt,
       featuredImage,
       status,
@@ -1097,7 +1158,22 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       content: contentToSave,
     };
 
-    onSave(postData);
+    try {
+      setSaveBusy(true);
+      const res: any = await onSave(postData);
+      const savedSlug = res?.post?.slug ?? postData.slug;
+      const url =
+        (typeof res?.post?.permalink === "string" && res.post.permalink) ||
+        buildPublicPostUrl(String(savedSlug ?? ""));
+      openPermalinkModal(url, true);
+    } catch (e: any) {
+      // eslint-disable-next-line no-alert
+      alert(
+        typeof e === "string" ? e : e?.message || "Failed to save post",
+      );
+    } finally {
+      setSaveBusy(false);
+    }
   };
 
   const buildPostPayloadForPreview = () => {
@@ -1105,7 +1181,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
     return {
       title,
       titleAlignment,
-      slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "preview",
+      slug: computeDerivedSlug() || "preview",
       excerpt,
       featuredImage,
       status,
@@ -1128,7 +1204,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       window.open(url, "_blank", "noopener,noreferrer");
     } catch (e) {
       console.error(e);
-      window.alert("Could not save preview data. Check that storage is allowed.");
+      window.alert(
+        "Could not save preview data. Check that storage is allowed.",
+      );
     }
   };
 
@@ -1359,9 +1437,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           </div>
         );
       case "list":
-        return (
-          <ListBlockCanvas block={block} updateBlock={updateBlock} />
-        );
+        return <ListBlockCanvas block={block} updateBlock={updateBlock} />;
       case "quote":
         return (
           <div>
@@ -1918,16 +1994,12 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
         const normalizeTableData = () => {
           let h = [...headers];
           let r = rows.map((row: string[]) => [...row]);
-          const nc = Math.max(
-            h.length,
-            ...r.map((x) => x.length),
-            1,
-          );
+          const nc = Math.max(h.length, ...r.map((x: string[]) => x.length), 1);
           while (h.length < nc) {
             h.push(`Header ${h.length + 1}`);
           }
           h = h.slice(0, nc);
-          r = r.map((row) => thePad(row, nc));
+          r = r.map((row: string[]) => thePad(row, nc));
           if (r.length === 0) {
             r = [Array(nc).fill("")];
           }
@@ -1973,7 +2045,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
         const addColumn = () => {
           const { headers: h, rows: r } = normalizeTableData();
           const nh = [...h, `Header ${h.length + 1}`];
-          const nr = r.map((row) => [...row, ""]);
+          const nr = r.map((row: string[]) => [...row, ""]);
           updateBlock(block.id, { headers: nh, rows: nr });
         };
 
@@ -1983,7 +2055,7 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
             return;
           }
           const nh = h.slice(0, -1);
-          const nr = r.map((row) => row.slice(0, -1));
+          const nr = r.map((row: string[]) => row.slice(0, -1));
           updateBlock(block.id, { headers: nh, rows: nr });
         };
 
@@ -2025,7 +2097,11 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                   flexWrap: "wrap",
                 }}
               >
-                <button type="button" style={tableActionBtn} onClick={addColumn}>
+                <button
+                  type="button"
+                  style={tableActionBtn}
+                  onClick={addColumn}
+                >
                   + Add column
                 </button>
                 <button
@@ -2096,8 +2172,13 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           <ToolbarButton type="button" onClick={handlePreview}>
             <FaEye /> Preview
           </ToolbarButton>
-          <ToolbarButton primary onClick={handleSave}>
-            <FaSave /> Publish
+          <ToolbarButton
+            primary
+            type="button"
+            onClick={() => void handleSave()}
+            disabled={saveBusy}
+          >
+            <FaSave /> {saveBusy ? "Saving…" : "Publish"}
           </ToolbarButton>
           <ToolbarButton onClick={onCancel}>
             <FaTimes />
@@ -2281,6 +2362,33 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                       onChange={(e) => setSlug(e.target.value)}
                       placeholder="Auto-generated from title"
                     />
+                    <SmallHelp style={{ marginTop: 8 }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const s = computeDerivedSlug();
+                          if (!s) {
+                            // eslint-disable-next-line no-alert
+                            alert("Add a title or slug first.");
+                            return;
+                          }
+                          openPermalinkModal(buildPublicPostUrl(s), false);
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          color: "#2271b1",
+                          cursor: "pointer",
+                          fontSize: 13,
+                          fontWeight: 600,
+                          padding: 0,
+                          textDecoration: "underline",
+                          fontFamily: "inherit",
+                        }}
+                      >
+                        View permalink
+                      </button>
+                    </SmallHelp>
                   </SettingField>
                   <SettingField>
                     <SettingLabel>Excerpt</SettingLabel>
@@ -2291,12 +2399,80 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                     />
                   </SettingField>
                   <SettingField>
-                    <SettingLabel>Featured Image URL</SettingLabel>
-                    <SettingInput
-                      value={featuredImage}
-                      onChange={(e) => setFeaturedImage(e.target.value)}
-                      placeholder="https://..."
-                    />
+                    <SettingLabel>Featured image</SettingLabel>
+                    {featuredImage ? (
+                      <div style={{ marginBottom: 10 }}>
+                        <img
+                          src={featuredImage}
+                          alt=""
+                          style={{
+                            width: "100%",
+                            maxHeight: 160,
+                            objectFit: "cover",
+                            borderRadius: 4,
+                            display: "block",
+                            border: "1px solid #ddd",
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setFeaturedImage("")}
+                          style={{
+                            marginTop: 8,
+                            fontSize: 12,
+                            color: "#b32d2e",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            textDecoration: "underline",
+                            padding: 0,
+                            fontFamily: "inherit",
+                          }}
+                        >
+                          Remove image
+                        </button>
+                      </div>
+                    ) : null}
+                    <ImageDropZone
+                      isDraggingOver={uploadingFeatured}
+                      onClick={() => {
+                        document.getElementById("featured-image-file")?.click();
+                      }}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const file = e.dataTransfer.files?.[0];
+                        if (file?.type.startsWith("image/")) {
+                          void handleFeaturedImageUpload(file);
+                        }
+                      }}
+                      style={{ opacity: uploadingFeatured ? 0.7 : 1 }}
+                    >
+                      <div style={{ fontWeight: 600 }}>
+                        {featuredImage
+                          ? "Replace featured image"
+                          : "Drop featured image here"}
+                      </div>
+                      <SmallHelp>or click to upload (same as in-post images)</SmallHelp>
+                      {uploadingFeatured && (
+                        <InlineSpinner>Uploading…</InlineSpinner>
+                      )}
+                      <input
+                        id="featured-image-file"
+                        type="file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) void handleFeaturedImageUpload(file);
+                          e.target.value = "";
+                        }}
+                      />
+                    </ImageDropZone>
                   </SettingField>
                   <SettingField>
                     <SettingLabel>Status</SettingLabel>
@@ -2375,6 +2551,13 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
           </SettingsContent>
         </RightSidebar>
       </MainContent>
+      <PermalinkModal
+        open={permalinkModalOpen}
+        url={permalinkModalUrl}
+        title="Post permalink"
+        hint="Copy this link to share. Published posts open here on your site."
+        onClose={closePermalinkModal}
+      />
     </EditorWrapper>
   );
 };

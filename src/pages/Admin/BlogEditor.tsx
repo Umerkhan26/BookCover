@@ -71,17 +71,10 @@ const BlogEditor: React.FC = () => {
   };
 
   const handleSave = async (postData: any) => {
-    try {
-      if (id && id !== "new") {
-        await updateBlogPost(id, postData);
-      } else {
-        await createBlogPost(postData);
-      }
-      navigate("/admin/blog");
-    } catch (error: any) {
-      console.error("Error saving post:", error);
-      alert(error.message || "Failed to save post");
+    if (id && id !== "new") {
+      return await updateBlogPost(id, postData);
     }
+    return await createBlogPost(postData);
   };
 
   const handleCancel = () => {
@@ -108,6 +101,7 @@ const BlogEditor: React.FC = () => {
           categories={categories}
           onSave={handleSave}
           onCancel={handleCancel}
+          onAfterSaveNavigate={() => navigate("/admin/blog")}
         />
       </EditorContent>
     </EditorContainer>
