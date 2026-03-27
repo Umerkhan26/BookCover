@@ -362,6 +362,27 @@ export const fetchAllOrders = async (
   }
 };
 
+export const deleteOrderById = async (orderId: string) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(
+      `${API_BASE_URL}/deleteOrder/${encodeURIComponent(orderId)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw (
+      error.response?.data?.message ||
+      error.message ||
+      "Failed to delete order"
+    );
+  }
+};
+
 export const createBookRequest = async (bookRequestData: {
   name: string;
   title: string;

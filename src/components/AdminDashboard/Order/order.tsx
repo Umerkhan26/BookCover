@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { fetchAllOrders } from "../../../apis/apis";
+import { deleteOrderById, fetchAllOrders } from "../../../apis/apis";
 import {
   Container,
   Table,
@@ -16,6 +16,8 @@ import {
 } from "../../DashboardLoading/DashboardLoading";
 import AdminListPagination from "../AdminListPagination";
 import styled from "styled-components";
+import ConfirmModal from "../../ConfirmModal/ConfirmModal";
+import { toast, ToastContainer } from "react-toastify";
 
 const ORDERS_PAGE_SIZE = 10;
 
@@ -54,6 +56,8 @@ const Order: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<any | null>(null);
   const [selectedOtherInfo, setSelectedOtherInfo] = useState<any | null>(null);
+  const [orderToDelete, setOrderToDelete] = useState<IOrder | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     const loadOrders = async () => {
@@ -95,6 +99,34 @@ const Order: React.FC = () => {
   const closePackageModal = () => setSelectedPackage(null);
   const closeOtherInfoModal = () => setSelectedOtherInfo(null);
 
+  const handleDeleteConfirm = async () => {
+    if (!orderToDelete?._id) return;
+    const id = String(orderToDelete._id);
+    try {
+      setDeleteLoading(true);
+      await deleteOrderById(id);
+      const next = orders.filter((o) => o._id !== id);
+      setOrders(next);
+      setTotal((t) => Math.max(0, t - 1));
+      if (selectedOtherInfo?._id === id) {
+        setSelectedOtherInfo(null);
+      }
+      setOrderToDelete(null);
+      toast.success("Order deleted successfully");
+      if (next.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
+      }
+    } catch (err: any) {
+      const msg =
+        typeof err === "string"
+          ? err
+          : err?.message || "Failed to delete order";
+      toast.error(msg);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <Container>
@@ -114,7 +146,7 @@ const Order: React.FC = () => {
               <TableHeader>Package</TableHeader>
               <TableHeader>Total Price</TableHeader>
               <TableHeader>Status</TableHeader>
-              <TableHeader>Form Data</TableHeader>
+              <TableHeader>Actions</TableHeader>
             </tr>
           </thead>
           <tbody>
@@ -142,6 +174,21 @@ const Order: React.FC = () => {
           content="Admin panel for managing orders and their statuses."
         />
       </Helmet>
+      <ConfirmModal
+        open={!!orderToDelete}
+        title="Delete order"
+        message={
+          orderToDelete
+            ? `Delete order ${orderToDelete._id.slice(-8)} (${orderToDelete.package?.name || "package"})? This cannot be undone.`
+            : ""
+        }
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => {
+          if (!deleteLoading) setOrderToDelete(null);
+        }}
+      />
       <HeaderSection>
         <Title>Orders</Title>
         <OrderCount>
@@ -164,7 +211,7 @@ const Order: React.FC = () => {
               <TableHeader>Package</TableHeader>
               <TableHeader>Total Price</TableHeader>
               <TableHeader>Status</TableHeader>
-              <TableHeader>Form Data</TableHeader>
+              <TableHeader>Actions</TableHeader>
             </tr>
           </thead>
           <tbody>
@@ -200,9 +247,18 @@ const Order: React.FC = () => {
                   </StatusBadge>
                 </TableData>
                 <TableData>
-                  <ClickableLink onClick={() => handleOtherInfoClick(order)}>
-                    View Info
-                  </ClickableLink>
+                  <OrderActionCell>
+                    <ClickableLink onClick={() => handleOtherInfoClick(order)}>
+                      View Info
+                    </ClickableLink>
+                    <DeleteOrderButton
+                      type="button"
+                      disabled={deleteLoading}
+                      onClick={() => setOrderToDelete(order)}
+                    >
+                      Delete
+                    </DeleteOrderButton>
+                  </OrderActionCell>
                 </TableData>
               </TableRow>
             ))}
@@ -219,6 +275,7 @@ const Order: React.FC = () => {
           onNext={() => setPage((p) => Math.min(totalPages, p + 1))}
         />
       )}
+      <ToastContainer />
 
       {/* User Modal */}
       {selectedUser && (
@@ -469,10 +526,45 @@ const ClickableLink = styled.span`
   transition: all 0.2s ease;
   text-decoration: underline;
   text-decoration-color: transparent;
+  flex-shrink: 0;
 
   &:hover {
     color: #5ab8c2;
     text-decoration-color: #5ab8c2;
+  }
+`;
+
+const OrderActionCell = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  white-space: nowrap;
+`;
+
+const DeleteOrderButton = styled.button`
+  padding: 6px 12px;
+  background-color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  flex-shrink: 0;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #b91c1c;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
   }
 `;
 
