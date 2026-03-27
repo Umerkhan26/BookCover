@@ -183,20 +183,20 @@ const DashboardContent = () => {
 export default DashboardContent;
 
 const DashboardContainer = styled.div`
-  padding: 30px;
+  padding: 18px 20px;
   max-width: 1400px;
   margin: 0 auto;
   font-family: "Manrope", sans-serif;
 
   @media (max-width: 768px) {
-    padding: 20px 15px;
+    padding: 14px 12px;
   }
 `;
 
 const WelcomeMessage = styled.h1`
-  font-size: clamp(24px, 4vw, 32px);
+  font-size: clamp(20px, 3vw, 26px);
   color: #212121;
-  margin-bottom: 30px;
+  margin-bottom: 18px;
   font-weight: 600;
 
   span {
@@ -206,13 +206,13 @@ const WelcomeMessage = styled.h1`
 `;
 
 const WelcomeMessageSkeleton = styled.div`
-  height: 40px;
-  width: 300px;
+  height: 32px;
+  width: 260px;
   background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
-  border-radius: 8px;
-  margin-bottom: 30px;
+  border-radius: 6px;
+  margin-bottom: 18px;
 
   @keyframes shimmer {
     0% {
@@ -225,13 +225,13 @@ const WelcomeMessageSkeleton = styled.div`
 `;
 
 const SectionTitleSkeleton = styled.div`
-  height: 28px;
-  width: 200px;
+  height: 22px;
+  width: 160px;
   background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;
-  margin: 30px 0 20px 0;
+  margin: 20px 0 12px 0;
 
   @keyframes shimmer {
     0% {
@@ -245,13 +245,13 @@ const SectionTitleSkeleton = styled.div`
 
 const StatsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 15px;
+    gap: 10px;
   }
 `;
 
@@ -262,25 +262,25 @@ const StatBox = styled.div<{ variant?: "success" | "info" }>`
       : props.variant === "info"
         ? "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)"
         : "linear-gradient(135deg, #6dc7d1 0%, #5ab8c2 100%)"};
-  padding: 24px;
-  border-radius: 16px;
+  padding: 16px 18px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
   color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   }
 `;
 
 const StatIcon = styled.div`
-  font-size: 40px;
+  font-size: 28px;
   line-height: 1;
 `;
 
@@ -289,26 +289,26 @@ const StatContent = styled.div`
 `;
 
 const StatLabel = styled.div`
-  font-size: 14px;
-  opacity: 0.9;
-  margin-bottom: 8px;
+  font-size: 12px;
+  opacity: 0.92;
+  margin-bottom: 4px;
   font-weight: 500;
 `;
 
 const StatValue = styled.div`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 1;
 `;
 
 const Section = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 `;
 
 const SectionTitle = styled.h2`
-  font-size: clamp(20px, 3vw, 24px);
+  font-size: clamp(16px, 2.5vw, 19px);
   color: #212121;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   font-weight: 600;
 `;
 
@@ -317,20 +317,20 @@ const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0;
   background: white;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 `;
 
 const TableHeader = styled.th`
   background: linear-gradient(135deg, #6dc7d1 0%, #5ab8c2 100%);
   color: white;
-  padding: 16px;
+  padding: 10px 12px;
   text-align: left;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
 
   &:first-child {
     border-top-left-radius: 12px;
@@ -354,26 +354,27 @@ const TableRow = styled.tr`
 `;
 
 const TableCell = styled.td`
-  padding: 16px;
+  padding: 10px 12px;
   border-bottom: 1px solid #e5e7eb;
   color: #374151;
-  font-size: 14px;
+  font-size: 13px;
 
   &.id-cell {
     font-family: monospace;
     color: #6dc7d1;
     font-weight: 500;
+    font-size: 12px;
   }
 `;
 
 const StatusBadge = styled.span<{ status: string }>`
   display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
   background-color: ${(props) => {
     switch (props.status?.toLowerCase()) {
       case "completed":

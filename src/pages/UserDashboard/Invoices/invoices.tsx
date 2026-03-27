@@ -14,14 +14,13 @@ type Invoice = {
 // Styled components (unchanged)
 const Container = styled.div`
   font-family: "Manrope", sans-serif;
-  margin-bottom: 3rem;
+  margin-bottom: 1.75rem;
 `;
 
 const Title = styled.h1`
   color: #333;
-  margin-bottom: 20px;
-  margin-bottom: 2rem;
-  line-height: 1.2;
+  margin-bottom: 1rem;
+  line-height: 1.25;
 `;
 
 const Card = styled.div`
@@ -36,27 +35,30 @@ const Table = styled.table`
 
 const Th = styled.th`
   text-align: left;
-  padding: 12px 12px 12px 20px;
+  padding: 8px 10px 8px 14px;
   border-bottom: 1px solid #ebecf0;
-  font-size: 14.5px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: #6b778c;
 `;
 
 const Td = styled.td`
-  padding: 12px;
+  padding: 10px 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
   color: #495057;
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const StatusBadge = styled.span`
   background-color: #28a745;
   color: #fff;
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
 `;
 
 const Link = styled.a`
@@ -70,7 +72,7 @@ const MobileDate = styled.div`
   @media (max-width: 768px) {
     display: block;
     color: #6c757d;
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 
@@ -95,7 +97,7 @@ const InvoiceTable: React.FC = () => {
           content="View your invoices and track payment status here."
         />
       </Helmet>
-      <Title className="text-black font-bold text-3xl pb-8 pt-6">
+      <Title className="text-black font-bold text-xl pb-4 pt-2">
         Invoices
       </Title>
       <Card>

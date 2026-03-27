@@ -477,6 +477,10 @@ interface BlogPost {
   slug: string;
   excerpt?: string;
   featuredImage?: string;
+  featured_image?: string;
+  thumbnail?: string;
+  coverImage?: string;
+  cover_image?: string;
   content?: any[];
   author: {
     firstName: string;
@@ -488,12 +492,22 @@ interface BlogPost {
 
 // Helper function to get image URL from post
 const getPostImage = (post: BlogPost): string | null => {
-  // First, try featuredImage
-  if (post.featuredImage && post.featuredImage.trim() !== "") {
-    return post.featuredImage;
+  // Prefer dedicated featured media fields first.
+  const featuredCandidates = [
+    post.featuredImage,
+    post.featured_image,
+    post.thumbnail,
+    post.coverImage,
+    post.cover_image,
+  ];
+  const featured = featuredCandidates.find(
+    (img) => typeof img === "string" && img.trim() !== "",
+  );
+  if (featured) {
+    return featured;
   }
-  
-  // If no featuredImage, look for first image in content blocks
+
+  // If no featured image field is available, fallback to the first image block.
   if (post.content && Array.isArray(post.content)) {
     const sortedContent = [...post.content].sort((a, b) => a.order - b.order);
     const imageBlock = sortedContent.find((block) => block.type === "image");
@@ -538,7 +552,18 @@ const BlogList: React.FC = () => {
         sortBy: "createdAt",
         sortOrder: "desc",
       });
-      setPosts(response.posts || []);
+      const rawPosts = response.posts || [];
+      const normalizedPosts = rawPosts.map((post: BlogPost) => ({
+        ...post,
+        featuredImage:
+          post.featuredImage ||
+          post.featured_image ||
+          post.thumbnail ||
+          post.coverImage ||
+          post.cover_image ||
+          "",
+      }));
+      setPosts(normalizedPosts);
       setTotalPages(response.totalPages || 1);
     } catch (error) {
       console.error("Error fetching blog posts:", error);

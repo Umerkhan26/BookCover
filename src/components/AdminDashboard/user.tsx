@@ -20,6 +20,7 @@ import {
   TableSkeleton,
   ErrorMessage,
 } from "../DashboardLoading/DashboardLoading";
+import AdminListPagination from "./AdminListPagination";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import styled from "styled-components";
 
@@ -37,8 +38,14 @@ interface User {
   action: string;
 }
 
+const USERS_PAGE_SIZE = 10;
+
 const User: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSizeLabel, setPageSizeLabel] = useState(USERS_PAGE_SIZE);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editingStatusUserId, setEditingStatusUserId] = useState<string | null>(
@@ -51,18 +58,27 @@ const User: React.FC = () => {
     const loadUsers = async () => {
       try {
         setLoading(true);
-        const fetchedUsers = await fetchUsers();
-        setUsers(fetchedUsers);
+        setError(null);
+        const res = await fetchUsers({ page, limit: USERS_PAGE_SIZE });
+        setUsers(res.users as User[]);
+        setTotal(res.total);
+        setTotalPages(res.totalPages);
+        setPageSizeLabel(res.limit || USERS_PAGE_SIZE);
+        if (res.users.length === 0 && page > 1) {
+          setPage((p) => Math.max(1, p - 1));
+        }
       } catch (err: any) {
-        setError(err);
-        toast.error(err.message || "Failed to load users");
+        const msg =
+          typeof err === "string" ? err : err?.message || "Failed to load users";
+        setError(msg);
+        toast.error(msg);
       } finally {
         setLoading(false);
       }
     };
 
-    loadUsers();
-  }, []);
+    void loadUsers();
+  }, [page]);
 
   if (loading) {
     return (
@@ -212,7 +228,11 @@ const User: React.FC = () => {
       <HeaderSection>
         <div>
           <Title>All Users</Title>
-          {!error && <UserCount>({users.length} total)</UserCount>}
+          {!error && (
+            <UserCount>
+              ({total} total{totalPages > 1 ? ` · page ${page} of ${totalPages}` : ""})
+            </UserCount>
+          )}
         </div>
       </HeaderSection>
 
@@ -238,8 +258,10 @@ const User: React.FC = () => {
             </TableRow>
           ) : users.length > 0 ? (
             users.map((user, index) => (
-              <TableRow key={user.id}>
-                <TableData className="id-column">{index + 1}</TableData>
+              <TableRow key={user.userId}>
+                <TableData className="id-column">
+                  {(page - 1) * USERS_PAGE_SIZE + index + 1}
+                </TableData>
                 <TableData>
                   <UserName>{`${user.firstName} ${user.lastName}`}</UserName>
                 </TableData>
@@ -306,6 +328,17 @@ const User: React.FC = () => {
           )}
         </tbody>
       </Table>
+
+      {!error && total > 0 && (
+        <AdminListPagination
+          page={page}
+          totalPages={totalPages}
+          disabled={actionLoading}
+          pageSizeLabel={pageSizeLabel}
+          onPrev={() => setPage((p) => Math.max(1, p - 1))}
+          onNext={() => setPage((p) => Math.min(totalPages, p + 1))}
+        />
+      )}
     </Container>
   );
 };
@@ -335,11 +368,12 @@ const UserName = styled.span`
 
 const RoleBadge = styled.span<{ role: string }>`
   display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.03em;
   background-color: ${(props) =>
     props.role === "admin" ? "#dbeafe" : "#e0e7ff"};
   color: ${(props) => (props.role === "admin" ? "#1e40af" : "#4338ca")};
@@ -359,14 +393,14 @@ const ActionButtons = styled.div`
 `;
 
 const EmptyMessage = styled.div`
-  color: #6b7280;
-  font-size: 16px;
+  color: #64748b;
+  font-size: 13px;
   font-weight: 500;
 `;
 
 const ErrorMessageText = styled.div`
   color: #dc2626;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
 `;
 

@@ -14,7 +14,10 @@ import {
   ErrorMessage,
   EmptyState,
 } from "../../DashboardLoading/DashboardLoading";
+import AdminListPagination from "../AdminListPagination";
 import styled from "styled-components";
+
+const ORDERS_PAGE_SIZE = 10;
 
 interface IOrder {
   _id: string;
@@ -42,6 +45,10 @@ interface IOrder {
 
 const Order: React.FC = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSizeLabel, setPageSizeLabel] = useState(ORDERS_PAGE_SIZE);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
@@ -51,8 +58,16 @@ const Order: React.FC = () => {
   useEffect(() => {
     const loadOrders = async () => {
       try {
-        const fetchedOrders = await fetchAllOrders();
-        setOrders(fetchedOrders || []);
+        setLoading(true);
+        setError(null);
+        const res = await fetchAllOrders({ page, limit: ORDERS_PAGE_SIZE });
+        setOrders((res.orders as IOrder[]) || []);
+        setTotal(res.total);
+        setTotalPages(res.totalPages);
+        setPageSizeLabel(res.limit || ORDERS_PAGE_SIZE);
+        if (res.orders.length === 0 && page > 1) {
+          setPage((p) => Math.max(1, p - 1));
+        }
       } catch (err) {
         setError("Failed to load orders");
       } finally {
@@ -60,8 +75,8 @@ const Order: React.FC = () => {
       }
     };
 
-    loadOrders();
-  }, []);
+    void loadOrders();
+  }, [page]);
 
   const handleUserClick = (user: any) => {
     setSelectedUser(user);
@@ -129,7 +144,10 @@ const Order: React.FC = () => {
       </Helmet>
       <HeaderSection>
         <Title>Orders</Title>
-        <OrderCount>({orders.length} total)</OrderCount>
+        <OrderCount>
+          ({total} total
+          {totalPages > 1 ? ` · page ${page} of ${totalPages}` : ""})
+        </OrderCount>
       </HeaderSection>
 
       {orders.length === 0 ? (
@@ -153,7 +171,9 @@ const Order: React.FC = () => {
             {orders.map((order) => (
               <TableRow key={order._id}>
                 <TableData>
-                  <OrderId>{order._id.slice(-8)}</OrderId>
+                  <OrderIdRow>
+                    <OrderIdSub>{order._id.slice(-8)}</OrderIdSub>
+                  </OrderIdRow>
                 </TableData>
                 <TableData>
                   <ClickableLink onClick={() => handleUserClick(order.user)}>
@@ -188,6 +208,16 @@ const Order: React.FC = () => {
             ))}
           </tbody>
         </Table>
+      )}
+
+      {!error && total > 0 && (
+        <AdminListPagination
+          page={page}
+          totalPages={totalPages}
+          pageSizeLabel={pageSizeLabel}
+          onPrev={() => setPage((p) => Math.max(1, p - 1))}
+          onNext={() => setPage((p) => Math.min(totalPages, p + 1))}
+        />
       )}
 
       {/* User Modal */}
@@ -377,13 +407,13 @@ const Order: React.FC = () => {
 export default Order;
 
 const TitleSkeleton = styled.div`
-  height: 32px;
-  width: 150px;
+  height: 22px;
+  width: 120px;
   background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 
   @keyframes shimmer {
     0% {
@@ -398,28 +428,38 @@ const TitleSkeleton = styled.div`
 const HeaderSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 12px;
 `;
 
 const Title = styled.h1`
-  font-size: clamp(24px, 4vw, 32px);
-  color: #212121;
+  font-size: 1.125rem;
+  color: #0f172a;
   margin: 0;
   font-weight: 700;
+  letter-spacing: -0.02em;
 `;
 
 const OrderCount = styled.span`
-  color: #6dc7d1;
-  font-size: 18px;
+  color: #64748b;
+  font-size: 12px;
   font-weight: 600;
 `;
 
-const OrderId = styled.span`
+const OrderIdRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 13px;
+`;
+
+const OrderIdSub = styled.span`
   font-family: monospace;
   color: #6dc7d1;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 11px;
 `;
 
 const ClickableLink = styled.span`
@@ -439,14 +479,14 @@ const ClickableLink = styled.span`
 const Price = styled.span`
   font-weight: 700;
   color: #10b981;
-  font-size: 16px;
+  font-size: 13px;
 `;
 
 const StatusBadge = styled.span<{ status: string }>`
   display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;

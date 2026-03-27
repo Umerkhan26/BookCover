@@ -13,6 +13,7 @@ const FormContainer = styled.div`
   margin: 0 auto;
   padding: 20px;
   border-radius: 8px;
+  position: relative;
 `;
 
 const FormTitle = styled.h1`
@@ -78,11 +79,59 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 4px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #6dc7d1;
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+`;
+
+const LoadingSpinner = styled.span`
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(109, 199, 209, 0.25);
+  border-top-color: #6dc7d1;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const FormLoadingOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(1px);
+  border-radius: 8px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding-top: 70px;
+`;
+
+const LoadingText = styled.p`
+  margin: 0;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const CheckboxContainer = styled.div`
@@ -107,6 +156,7 @@ const CheckboxContainer = styled.div`
 `;
 
 const BookCoverForm: React.FC = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     title: "",
@@ -157,6 +207,7 @@ const BookCoverForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
 
     const bookRequestData = {
       name: formData.name,
@@ -173,6 +224,7 @@ const BookCoverForm: React.FC = () => {
     };
 
     try {
+      setIsSubmitting(true);
       const response = await createBookRequest(bookRequestData);
       console.log("submitted successfully", response);
 
@@ -220,6 +272,8 @@ const BookCoverForm: React.FC = () => {
       toast.error(
         "Failed to submit the book cover request. Please try again later.",
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -232,6 +286,12 @@ const BookCoverForm: React.FC = () => {
       <HowItWorksSection />
 
       <FormContainer>
+        {isSubmitting && (
+          <FormLoadingOverlay>
+            <LoadingSpinner />
+            <LoadingText>Submitting your request...</LoadingText>
+          </FormLoadingOverlay>
+        )}
         <FormTitle>Get a Book Cover Design Idea</FormTitle>
         <Disclaimer>
           * This is not an order form. If you want to order a cover design,
@@ -247,6 +307,7 @@ const BookCoverForm: React.FC = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="Your name"
           />
           <StyledInput
@@ -254,12 +315,14 @@ const BookCoverForm: React.FC = () => {
             name="title"
             value={formData.title}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="Title of your book"
           />
           <StyledSelect
             name="genre"
             value={formData.genre}
             onChange={handleChange}
+            disabled={isSubmitting}
           >
             <option value="">Genre: optional</option>
             <option value="fiction">Fiction</option>
@@ -271,6 +334,7 @@ const BookCoverForm: React.FC = () => {
             name="isSeries"
             value={formData.isSeries ? "yes" : "no"}
             onChange={handleChange}
+            disabled={isSubmitting}
           >
             <option value="no">
               Will the book continue as a series? optional
@@ -282,11 +346,13 @@ const BookCoverForm: React.FC = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="Tell us briefly about your book's plot or description (optional)"
           />
           <StyledSelect
             name="coverPreference"
             value={formData.coverPreference}
+            disabled={isSubmitting}
             onChange={(e) => {
               const { options } = e.target as HTMLSelectElement;
               const selectedOptions = Array.from(options)
@@ -309,6 +375,7 @@ const BookCoverForm: React.FC = () => {
             name="mainCharacters"
             value={formData.mainCharacters}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="Please describe the main character(s) or key objects/themes (optional)"
           />
           <StyledInput
@@ -316,6 +383,7 @@ const BookCoverForm: React.FC = () => {
             name="setting"
             value={formData.setting}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="What is the setting of your book? (optional)"
           />
           <StyledInput
@@ -324,6 +392,7 @@ const BookCoverForm: React.FC = () => {
             accept="image/*"
             multiple
             onChange={handleFileChange}
+            disabled={isSubmitting}
           />
           <StyledInput
             type="email"
@@ -332,6 +401,7 @@ const BookCoverForm: React.FC = () => {
             onChange={handleChange}
             placeholder="Email"
             required
+            disabled={isSubmitting}
           />
           <CheckboxContainer>
             <input
@@ -340,6 +410,7 @@ const BookCoverForm: React.FC = () => {
               checked={formData.privacyPolicy}
               onChange={handleChange}
               required
+              disabled={isSubmitting}
             />
             <label htmlFor="privacy-policy">
               Agree with personal data processing. For more info, please consult{" "}
@@ -357,7 +428,9 @@ const BookCoverForm: React.FC = () => {
             className="g-recaptcha"
             data-sitekey="6LdePgsaAAAAAKe7WUNTkvXyiCH7kX69eG2kQTSj"
           ></div>
-          <StyledButton type="submit">Submit</StyledButton>
+          <StyledButton type="submit" disabled={isSubmitting}>
+            Submit
+          </StyledButton>
         </StyledForm>
       </FormContainer>
       <ToastContainer />

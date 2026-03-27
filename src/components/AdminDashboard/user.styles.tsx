@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 // Container with responsive padding and margin
 export const Container = styled.div`
-  padding: 20px;
+  padding: 12px 14px;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
 
   @media (max-width: 768px) {
     padding: 10px;
@@ -17,30 +17,34 @@ export const HeaderSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 `;
 
 export const Title = styled.h2`
   margin: 0;
-  color: black;
+  color: #0f172a;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 
   @media (max-width: 768px) {
-    font-size: 1.25rem; /* Slightly smaller title on mobile */
+    font-size: 1rem;
   }
 `;
 
 export const UserCount = styled.span`
-  color: #777;
-  font-size: 14px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
 
   @media (max-width: 768px) {
-    font-size: 12px; /* Adjust font size for smaller screens */
+    font-size: 11px;
   }
 `;
 
@@ -63,14 +67,18 @@ export const Table = styled.table`
 `;
 
 export const TableHeader = styled.th`
-  background-color: #f9f8fa;
-  color: black;
-  padding: 10px;
-  text-align: center; /* Center-align header content */
+  background-color: #f8fafc;
+  color: #0f172a;
+  padding: 8px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
 
   @media (max-width: 768px) {
-    padding: 8px; /* Reduce padding on mobile */
-    font-size: 12px; /* Adjust font size on mobile */
+    padding: 6px;
+    font-size: 10px;
     display: none; /* Hide all column headers on mobile */
   }
 
@@ -99,14 +107,14 @@ export const TableRow = styled.tr`
 `;
 
 export const TableData = styled.td`
-  padding: 10px;
-  color: black;
-  font-size: 15px;
-  text-align: center; /* Center-align table data */
+  padding: 8px 6px;
+  color: #334155;
+  font-size: 13px;
+  text-align: center;
 
   @media (max-width: 768px) {
-    padding: 8px; /* Adjust padding for mobile */
-    font-size: 14px; /* Adjust font size for mobile */
+    padding: 6px;
+    font-size: 12px;
     display: block; /* Show as block for mobile view */
     width: 100%;
     margin-left: 0; /* Remove margin-left to prevent shifting */
@@ -169,27 +177,26 @@ interface ButtonProps {
 export const Button = styled.button<ButtonProps>`
   background-color: ${(props) => props.bgColor || "gray"};
   color: white;
-  padding: 8px 16px;
+  padding: 5px 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 14px;
-  transition: all 0.2s ease;
+  font-size: 12px;
+  transition: all 0.15s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-height: 36px;
+  gap: 4px;
+  min-height: 30px;
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    opacity: 0.92;
+    filter: brightness(0.97);
   }
 
   &:active:not(:disabled) {
-    transform: translateY(0);
+    transform: scale(0.98);
   }
 
   &:disabled {
@@ -198,9 +205,9 @@ export const Button = styled.button<ButtonProps>`
   }
 
   @media (max-width: 768px) {
-    padding: 6px 12px;
-    font-size: 12px;
-    min-height: 32px;
+    padding: 4px 8px;
+    font-size: 11px;
+    min-height: 28px;
   }
 `;
 

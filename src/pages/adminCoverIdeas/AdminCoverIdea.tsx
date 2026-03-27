@@ -17,25 +17,47 @@ import {
   InfoButton,
   SeriesBadge,
 } from "./AdminCoverIdea.styles";
-import { fetchAllBookRequests } from "../../apis/apis";
+import { deleteBookRequestById, fetchAllBookRequests } from "../../apis/apis";
 import { Helmet } from "react-helmet-async";
 import { TableSkeleton } from "../../components/DashboardLoading/DashboardLoading";
+import AdminListPagination from "../../components/AdminDashboard/AdminListPagination";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
+
+const COVER_IDEAS_PAGE_SIZE = 10;
 
 const AdminCoverIdea: React.FC = () => {
   const [bookRequests, setBookRequests] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSizeLabel, setPageSizeLabel] = useState(COVER_IDEAS_PAGE_SIZE);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedBookRequest, setSelectedBookRequest] = useState<any | null>(
     null,
   );
+  const [requestToDelete, setRequestToDelete] = useState<any | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     const loadBookRequests = async () => {
       try {
         setLoading(true);
-        const data = await fetchAllBookRequests();
-        setBookRequests(data || []);
+        setError(null);
+        const res = await fetchAllBookRequests({
+          page,
+          limit: COVER_IDEAS_PAGE_SIZE,
+        });
+        setBookRequests(res.bookRequests || []);
+        setTotal(res.total);
+        setTotalPages(res.totalPages);
+        setPageSizeLabel(res.limit || COVER_IDEAS_PAGE_SIZE);
+        if (res.bookRequests.length === 0 && page > 1) {
+          setPage((p) => Math.max(1, p - 1));
+        }
       } catch (err: any) {
         setError(err.message || "Failed to load book requests");
       } finally {
@@ -43,8 +65,8 @@ const AdminCoverIdea: React.FC = () => {
       }
     };
 
-    loadBookRequests();
-  }, []);
+    void loadBookRequests();
+  }, [page]);
 
   if (loading) {
     return (
@@ -74,7 +96,7 @@ const AdminCoverIdea: React.FC = () => {
                 <TableHeader className="header-cover">
                   Cover Preference
                 </TableHeader>
-                <TableHeader className="header-moreinfo">More Info</TableHeader>
+                <TableHeader className="header-moreinfo">Actions</TableHeader>
               </tr>
             </thead>
             <tbody>
@@ -96,6 +118,32 @@ const AdminCoverIdea: React.FC = () => {
     setSelectedBookRequest(null); // Clear the selected book request
   };
 
+  const handleDeleteConfirm = async () => {
+    if (!requestToDelete?._id) return;
+    const id = String(requestToDelete._id);
+    try {
+      setDeleteLoading(true);
+      await deleteBookRequestById(id);
+      const next = bookRequests.filter((r) => r._id !== id);
+      setBookRequests(next);
+      setTotal((t) => Math.max(0, t - 1));
+      if (selectedBookRequest?._id === id) {
+        setSelectedBookRequest(null);
+      }
+      setRequestToDelete(null);
+      toast.success("Cover idea deleted successfully");
+      if (next.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
+      }
+    } catch (err: any) {
+      const msg =
+        typeof err === "string" ? err : err?.message || "Failed to delete";
+      toast.error(msg);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <Container>
       <Helmet>
@@ -105,9 +153,29 @@ const AdminCoverIdea: React.FC = () => {
           content="Manage and view cover ideas submitted by users."
         />
       </Helmet>
+      <ConfirmModal
+        open={!!requestToDelete}
+        title="Delete cover idea"
+        message={
+          requestToDelete
+            ? `Delete the request from ${requestToDelete.name || "this user"} (${requestToDelete.title || "untitled"})? This cannot be undone.`
+            : ""
+        }
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => {
+          if (!deleteLoading) setRequestToDelete(null);
+        }}
+      />
       <HeaderSection>
         <Title>Book Cover Ideas</Title>
-        {!error && <RequestCount>({bookRequests.length} total)</RequestCount>}
+        {!error && (
+          <RequestCount>
+            ({total} total
+            {totalPages > 1 ? ` · page ${page} of ${totalPages}` : ""})
+          </RequestCount>
+        )}
       </HeaderSection>
 
       <TableContainer>
@@ -123,7 +191,7 @@ const AdminCoverIdea: React.FC = () => {
               <TableHeader className="header-cover">
                 Cover Preference
               </TableHeader>
-              <TableHeader className="header-moreinfo">More Info</TableHeader>
+              <TableHeader className="header-moreinfo">Actions</TableHeader>
             </tr>
           </thead>
           <tbody>
@@ -140,7 +208,9 @@ const AdminCoverIdea: React.FC = () => {
               bookRequests.map((bookRequest) => (
                 <TableRow key={bookRequest._id}>
                   <TableData className="book-id">
-                    <RequestId>{bookRequest._id.slice(-8)}</RequestId>
+                    <RequestIdRow>
+                      <RequestIdSub>{bookRequest._id.slice(-8)}</RequestIdSub>
+                    </RequestIdRow>
                   </TableData>
                   <TableData className="user-name">
                     <UserName>{bookRequest.name || "N/A"}</UserName>
@@ -163,9 +233,21 @@ const AdminCoverIdea: React.FC = () => {
                     {bookRequest.coverPreference?.join(", ") || "N/A"}
                   </TableData>
                   <TableData className="book-button">
-                    <InfoButton onClick={() => handleInfoClick(bookRequest)}>
-                      View Info
-                    </InfoButton>
+                    <ActionCell>
+                      <InfoButton
+                        type="button"
+                        onClick={() => handleInfoClick(bookRequest)}
+                      >
+                        View Info
+                      </InfoButton>
+                      <DeleteButton
+                        type="button"
+                        disabled={deleteLoading}
+                        onClick={() => setRequestToDelete(bookRequest)}
+                      >
+                        Delete
+                      </DeleteButton>
+                    </ActionCell>
                   </TableData>
                 </TableRow>
               ))
@@ -182,6 +264,16 @@ const AdminCoverIdea: React.FC = () => {
           </tbody>
         </Table>
       </TableContainer>
+
+      {!error && total > 0 && (
+        <AdminListPagination
+          page={page}
+          totalPages={totalPages}
+          pageSizeLabel={pageSizeLabel}
+          onPrev={() => setPage((p) => Math.max(1, p - 1))}
+          onNext={() => setPage((p) => Math.min(totalPages, p + 1))}
+        />
+      )}
 
       {/* Enhanced Modal */}
       {selectedBookRequest && (
@@ -263,10 +355,20 @@ const AdminCoverIdea: React.FC = () => {
                     </CoverImages>
                   </InfoSection>
                 )}
+              <ModalActions>
+                <DeleteButton
+                  type="button"
+                  disabled={deleteLoading}
+                  onClick={() => setRequestToDelete(selectedBookRequest)}
+                >
+                  Delete
+                </DeleteButton>
+              </ModalActions>
             </ModalBody>
           </ModalContent>
         </ModalOverlay>
       )}
+      <ToastContainer />
     </Container>
   );
 };
@@ -274,13 +376,13 @@ const AdminCoverIdea: React.FC = () => {
 export default AdminCoverIdea;
 
 const TitleSkeleton = styled.div`
-  height: 32px;
-  width: 250px;
+  height: 26px;
+  width: 200px;
   background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
   border-radius: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 
   @keyframes shimmer {
     0% {
@@ -292,11 +394,20 @@ const TitleSkeleton = styled.div`
   }
 `;
 
-const RequestId = styled.span`
+const RequestIdRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 13px;
+`;
+
+const RequestIdSub = styled.span`
   font-family: monospace;
   color: #6dc7d1;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 11px;
 `;
 
 const UserName = styled.span`
@@ -391,4 +502,48 @@ const ErrorMessageText = styled.div`
   color: #dc2626;
   font-size: 16px;
   font-weight: 500;
+`;
+
+const ActionCell = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+
+  & > button {
+    flex-shrink: 0;
+  }
+`;
+
+const DeleteButton = styled.button`
+  padding: 8px 16px;
+  background-color: #dc2626;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #b91c1c;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+`;
+
+const ModalActions = styled.div`
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
 `;

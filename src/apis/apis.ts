@@ -92,10 +92,101 @@ export const getPackagesByPageAPI = async (page: string) => {
   }
 };
 
-export const fetchUsers = async () => {
+/**
+ * Server-paged responses include numeric `total`. Legacy responses omit it and
+ * return the full list; we then slice client-side to `limit` so the UI stays at 10 (etc.) per page.
+ */
+function normalizeListPagination(
+  fullList: unknown[],
+  rawBody: Record<string, unknown>,
+  params: { page?: number; limit?: number } | undefined,
+  defaultLimit = 10,
+): {
+  pageItems: unknown[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+} {
+  const limitNum = Number(rawBody.limit);
+  const pageNum = Number(rawBody.page);
+  const limit =
+    Number.isFinite(limitNum) && limitNum > 0
+      ? limitNum
+      : params?.limit ?? defaultLimit;
+  const page =
+    Number.isFinite(pageNum) && pageNum >= 1 ? pageNum : params?.page ?? 1;
+
+  const totalRaw = rawBody.total;
+  const serverTotal =
+    totalRaw === undefined || totalRaw === null || totalRaw === ""
+      ? NaN
+      : Number(totalRaw);
+  const hasServerTotal = Number.isFinite(serverTotal) && serverTotal >= 0;
+
+  if (hasServerTotal) {
+    const total = serverTotal;
+    const tpRaw = rawBody.totalPages;
+    const totalPages =
+      tpRaw !== undefined && tpRaw !== null && tpRaw !== ""
+        ? Math.max(1, Number(tpRaw))
+        : Math.max(1, Math.ceil(total / limit));
+    const pageClamped = Math.min(page, Math.max(1, totalPages));
+    return {
+      pageItems: fullList,
+      total,
+      page: pageClamped,
+      limit,
+      totalPages,
+    };
+  }
+
+  const total = fullList.length;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+  const pageClamped = Math.min(page, totalPages);
+  const start = (pageClamped - 1) * limit;
+  return {
+    pageItems: fullList.slice(start, start + limit),
+    total,
+    page: pageClamped,
+    limit,
+    totalPages,
+  };
+}
+
+export interface FetchUsersParams {
+  page?: number;
+  limit?: number;
+}
+
+export interface FetchUsersResponse {
+  users: unknown[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export const fetchUsers = async (
+  params?: FetchUsersParams,
+): Promise<FetchUsersResponse> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/getAllUsers`);
-    return response.data.users;
+    const search = new URLSearchParams();
+    if (params?.page != null) search.set("page", String(params.page));
+    if (params?.limit != null) search.set("limit", String(params.limit));
+    const qs = search.toString();
+    const url = `${API_BASE_URL}/getAllUsers${qs ? `?${qs}` : ""}`;
+    const response = await axios.get(url);
+    const d = response.data as Record<string, unknown>;
+    const users = Array.isArray(d.users) ? d.users : [];
+    const n = normalizeListPagination(users, d, params);
+    return {
+      users: n.pageItems,
+      total: n.total,
+      page: n.page,
+      limit: n.limit,
+      totalPages: n.totalPages,
+    };
   } catch (error: any) {
     throw error.response?.data?.message || "Failed to fetch users";
   }
@@ -231,10 +322,40 @@ export const fetchOrdersByUserId = async (): Promise<any[]> => {
   }
 };
 
-export const fetchAllOrders = async (): Promise<any> => {
+export interface FetchAllOrdersParams {
+  page?: number;
+  limit?: number;
+}
+
+export interface FetchAllOrdersResponse {
+  orders: unknown[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export const fetchAllOrders = async (
+  params?: FetchAllOrdersParams,
+): Promise<FetchAllOrdersResponse> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/getAllorders`);
-    return response.data.orders;
+    const search = new URLSearchParams();
+    if (params?.page != null) search.set("page", String(params.page));
+    if (params?.limit != null) search.set("limit", String(params.limit));
+    const qs = search.toString();
+    const response = await axios.get(
+      `${API_BASE_URL}/getAllorders${qs ? `?${qs}` : ""}`,
+    );
+    const d = response.data as Record<string, unknown>;
+    const orders = Array.isArray(d.orders) ? d.orders : [];
+    const n = normalizeListPagination(orders, d, params);
+    return {
+      orders: n.pageItems,
+      total: n.total,
+      page: n.page,
+      limit: n.limit,
+      totalPages: n.totalPages,
+    };
   } catch (error) {
     console.error("Error fetching all orders:", error);
     throw new Error("Failed to fetch orders");
@@ -291,14 +412,84 @@ export const createBookRequest = async (bookRequestData: {
   }
 };
 
-export const fetchAllBookRequests = async (): Promise<any> => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/getCoverIdeas`);
+export interface FetchCoverIdeasParams {
+  page?: number;
+  limit?: number;
+}
 
-    return response.data;
+export interface FetchCoverIdeasResponse {
+  bookRequests: unknown[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export const fetchAllBookRequests = async (
+  params?: FetchCoverIdeasParams,
+): Promise<FetchCoverIdeasResponse> => {
+  try {
+    const search = new URLSearchParams();
+    if (params?.page != null) search.set("page", String(params.page));
+    if (params?.limit != null) search.set("limit", String(params.limit));
+    const qs = search.toString();
+    const response = await axios.get(
+      `${API_BASE_URL}/getCoverIdeas${qs ? `?${qs}` : ""}`,
+    );
+    const d = response.data;
+
+    if (Array.isArray(d)) {
+      const n = normalizeListPagination(
+        d,
+        { page: params?.page, limit: params?.limit },
+        params,
+      );
+      return {
+        bookRequests: n.pageItems,
+        total: n.total,
+        page: n.page,
+        limit: n.limit,
+        totalPages: n.totalPages,
+      };
+    }
+
+    const body = d as Record<string, unknown>;
+    const bookRequests = Array.isArray(body.bookRequests)
+      ? body.bookRequests
+      : [];
+    const n = normalizeListPagination(bookRequests, body, params);
+
+    return {
+      bookRequests: n.pageItems,
+      total: n.total,
+      page: n.page,
+      limit: n.limit,
+      totalPages: n.totalPages,
+    };
   } catch (error) {
     console.error("Error fetching all book requests:", error);
     throw new Error("Failed to fetch book requests");
+  }
+};
+
+export const deleteBookRequestById = async (id: string) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(
+      `${API_BASE_URL}/deleteCoverIdeasById/${encodeURIComponent(id)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw (
+      error.response?.data?.message ||
+      error.message ||
+      "Failed to delete book request"
+    );
   }
 };
 

@@ -3,36 +3,37 @@ import styled from "styled-components";
 // Container and other styles remain the same
 export const Container = styled.div`
   width: 100%;
-  padding: 30px;
+  padding: 12px 14px;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
   font-family: "Manrope", sans-serif;
   max-width: 1400px;
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    padding: 20px 15px;
+    padding: 10px 12px;
   }
 `;
 
 export const HeaderSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 12px;
 `;
 
 export const Title = styled.h1`
-  font-size: clamp(24px, 4vw, 32px);
-  color: #212121;
+  font-size: 1.125rem;
+  color: #0f172a;
   margin: 0;
   font-weight: 700;
+  letter-spacing: -0.02em;
 `;
 
 export const RequestCount = styled.span`
-  color: #6dc7d1;
-  font-size: 18px;
+  color: #64748b;
+  font-size: 12px;
   font-weight: 600;
 `;
 
@@ -55,14 +56,14 @@ export const Table = styled.table`
 `;
 
 export const TableHeader = styled.th`
-  background-color: #f9f8fa;
+  background-color: #f8fafc;
   text-align: left;
-  padding: 10px 16px;
-  font-size: 14px;
-  color: #212121;
-  font-weight: 600;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #0f172a;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
 
   &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
     display: table-cell;
@@ -94,11 +95,12 @@ export const TableHeader = styled.th`
 `;
 
 export const TableData = styled.td`
-  padding: 8px 16px;
+  padding: 6px 10px;
   text-align: left;
-  font-size: 14px;
-  color: #374151;
+  font-size: 13px;
+  color: #334155;
   border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
 
   &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover {
     display: table-cell;
@@ -106,6 +108,11 @@ export const TableData = styled.td`
 
   &.book-username, &.book-title, &.book-moreinfo {
     display: table-cell;
+  }
+
+  &.book-button {
+    white-space: nowrap;
+    width: 1%;
   }
 
   /* For 1024px screens and below, hide certain columns */

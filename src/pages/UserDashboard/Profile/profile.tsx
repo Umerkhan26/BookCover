@@ -77,8 +77,8 @@ const ProfilePage = () => {
       <ProfileContainer>
         <h1
           style={{
-            margin: "0px 0px 25px",
-            fontSize: "20px",
+            margin: "0px 0px 16px",
+            fontSize: "18px",
             fontWeight: "bold",
           }}
         >
@@ -141,9 +141,9 @@ const ProfilePage = () => {
           <FormSection>
             <h2
               style={{
-                fontSize: "16px",
+                fontSize: "15px",
                 fontWeight: "bold",
-                marginBottom: "16px",
+                marginBottom: "12px",
               }}
             >
               Billing Address
@@ -230,7 +230,15 @@ const ProfilePage = () => {
           </FormSection>
 
           <FormSection>
-            <h2>Contact Information</h2>
+            <h2
+              style={{
+                fontSize: "15px",
+                fontWeight: "bold",
+                marginBottom: "12px",
+              }}
+            >
+              Contact Information
+            </h2>
             <Row>
               <FormGroup>
                 <label>Phone</label>
@@ -281,7 +289,7 @@ export default ProfilePage;
 
 // Styled Components
 const ProfileContainer = styled.div`
-  padding: 20px;
+  padding: 14px 16px;
   color: black;
   margin: 0 auto;
   border-radius: 8px;
@@ -290,12 +298,12 @@ const ProfileContainer = styled.div`
 const ProfileForm = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 3rem;
-  gap: 20px;
+  padding: 1.25rem 1.5rem;
+  gap: 14px;
 `;
 
 const FormSection = styled.div`
-  padding: 20px;
+  padding: 14px 16px;
   border-radius: 8px;
 `;
 
@@ -306,46 +314,47 @@ const PasswordContainer = styled.div`
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   flex: 1;
   label {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     display: block;
     color: #00254d;
+    font-size: 13px;
   }
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 8px;
+  padding: 7px 9px;
   border: 1px solid #c9ced6;
   border-radius: 4px;
   color: #00254d;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const Select = styled.select`
   width: 100%;
-  padding: 10px;
+  padding: 8px 9px;
   border: 1px solid #c9ced6;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const Row = styled.div`
   display: flex;
-  gap: 20px;
-  margin-bottom: 15px;
+  gap: 14px;
+  margin-bottom: 12px;
 `;
 
 const Enable2FAButton = styled.button`
   color: #42526e;
   background: #f3f3f7;
   border: 1px solid #f3f3f7;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   white-space: nowrap;
 `;
 
@@ -353,11 +362,11 @@ const SaveChangesButton = styled.button`
   background: #28a745;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 18px;
   border-radius: 4px;
   cursor: pointer;
   align-self: flex-end;
-  font-size: 16px;
+  font-size: 14px;
 
   &:hover {
     background: #218838;
@@ -373,18 +382,18 @@ const UploadButton = styled.button`
   color: #42526e;
   background: #f3f3f7;
   border: 1px solid #f3f3f7;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const DeleteButton = styled.button`
   color: #42526e;
   background: #f3f3f7;
   border: 1px solid #f3f3f7;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
 `;

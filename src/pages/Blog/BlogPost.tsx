@@ -10,18 +10,18 @@ import blogCover from "../../assets/blogs/blogCover.webp";
 const BlogBanner = styled.section`
   position: relative;
   width: 100%;
-  max-height: 480px;
+  height: 320px;
   overflow: hidden;
   margin-top: 85px;
 
   @media (max-width: 768px) {
     margin-top: 75px;
-    max-height: 300px;
+    height: 240px;
   }
 
   @media (max-width: 480px) {
     margin-top: 70px;
-    max-height: 200px;
+    height: 180px;
   }
 `;
 
@@ -34,6 +34,7 @@ const BannerImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
   }
 
@@ -172,7 +173,8 @@ const ContentWrapper = styled.div`
 
 const PostHeader = styled.div`
   margin-bottom: ${SECTION_GAP};
-  padding: 0 20px;
+  /* Only ContentWrapper horizontal padding — avoids title sitting inset vs paragraphs/tables */
+  padding: 0;
 `;
 
 const PostTitle = styled.h1<{ alignment?: string }>`
@@ -218,48 +220,6 @@ const PostFooterDate = styled.div`
   &::before {
     content: "📅";
     font-size: 14px;
-  }
-`;
-
-const FeaturedImageWrapper = styled.div`
-  width: 100%;
-  position: relative;
-  margin-bottom: ${SECTION_GAP};
-`;
-
-const FeaturedImage = styled.div<{ imageUrl?: string }>`
-  width: 100%;
-  height: 500px;
-  background: ${(props) =>
-    props.imageUrl
-      ? `url(${props.imageUrl}) center/cover`
-      : `linear-gradient(135deg, ${theme.colors.secondary} 0%, ${theme.colors.primary} 100%)`};
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.1) 100%
-    );
-  }
-
-  @media (max-width: 768px) {
-    height: 350px;
-  }
-
-  @media (max-width: 480px) {
-    height: 250px;
   }
 `;
 
@@ -1022,7 +982,7 @@ const BlogPost: React.FC = () => {
         <BannerImage>
           <img
             src={blogCover}
-            alt="Blog Cover"
+            alt={post.title || "Blog Cover"}
             width={1263}
             height={651}
             loading="eager"
@@ -1036,13 +996,6 @@ const BlogPost: React.FC = () => {
       </BlogBanner>
 
       <PostContainer ref={containerRef}>
-        {/* Featured Image Always First */}
-        {post.featuredImage && (
-          <FeaturedImageWrapper>
-            <FeaturedImage imageUrl={post.featuredImage} />
-          </FeaturedImageWrapper>
-        )}
-
         <ContentWrapper>
           {/* Post Header - Title Only */}
           <PostHeader>

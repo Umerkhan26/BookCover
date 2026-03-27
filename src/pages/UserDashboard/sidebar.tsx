@@ -46,15 +46,15 @@ const SidebarContainer = styled.aside<CollapsibleProps>`
 
 const MainContent = styled.div<CollapsibleProps>`
   flex: 1;
-  padding: 20px;
+  padding: 14px 16px;
   margin-left: ${(props) =>
     props.collapsed ? "0" : "235px"}; /* Adjust margin based on sidebar width */
   transition: margin-left 0.3s ease;
-  padding-left: ${(props) => (props.collapsed ? "10px" : "20px")};
+  padding-left: ${(props) => (props.collapsed ? "10px" : "16px")};
 
   @media (max-width: 768px) {
     margin-left: 0; /* Take full width when sidebar is collapsed */
-    padding-left: 10px;
+    padding: 12px 10px;
     width: 100%; /* Ensure content takes full width */
   }
 `;

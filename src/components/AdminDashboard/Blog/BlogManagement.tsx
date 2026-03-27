@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
@@ -8,10 +8,13 @@ import {
   publishBlogPost,
 } from "../../../apis/apis";
 import { TableSkeleton } from "../../DashboardLoading/DashboardLoading";
+import AdminListPagination from "../AdminListPagination";
 import ConfirmModal from "../../ConfirmModal/ConfirmModal";
 
+const BLOG_ADMIN_PAGE_SIZE = 10;
+
 const Container = styled.div`
-  padding: 20px;
+  padding: 12px 14px;
   font-family: "Manrope", sans-serif;
 `;
 
@@ -19,22 +22,31 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 12px;
 `;
 
 const Title = styled.h1`
-  font-size: 32px;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: #000;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+`;
+
+const MetaLine = styled.div`
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
 `;
 
 const Button = styled.button<{ variant?: "primary" | "secondary" | "danger" }>`
-  padding: 12px 24px;
+  padding: 8px 14px;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -81,23 +93,24 @@ const TableRow = styled.tr`
 `;
 
 const TableHeaderCell = styled.th`
-  padding: 16px;
+  padding: 8px 10px;
   text-align: left;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 11px;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
 `;
 
 const TableCell = styled.td`
-  padding: 16px;
-  font-size: 14px;
-  color: #333;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: #334155;
 `;
 
 const StatusBadge = styled.span<{ status: string }>`
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   background: ${(props) => {
@@ -114,10 +127,10 @@ const ActionButtons = styled.div`
 `;
 
 const ActionButton = styled.button<{ variant?: "edit" | "delete" | "publish" }>`
-  padding: 6px 12px;
+  padding: 4px 10px;
   border: none;
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: 6px;
+  font-size: 11px;
   cursor: pointer;
   transition: all 0.3s ease;
   background: ${(props) => {
@@ -135,8 +148,9 @@ const ActionButton = styled.button<{ variant?: "edit" | "delete" | "publish" }>`
 
 const EmptyState = styled.div`
   text-align: center;
-  padding: 60px 20px;
-  color: #666;
+  padding: 36px 16px;
+  color: #64748b;
+  font-size: 13px;
 `;
 
 interface BlogPost {
@@ -155,29 +169,44 @@ interface BlogPost {
 const BlogManagement: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState<{ postId: string } | null>(null);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
+  const loadPosts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await getBlogPosts({
-        page: 1,
-        limit: 100,
+        page,
+        limit: BLOG_ADMIN_PAGE_SIZE,
         sortBy: "createdAt",
         sortOrder: "desc",
       });
-      setPosts(response.posts || []);
+      const list = response.posts || [];
+      setPosts(list);
+      const totalCount = Number(response.total);
+      setTotal(Number.isFinite(totalCount) ? totalCount : list.length);
+      const tp = Number(response.totalPages);
+      setTotalPages(
+        Number.isFinite(tp) && tp >= 1
+          ? tp
+          : Math.max(1, Math.ceil((Number.isFinite(totalCount) ? totalCount : list.length) / BLOG_ADMIN_PAGE_SIZE)),
+      );
+      if (list.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
+      }
     } catch (error) {
       console.error("Error fetching posts:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [page]);
+
+  useEffect(() => {
+    void loadPosts();
+  }, [loadPosts]);
 
   const handleCreateNew = () => {
     navigate("/admin/blog/new");
@@ -196,7 +225,7 @@ const BlogManagement: React.FC = () => {
     try {
       await deleteBlogPost(deleteModal.postId);
       setDeleteModal(null);
-      fetchPosts();
+      await loadPosts();
       toast.success("Post deleted successfully");
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -209,7 +238,7 @@ const BlogManagement: React.FC = () => {
       const newStatus =
         currentStatus === "published" ? "draft" : "published";
       await publishBlogPost(postId, newStatus);
-      fetchPosts();
+      await loadPosts();
       toast.success(
         newStatus === "published" ? "Post published" : "Post unpublished",
       );
@@ -261,7 +290,16 @@ const BlogManagement: React.FC = () => {
         onCancel={() => setDeleteModal(null)}
       />
       <Header>
-        <Title>Blog Management</Title>
+        <div>
+          <Title>Blog Management</Title>
+          {total > 0 && (
+            <MetaLine>
+              {total} post{total === 1 ? "" : "s"}
+              {totalPages > 1 ? ` · page ${page} of ${totalPages}` : ""} ·{" "}
+              {BLOG_ADMIN_PAGE_SIZE} per page
+            </MetaLine>
+          )}
+        </div>
         <Button onClick={handleCreateNew}>+ Create New Post</Button>
       </Header>
 
@@ -320,13 +358,23 @@ const BlogManagement: React.FC = () => {
           </tbody>
         </Table>
       )}
+
+      {total > 0 && (
+        <AdminListPagination
+          page={page}
+          totalPages={totalPages}
+          disabled={loading}
+          onPrev={() => setPage((p) => Math.max(1, p - 1))}
+          onNext={() => setPage((p) => Math.min(totalPages, p + 1))}
+        />
+      )}
     </Container>
   );
 };
 
 const TitleSkeleton = styled.div`
-  height: 32px;
-  width: 200px;
+  height: 22px;
+  width: 160px;
   background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;

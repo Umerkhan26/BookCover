@@ -969,12 +969,16 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
   const [permalinkModalUrl, setPermalinkModalUrl] = useState("");
   const navigateAfterPermalinkClose = React.useRef(false);
 
-  const computeDerivedSlug = () =>
-    slug.trim() ||
-    title
+  const slugifyTitle = (t: string) =>
+    t
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+
+  const computeDerivedSlug = () => slug.trim() || slugifyTitle(title);
+
+  /** What we show in the slug field: explicit slug, or live preview from title */
+  const slugInputValue = slug.trim() !== "" ? slug : slugifyTitle(title);
 
   const openPermalinkModal = (url: string, navigateAfterClose: boolean) => {
     navigateAfterPermalinkClose.current = navigateAfterClose;
@@ -2358,9 +2362,9 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
                   <SettingField>
                     <SettingLabel>Slug</SettingLabel>
                     <SettingInput
-                      value={slug}
+                      value={slugInputValue}
                       onChange={(e) => setSlug(e.target.value)}
-                      placeholder="Auto-generated from title"
+                      placeholder="Uses title if left empty (e.g. hello-son)"
                     />
                     <SmallHelp style={{ marginTop: 8 }}>
                       <button

@@ -100,7 +100,7 @@ const OrdersTable: React.FC = () => {
             <TableRow>
               <TableCell
                 colSpan={4}
-                style={{ textAlign: "center", padding: "40px" }}
+                style={{ textAlign: "center", padding: "24px 16px" }}
               >
                 <ErrorMessageText>{error}</ErrorMessageText>
               </TableCell>
@@ -109,7 +109,7 @@ const OrdersTable: React.FC = () => {
             <TableRow>
               <TableCell
                 colSpan={4}
-                style={{ textAlign: "center", padding: "40px" }}
+                style={{ textAlign: "center", padding: "24px 16px" }}
               >
                 <EmptyMessage>No orders found</EmptyMessage>
               </TableCell>
@@ -145,31 +145,31 @@ export default OrdersTable;
 const OrdersContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 18px 20px;
   font-family: "Manrope", sans-serif;
 
   @media (max-width: 768px) {
-    padding: 20px 15px;
+    padding: 14px 12px;
   }
 `;
 
 const HeaderSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 16px;
 `;
 
 const Title = styled.h1`
-  font-size: clamp(24px, 4vw, 32px);
+  font-size: clamp(20px, 3vw, 26px);
   color: #212121;
   margin: 0;
   font-weight: 700;
 `;
 
 const TitleSkeleton = styled.div`
-  height: 32px;
-  width: 150px;
+  height: 26px;
+  width: 120px;
   background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
@@ -187,7 +187,7 @@ const TitleSkeleton = styled.div`
 
 const OrderCount = styled.span`
   color: #6dc7d1;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
 `;
 
@@ -196,20 +196,20 @@ const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0;
   background: white;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 `;
 
 const TableHeader = styled.th`
   background-color: #f9f8fa;
   color: #212121;
-  padding: 10px 16px;
+  padding: 8px 12px;
   text-align: left;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
 
   &:first-child {
     border-top-left-radius: 12px;
@@ -233,32 +233,33 @@ const TableRow = styled.tr`
 `;
 
 const TableCell = styled.td`
-  padding: 16px;
+  padding: 10px 12px;
   border-bottom: 1px solid #e5e7eb;
   color: #374151;
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const OrderId = styled.span`
   font-family: monospace;
   color: #6dc7d1;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12px;
 `;
 
 const OrderTitle = styled.span`
   font-weight: 600;
   color: #212121;
+  font-size: 13px;
 `;
 
 const StatusBadge = styled.span<{ status: string }>`
   display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
   background-color: ${(props) => {
     switch (props.status?.toLowerCase()) {
       case "completed":
@@ -287,12 +288,12 @@ const StatusBadge = styled.span<{ status: string }>`
 
 const EmptyMessage = styled.div`
   color: #6b7280;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
 `;
 
 const ErrorMessageText = styled.div`
   color: #dc2626;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
 `;

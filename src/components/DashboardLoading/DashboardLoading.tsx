@@ -21,15 +21,15 @@ const ShimmerBase = styled.div`
 
 // Table Row Skeleton
 export const TableRowSkeleton = styled(ShimmerBase)`
-  height: 56px;
-  margin-bottom: 8px;
+  height: 40px;
+  margin-bottom: 6px;
   width: 100%;
 `;
 
 // Stat Card Skeleton
 export const StatCardSkeleton = styled(ShimmerBase)`
-  height: 120px;
-  border-radius: 12px;
+  height: 88px;
+  border-radius: 10px;
   flex: 1;
   margin: 0 10px;
 `;
