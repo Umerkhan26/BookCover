@@ -1166,9 +1166,10 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       setSaveBusy(true);
       const res: any = await onSave(postData);
       const savedSlug = res?.post?.slug ?? postData.slug;
+      const builtUrl = buildPublicPostUrl(String(savedSlug ?? ""));
       const url =
-        (typeof res?.post?.permalink === "string" && res.post.permalink) ||
-        buildPublicPostUrl(String(savedSlug ?? ""));
+        builtUrl ||
+        (typeof res?.post?.permalink === "string" ? res.post.permalink : "");
       openPermalinkModal(url, true);
     } catch (e: any) {
       // eslint-disable-next-line no-alert

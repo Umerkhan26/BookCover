@@ -171,27 +171,6 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const PostHeader = styled.div`
-  margin-bottom: ${SECTION_GAP};
-  /* Only ContentWrapper horizontal padding — avoids title sitting inset vs paragraphs/tables */
-  padding: 0;
-`;
-
-const PostTitle = styled.h1<{ alignment?: string }>`
-  font-size: 32px;
-  font-weight: 800;
-  color: ${theme.colors.primary};
-  margin-bottom: 0;
-  line-height: 1.2;
-  scroll-margin-top: 120px;
-  text-align: ${(props) => props.alignment || "left"};
-
-  @media (max-width: 768px) {
-    font-size: 24px;
-    scroll-margin-top: 100px;
-  }
-`;
-
 const PostFooter = styled.div`
   margin-top: ${SECTION_GAP};
   padding-top: 20px;
@@ -873,16 +852,6 @@ const BlogPost: React.FC = () => {
     (a, b) => a.order - b.order,
   );
 
-  // Extract title alignment from postMetadata block (stored in content for persistence)
-  const metadataBlock = sortedContent.find(
-    (block: any) => block.type === "postMetadata",
-  );
-  const titleAlignment =
-    metadataBlock?.data?.titleAlignment ||
-    post.titleAlignment ||
-    post.seoMeta?.titleAlignment ||
-    "left";
-
   // Check if there's a TOC block
   const tocBlock = sortedContent.find(
     (block: any) => block.type === "tableOfContents",
@@ -997,14 +966,6 @@ const BlogPost: React.FC = () => {
 
       <PostContainer ref={containerRef}>
         <ContentWrapper>
-          {/* Post Header - Title Only */}
-          <PostHeader>
-            <PostTitle alignment={titleAlignment}>
-              {post.title || "Untitled Post"}
-            </PostTitle>
-          </PostHeader>
-
-          {/* Main Content */}
           <PostContent>
             {/* Render all content blocks (TOC block will be rendered at the end) */}
             {contentWithoutTOC.map((block: any, index: number) =>
