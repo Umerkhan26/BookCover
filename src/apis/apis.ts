@@ -263,6 +263,64 @@ export const submitContactFormAPI = async (contactData: {
   }
 };
 
+export interface FetchContactsParams {
+  page?: number;
+  limit?: number;
+}
+
+export interface FetchContactsResponse {
+  contacts: unknown[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export const fetchAllContacts = async (
+  params?: FetchContactsParams,
+): Promise<FetchContactsResponse> => {
+  try {
+    const search = new URLSearchParams();
+    if (params?.page != null) search.set("page", String(params.page));
+    if (params?.limit != null) search.set("limit", String(params.limit));
+    const qs = search.toString();
+    const response = await axios.get(
+      `${API_BASE_URL}/getAllContacts${qs ? `?${qs}` : ""}`,
+    );
+    const d = response.data;
+
+    if (Array.isArray(d)) {
+      const n = normalizeListPagination(
+        d,
+        { page: params?.page, limit: params?.limit },
+        params,
+      );
+      return {
+        contacts: n.pageItems,
+        total: n.total,
+        page: n.page,
+        limit: n.limit,
+        totalPages: n.totalPages,
+      };
+    }
+
+    const body = d as Record<string, unknown>;
+    const contacts = Array.isArray(body.contacts) ? body.contacts : [];
+    const n = normalizeListPagination(contacts, body, params);
+
+    return {
+      contacts: n.pageItems,
+      total: n.total,
+      page: n.page,
+      limit: n.limit,
+      totalPages: n.totalPages,
+    };
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    throw new Error("Failed to fetch contacts");
+  }
+};
+
 export const createOrderAPI = async (orderData: {
   userId: string;
   packageId: string;
@@ -490,6 +548,22 @@ export const fetchAllBookRequests = async (
   } catch (error) {
     console.error("Error fetching all book requests:", error);
     throw new Error("Failed to fetch book requests");
+  }
+};
+
+export const fetchBookRequestById = async (id: string) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/getCoverIdeasById/${encodeURIComponent(id)}`,
+    );
+    return response.data;
+  } catch (error: any) {
+    throw (
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      "Failed to fetch book request details"
+    );
   }
 };
 

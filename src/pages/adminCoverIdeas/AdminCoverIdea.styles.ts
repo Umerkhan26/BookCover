@@ -3,16 +3,17 @@ import styled from "styled-components";
 // Container and other styles remain the same
 export const Container = styled.div`
   width: 100%;
-  padding: 12px 14px;
+  padding: 16px 18px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
   font-family: "Manrope", sans-serif;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 20px auto 28px;
 
   @media (max-width: 768px) {
-    padding: 10px 12px;
+    padding: 12px;
+    margin: 14px auto 20px;
   }
 `;
 

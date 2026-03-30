@@ -53,9 +53,10 @@ const MainContent = styled.div<CollapsibleProps>`
   padding-left: ${(props) => (props.collapsed ? "10px" : "16px")};
 
   @media (max-width: 768px) {
-    margin-left: 0; /* Take full width when sidebar is collapsed */
+    /* Keep content visible next to compact fixed sidebar on mobile */
+    margin-left: ${(props) => (props.collapsed ? "68px" : "0")};
     padding: 12px 10px;
-    width: 100%; /* Ensure content takes full width */
+    width: ${(props) => (props.collapsed ? "calc(100% - 68px)" : "100%")}; /* Ensure content takes full width */
   }
 `;
 

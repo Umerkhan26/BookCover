@@ -18,8 +18,10 @@ import AdminListPagination from "../AdminListPagination";
 import styled from "styled-components";
 import ConfirmModal from "../../ConfirmModal/ConfirmModal";
 import { toast, ToastContainer } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faUser, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 
-const ORDERS_PAGE_SIZE = 10;
+const ORDERS_PAGE_SIZE = 50;
 
 interface IOrder {
   _id: string;
@@ -127,6 +129,12 @@ const Order: React.FC = () => {
     }
   };
 
+  const getUserDisplayName = (user: any) => {
+    if (!user) return "No User";
+    const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
+    return fullName || user.email || user.userId || "No User";
+  };
+
   if (loading) {
     return (
       <Container>
@@ -224,9 +232,8 @@ const Order: React.FC = () => {
                 </TableData>
                 <TableData>
                   <ClickableLink onClick={() => handleUserClick(order.user)}>
-                    {order.user
-                      ? `${order.user.firstName} ${order.user.lastName}`
-                      : "No User"}
+                    <InlineIcon icon={faUser} />
+                    {getUserDisplayName(order.user)}
                   </ClickableLink>
                 </TableData>
                 <TableData>
@@ -235,6 +242,7 @@ const Order: React.FC = () => {
                       handlePackageClick(order.package, order.addOns)
                     }
                   >
+                    <InlineIcon icon={faBoxOpen} />
                     {order.package ? order.package.name : "No Package"}
                   </ClickableLink>
                 </TableData>
@@ -248,9 +256,13 @@ const Order: React.FC = () => {
                 </TableData>
                 <TableData>
                   <OrderActionCell>
-                    <ClickableLink onClick={() => handleOtherInfoClick(order)}>
+                    <ViewInfoButton
+                      type="button"
+                      onClick={() => handleOtherInfoClick(order)}
+                    >
+                      <InlineIcon icon={faEye} />
                       View Info
-                    </ClickableLink>
+                    </ViewInfoButton>
                     <DeleteOrderButton
                       type="button"
                       disabled={deleteLoading}
@@ -520,18 +532,26 @@ const OrderIdSub = styled.span`
 `;
 
 const ClickableLink = styled.span`
-  color: #6dc7d1;
+  color: #334155;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.2s ease;
   text-decoration: underline;
   text-decoration-color: transparent;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 
   &:hover {
-    color: #5ab8c2;
-    text-decoration-color: #5ab8c2;
+    color: #0e7490;
+    text-decoration-color: #0e7490;
   }
+`;
+
+const InlineIcon = styled(FontAwesomeIcon)`
+  font-size: 12px;
+  opacity: 0.9;
 `;
 
 const OrderActionCell = styled.div`
@@ -540,8 +560,28 @@ const OrderActionCell = styled.div`
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   white-space: nowrap;
+`;
+
+const ViewInfoButton = styled.button`
+  padding: 6px 12px;
+  background-color: #6dc7d1;
+  border: none;
+  border-radius: 7px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.1;
+  transition: background-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    background-color: #5ab8c2;
+  }
 `;
 
 const DeleteOrderButton = styled.button`
@@ -590,6 +630,8 @@ const StatusBadge = styled.span<{ status: string }>`
         return "#fef3c7";
       case "cancelled":
         return "#fee2e2";
+      case "submitted":
+        return "#e0f2fe";
       default:
         return "#e5e7eb";
     }
@@ -602,6 +644,8 @@ const StatusBadge = styled.span<{ status: string }>`
         return "#92400e";
       case "cancelled":
         return "#991b1b";
+      case "submitted":
+        return "#0c4a6e";
       default:
         return "#374151";
     }

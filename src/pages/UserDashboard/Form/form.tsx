@@ -333,7 +333,7 @@ const FormOrder: React.FC = () => {
             </RadioLabel>
           </RadioContainer>
         </FormGroup> */}
-        <SubmitButton onClick={handleReview}>Submit</SubmitButton>
+        <SubmitButton onClick={handleReview}>Order Now</SubmitButton>
       </FormContainer>
       <ToastContainer />
     </div>

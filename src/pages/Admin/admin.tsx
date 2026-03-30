@@ -111,6 +111,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faListAlt,
+  faMessage,
   faReplyAll,
   faStar,
   faUser,
@@ -165,9 +166,10 @@ const MainContent = styled.div<CollapsibleProps>`
   padding-left: ${(props) => (props.collapsed ? "10px" : "16px")};
 
   @media (max-width: 768px) {
-    margin-left: 0; /* Take full width when sidebar is collapsed */
+    /* Keep content visible next to compact fixed sidebar on mobile */
+    margin-left: ${(props) => (props.collapsed ? "68px" : "0")};
     padding: 12px 10px;
-    width: 100%; /* Ensure content takes full width */
+    width: ${(props) => (props.collapsed ? "calc(100% - 68px)" : "100%")};
   }
 `;
 
@@ -367,6 +369,12 @@ const UserDashboard: React.FC = () => {
                 <NavLink as={Link} to="/admin/coverIdeas" aria-label="Cover Ideas">
                   <Icon icon={faFileAlt} collapsed={collapsed} />
                   <LinkText collapsed={collapsed}>Cover Ideas</LinkText>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink as={Link} to="/admin/contacts" aria-label="Contacts">
+                  <Icon icon={faMessage} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Contacts</LinkText>
                 </NavLink>
               </NavItem>
             </>

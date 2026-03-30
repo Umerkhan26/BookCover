@@ -107,6 +107,12 @@ const TermsAndConditions = lazy(
 const AdminCoverIdea = lazy(
   () => import("../pages/adminCoverIdeas/AdminCoverIdea"),
 );
+const AdminCoverIdeaDetails = lazy(
+  () => import("../pages/adminCoverIdeas/AdminCoverIdeaDetails"),
+);
+const AdminContacts = lazy(
+  () => import("../pages/adminContacts/AdminContacts"),
+);
 const MarketingMaterial = lazy(
   () => import("../components/Marketing Material/marketing"),
 );
@@ -274,6 +280,22 @@ const AppRoutes: React.FC = () => {
             element={
               <Suspense fallback={null}>
                 <AdminCoverIdea />
+              </Suspense>
+            }
+          />
+          <Route
+            path="coverIdeas/:id"
+            element={
+              <Suspense fallback={null}>
+                <AdminCoverIdeaDetails />
+              </Suspense>
+            }
+          />
+          <Route
+            path="contacts"
+            element={
+              <Suspense fallback={null}>
+                <AdminContacts />
               </Suspense>
             }
           />

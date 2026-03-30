@@ -356,17 +356,17 @@ const Packages: React.FC = () => {
   };
 
   const handleOrderNow = (packageId: string | undefined) => {
+    if (!packageId) {
+      console.error("🚨 Package ID is undefined! Cannot navigate.");
+      return;
+    }
+
     const token = localStorage.getItem("token");
 
     if (!token) {
       console.warn("🚨 No token found! Redirecting to login...");
       localStorage.setItem("redirectAfterLogin", `/order/${packageId}`);
       setShowLoginModal(true);
-      return;
-    }
-
-    if (!packageId) {
-      console.error("🚨 Package ID is undefined! Cannot navigate.");
       return;
     }
 
@@ -521,7 +521,6 @@ const Packages: React.FC = () => {
         show={showLoginModal}
         onClose={() => setShowLoginModal(false)}
         onLoginSuccess={handleLoginSuccess}
-        disableRedirect={true}
         onRegisterClick={() => {
           setShowLoginModal(false);
           setShowRegisterModal(true);

@@ -46,7 +46,6 @@ function Header() {
     const userDataString = localStorage.getItem("user");
 
     if (!userDataString) {
-      localStorage.setItem("redirectAfterLogin", "/portal");
       setShowLoginModal(true); // Show the login modal
       return;
     }
@@ -55,7 +54,6 @@ function Header() {
     const isAuthenticated = userData && userData.userId;
 
     if (!isAuthenticated) {
-      localStorage.setItem("redirectAfterLogin", "/portal");
       setShowLoginModal(true); // Show the login modal
     } else {
       const userRole = userData.role;
@@ -70,7 +68,6 @@ function Header() {
   };
   const handleLoginSuccess = () => {
     setShowLoginModal(false);
-    navigate("/portal/orders");
   };
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);

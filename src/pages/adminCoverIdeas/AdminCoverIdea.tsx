@@ -6,11 +6,6 @@ import {
   TableData,
   TableHeader,
   TableRow,
-  ModalOverlay,
-  ModalContent,
-  CloseButton,
-  ModalTitle,
-  ModalBody,
   HeaderSection,
   Title,
   RequestCount,
@@ -25,10 +20,12 @@ import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const COVER_IDEAS_PAGE_SIZE = 10;
+const COVER_IDEAS_PAGE_SIZE = 50;
 
 const AdminCoverIdea: React.FC = () => {
+  const navigate = useNavigate();
   const [bookRequests, setBookRequests] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -36,9 +33,6 @@ const AdminCoverIdea: React.FC = () => {
   const [pageSizeLabel, setPageSizeLabel] = useState(COVER_IDEAS_PAGE_SIZE);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedBookRequest, setSelectedBookRequest] = useState<any | null>(
-    null,
-  );
   const [requestToDelete, setRequestToDelete] = useState<any | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -108,14 +102,8 @@ const AdminCoverIdea: React.FC = () => {
     );
   }
 
-  // Function to show the modal with the full details of a book request
-  const handleInfoClick = (bookRequest: any) => {
-    setSelectedBookRequest(bookRequest); // Set selected book request data
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setSelectedBookRequest(null); // Clear the selected book request
+  const handleInfoClick = (id: string) => {
+    navigate(`/admin/coverIdeas/${id}`);
   };
 
   const handleDeleteConfirm = async () => {
@@ -127,9 +115,6 @@ const AdminCoverIdea: React.FC = () => {
       const next = bookRequests.filter((r) => r._id !== id);
       setBookRequests(next);
       setTotal((t) => Math.max(0, t - 1));
-      if (selectedBookRequest?._id === id) {
-        setSelectedBookRequest(null);
-      }
       setRequestToDelete(null);
       toast.success("Cover idea deleted successfully");
       if (next.length === 0 && page > 1) {
@@ -234,12 +219,12 @@ const AdminCoverIdea: React.FC = () => {
                   </TableData>
                   <TableData className="book-button">
                     <ActionCell>
-                      <InfoButton
+                      <CompactInfoButton
                         type="button"
-                        onClick={() => handleInfoClick(bookRequest)}
+                        onClick={() => handleInfoClick(bookRequest._id)}
                       >
                         View Info
-                      </InfoButton>
+                      </CompactInfoButton>
                       <DeleteButton
                         type="button"
                         disabled={deleteLoading}
@@ -273,100 +258,6 @@ const AdminCoverIdea: React.FC = () => {
           onPrev={() => setPage((p) => Math.max(1, p - 1))}
           onNext={() => setPage((p) => Math.min(totalPages, p + 1))}
         />
-      )}
-
-      {/* Enhanced Modal */}
-      {selectedBookRequest && (
-        <ModalOverlay onClick={closeModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <ModalHeader>
-              <ModalTitle>Book Request Details</ModalTitle>
-              <CloseButton onClick={closeModal}>×</CloseButton>
-            </ModalHeader>
-            <ModalBody>
-              <InfoRow>
-                <InfoLabel>User Name:</InfoLabel>
-                <InfoValue>{selectedBookRequest.name || "N/A"}</InfoValue>
-              </InfoRow>
-              <InfoRow>
-                <InfoLabel>Email:</InfoLabel>
-                <InfoValue>{selectedBookRequest.email || "N/A"}</InfoValue>
-              </InfoRow>
-              <InfoRow>
-                <InfoLabel>Book Title:</InfoLabel>
-                <InfoValue>{selectedBookRequest.title || "N/A"}</InfoValue>
-              </InfoRow>
-              <InfoRow>
-                <InfoLabel>Genre:</InfoLabel>
-                <InfoValue>{selectedBookRequest.genre || "N/A"}</InfoValue>
-              </InfoRow>
-              <InfoRow>
-                <InfoLabel>Is Series:</InfoLabel>
-                <InfoValue>
-                  <SeriesBadge isSeries={selectedBookRequest.isSeries}>
-                    {selectedBookRequest.isSeries ? "Yes" : "No"}
-                  </SeriesBadge>
-                </InfoValue>
-              </InfoRow>
-              {selectedBookRequest.description && (
-                <InfoRow>
-                  <InfoLabel>Description:</InfoLabel>
-                  <InfoValue style={{ whiteSpace: "pre-wrap" }}>
-                    {selectedBookRequest.description}
-                  </InfoValue>
-                </InfoRow>
-              )}
-              {selectedBookRequest.mainCharacters && (
-                <InfoRow>
-                  <InfoLabel>Main Characters:</InfoLabel>
-                  <InfoValue>{selectedBookRequest.mainCharacters}</InfoValue>
-                </InfoRow>
-              )}
-              {selectedBookRequest.setting && (
-                <InfoRow>
-                  <InfoLabel>Book Cover Setting:</InfoLabel>
-                  <InfoValue>{selectedBookRequest.setting}</InfoValue>
-                </InfoRow>
-              )}
-              {selectedBookRequest.coverPreference &&
-                selectedBookRequest.coverPreference.length > 0 && (
-                  <InfoRow>
-                    <InfoLabel>Cover Preferences:</InfoLabel>
-                    <InfoValue>
-                      {selectedBookRequest.coverPreference.join(", ")}
-                    </InfoValue>
-                  </InfoRow>
-                )}
-              {selectedBookRequest.comparableCovers &&
-                selectedBookRequest.comparableCovers.length > 0 && (
-                  <InfoSection>
-                    <SectionLabel>Comparable Covers:</SectionLabel>
-                    <CoverImages>
-                      {selectedBookRequest.comparableCovers.map(
-                        (cover: string, index: number) => (
-                          <CoverImage
-                            key={index}
-                            src={cover}
-                            alt={`Comparable Cover ${index + 1}`}
-                            loading="lazy"
-                          />
-                        ),
-                      )}
-                    </CoverImages>
-                  </InfoSection>
-                )}
-              <ModalActions>
-                <DeleteButton
-                  type="button"
-                  disabled={deleteLoading}
-                  onClick={() => setRequestToDelete(selectedBookRequest)}
-                >
-                  Delete
-                </DeleteButton>
-              </ModalActions>
-            </ModalBody>
-          </ModalContent>
-        </ModalOverlay>
       )}
       <ToastContainer />
     </Container>
@@ -420,78 +311,6 @@ const BookTitle = styled.span`
   color: #212121;
 `;
 
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px;
-  border-bottom: 1px solid #e5e7eb;
-  background: linear-gradient(135deg, #6dc7d1 0%, #5ab8c2 100%);
-  border-radius: 16px 16px 0 0;
-  position: relative;
-`;
-
-const InfoRow = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f3f4f6;
-
-  &:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-  }
-`;
-
-const InfoLabel = styled.span`
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-`;
-
-const InfoValue = styled.span`
-  font-size: 16px;
-  color: #212121;
-  font-weight: 500;
-`;
-
-const InfoSection = styled.div`
-  margin-bottom: 24px;
-  padding: 16px;
-  background: #f9fafb;
-  border-radius: 8px;
-`;
-
-const SectionLabel = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 12px;
-`;
-
-const CoverImages = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 12px;
-`;
-
-const CoverImage = styled.img`
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
 const EmptyMessage = styled.div`
   color: #6b7280;
   font-size: 16px;
@@ -508,7 +327,7 @@ const ActionCell = styled.div`
   display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   justify-content: flex-start;
 
@@ -517,15 +336,26 @@ const ActionCell = styled.div`
   }
 `;
 
+const CompactInfoButton = styled(InfoButton)`
+  padding: 6px 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 92px;
+  line-height: 1.1;
+`;
+
 const DeleteButton = styled.button`
-  padding: 8px 16px;
+  padding: 6px 12px;
   background-color: #dc2626;
   border: none;
-  border-radius: 8px;
+  border-radius: 7px;
   color: white;
   cursor: pointer;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
+  min-width: 78px;
+  line-height: 1.1;
   transition:
     background-color 0.15s ease,
     opacity 0.15s ease;
@@ -540,10 +370,3 @@ const DeleteButton = styled.button`
   }
 `;
 
-const ModalActions = styled.div`
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #e5e7eb;
-  display: flex;
-  justify-content: flex-end;
-`;

@@ -38,7 +38,7 @@ interface User {
   action: string;
 }
 
-const USERS_PAGE_SIZE = 10;
+const USERS_PAGE_SIZE = 50;
 
 const User: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -263,7 +263,17 @@ const User: React.FC = () => {
                   {(page - 1) * USERS_PAGE_SIZE + index + 1}
                 </TableData>
                 <TableData>
-                  <UserName>{`${user.firstName} ${user.lastName}`}</UserName>
+                  <NameCell>
+                    <Avatar>
+                      {`${user.firstName?.[0] || ""}${user.lastName?.[0] || ""}`
+                        .trim()
+                        .toUpperCase() || "U"}
+                    </Avatar>
+                    <div>
+                      <UserName>{`${user.firstName} ${user.lastName}`}</UserName>
+                      <MutedSub>#{user.userId}</MutedSub>
+                    </div>
+                  </NameCell>
                 </TableData>
                 <TableData className="email-column">{user.email}</TableData>
                 <TableData>
@@ -364,6 +374,31 @@ const TitleSkeleton = styled.div`
 const UserName = styled.span`
   font-weight: 600;
   color: #212121;
+`;
+
+const NameCell = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Avatar = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0f7fa;
+  color: #0e7490;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 12px;
+`;
+
+const MutedSub = styled.div`
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 2px;
 `;
 
 const RoleBadge = styled.span<{ role: string }>`

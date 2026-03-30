@@ -51,7 +51,7 @@
 
 // export default VerifyEmailPage;
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { verifyEmailWithOTP } from "../../../apis/apis";
@@ -71,9 +71,44 @@ const VerifyEmailModal: React.FC<Props> = ({
 }) => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+
+  const handleOtpChange = (index: number, value: string) => {
+    const digit = value.replace(/\D/g, "").slice(-1);
+    const otpArray = otp.padEnd(4, " ").split("");
+    otpArray[index] = digit || "";
+    const newOtp = otpArray.join("").replace(/\s/g, "");
+    setOtp(newOtp);
+
+    if (digit && index < 3) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === "Backspace") {
+      if (otp[index]) {
+        const otpArray = otp.padEnd(4, " ").split("");
+        otpArray[index] = "";
+        setOtp(otpArray.join("").replace(/\s/g, ""));
+        return;
+      }
+
+      if (index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      }
+    }
+  };
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (otp.length !== 4) {
+      toast.error("Please enter a 4-digit code.");
+      return;
+    }
     setLoading(true);
 
     try {
@@ -93,14 +128,24 @@ const VerifyEmailModal: React.FC<Props> = ({
       <ModalContent>
         <Title>Verify Your Email</Title>
         <Form onSubmit={handleVerify}>
-          <Input
-            type="text"
-            placeholder="Enter 6-digit code"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            maxLength={6}
-            required
-          />
+          <OtpWrapper>
+            {[0, 1, 2, 3].map((index) => (
+              <OtpInput
+                key={index}
+                ref={(el) => {
+                  inputRefs.current[index] = el;
+                }}
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength={1}
+                value={otp[index] || ""}
+                onChange={(e) => handleOtpChange(index, e.target.value)}
+                onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                required
+              />
+            ))}
+          </OtpWrapper>
           <SubmitButton type="submit" disabled={loading}>
             {loading ? "Verifying..." : "Verify"}
           </SubmitButton>
@@ -145,13 +190,26 @@ const Form = styled.form`
   flex-direction: column;
   gap: 10px;
 `;
-const Input = styled.input`
-  padding: 10px;
-  font-size: 14px;
+const OtpWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+`;
+const OtpInput = styled.input`
+  width: 52px;
+  height: 52px;
   border: 1px solid #ccc;
-  color: black;
-  border-radius: 4px;
-  width: 100%;
+  border-radius: 10px;
+  font-size: 22px;
+  text-align: center;
+  color: #111;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    border-color: #6dc7d1;
+    box-shadow: 0 0 0 3px rgba(109, 199, 209, 0.25);
+  }
 `;
 const SubmitButton = styled.button`
   padding: 12px;

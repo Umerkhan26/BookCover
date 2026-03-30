@@ -2,14 +2,18 @@ import styled from "styled-components";
 
 // Container with responsive padding and margin
 export const Container = styled.div`
-  padding: 12px 14px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 16px 18px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  margin: 20px auto 28px;
+  font-family: "Manrope", sans-serif;
 
   @media (max-width: 768px) {
-    padding: 10px;
-    margin-left: 92px;
+    padding: 12px;
+    margin: 14px auto 20px;
   }
 `;
 

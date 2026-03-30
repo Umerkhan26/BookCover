@@ -5,6 +5,8 @@ import { useAuth } from "../../context/authContext";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ForgotPasswordModal from "../ForgotPassword/ForgotPasswordModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 interface LoginModalProps {
   show: boolean;
@@ -31,8 +33,16 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [showForgotModal, setShowForgotModal] = useState(false);
 
   const navigateUser = (role: string) => {
-    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+    const redirectPath = localStorage.getItem("redirectAfterLogin");
     localStorage.removeItem("redirectAfterLogin");
+
+    // If a guarded action set a destination before login, honor it first
+    // for non-admin routes so users can continue where they intended.
+    if (redirectPath && role !== "admin" && role !== "seo") {
+      toast.success("Redirecting...");
+      navigate(redirectPath, { replace: true });
+      return;
+    }
 
     switch (role) {
       case "admin":
@@ -44,8 +54,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
         navigate("/admin/blog", { replace: true });
         break;
       case "client":
-        toast.success("Redirecting to client Dashboard...");
-        navigate("/portal/orders", { replace: true });
+        toast.success("Logged in successfully.");
+        onClose();
         break;
       case "designer":
         toast.success("You are logged in as a User.");
@@ -53,7 +63,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
         break;
       default:
         toast.success("Redirecting to Home...");
-        navigate(redirectPath, { replace: true });
+        navigate("/", { replace: true });
     }
   };
 
@@ -114,7 +124,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
             >
-              {showPassword ? "🙈" : "👁️"}
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </TogglePasswordButton>
           </PasswordWrapper>
 
@@ -231,12 +241,12 @@ const TogglePasswordButton = styled.button`
   transform: translateY(-50%);
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
-  color: #6dc7d1;
+  color: #000;
 
   &:hover {
-    color: rgb(24, 92, 99);
+    color: #111;
   }
 `;
 
