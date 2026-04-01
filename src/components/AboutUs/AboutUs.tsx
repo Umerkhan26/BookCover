@@ -1,4 +1,4 @@
-import TeamSection from "../../pages/AboutTeamCard/AboutTeamSection";
+// import TeamSection from "../../pages/AboutTeamCard/AboutTeamSection";
 import AboutContent from "../../pages/AboutContent/AboutContent";
 import { Helmet } from "react-helmet-async";
 import bannerImg from "../../assets/PageBanner/6.webp";
@@ -24,7 +24,7 @@ const AboutUs = () => {
         formatSubtitle={false}
       />
       <AboutContent />
-      <TeamSection />
+      {/* <TeamSection /> */}
     </div>
   );
 };
