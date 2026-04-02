@@ -14,7 +14,7 @@ const OrdersTable: React.FC = () => {
     const getOrders = async () => {
       try {
         setLoading(true);
-        setError(null); // Clear any previous errors
+        setError(null);
         const fetchedOrders = await fetchOrdersByUserId();
         setOrders(fetchedOrders || []);
         setSearchQuery("");

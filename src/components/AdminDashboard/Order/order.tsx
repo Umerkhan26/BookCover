@@ -23,28 +23,99 @@ import { faEye, faUser, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 
 const ORDERS_PAGE_SIZE = 50;
 
+const SERIES_LABELS: Record<string, string> = {
+  yes: "Yes",
+  no: "No",
+  unknown: "I don't know",
+};
+
+const COVER_STYLE_LABELS: Record<string, string> = {
+  detailed: "With detailed characters",
+  silhouettes: "Only with silhouettes",
+  object: "Object-based covers",
+  typographic: "Typographic covers",
+  unknown: "I don't know",
+};
+
+const SHARE_CONSENT_LABELS: Record<string, string> = {
+  yes: "Yes",
+  no: "No",
+  after_publication: "Yes, but only after the book",
+};
+
+function formatSeriesContinuation(raw?: string): string {
+  if (raw == null || raw === "") return "—";
+  return SERIES_LABELS[raw] ?? raw;
+}
+
+function formatCoverStyle(raw?: string): string {
+  if (raw == null || raw === "") return "—";
+  return COVER_STYLE_LABELS[raw] ?? raw;
+}
+
+function formatSharePortfolio(
+  consent?: string,
+  allowed?: boolean,
+): { line: string; detail?: string } {
+  if (consent && SHARE_CONSENT_LABELS[consent]) {
+    return { line: SHARE_CONSENT_LABELS[consent] };
+  }
+  if (consent) return { line: consent };
+  if (allowed === true) return { line: "Yes" };
+  if (allowed === false) return { line: "No" };
+  return { line: "—" };
+}
+
+function formatUserContacts(raw: unknown): string {
+  if (raw == null) return "—";
+  if (Array.isArray(raw)) {
+    const parts = raw
+      .map((x) => (x == null ? "" : String(x).trim()))
+      .filter(Boolean);
+    return parts.length ? parts.join("\n") : "—";
+  }
+  return String(raw).trim() || "—";
+}
+
+function formatYesNoUnknown(
+  value: boolean | undefined,
+  unknownMeans?: string,
+): string {
+  if (value === true) return "Yes";
+  if (value === false) return "No";
+  return unknownMeans ?? "—";
+}
+
 interface IOrder {
   _id: string;
   user: any;
   package: any;
   addOns: any[];
   totalPrice: number;
-  status: "Pending" | "Completed" | "Cancelled";
-  paymentStatus: "Unpaid" | "Paid";
+  status: "Pending" | "Completed" | "Cancelled" | "Submitted";
+  paymentStatus?: "Unpaid" | "Paid";
   bookTitle: string;
   bookSubtitle?: string;
+  /** Portal: "Your name" */
+  name?: string;
   authorName?: string;
+  narratorName?: string;
   genre: string;
   seriesContinuation?: string;
   summary?: string;
   coverStyle?: string;
+  prefferedCoverStyle?: string;
+  likeToSeeOnCover?: string;
   coverMood?: string;
   colorPalette?: string;
   examples?: string;
   file?: string;
   firstOrder?: boolean;
   shareOnPortfolio?: boolean;
-  paymentMethod: string;
+  shareOnPortfolioConsent?: string;
+  userContacts?: string[];
+  paymentMethod?: string;
+  createdAt?: string;
 }
 
 const Order: React.FC = () => {
@@ -406,65 +477,139 @@ const Order: React.FC = () => {
             </ModalHeader>
             <ModalBody>
               <InfoRow>
-                <InfoLabel>Book Title:</InfoLabel>
-                <InfoValue>{selectedOtherInfo.bookTitle || "N/A"}</InfoValue>
+                <InfoLabel>Your name (form)</InfoLabel>
+                <InfoValue>
+                  {selectedOtherInfo.name ||
+                    selectedOtherInfo.authorName ||
+                    "—"}
+                </InfoValue>
               </InfoRow>
-              {selectedOtherInfo.bookSubtitle && (
-                <InfoRow>
-                  <InfoLabel>Book Subtitle:</InfoLabel>
-                  <InfoValue>{selectedOtherInfo.bookSubtitle}</InfoValue>
-                </InfoRow>
-              )}
-              {selectedOtherInfo.narratorName && (
-                <InfoRow>
-                  <InfoLabel>Narrator Name:</InfoLabel>
-                  <InfoValue>{selectedOtherInfo.narratorName}</InfoValue>
-                </InfoRow>
-              )}
               <InfoRow>
-                <InfoLabel>Genre:</InfoLabel>
-                <InfoValue>{selectedOtherInfo.genre || "N/A"}</InfoValue>
+                <InfoLabel>Book title</InfoLabel>
+                <InfoValue>
+                  {selectedOtherInfo.bookTitle || "—"}
+                </InfoValue>
               </InfoRow>
-              {selectedOtherInfo.summary && (
+              <InfoRow>
+                <InfoLabel>Book subtitle</InfoLabel>
+                <InfoValue>
+                  {selectedOtherInfo.bookSubtitle || "—"}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Narrator&apos;s name</InfoLabel>
+                <InfoValue>
+                  {selectedOtherInfo.narratorName || "—"}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Preferred contact information</InfoLabel>
+                <InfoValue style={{ whiteSpace: "pre-wrap" }}>
+                  {formatUserContacts(selectedOtherInfo.userContacts)}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Genre</InfoLabel>
+                <InfoValue>{selectedOtherInfo.genre || "—"}</InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Will this book continue as a series?</InfoLabel>
+                <InfoValue>
+                  {formatSeriesContinuation(
+                    selectedOtherInfo.seriesContinuation,
+                  )}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Book summary</InfoLabel>
+                <InfoValue style={{ whiteSpace: "pre-wrap" }}>
+                  {selectedOtherInfo.summary || "—"}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Preferred cover style</InfoLabel>
+                <InfoValue>
+                  {formatCoverStyle(
+                    selectedOtherInfo.prefferedCoverStyle ||
+                      selectedOtherInfo.coverStyle,
+                  )}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>What to see on the cover / references</InfoLabel>
+                <InfoValue style={{ whiteSpace: "pre-wrap" }}>
+                  {selectedOtherInfo.likeToSeeOnCover || "—"}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>
+                  Share cover on social media &amp; website?
+                </InfoLabel>
+                <InfoValue>
+                  {(() => {
+                    const { line } = formatSharePortfolio(
+                      selectedOtherInfo.shareOnPortfolioConsent,
+                      selectedOtherInfo.shareOnPortfolio,
+                    );
+                    const ok =
+                      selectedOtherInfo.shareOnPortfolio === true ||
+                      selectedOtherInfo.shareOnPortfolioConsent === "yes" ||
+                      selectedOtherInfo.shareOnPortfolioConsent ===
+                        "after_publication";
+                    return line === "—" ? (
+                      line
+                    ) : ok ? (
+                      <Badge success>{line}</Badge>
+                    ) : (
+                      <Badge>{line}</Badge>
+                    );
+                  })()}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>First order with Lumeart Studio?</InfoLabel>
+                <InfoValue>
+                  {formatYesNoUnknown(selectedOtherInfo.firstOrder)}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Order status</InfoLabel>
+                <InfoValue>{selectedOtherInfo.status || "—"}</InfoValue>
+              </InfoRow>
+              <InfoRow>
+                <InfoLabel>Payment status</InfoLabel>
+                <InfoValue>
+                  {selectedOtherInfo.paymentStatus || "—"}
+                </InfoValue>
+              </InfoRow>
+              {selectedOtherInfo.paymentMethod ? (
                 <InfoRow>
-                  <InfoLabel>Summary:</InfoLabel>
+                  <InfoLabel>Payment method</InfoLabel>
+                  <InfoValue>{selectedOtherInfo.paymentMethod}</InfoValue>
+                </InfoRow>
+              ) : null}
+              {selectedOtherInfo.coverMood ? (
+                <InfoRow>
+                  <InfoLabel>Cover mood (legacy)</InfoLabel>
+                  <InfoValue>{selectedOtherInfo.coverMood}</InfoValue>
+                </InfoRow>
+              ) : null}
+              {selectedOtherInfo.examples ? (
+                <InfoRow>
+                  <InfoLabel>Examples (legacy)</InfoLabel>
                   <InfoValue style={{ whiteSpace: "pre-wrap" }}>
-                    {selectedOtherInfo.summary}
+                    {selectedOtherInfo.examples}
                   </InfoValue>
                 </InfoRow>
-              )}
-              {selectedOtherInfo.prefferedCoverStyle && (
+              ) : null}
+              {selectedOtherInfo.createdAt ? (
                 <InfoRow>
-                  <InfoLabel>Cover Style:</InfoLabel>
-                  <InfoValue>{selectedOtherInfo.prefferedCoverStyle}</InfoValue>
+                  <InfoLabel>Submitted</InfoLabel>
+                  <InfoValue>
+                    {new Date(selectedOtherInfo.createdAt).toLocaleString()}
+                  </InfoValue>
                 </InfoRow>
-              )}
-              {selectedOtherInfo.likeToSeeOnCover && (
-                <InfoRow>
-                  <InfoLabel>Like to see on cover:</InfoLabel>
-                  <InfoValue>{selectedOtherInfo.likeToSeeOnCover}</InfoValue>
-                </InfoRow>
-              )}
-              <InfoRow>
-                <InfoLabel>First Order:</InfoLabel>
-                <InfoValue>
-                  {selectedOtherInfo.firstOrder ? (
-                    <Badge success>Yes</Badge>
-                  ) : (
-                    <Badge>No</Badge>
-                  )}
-                </InfoValue>
-              </InfoRow>
-              <InfoRow>
-                <InfoLabel>Share on Portfolio:</InfoLabel>
-                <InfoValue>
-                  {selectedOtherInfo.shareOnPortfolio ? (
-                    <Badge success>Yes</Badge>
-                  ) : (
-                    <Badge>No</Badge>
-                  )}
-                </InfoValue>
-              </InfoRow>
+              ) : null}
             </ModalBody>
           </ModalContent>
         </ModalOverlay>
