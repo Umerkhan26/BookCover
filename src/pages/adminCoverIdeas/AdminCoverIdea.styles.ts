@@ -3,6 +3,7 @@ import styled from "styled-components";
 // Container and other styles remain the same
 export const Container = styled.div`
   width: 100%;
+  min-width: 0; /* flex child: allow shrink so inner overflow-x can scroll */
   padding: 16px 18px;
   background-color: #fff;
   border-radius: 10px;
@@ -40,6 +41,7 @@ export const RequestCount = styled.span`
 
 export const Table = styled.table`
   width: 100%;
+  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
   background: white;
@@ -56,6 +58,32 @@ export const Table = styled.table`
   }
 `;
 
+/** Cover Ideas list: tighter padding; column widths via colgroup in JSX (avoids % vs px fighting). */
+export const CoverIdeasTable = styled(Table)`
+  min-width: 960px;
+
+  th,
+  td {
+    padding: 5px 6px;
+  }
+
+  td.book-id {
+    overflow: hidden;
+    vertical-align: middle;
+  }
+
+  td.book-email {
+    overflow: hidden;
+    vertical-align: middle;
+  }
+
+  td.book-cover {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
+
 export const TableHeader = styled.th`
   background-color: #f8fafc;
   text-align: left;
@@ -66,12 +94,22 @@ export const TableHeader = styled.th`
   text-transform: uppercase;
   letter-spacing: 0.04em;
 
-  &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
+  &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover, &.header-date {
     display: table-cell;
   }
 
   &.header-username, &.header-booktitle, &.header-moreinfo {
     display: table-cell;
+  }
+
+  /* Actions always keeps room for both buttons (Cover Ideas + Contacts) */
+  &.header-actions {
+    width: 220px;
+    min-width: 220px;
+    max-width: 220px;
+    text-align: center;
+    white-space: nowrap;
+    box-sizing: border-box;
   }
 
   /* For 1024px screens and below, hide certain columns */
@@ -89,7 +127,7 @@ export const TableHeader = styled.th`
   @media (max-width: 480px) {
     padding: 6px;
     font-size: 10px;
-    &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover {
+    &.header-id, &.header-email, &.header-genre, &.header-series, &.header-cover, &.header-date {
       display: none;
     }
   }
@@ -103,17 +141,38 @@ export const TableData = styled.td`
   border-bottom: 1px solid #e5e7eb;
   vertical-align: middle;
 
-  &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover {
+  &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover, &.book-date {
     display: table-cell;
   }
 
-  &.book-username, &.book-title, &.book-moreinfo {
+  &.book-username,
+  &.user-name,
+  &.book-title,
+  &.book-moreinfo {
     display: table-cell;
   }
 
-  &.book-button {
+  &.book-button,
+  &.cell-actions {
+    width: 220px;
+    min-width: 220px;
+    max-width: 220px;
     white-space: nowrap;
-    width: 1%;
+    text-align: center;
+    vertical-align: middle;
+    box-sizing: border-box;
+  }
+
+  &.book-email {
+    vertical-align: middle;
+  }
+
+  &.book-title,
+  &.book-genre,
+  &.book-cover,
+  &.user-name {
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   /* For 1024px screens and below, hide certain columns */
@@ -131,7 +190,7 @@ export const TableData = styled.td`
   @media (max-width: 480px) {
     padding: 6px;
     font-size: 10px;
-    &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover {
+    &.book-id, &.book-email, &.book-genre, &.book-series, &.book-cover, &.book-date {
       display: none;
     }
   }
@@ -158,7 +217,12 @@ export const TableRow = styled.tr`
 `;
 
 export const TableContainer = styled.div`
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
 
   @media (max-width: 768px) {
     font-size: 12px;

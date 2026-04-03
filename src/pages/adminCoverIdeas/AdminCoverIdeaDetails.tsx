@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchBookRequestById } from "../../apis/apis";
+import { formatSubmittedAt } from "../../utils/formatSubmittedAt";
 import {
   Container,
   HeaderSection,
@@ -77,6 +78,10 @@ const AdminCoverIdeaDetails: React.FC = () => {
         <StateText>Request not found</StateText>
       ) : (
         <DetailsCard>
+          <InfoRow>
+            <InfoLabel>Submitted</InfoLabel>
+            <InfoValue>{formatSubmittedAt(bookRequest.createdAt)}</InfoValue>
+          </InfoRow>
           <InfoRow>
             <InfoLabel>User Name</InfoLabel>
             <InfoValue>{bookRequest.name || "N/A"}</InfoValue>

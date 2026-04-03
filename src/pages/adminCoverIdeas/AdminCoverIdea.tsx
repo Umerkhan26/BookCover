@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Container,
-  Table,
+  CoverIdeasTable,
   TableContainer,
   TableData,
   TableHeader,
@@ -13,6 +13,7 @@ import {
   SeriesBadge,
 } from "./AdminCoverIdea.styles";
 import { deleteBookRequestById, fetchAllBookRequests } from "../../apis/apis";
+import { formatSubmittedAt } from "../../utils/formatSubmittedAt";
 import { Helmet } from "react-helmet-async";
 import { TableSkeleton } from "../../components/DashboardLoading/DashboardLoading";
 import AdminListPagination from "../../components/AdminDashboard/AdminListPagination";
@@ -23,6 +24,69 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const COVER_IDEAS_PAGE_SIZE = 50;
+
+/** Stable column widths: fixed ID + Actions, % for the rest (table-layout: fixed). */
+const CoverIdeasColGroup = () => (
+  <colgroup>
+    <col style={{ width: "88px" }} />
+    <col style={{ width: "10%" }} />
+    <col style={{ width: "24%" }} />
+    <col style={{ width: "14%" }} />
+    <col style={{ width: "7%" }} />
+    <col style={{ width: "7%" }} />
+    <col style={{ width: "11%" }} />
+    <col style={{ width: "9%" }} />
+    <col style={{ width: "220px" }} />
+  </colgroup>
+);
+
+const PREVIEW_MAX_CHARS = 44;
+
+const HoverPreviewSpan = styled.span<{ $truncated: boolean }>`
+  display: inline;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  cursor: ${(p) => (p.$truncated ? "pointer" : "default")};
+`;
+
+type HoverPreviewProps = {
+  text: string;
+  /** When text has more words than this, show first N words + "..."; default 2. */
+  wordLimit?: number;
+};
+
+/**
+ * More than `wordLimit` words → first N whole words + "...".
+ * Long single chunk (e.g. one long token) → end "..." after PREVIEW_MAX_CHARS.
+ * Full value on hover via `title` when shortened.
+ */
+const HoverPreview: React.FC<HoverPreviewProps> = ({
+  text,
+  wordLimit = 2,
+}) => {
+  const raw = String(text ?? "").trim() || "N/A";
+  const words = raw.split(/\s+/).filter(Boolean);
+  let shown: string;
+  let truncated: boolean;
+
+  if (words.length > wordLimit) {
+    shown = `${words.slice(0, wordLimit).join(" ")}...`;
+    truncated = true;
+  } else if (raw.length > PREVIEW_MAX_CHARS) {
+    shown = `${raw.slice(0, PREVIEW_MAX_CHARS - 3).trimEnd()}...`;
+    truncated = true;
+  } else {
+    shown = raw;
+    truncated = false;
+  }
+
+  return (
+    <HoverPreviewSpan title={truncated ? raw : undefined} $truncated={truncated}>
+      {shown}
+    </HoverPreviewSpan>
+  );
+};
 
 const AdminCoverIdea: React.FC = () => {
   const navigate = useNavigate();
@@ -76,7 +140,8 @@ const AdminCoverIdea: React.FC = () => {
           <TitleSkeleton />
         </HeaderSection>
         <TableContainer>
-          <Table>
+          <CoverIdeasTable>
+            <CoverIdeasColGroup />
             <thead>
               <tr>
                 <TableHeader className="header-id">ID</TableHeader>
@@ -90,13 +155,14 @@ const AdminCoverIdea: React.FC = () => {
                 <TableHeader className="header-cover">
                   Cover Preference
                 </TableHeader>
-                <TableHeader className="header-moreinfo">Actions</TableHeader>
+                <TableHeader className="header-date">Submitted</TableHeader>
+                <TableHeader className="header-actions">Actions</TableHeader>
               </tr>
             </thead>
             <tbody>
-              <TableSkeleton rows={8} cols={8} />
+              <TableSkeleton rows={8} cols={9} />
             </tbody>
-          </Table>
+          </CoverIdeasTable>
         </TableContainer>
       </Container>
     );
@@ -164,7 +230,8 @@ const AdminCoverIdea: React.FC = () => {
       </HeaderSection>
 
       <TableContainer>
-        <Table>
+        <CoverIdeasTable>
+          <CoverIdeasColGroup />
           <thead>
             <tr>
               <TableHeader className="header-id">ID</TableHeader>
@@ -176,14 +243,15 @@ const AdminCoverIdea: React.FC = () => {
               <TableHeader className="header-cover">
                 Cover Preference
               </TableHeader>
-              <TableHeader className="header-moreinfo">Actions</TableHeader>
+              <TableHeader className="header-date">Submitted</TableHeader>
+              <TableHeader className="header-actions">Actions</TableHeader>
             </tr>
           </thead>
           <tbody>
             {error ? (
               <TableRow>
                 <TableData
-                  colSpan={8}
+                  colSpan={9}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <ErrorMessageText>Error: {error}</ErrorMessageText>
@@ -198,16 +266,23 @@ const AdminCoverIdea: React.FC = () => {
                     </RequestIdRow>
                   </TableData>
                   <TableData className="user-name">
-                    <UserName>{bookRequest.name || "N/A"}</UserName>
+                    <UserName as="span">
+                      <HoverPreview text={bookRequest.name || "N/A"} />
+                    </UserName>
                   </TableData>
                   <TableData className="book-email">
-                    {bookRequest.email || "N/A"}
+                    <HoverPreview
+                      text={bookRequest.email || "N/A"}
+                      wordLimit={3}
+                    />
                   </TableData>
                   <TableData className="book-title">
-                    <BookTitle>{bookRequest.title || "N/A"}</BookTitle>
+                    <BookTitle as="span">
+                      <HoverPreview text={bookRequest.title || "N/A"} />
+                    </BookTitle>
                   </TableData>
                   <TableData className="book-genre">
-                    {bookRequest.genre || "N/A"}
+                    <HoverPreview text={bookRequest.genre || "N/A"} />
                   </TableData>
                   <TableData className="book-series">
                     <SeriesBadge isSeries={bookRequest.isSeries}>
@@ -215,9 +290,20 @@ const AdminCoverIdea: React.FC = () => {
                     </SeriesBadge>
                   </TableData>
                   <TableData className="book-cover">
-                    {bookRequest.coverPreference?.join(", ") || "N/A"}
+                    <HoverPreview
+                      text={
+                        bookRequest.coverPreference?.join(", ") || "N/A"
+                      }
+                    />
                   </TableData>
-                  <TableData className="book-button">
+                  <TableData className="book-date">
+                    <DateText>
+                      {formatSubmittedAt(bookRequest.createdAt, {
+                        dateOnly: true,
+                      })}
+                    </DateText>
+                  </TableData>
+                  <TableData className="cell-actions">
                     <ActionCell>
                       <CompactInfoButton
                         type="button"
@@ -239,7 +325,7 @@ const AdminCoverIdea: React.FC = () => {
             ) : (
               <TableRow>
                 <TableData
-                  colSpan={8}
+                  colSpan={9}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <EmptyMessage>No cover ideas found</EmptyMessage>
@@ -247,7 +333,7 @@ const AdminCoverIdea: React.FC = () => {
               </TableRow>
             )}
           </tbody>
-        </Table>
+        </CoverIdeasTable>
       </TableContainer>
 
       {!error && total > 0 && (
@@ -295,10 +381,14 @@ const RequestIdRow = styled.div`
 `;
 
 const RequestIdSub = styled.span`
+  display: block;
   font-family: monospace;
   color: #6dc7d1;
   font-weight: 600;
   font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const UserName = styled.span`
@@ -309,6 +399,13 @@ const UserName = styled.span`
 const BookTitle = styled.span`
   font-weight: 600;
   color: #212121;
+`;
+
+const DateText = styled.span`
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+  white-space: nowrap;
 `;
 
 const EmptyMessage = styled.div`
@@ -329,7 +426,7 @@ const ActionCell = styled.div`
   flex-wrap: nowrap;
   gap: 6px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 
   & > button {
     flex-shrink: 0;

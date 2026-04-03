@@ -20,6 +20,7 @@ import ConfirmModal from "../../ConfirmModal/ConfirmModal";
 import { toast, ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faUser, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
+import { formatSubmittedAt } from "../../../utils/formatSubmittedAt";
 
 const ORDERS_PAGE_SIZE = 50;
 
@@ -225,11 +226,12 @@ const Order: React.FC = () => {
               <TableHeader>Package</TableHeader>
               <TableHeader>Total Price</TableHeader>
               <TableHeader>Status</TableHeader>
+              <TableHeader>Submitted</TableHeader>
               <TableHeader>Actions</TableHeader>
             </tr>
           </thead>
           <tbody>
-            <TableSkeleton rows={8} cols={6} />
+            <TableSkeleton rows={8} cols={7} />
           </tbody>
         </Table>
       </Container>
@@ -290,6 +292,7 @@ const Order: React.FC = () => {
               <TableHeader>Package</TableHeader>
               <TableHeader>Total Price</TableHeader>
               <TableHeader>Status</TableHeader>
+              <TableHeader>Submitted</TableHeader>
               <TableHeader>Actions</TableHeader>
             </tr>
           </thead>
@@ -324,6 +327,11 @@ const Order: React.FC = () => {
                   <StatusBadge status={order.status}>
                     {order.status}
                   </StatusBadge>
+                </TableData>
+                <TableData>
+                  <OrderDateText>
+                    {formatSubmittedAt(order.createdAt)}
+                  </OrderDateText>
                 </TableData>
                 <TableData>
                   <OrderActionCell>
@@ -477,6 +485,12 @@ const Order: React.FC = () => {
             </ModalHeader>
             <ModalBody>
               <InfoRow>
+                <InfoLabel>Submitted</InfoLabel>
+                <InfoValue>
+                  {formatSubmittedAt(selectedOtherInfo.createdAt)}
+                </InfoValue>
+              </InfoRow>
+              <InfoRow>
                 <InfoLabel>Your name (form)</InfoLabel>
                 <InfoValue>
                   {selectedOtherInfo.name ||
@@ -599,14 +613,6 @@ const Order: React.FC = () => {
                   <InfoLabel>Examples (legacy)</InfoLabel>
                   <InfoValue style={{ whiteSpace: "pre-wrap" }}>
                     {selectedOtherInfo.examples}
-                  </InfoValue>
-                </InfoRow>
-              ) : null}
-              {selectedOtherInfo.createdAt ? (
-                <InfoRow>
-                  <InfoLabel>Submitted</InfoLabel>
-                  <InfoValue>
-                    {new Date(selectedOtherInfo.createdAt).toLocaleString()}
                   </InfoValue>
                 </InfoRow>
               ) : null}
@@ -998,6 +1004,13 @@ const FeatureItem = styled.li`
   &:last-child {
     border-bottom: none;
   }
+`;
+
+const OrderDateText = styled.span`
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+  white-space: nowrap;
 `;
 
 const Badge = styled.span<{ success?: boolean }>`

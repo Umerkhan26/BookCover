@@ -82,7 +82,6 @@ const ContactUsForm: React.FC = () => {
 
     try {
       const response = await submitContactFormAPI(formData);
-      console.log("API Response:", response);
       submitToGoogleSheet({
         formType: "contact",
         firstName: formData.firstName,
@@ -91,7 +90,11 @@ const ContactUsForm: React.FC = () => {
         referral: formData.referral || "",
         message: formData.message,
       });
-      toast.success("Your message has been sent successfully!");
+      toast.success(
+        typeof response?.message === "string" && response.message.trim()
+          ? response.message
+          : "Your message has been sent successfully!",
+      );
 
       setFormData({
         firstName: "",
@@ -101,9 +104,12 @@ const ContactUsForm: React.FC = () => {
         message: "",
       });
       setIsAgreed(false);
-    } catch (err) {
-      console.error("Contact form submission error:", err);
-      toast.error("Failed to send message. Please try again later.");
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Failed to send message. Please try again later.";
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }

@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { TableSkeleton } from "../../components/DashboardLoading/DashboardLoading";
 import AdminListPagination from "../../components/AdminDashboard/AdminListPagination";
-import { fetchAllContacts } from "../../apis/apis";
+import { deleteContactById, fetchAllContacts } from "../../apis/apis";
+import { formatSubmittedAt } from "../../utils/formatSubmittedAt";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   CloseButton,
   Container,
@@ -31,6 +35,8 @@ type ContactItem = {
   email?: string;
   referral?: string;
   message?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 const AdminContacts: React.FC = () => {
@@ -44,6 +50,10 @@ const AdminContacts: React.FC = () => {
   const [selectedContact, setSelectedContact] = useState<ContactItem | null>(
     null,
   );
+  const [contactToDelete, setContactToDelete] = useState<ContactItem | null>(
+    null,
+  );
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const getPreviewData = (text: string, maxWords: number) => {
     const normalized = text.trim();
@@ -85,11 +95,50 @@ const AdminContacts: React.FC = () => {
     void loadContacts();
   }, [page]);
 
+  const handleDeleteConfirm = async () => {
+    if (!contactToDelete?._id) return;
+    const id = String(contactToDelete._id);
+    try {
+      setDeleteLoading(true);
+      await deleteContactById(id);
+      const next = contacts.filter((c) => c._id !== id);
+      setContacts(next);
+      setTotal((t) => Math.max(0, t - 1));
+      if (selectedContact?._id === id) setSelectedContact(null);
+      setContactToDelete(null);
+      toast.success("Contact deleted successfully");
+      if (next.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
+      }
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error ? err.message : "Failed to delete contact";
+      toast.error(msg);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <Container>
       <Helmet>
         <title>Contact Submissions</title>
       </Helmet>
+      <ConfirmModal
+        open={!!contactToDelete}
+        title="Delete contact submission"
+        message={
+          contactToDelete
+            ? `Delete submission from ${`${contactToDelete.firstName || ""} ${contactToDelete.lastName || ""}`.trim() || contactToDelete.email || "this contact"}? This cannot be undone.`
+            : ""
+        }
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => {
+          if (!deleteLoading) setContactToDelete(null);
+        }}
+      />
       <HeaderSection>
         <Title>Contact Submissions</Title>
         {!error && (
@@ -109,15 +158,17 @@ const AdminContacts: React.FC = () => {
               <TableHeader className="header-email">Email</TableHeader>
               <TableHeader className="header-cover">Referral</TableHeader>
               <TableHeader className="header-moreinfo">Message</TableHeader>
+              <TableHeader className="header-date">Submitted</TableHeader>
+              <TableHeader className="header-actions">Actions</TableHeader>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <TableSkeleton rows={8} cols={5} />
+              <TableSkeleton rows={8} cols={7} />
             ) : error ? (
               <TableRow>
                 <TableData
-                  colSpan={5}
+                  colSpan={7}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <ErrorText>Error: {error}</ErrorText>
@@ -189,13 +240,25 @@ const AdminContacts: React.FC = () => {
                       {messagePreview.preview}
                     </PreviewText>
                   </TableData>
+                  <TableData className="cell-date">
+                    <DateText>{formatSubmittedAt(contact.createdAt)}</DateText>
+                  </TableData>
+                  <TableData className="cell-actions">
+                    <DeleteBtn
+                      type="button"
+                      disabled={deleteLoading}
+                      onClick={() => setContactToDelete(contact)}
+                    >
+                      Delete
+                    </DeleteBtn>
+                  </TableData>
                 </TableRow>
                 );
               })
             ) : (
               <TableRow>
                 <TableData
-                  colSpan={5}
+                  colSpan={7}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <EmptyText>No contact submissions found</EmptyText>
@@ -215,6 +278,7 @@ const AdminContacts: React.FC = () => {
           onNext={() => setPage((p) => Math.min(totalPages, p + 1))}
         />
       )}
+      <ToastContainer />
 
       {selectedContact && (
         <ModalOverlay onClick={() => setSelectedContact(null)}>
@@ -226,6 +290,8 @@ const AdminContacts: React.FC = () => {
               </CloseButton>
             </ModalHeader>
             <ModalBody>
+              <Label>Submitted</Label>
+              <Value>{formatSubmittedAt(selectedContact.createdAt)}</Value>
               <Label>Referral</Label>
               <Value>{selectedContact.referral || "N/A"}</Value>
               <Label>Message</Label>
@@ -286,6 +352,36 @@ const EmptyText = styled.div`
   color: #6b7280;
   font-size: 16px;
   font-weight: 500;
+`;
+
+const DateText = styled.span`
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+  white-space: nowrap;
+`;
+
+const DeleteBtn = styled.button`
+  padding: 6px 12px;
+  background-color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #b91c1c;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
 `;
 
 const PreviewText = styled.span<{ $isClickable?: boolean }>`

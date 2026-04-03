@@ -157,6 +157,7 @@ const SidebarContainer = styled.aside<CollapsibleProps>`
 
 const MainContent = styled.div<CollapsibleProps>`
   flex: 1;
+  min-width: 0; /* let nested tables use overflow-x: auto instead of expanding past viewport */
   padding: 14px 16px;
   margin-left: ${(props) =>
     props.collapsed

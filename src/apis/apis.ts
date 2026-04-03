@@ -247,19 +247,38 @@ export const fetchAddOnsByPackageId = async (packageId: string) => {
   }
 };
 
+export interface SubmitContactResponse {
+  message: string;
+  contactData?: unknown;
+}
+
 export const submitContactFormAPI = async (contactData: {
   firstName: string;
   lastName: string;
   email: string;
-  referral: string;
+  referral?: string;
   message: string;
-}) => {
+}): Promise<SubmitContactResponse> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/submit`, contactData);
-
+    const response = await axios.post<SubmitContactResponse>(
+      `${API_BASE_URL}/submit`,
+      {
+        firstName: contactData.firstName,
+        lastName: contactData.lastName,
+        email: contactData.email,
+        referral: contactData.referral ?? "",
+        message: contactData.message,
+      },
+    );
     return response.data;
-  } catch (error: any) {
-    throw error.response?.data?.message || "Failed to submit contact form";
+  } catch (error: unknown) {
+    const ax = error as {
+      response?: { data?: { message?: string } };
+    };
+    const msg = ax.response?.data?.message;
+    throw new Error(
+      typeof msg === "string" ? msg : "Failed to submit contact form",
+    );
   }
 };
 
@@ -318,6 +337,20 @@ export const fetchAllContacts = async (
   } catch (error) {
     console.error("Error fetching contacts:", error);
     throw new Error("Failed to fetch contacts");
+  }
+};
+
+export const deleteContactById = async (id: string): Promise<void> => {
+  try {
+    await axios.delete(
+      `${API_BASE_URL}/deleteContactById/${encodeURIComponent(id)}`,
+    );
+  } catch (error: any) {
+    const msg =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      "Failed to delete contact";
+    throw new Error(typeof msg === "string" ? msg : "Failed to delete contact");
   }
 };
 
