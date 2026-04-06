@@ -294,12 +294,10 @@ const BlockContent = styled.div`
   color: #1e1e1e;
 `;
 
-const EditableHeading = styled.div<{ level: number }>`
+const EditableHeading = styled.textarea<{ level: number }>`
   width: 100%;
   border: none;
   background: transparent;
-  direction: ltr;
-  unicode-bidi: plaintext;
   font-size: ${(props) => {
     const sizes = {
       1: "2em",
@@ -315,11 +313,14 @@ const EditableHeading = styled.div<{ level: number }>`
   color: #1e1e1e;
   padding: 4px 0;
   margin: 0;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.3;
+  font-family: "Manrope", sans-serif;
   outline: none;
-  min-height: 1.2em;
+  min-height: 2.1em;
 
-  &:empty:before {
-    content: attr(data-placeholder);
+  &::placeholder {
     color: #757575;
   }
 `;
@@ -1227,21 +1228,17 @@ const GutenbergEditor: React.FC<GutenbergEditorProps> = ({
       case "heading":
         return (
           <EditableHeading
-            as={`h${Number(block.data.level) || 2}` as any}
             level={Number(block.data.level) || 2}
-            contentEditable
-            suppressContentEditableWarning
-            dir="ltr"
-            data-placeholder={`Heading (H${Number(block.data.level) || 2})`}
-            onInput={(e: React.FormEvent<HTMLDivElement>) =>
-              updateBlock(block.id, {
-                text: (e.currentTarget.textContent || "").trimEnd(),
-              })
-            }
+            value={block.data.text || ""}
+            placeholder={`Heading (H${Number(block.data.level) || 2})`}
+            onChange={(e) => updateBlock(block.id, { text: e.target.value })}
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = "auto";
+              target.style.height = target.scrollHeight + "px";
+            }}
             style={{ textAlign: block.data.alignment || "left" }}
-          >
-            {block.data.text || ""}
-          </EditableHeading>
+          />
         );
       case "paragraph":
         return (

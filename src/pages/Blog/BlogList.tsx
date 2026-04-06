@@ -621,6 +621,11 @@ const BlogList: React.FC = () => {
     );
   }
 
+  const canonicalUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${window.location.pathname}`
+      : "";
+
   return (
     <>
       <Helmet>
@@ -629,6 +634,7 @@ const BlogList: React.FC = () => {
           name="description"
           content="Read our latest blog posts about book cover design, self-publishing tips, and creative insights."
         />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       </Helmet>
       <BlogBanner>
         <BannerImage>

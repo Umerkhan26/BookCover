@@ -208,12 +208,7 @@ const PostContent = styled.div`
   color: #333;
   margin-bottom: ${SECTION_GAP};
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  .editor-heading {
     margin-top: 24px;
     margin-bottom: 12px;
     font-weight: 700;
@@ -249,27 +244,27 @@ const PostContent = styled.div`
     }
   }
 
-  h1 {
+  .editor-heading-1 {
     font-size: 32px;
   }
 
-  h2 {
+  .editor-heading-2 {
     font-size: 28px;
   }
 
-  h3 {
+  .editor-heading-3 {
     font-size: 24px;
   }
 
-  h4 {
+  .editor-heading-4 {
     font-size: 20px;
   }
 
-  h5 {
+  .editor-heading-5 {
     font-size: 18px;
   }
 
-  h6 {
+  .editor-heading-6 {
     font-size: 16px;
   }
 
@@ -288,7 +283,7 @@ const PostContent = styled.div`
     display: block;
   }
 
-  table {
+  table.editor-table {
     width: 100%;
     border-collapse: collapse;
     margin: ${SECTION_GAP} 0;
@@ -297,14 +292,14 @@ const PostContent = styled.div`
     overflow: hidden;
   }
 
-  table th,
-  table td {
+  table.editor-table th,
+  table.editor-table td {
     padding: 12px;
     border: 1px solid #e0e0e0;
     text-align: left;
   }
 
-  table th {
+  table.editor-table th {
     background: ${theme.colors.gradient2};
     color: #fff;
     font-weight: 700;
@@ -313,11 +308,11 @@ const PostContent = styled.div`
     letter-spacing: 0.5px;
   }
 
-  table td {
+  table.editor-table td {
     background: #fff;
   }
 
-  table tr:nth-child(even) td {
+  table.editor-table tr:nth-child(even) td {
     background: #f9f9f9;
   }
 
@@ -550,6 +545,7 @@ const renderContentBlock = (block: any, index: number) => {
         <HeadingTag
           key={index}
           id={headingSlug}
+          className={`editor-heading editor-heading-${Number(block.data.level) || 2}`}
           data-alignment={alignment}
           style={{
             textAlign: alignment,
@@ -629,7 +625,7 @@ const renderContentBlock = (block: any, index: number) => {
 
     case "table":
       return (
-        <table key={index} style={block.styles}>
+        <table key={index} className="editor-table" style={block.styles}>
           {block.data.hasHeaderRow && (
             <thead>
               <tr>
@@ -655,6 +651,7 @@ const renderContentBlock = (block: any, index: number) => {
       return (
         <div
           key={index}
+          className="html-block"
           dangerouslySetInnerHTML={{ __html: block.data.rawHtml }}
           style={block.styles}
         />
@@ -819,6 +816,11 @@ const BlogPost: React.FC = () => {
     });
   };
 
+  const canonicalUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${location.pathname}`
+      : "";
+
   if (loading) {
     return (
       <>
@@ -943,8 +945,8 @@ const BlogPost: React.FC = () => {
         {post.seoMeta?.keywords && (
           <meta name="keywords" content={post.seoMeta.keywords.join(", ")} />
         )}
-        {post.seoMeta?.canonicalUrl && (
-          <link rel="canonical" href={post.seoMeta.canonicalUrl} />
+        {!isPreview && canonicalUrl && (
+          <link rel="canonical" href={canonicalUrl} />
         )}
       </Helmet>
       <BlogBanner>
