@@ -150,7 +150,16 @@ const AdminContacts: React.FC = () => {
       </HeaderSection>
 
       <TableContainer>
-        <Table>
+        <ContactsTable>
+          <colgroup>
+            <col style={{ width: "96px" }} />
+            <col style={{ width: "14%" }} />
+            <col style={{ width: "22%" }} />
+            <col style={{ width: "13%" }} />
+            <col style={{ width: "17%" }} />
+            <col style={{ width: "148px" }} />
+            <col style={{ width: "120px" }} />
+          </colgroup>
           <thead>
             <tr>
               <TableHeader className="header-id">ID</TableHeader>
@@ -185,6 +194,10 @@ const AdminContacts: React.FC = () => {
                   PREVIEW_WORD_LIMIT,
                 );
                 const openDetails = () => setSelectedContact(contact);
+                const submittedFull = formatSubmittedAt(contact.createdAt);
+                const submittedDateOnly = formatSubmittedAt(contact.createdAt, {
+                  dateOnly: true,
+                });
 
                 return (
                 <TableRow key={contact._id}>
@@ -192,11 +205,20 @@ const AdminContacts: React.FC = () => {
                     <IdText>{contact._id?.slice(-8) || "N/A"}</IdText>
                   </TableData>
                   <TableData className="user-name">
-                    {`${contact.firstName || ""} ${contact.lastName || ""}`.trim() ||
-                      "N/A"}
+                    <PreviewText
+                      title={
+                        `${contact.firstName || ""} ${contact.lastName || ""}`.trim() ||
+                        "N/A"
+                      }
+                    >
+                      {`${contact.firstName || ""} ${contact.lastName || ""}`.trim() ||
+                        "N/A"}
+                    </PreviewText>
                   </TableData>
                   <TableData className="book-email">
-                    {contact.email || "N/A"}
+                    <PreviewText title={contact.email || "N/A"}>
+                      {contact.email || "N/A"}
+                    </PreviewText>
                   </TableData>
                   <TableData className="book-cover">
                     <PreviewText
@@ -240,8 +262,14 @@ const AdminContacts: React.FC = () => {
                       {messagePreview.preview}
                     </PreviewText>
                   </TableData>
-                  <TableData className="cell-date">
-                    <DateText>{formatSubmittedAt(contact.createdAt)}</DateText>
+                  <TableData className="book-date">
+                    <DateText
+                      title={
+                        submittedFull !== "—" ? submittedFull : undefined
+                      }
+                    >
+                      {submittedDateOnly}
+                    </DateText>
                   </TableData>
                   <TableData className="cell-actions">
                     <DeleteBtn
@@ -266,7 +294,7 @@ const AdminContacts: React.FC = () => {
               </TableRow>
             )}
           </tbody>
-        </Table>
+        </ContactsTable>
       </TableContainer>
 
       {!loading && !error && total > 0 && (
@@ -402,5 +430,41 @@ const PreviewText = styled.span<{ $isClickable?: boolean }>`
     color: ${(props) => (props.$isClickable ? "#5ab8c2" : "#0f172a")};
     text-decoration-color: ${(props) =>
       props.$isClickable ? "#5ab8c2" : "initial"};
+  }
+`;
+
+const ContactsTable = styled(Table)`
+  min-width: 980px;
+
+  th.header-actions,
+  td.cell-actions {
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+  }
+
+  th.header-date,
+  td.book-date {
+    width: 148px;
+    min-width: 148px;
+    max-width: 148px;
+    padding-right: 12px;
+    box-sizing: border-box;
+  }
+
+  td.book-date {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  td.user-name,
+  td.book-email,
+  td.book-cover,
+  td.book-message {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `;
