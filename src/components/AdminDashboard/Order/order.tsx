@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 
-import { deleteOrderById, fetchAllOrders } from "../../../apis/apis";
+import {
+  bulkDeleteOrders,
+  deleteOrderById,
+  fetchAllOrders,
+} from "../../../apis/apis";
 import {
   Container,
   Table,
@@ -15,12 +19,15 @@ import {
   EmptyState,
 } from "../../DashboardLoading/DashboardLoading";
 import AdminListPagination from "../AdminListPagination";
+import AdminListFilters, { AdminBulkBar } from "../AdminListFilters";
 import styled from "styled-components";
 import ConfirmModal from "../../ConfirmModal/ConfirmModal";
 import { toast, ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faUser, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import { formatSubmittedAt } from "../../../utils/formatSubmittedAt";
+import type { DatePreset } from "../../../utils/adminDateRange";
+import { presetToDateStrings } from "../../../utils/adminDateRange";
 
 const ORDERS_PAGE_SIZE = 50;
 
@@ -132,29 +139,121 @@ const Order: React.FC = () => {
   const [selectedOtherInfo, setSelectedOtherInfo] = useState<any | null>(null);
   const [orderToDelete, setOrderToDelete] = useState<IOrder | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [datePreset, setDatePreset] = useState<DatePreset>("all");
+  const [customDateFrom, setCustomDateFrom] = useState("");
+  const [customDateTo, setCustomDateTo] = useState("");
+  const { dateFrom: apiDateFrom, dateTo: apiDateTo } = useMemo(
+    () => presetToDateStrings(datePreset, customDateFrom, customDateTo),
+    [datePreset, customDateFrom, customDateTo],
+  );
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const filterInit = useRef(true);
+  const selectAllRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const loadOrders = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const res = await fetchAllOrders({ page, limit: ORDERS_PAGE_SIZE });
-        setOrders((res.orders as IOrder[]) || []);
-        setTotal(res.total);
-        setTotalPages(res.totalPages);
-        setPageSizeLabel(res.limit || ORDERS_PAGE_SIZE);
-        if (res.orders.length === 0 && page > 1) {
-          setPage((p) => Math.max(1, p - 1));
-        }
-      } catch (err) {
-        setError("Failed to load orders");
-      } finally {
-        setLoading(false);
-      }
-    };
+    const t = window.setTimeout(() => {
+      setDebouncedSearch(searchInput.trim());
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [searchInput]);
 
+  useEffect(() => {
+    if (filterInit.current) {
+      filterInit.current = false;
+      return;
+    }
+    setPage(1);
+  }, [debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  useEffect(() => {
+    setSelectedIds(new Set());
+  }, [page, debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  const loadOrders = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetchAllOrders({
+        page,
+        limit: ORDERS_PAGE_SIZE,
+        search: debouncedSearch || undefined,
+        dateFrom: apiDateFrom || undefined,
+        dateTo: apiDateTo || undefined,
+      });
+      setOrders((res.orders as IOrder[]) || []);
+      setTotal(res.total);
+      setTotalPages(res.totalPages);
+      setPageSizeLabel(res.limit || ORDERS_PAGE_SIZE);
+      if (res.orders.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
+      }
+    } catch (err) {
+      setError("Failed to load orders");
+    } finally {
+      setLoading(false);
+    }
+  }, [page, debouncedSearch, apiDateFrom, apiDateTo]);
+
+  useEffect(() => {
     void loadOrders();
-  }, [page]);
+  }, [loadOrders]);
+
+  const pageOrderIds = orders.map((o) => String(o._id));
+  const allOnPageSelected =
+    pageOrderIds.length > 0 &&
+    pageOrderIds.every((id) => selectedIds.has(id));
+  const someOnPageSelected = pageOrderIds.some((id) => selectedIds.has(id));
+
+  useEffect(() => {
+    const el = selectAllRef.current;
+    if (el) {
+      el.indeterminate = someOnPageSelected && !allOnPageSelected;
+    }
+  }, [someOnPageSelected, allOnPageSelected]);
+
+  const toggleSelectOne = (id: string, checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) n.add(id);
+      else n.delete(id);
+      return n;
+    });
+  };
+
+  const toggleSelectAllOnPage = (checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) pageOrderIds.forEach((id) => n.add(id));
+      else pageOrderIds.forEach((id) => n.delete(id));
+      return n;
+    });
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    const ids = [...selectedIds];
+    if (ids.length === 0) return;
+    try {
+      setDeleteLoading(true);
+      await bulkDeleteOrders(ids);
+      setBulkDeleteOpen(false);
+      setSelectedIds(new Set());
+      toast.success(`Deleted ${ids.length} order(s)`);
+      await loadOrders();
+    } catch (err: any) {
+      const msg =
+        typeof err === "string"
+          ? err
+          : err?.message || "Bulk delete failed";
+      toast.error(msg);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
 
   const handleUserClick = (user: any) => {
     setSelectedUser(user);
@@ -182,6 +281,11 @@ const Order: React.FC = () => {
       const next = orders.filter((o) => o._id !== id);
       setOrders(next);
       setTotal((t) => Math.max(0, t - 1));
+      setSelectedIds((prev) => {
+        const n = new Set(prev);
+        n.delete(id);
+        return n;
+      });
       if (selectedOtherInfo?._id === id) {
         setSelectedOtherInfo(null);
       }
@@ -221,6 +325,7 @@ const Order: React.FC = () => {
         <Table>
           <thead>
             <tr>
+              <TableHeader className="checkbox-column" aria-label="Select" />
               <TableHeader>ID</TableHeader>
               <TableHeader>User</TableHeader>
               <TableHeader>Package</TableHeader>
@@ -231,7 +336,7 @@ const Order: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            <TableSkeleton rows={8} cols={7} />
+            <TableSkeleton rows={8} cols={8} />
           </tbody>
         </Table>
       </Container>
@@ -256,6 +361,17 @@ const Order: React.FC = () => {
         />
       </Helmet>
       <ConfirmModal
+        open={bulkDeleteOpen}
+        title="Delete selected orders"
+        message={`Delete ${selectedIds.size} order(s)? This cannot be undone.`}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleBulkDeleteConfirm}
+        onCancel={() => {
+          if (!deleteLoading) setBulkDeleteOpen(false);
+        }}
+      />
+      <ConfirmModal
         open={!!orderToDelete}
         title="Delete order"
         message={
@@ -278,6 +394,26 @@ const Order: React.FC = () => {
         </OrderCount>
       </HeaderSection>
 
+      <AdminListFilters
+        searchLabel="Search orders"
+        searchPlaceholder="Order ID, user, package, title…"
+        searchValue={searchInput}
+        onSearchChange={setSearchInput}
+        datePreset={datePreset}
+        onDatePresetChange={setDatePreset}
+        customDateFrom={customDateFrom}
+        customDateTo={customDateTo}
+        onCustomDateFromChange={setCustomDateFrom}
+        onCustomDateToChange={setCustomDateTo}
+      />
+
+      <AdminBulkBar
+        selectedCount={selectedIds.size}
+        itemLabel="selected"
+        disabled={deleteLoading}
+        onDeleteClick={() => setBulkDeleteOpen(true)}
+      />
+
       {orders.length === 0 ? (
         <EmptyState>
           <h3>No orders found</h3>
@@ -287,6 +423,15 @@ const Order: React.FC = () => {
         <Table>
           <thead>
             <tr>
+              <TableHeader className="checkbox-column">
+                <RowCheckbox
+                  ref={selectAllRef}
+                  type="checkbox"
+                  checked={allOnPageSelected}
+                  onChange={(e) => toggleSelectAllOnPage(e.target.checked)}
+                  aria-label="Select all on this page"
+                />
+              </TableHeader>
               <TableHeader>ID</TableHeader>
               <TableHeader>User</TableHeader>
               <TableHeader>Package</TableHeader>
@@ -299,6 +444,16 @@ const Order: React.FC = () => {
           <tbody>
             {orders.map((order) => (
               <TableRow key={order._id}>
+                <TableData>
+                  <RowCheckbox
+                    type="checkbox"
+                    checked={selectedIds.has(String(order._id))}
+                    onChange={(e) =>
+                      toggleSelectOne(String(order._id), e.target.checked)
+                    }
+                    aria-label="Select order"
+                  />
+                </TableData>
                 <TableData>
                   <OrderIdRow>
                     <OrderIdSub>{order._id.slice(-8)}</OrderIdSub>
@@ -1021,4 +1176,11 @@ const Badge = styled.span<{ success?: boolean }>`
   font-weight: 600;
   background-color: ${(props) => (props.success ? "#d1fae5" : "#e5e7eb")};
   color: ${(props) => (props.success ? "#065f46" : "#374151")};
+`;
+
+const RowCheckbox = styled.input`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #0e7490;
 `;

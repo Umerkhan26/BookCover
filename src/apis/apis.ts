@@ -154,7 +154,27 @@ function normalizeListPagination(
   };
 }
 
-export interface FetchUsersParams {
+/** Optional text + date range filters for admin list GET endpoints. */
+export type ListFilterParams = {
+  search?: string;
+  /** `YYYY-MM-DD` */
+  dateFrom?: string;
+  /** `YYYY-MM-DD` */
+  dateTo?: string;
+};
+
+function appendListFilterParams(
+  search: URLSearchParams,
+  filters?: ListFilterParams,
+): void {
+  if (!filters) return;
+  const s = filters.search?.trim();
+  if (s) search.set("search", s);
+  if (filters.dateFrom) search.set("dateFrom", filters.dateFrom);
+  if (filters.dateTo) search.set("dateTo", filters.dateTo);
+}
+
+export interface FetchUsersParams extends ListFilterParams {
   page?: number;
   limit?: number;
 }
@@ -174,6 +194,7 @@ export const fetchUsers = async (
     const search = new URLSearchParams();
     if (params?.page != null) search.set("page", String(params.page));
     if (params?.limit != null) search.set("limit", String(params.limit));
+    appendListFilterParams(search, params);
     const qs = search.toString();
     const url = `${API_BASE_URL}/getAllUsers${qs ? `?${qs}` : ""}`;
     const response = await axios.get(url);
@@ -211,6 +232,20 @@ export const updateUserStatus = async (
   } catch (error: any) {
     throw error.response?.data?.message || "Failed to update user status";
   }
+};
+
+export const bulkDeleteUsers = async (userIds: string[]) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(
+    `${API_BASE_URL}/bulk-delete-users`,
+    { userIds },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data as { message: string; deletedCount: number };
 };
 
 export const deleteUser = async (userId: string) => {
@@ -282,7 +317,7 @@ export const submitContactFormAPI = async (contactData: {
   }
 };
 
-export interface FetchContactsParams {
+export interface FetchContactsParams extends ListFilterParams {
   page?: number;
   limit?: number;
 }
@@ -302,6 +337,7 @@ export const fetchAllContacts = async (
     const search = new URLSearchParams();
     if (params?.page != null) search.set("page", String(params.page));
     if (params?.limit != null) search.set("limit", String(params.limit));
+    appendListFilterParams(search, params);
     const qs = search.toString();
     const response = await axios.get(
       `${API_BASE_URL}/getAllContacts${qs ? `?${qs}` : ""}`,
@@ -340,6 +376,20 @@ export const fetchAllContacts = async (
   }
 };
 
+export const bulkDeleteContacts = async (contactIds: string[]) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(
+    `${API_BASE_URL}/bulk-delete-contacts`,
+    { contactIds },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data as { message: string; deletedCount: number };
+};
+
 export const deleteContactById = async (id: string): Promise<void> => {
   try {
     await axios.delete(
@@ -371,7 +421,8 @@ export const createOrderAPI = async (orderData: {
   // examples: string;
   // file: string;
   firstOrder: boolean;
-  shareOnPortfolio: boolean;
+  /** Portal sends `yes` | `no` | `unknown` strings; backend normalizes. */
+  shareOnPortfolio: boolean | string;
   // paymentMethod: string;
   status: string;
   userContacts?: string[];
@@ -413,7 +464,7 @@ export const fetchOrdersByUserId = async (): Promise<any[]> => {
   }
 };
 
-export interface FetchAllOrdersParams {
+export interface FetchAllOrdersParams extends ListFilterParams {
   page?: number;
   limit?: number;
 }
@@ -433,6 +484,7 @@ export const fetchAllOrders = async (
     const search = new URLSearchParams();
     if (params?.page != null) search.set("page", String(params.page));
     if (params?.limit != null) search.set("limit", String(params.limit));
+    appendListFilterParams(search, params);
     const qs = search.toString();
     const response = await axios.get(
       `${API_BASE_URL}/getAllorders${qs ? `?${qs}` : ""}`,
@@ -451,6 +503,20 @@ export const fetchAllOrders = async (
     console.error("Error fetching all orders:", error);
     throw new Error("Failed to fetch orders");
   }
+};
+
+export const bulkDeleteOrders = async (orderIds: string[]) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(
+    `${API_BASE_URL}/bulk-delete-orders`,
+    { orderIds },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data as { message: string; deletedCount: number };
 };
 
 export const deleteOrderById = async (orderId: string) => {
@@ -524,7 +590,7 @@ export const createBookRequest = async (bookRequestData: {
   }
 };
 
-export interface FetchCoverIdeasParams {
+export interface FetchCoverIdeasParams extends ListFilterParams {
   page?: number;
   limit?: number;
 }
@@ -544,6 +610,7 @@ export const fetchAllBookRequests = async (
     const search = new URLSearchParams();
     if (params?.page != null) search.set("page", String(params.page));
     if (params?.limit != null) search.set("limit", String(params.limit));
+    appendListFilterParams(search, params);
     const qs = search.toString();
     const response = await axios.get(
       `${API_BASE_URL}/getCoverIdeas${qs ? `?${qs}` : ""}`,
@@ -600,6 +667,20 @@ export const fetchBookRequestById = async (id: string) => {
   }
 };
 
+export const bulkDeleteBookRequests = async (ids: string[]) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(
+    `${API_BASE_URL}/bulk-delete-cover-ideas`,
+    { ids },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data as { message: string; deletedCount: number };
+};
+
 export const deleteBookRequestById = async (id: string) => {
   try {
     const token = localStorage.getItem("token");
@@ -642,6 +723,8 @@ export const getBlogPosts = async (filters?: {
   category?: string;
   tag?: string;
   search?: string;
+  dateFrom?: string;
+  dateTo?: string;
   page?: number;
   limit?: number;
   sortBy?: string;
@@ -717,6 +800,20 @@ export const updateBlogPostContent = async (postId: string, content: any[]) => {
   } catch (error: any) {
     throw error.response?.data?.message || "Failed to update blog post content";
   }
+};
+
+export const bulkDeleteBlogPosts = async (postIds: string[]) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(
+    `${API_BASE_URL}/blog/posts/bulk-delete`,
+    { postIds },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data as { message: string; deletedCount: number };
 };
 
 export const deleteBlogPost = async (postId: string) => {

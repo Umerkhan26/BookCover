@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Container,
   CoverIdeasTable,
@@ -12,22 +12,32 @@ import {
   InfoButton,
   SeriesBadge,
 } from "./AdminCoverIdea.styles";
-import { deleteBookRequestById, fetchAllBookRequests } from "../../apis/apis";
+import {
+  bulkDeleteBookRequests,
+  deleteBookRequestById,
+  fetchAllBookRequests,
+} from "../../apis/apis";
 import { formatSubmittedAt } from "../../utils/formatSubmittedAt";
 import { Helmet } from "react-helmet-async";
 import { TableSkeleton } from "../../components/DashboardLoading/DashboardLoading";
 import AdminListPagination from "../../components/AdminDashboard/AdminListPagination";
+import AdminListFilters, {
+  AdminBulkBar,
+} from "../../components/AdminDashboard/AdminListFilters";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import type { DatePreset } from "../../utils/adminDateRange";
+import { presetToDateStrings } from "../../utils/adminDateRange";
 
 const COVER_IDEAS_PAGE_SIZE = 50;
 
 /** Stable column widths: fixed ID + Actions, % for the rest (table-layout: fixed). */
 const CoverIdeasColGroup = () => (
   <colgroup>
+    <col style={{ width: "40px" }} />
     <col style={{ width: "88px" }} />
     <col style={{ width: "10%" }} />
     <col style={{ width: "24%" }} />
@@ -39,6 +49,13 @@ const CoverIdeasColGroup = () => (
     <col style={{ width: "220px" }} />
   </colgroup>
 );
+
+const RowCheckbox = styled.input`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #0e7490;
+`;
 
 const PREVIEW_MAX_CHARS = 44;
 
@@ -99,32 +116,118 @@ const AdminCoverIdea: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [requestToDelete, setRequestToDelete] = useState<any | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [datePreset, setDatePreset] = useState<DatePreset>("all");
+  const [customDateFrom, setCustomDateFrom] = useState("");
+  const [customDateTo, setCustomDateTo] = useState("");
+  const { dateFrom: apiDateFrom, dateTo: apiDateTo } = useMemo(
+    () => presetToDateStrings(datePreset, customDateFrom, customDateTo),
+    [datePreset, customDateFrom, customDateTo],
+  );
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const filterInit = useRef(true);
+  const selectAllRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const loadBookRequests = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const res = await fetchAllBookRequests({
-          page,
-          limit: COVER_IDEAS_PAGE_SIZE,
-        });
-        setBookRequests(res.bookRequests || []);
-        setTotal(res.total);
-        setTotalPages(res.totalPages);
-        setPageSizeLabel(res.limit || COVER_IDEAS_PAGE_SIZE);
-        if (res.bookRequests.length === 0 && page > 1) {
-          setPage((p) => Math.max(1, p - 1));
-        }
-      } catch (err: any) {
-        setError(err.message || "Failed to load book requests");
-      } finally {
-        setLoading(false);
-      }
-    };
+    const t = window.setTimeout(() => {
+      setDebouncedSearch(searchInput.trim());
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [searchInput]);
 
+  useEffect(() => {
+    if (filterInit.current) {
+      filterInit.current = false;
+      return;
+    }
+    setPage(1);
+  }, [debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  useEffect(() => {
+    setSelectedIds(new Set());
+  }, [page, debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  const loadBookRequests = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetchAllBookRequests({
+        page,
+        limit: COVER_IDEAS_PAGE_SIZE,
+        search: debouncedSearch || undefined,
+        dateFrom: apiDateFrom || undefined,
+        dateTo: apiDateTo || undefined,
+      });
+      setBookRequests(res.bookRequests || []);
+      setTotal(res.total);
+      setTotalPages(res.totalPages);
+      setPageSizeLabel(res.limit || COVER_IDEAS_PAGE_SIZE);
+      if (res.bookRequests.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to load book requests");
+    } finally {
+      setLoading(false);
+    }
+  }, [page, debouncedSearch, apiDateFrom, apiDateTo]);
+
+  useEffect(() => {
     void loadBookRequests();
-  }, [page]);
+  }, [loadBookRequests]);
+
+  const pageIds = bookRequests.map((r) => String(r._id));
+  const allOnPageSelected =
+    pageIds.length > 0 && pageIds.every((id) => selectedIds.has(id));
+  const someOnPageSelected = pageIds.some((id) => selectedIds.has(id));
+
+  useEffect(() => {
+    const el = selectAllRef.current;
+    if (el) {
+      el.indeterminate = someOnPageSelected && !allOnPageSelected;
+    }
+  }, [someOnPageSelected, allOnPageSelected]);
+
+  const toggleSelectOne = (id: string, checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) n.add(id);
+      else n.delete(id);
+      return n;
+    });
+  };
+
+  const toggleSelectAllOnPage = (checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) pageIds.forEach((id) => n.add(id));
+      else pageIds.forEach((id) => n.delete(id));
+      return n;
+    });
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    const ids = [...selectedIds];
+    if (ids.length === 0) return;
+    try {
+      setDeleteLoading(true);
+      await bulkDeleteBookRequests(ids);
+      setBulkDeleteOpen(false);
+      setSelectedIds(new Set());
+      toast.success(`Deleted ${ids.length} cover idea(s)`);
+      await loadBookRequests();
+    } catch (err: any) {
+      const msg =
+        typeof err === "string" ? err : err?.message || "Bulk delete failed";
+      toast.error(msg);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -144,6 +247,7 @@ const AdminCoverIdea: React.FC = () => {
             <CoverIdeasColGroup />
             <thead>
               <tr>
+                <TableHeader aria-label="Select" />
                 <TableHeader className="header-id">ID</TableHeader>
                 <TableHeader className="header-username">User Name</TableHeader>
                 <TableHeader className="header-email">Email</TableHeader>
@@ -160,7 +264,7 @@ const AdminCoverIdea: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              <TableSkeleton rows={8} cols={9} />
+              <TableSkeleton rows={8} cols={10} />
             </tbody>
           </CoverIdeasTable>
         </TableContainer>
@@ -181,6 +285,11 @@ const AdminCoverIdea: React.FC = () => {
       const next = bookRequests.filter((r) => r._id !== id);
       setBookRequests(next);
       setTotal((t) => Math.max(0, t - 1));
+      setSelectedIds((prev) => {
+        const n = new Set(prev);
+        n.delete(id);
+        return n;
+      });
       setRequestToDelete(null);
       toast.success("Cover idea deleted successfully");
       if (next.length === 0 && page > 1) {
@@ -204,6 +313,17 @@ const AdminCoverIdea: React.FC = () => {
           content="Manage and view cover ideas submitted by users."
         />
       </Helmet>
+      <ConfirmModal
+        open={bulkDeleteOpen}
+        title="Delete selected cover ideas"
+        message={`Delete ${selectedIds.size} cover idea(s)? This cannot be undone.`}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleBulkDeleteConfirm}
+        onCancel={() => {
+          if (!deleteLoading) setBulkDeleteOpen(false);
+        }}
+      />
       <ConfirmModal
         open={!!requestToDelete}
         title="Delete cover idea"
@@ -229,11 +349,40 @@ const AdminCoverIdea: React.FC = () => {
         )}
       </HeaderSection>
 
+      <AdminListFilters
+        searchLabel="Search cover ideas"
+        searchPlaceholder="ID, name, email, title, genre…"
+        searchValue={searchInput}
+        onSearchChange={setSearchInput}
+        datePreset={datePreset}
+        onDatePresetChange={setDatePreset}
+        customDateFrom={customDateFrom}
+        customDateTo={customDateTo}
+        onCustomDateFromChange={setCustomDateFrom}
+        onCustomDateToChange={setCustomDateTo}
+      />
+
+      <AdminBulkBar
+        selectedCount={selectedIds.size}
+        itemLabel="selected"
+        disabled={deleteLoading}
+        onDeleteClick={() => setBulkDeleteOpen(true)}
+      />
+
       <TableContainer>
         <CoverIdeasTable>
           <CoverIdeasColGroup />
           <thead>
             <tr>
+              <TableHeader>
+                <RowCheckbox
+                  ref={selectAllRef}
+                  type="checkbox"
+                  checked={allOnPageSelected}
+                  onChange={(e) => toggleSelectAllOnPage(e.target.checked)}
+                  aria-label="Select all on this page"
+                />
+              </TableHeader>
               <TableHeader className="header-id">ID</TableHeader>
               <TableHeader className="header-username">User Name</TableHeader>
               <TableHeader className="header-email">Email</TableHeader>
@@ -251,7 +400,7 @@ const AdminCoverIdea: React.FC = () => {
             {error ? (
               <TableRow>
                 <TableData
-                  colSpan={9}
+                  colSpan={10}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <ErrorMessageText>Error: {error}</ErrorMessageText>
@@ -260,6 +409,16 @@ const AdminCoverIdea: React.FC = () => {
             ) : bookRequests.length > 0 ? (
               bookRequests.map((bookRequest) => (
                 <TableRow key={bookRequest._id}>
+                  <TableData>
+                    <RowCheckbox
+                      type="checkbox"
+                      checked={selectedIds.has(String(bookRequest._id))}
+                      onChange={(e) =>
+                        toggleSelectOne(String(bookRequest._id), e.target.checked)
+                      }
+                      aria-label="Select row"
+                    />
+                  </TableData>
                   <TableData className="book-id">
                     <RequestIdRow>
                       <RequestIdSub>{bookRequest._id.slice(-8)}</RequestIdSub>
@@ -325,7 +484,7 @@ const AdminCoverIdea: React.FC = () => {
             ) : (
               <TableRow>
                 <TableData
-                  colSpan={9}
+                  colSpan={10}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <EmptyMessage>No cover ideas found</EmptyMessage>

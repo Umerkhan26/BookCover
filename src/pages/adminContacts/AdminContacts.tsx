@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { TableSkeleton } from "../../components/DashboardLoading/DashboardLoading";
 import AdminListPagination from "../../components/AdminDashboard/AdminListPagination";
-import { deleteContactById, fetchAllContacts } from "../../apis/apis";
+import AdminListFilters, {
+  AdminBulkBar,
+} from "../../components/AdminDashboard/AdminListFilters";
+import {
+  bulkDeleteContacts,
+  deleteContactById,
+  fetchAllContacts,
+} from "../../apis/apis";
 import { formatSubmittedAt } from "../../utils/formatSubmittedAt";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import { toast, ToastContainer } from "react-toastify";
@@ -24,6 +31,8 @@ import {
   TableRow,
   Title,
 } from "../adminCoverIdeas/AdminCoverIdea.styles";
+import type { DatePreset } from "../../utils/adminDateRange";
+import { presetToDateStrings } from "../../utils/adminDateRange";
 
 const CONTACTS_PAGE_SIZE = 50;
 const PREVIEW_WORD_LIMIT = 4;
@@ -54,6 +63,40 @@ const AdminContacts: React.FC = () => {
     null,
   );
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [datePreset, setDatePreset] = useState<DatePreset>("all");
+  const [customDateFrom, setCustomDateFrom] = useState("");
+  const [customDateTo, setCustomDateTo] = useState("");
+  const { dateFrom: apiDateFrom, dateTo: apiDateTo } = useMemo(
+    () => presetToDateStrings(datePreset, customDateFrom, customDateTo),
+    [datePreset, customDateFrom, customDateTo],
+  );
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const filterInit = useRef(true);
+  const selectAllRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      setDebouncedSearch(searchInput.trim());
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (filterInit.current) {
+      filterInit.current = false;
+      return;
+    }
+    setPage(1);
+  }, [debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  useEffect(() => {
+    setSelectedIds(new Set());
+  }, [page, debouncedSearch, datePreset, customDateFrom, customDateTo]);
 
   const getPreviewData = (text: string, maxWords: number) => {
     const normalized = text.trim();
@@ -68,32 +111,84 @@ const AdminContacts: React.FC = () => {
     };
   };
 
-  useEffect(() => {
-    const loadContacts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const res = await fetchAllContacts({
-          page,
-          limit: CONTACTS_PAGE_SIZE,
-        });
-        const items = (res.contacts || []) as ContactItem[];
-        setContacts(items);
-        setTotal(res.total);
-        setTotalPages(res.totalPages);
-        setPageSizeLabel(res.limit || CONTACTS_PAGE_SIZE);
-        if (items.length === 0 && page > 1) {
-          setPage((p) => Math.max(1, p - 1));
-        }
-      } catch (err: any) {
-        setError(err?.message || "Failed to load contacts");
-      } finally {
-        setLoading(false);
+  const loadContacts = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetchAllContacts({
+        page,
+        limit: CONTACTS_PAGE_SIZE,
+        search: debouncedSearch || undefined,
+        dateFrom: apiDateFrom || undefined,
+        dateTo: apiDateTo || undefined,
+      });
+      const items = (res.contacts || []) as ContactItem[];
+      setContacts(items);
+      setTotal(res.total);
+      setTotalPages(res.totalPages);
+      setPageSizeLabel(res.limit || CONTACTS_PAGE_SIZE);
+      if (items.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
       }
-    };
+    } catch (err: any) {
+      setError(err?.message || "Failed to load contacts");
+    } finally {
+      setLoading(false);
+    }
+  }, [page, debouncedSearch, apiDateFrom, apiDateTo]);
 
+  useEffect(() => {
     void loadContacts();
-  }, [page]);
+  }, [loadContacts]);
+
+  const pageIds = contacts.map((c) => String(c._id));
+  const allOnPageSelected =
+    pageIds.length > 0 && pageIds.every((id) => selectedIds.has(id));
+  const someOnPageSelected = pageIds.some((id) => selectedIds.has(id));
+
+  useEffect(() => {
+    const el = selectAllRef.current;
+    if (el) {
+      el.indeterminate = someOnPageSelected && !allOnPageSelected;
+    }
+  }, [someOnPageSelected, allOnPageSelected]);
+
+  const toggleSelectOne = (id: string, checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) n.add(id);
+      else n.delete(id);
+      return n;
+    });
+  };
+
+  const toggleSelectAllOnPage = (checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) pageIds.forEach((id) => n.add(id));
+      else pageIds.forEach((id) => n.delete(id));
+      return n;
+    });
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    const ids = [...selectedIds];
+    if (ids.length === 0) return;
+    try {
+      setDeleteLoading(true);
+      await bulkDeleteContacts(ids);
+      setBulkDeleteOpen(false);
+      setSelectedIds(new Set());
+      toast.success(`Deleted ${ids.length} contact(s)`);
+      await loadContacts();
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error ? err.message : "Bulk delete failed";
+      toast.error(msg);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
 
   const handleDeleteConfirm = async () => {
     if (!contactToDelete?._id) return;
@@ -104,6 +199,11 @@ const AdminContacts: React.FC = () => {
       const next = contacts.filter((c) => c._id !== id);
       setContacts(next);
       setTotal((t) => Math.max(0, t - 1));
+      setSelectedIds((prev) => {
+        const n = new Set(prev);
+        n.delete(id);
+        return n;
+      });
       if (selectedContact?._id === id) setSelectedContact(null);
       setContactToDelete(null);
       toast.success("Contact deleted successfully");
@@ -124,6 +224,17 @@ const AdminContacts: React.FC = () => {
       <Helmet>
         <title>Contact Submissions</title>
       </Helmet>
+      <ConfirmModal
+        open={bulkDeleteOpen}
+        title="Delete selected contacts"
+        message={`Delete ${selectedIds.size} contact submission(s)? This cannot be undone.`}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleBulkDeleteConfirm}
+        onCancel={() => {
+          if (!deleteLoading) setBulkDeleteOpen(false);
+        }}
+      />
       <ConfirmModal
         open={!!contactToDelete}
         title="Delete contact submission"
@@ -149,9 +260,30 @@ const AdminContacts: React.FC = () => {
         )}
       </HeaderSection>
 
+      <AdminListFilters
+        searchLabel="Search contacts"
+        searchPlaceholder="ID, name, email, message…"
+        searchValue={searchInput}
+        onSearchChange={setSearchInput}
+        datePreset={datePreset}
+        onDatePresetChange={setDatePreset}
+        customDateFrom={customDateFrom}
+        customDateTo={customDateTo}
+        onCustomDateFromChange={setCustomDateFrom}
+        onCustomDateToChange={setCustomDateTo}
+      />
+
+      <AdminBulkBar
+        selectedCount={selectedIds.size}
+        itemLabel="selected"
+        disabled={deleteLoading}
+        onDeleteClick={() => setBulkDeleteOpen(true)}
+      />
+
       <TableContainer>
         <ContactsTable>
           <colgroup>
+            <col style={{ width: "40px" }} />
             <col style={{ width: "96px" }} />
             <col style={{ width: "14%" }} />
             <col style={{ width: "22%" }} />
@@ -162,6 +294,15 @@ const AdminContacts: React.FC = () => {
           </colgroup>
           <thead>
             <tr>
+              <TableHeader className="header-check" aria-label="Select">
+                <RowCheckbox
+                  ref={selectAllRef}
+                  type="checkbox"
+                  checked={allOnPageSelected}
+                  onChange={(e) => toggleSelectAllOnPage(e.target.checked)}
+                  aria-label="Select all on this page"
+                />
+              </TableHeader>
               <TableHeader className="header-id">ID</TableHeader>
               <TableHeader className="header-username">Name</TableHeader>
               <TableHeader className="header-email">Email</TableHeader>
@@ -173,11 +314,11 @@ const AdminContacts: React.FC = () => {
           </thead>
           <tbody>
             {loading ? (
-              <TableSkeleton rows={8} cols={7} />
+              <TableSkeleton rows={8} cols={8} />
             ) : error ? (
               <TableRow>
                 <TableData
-                  colSpan={7}
+                  colSpan={8}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <ErrorText>Error: {error}</ErrorText>
@@ -201,6 +342,16 @@ const AdminContacts: React.FC = () => {
 
                 return (
                 <TableRow key={contact._id}>
+                  <TableData className="cell-check">
+                    <RowCheckbox
+                      type="checkbox"
+                      checked={selectedIds.has(String(contact._id))}
+                      onChange={(e) =>
+                        toggleSelectOne(String(contact._id), e.target.checked)
+                      }
+                      aria-label="Select row"
+                    />
+                  </TableData>
                   <TableData className="book-id">
                     <IdText>{contact._id?.slice(-8) || "N/A"}</IdText>
                   </TableData>
@@ -286,7 +437,7 @@ const AdminContacts: React.FC = () => {
             ) : (
               <TableRow>
                 <TableData
-                  colSpan={7}
+                  colSpan={8}
                   style={{ textAlign: "center", padding: "40px" }}
                 >
                   <EmptyText>No contact submissions found</EmptyText>
@@ -433,8 +584,22 @@ const PreviewText = styled.span<{ $isClickable?: boolean }>`
   }
 `;
 
+const RowCheckbox = styled.input`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #0e7490;
+`;
+
 const ContactsTable = styled(Table)`
   min-width: 980px;
+
+  th.header-check,
+  td.cell-check {
+    width: 40px;
+    text-align: center;
+    vertical-align: middle;
+  }
 
   th.header-actions,
   td.cell-actions {

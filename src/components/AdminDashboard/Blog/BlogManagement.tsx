@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import {
   getBlogPosts,
   deleteBlogPost,
+  bulkDeleteBlogPosts,
   publishBlogPost,
 } from "../../../apis/apis";
 import { TableSkeleton } from "../../DashboardLoading/DashboardLoading";
 import AdminListPagination from "../AdminListPagination";
+import AdminListFilters, { AdminBulkBar } from "../AdminListFilters";
 import ConfirmModal from "../../ConfirmModal/ConfirmModal";
+import type { DatePreset } from "../../../utils/adminDateRange";
+import { presetToDateStrings } from "../../../utils/adminDateRange";
 
 const BLOG_ADMIN_PAGE_SIZE = 10;
 
@@ -174,6 +178,40 @@ const BlogManagement: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState<{ postId: string } | null>(null);
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [datePreset, setDatePreset] = useState<DatePreset>("all");
+  const [customDateFrom, setCustomDateFrom] = useState("");
+  const [customDateTo, setCustomDateTo] = useState("");
+  const { dateFrom: apiDateFrom, dateTo: apiDateTo } = useMemo(
+    () => presetToDateStrings(datePreset, customDateFrom, customDateTo),
+    [datePreset, customDateFrom, customDateTo],
+  );
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const filterInit = useRef(true);
+  const selectAllRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      setDebouncedSearch(searchInput.trim());
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (filterInit.current) {
+      filterInit.current = false;
+      return;
+    }
+    setPage(1);
+  }, [debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  useEffect(() => {
+    setSelectedIds(new Set());
+  }, [page, debouncedSearch, datePreset, customDateFrom, customDateTo]);
 
   const loadPosts = useCallback(async () => {
     try {
@@ -183,6 +221,9 @@ const BlogManagement: React.FC = () => {
         limit: BLOG_ADMIN_PAGE_SIZE,
         sortBy: "createdAt",
         sortOrder: "desc",
+        search: debouncedSearch || undefined,
+        dateFrom: apiDateFrom || undefined,
+        dateTo: apiDateTo || undefined,
       });
       const list = response.posts || [];
       setPosts(list);
@@ -202,11 +243,57 @@ const BlogManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [page]);
+  }, [page, debouncedSearch, apiDateFrom, apiDateTo]);
 
   useEffect(() => {
     void loadPosts();
   }, [loadPosts]);
+
+  const pagePostIds = posts.map((p) => String(p._id));
+  const allOnPageSelected =
+    pagePostIds.length > 0 &&
+    pagePostIds.every((id) => selectedIds.has(id));
+  const someOnPageSelected = pagePostIds.some((id) => selectedIds.has(id));
+
+  useEffect(() => {
+    const el = selectAllRef.current;
+    if (el) {
+      el.indeterminate = someOnPageSelected && !allOnPageSelected;
+    }
+  }, [someOnPageSelected, allOnPageSelected]);
+
+  const toggleSelectOne = (id: string, checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) n.add(id);
+      else n.delete(id);
+      return n;
+    });
+  };
+
+  const toggleSelectAllOnPage = (checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) pagePostIds.forEach((id) => n.add(id));
+      else pagePostIds.forEach((id) => n.delete(id));
+      return n;
+    });
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    const ids = [...selectedIds];
+    if (ids.length === 0) return;
+    try {
+      await bulkDeleteBlogPosts(ids);
+      setBulkDeleteOpen(false);
+      setSelectedIds(new Set());
+      toast.success(`Deleted ${ids.length} post(s)`);
+      await loadPosts();
+    } catch (error) {
+      console.error("Bulk delete error:", error);
+      toast.error("Failed to delete posts");
+    }
+  };
 
   const handleCreateNew = () => {
     navigate("/admin/blog/new");
@@ -225,6 +312,11 @@ const BlogManagement: React.FC = () => {
     try {
       await deleteBlogPost(deleteModal.postId);
       setDeleteModal(null);
+      setSelectedIds((prev) => {
+        const n = new Set(prev);
+        n.delete(deleteModal.postId);
+        return n;
+      });
       await loadPosts();
       toast.success("Post deleted successfully");
     } catch (error) {
@@ -259,6 +351,7 @@ const BlogManagement: React.FC = () => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHeaderCell style={{ width: 40 }} aria-label="Select" />
               <TableHeaderCell>Title</TableHeaderCell>
               <TableHeaderCell>Status</TableHeaderCell>
               <TableHeaderCell>Author</TableHeaderCell>
@@ -268,7 +361,7 @@ const BlogManagement: React.FC = () => {
           </TableHeader>
           <tbody>
             <tr>
-              <td colSpan={5} style={{ padding: 0, border: 0 }}>
+              <td colSpan={6} style={{ padding: 0, border: 0 }}>
                 <TableSkeleton rows={8} />
               </td>
             </tr>
@@ -280,6 +373,15 @@ const BlogManagement: React.FC = () => {
 
   return (
     <Container>
+      <ConfirmModal
+        open={bulkDeleteOpen}
+        title="Delete selected posts"
+        message={`Delete ${selectedIds.size} post(s)? This cannot be undone.`}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleBulkDeleteConfirm}
+        onCancel={() => setBulkDeleteOpen(false)}
+      />
       <ConfirmModal
         open={!!deleteModal}
         title="Delete post"
@@ -303,6 +405,25 @@ const BlogManagement: React.FC = () => {
         <Button onClick={handleCreateNew}>+ Create New Post</Button>
       </Header>
 
+      <AdminListFilters
+        searchLabel="Search posts"
+        searchPlaceholder="Title, excerpt, tags…"
+        searchValue={searchInput}
+        onSearchChange={setSearchInput}
+        datePreset={datePreset}
+        onDatePresetChange={setDatePreset}
+        customDateFrom={customDateFrom}
+        customDateTo={customDateTo}
+        onCustomDateFromChange={setCustomDateFrom}
+        onCustomDateToChange={setCustomDateTo}
+      />
+
+      <AdminBulkBar
+        selectedCount={selectedIds.size}
+        itemLabel="selected"
+        onDeleteClick={() => setBulkDeleteOpen(true)}
+      />
+
       {posts.length === 0 ? (
         <EmptyState>
           <p>No blog posts yet. Create your first post!</p>
@@ -311,6 +432,15 @@ const BlogManagement: React.FC = () => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHeaderCell style={{ width: 40 }}>
+                <RowCheckbox
+                  ref={selectAllRef}
+                  type="checkbox"
+                  checked={allOnPageSelected}
+                  onChange={(e) => toggleSelectAllOnPage(e.target.checked)}
+                  aria-label="Select all on this page"
+                />
+              </TableHeaderCell>
               <TableHeaderCell>Title</TableHeaderCell>
               <TableHeaderCell>Status</TableHeaderCell>
               <TableHeaderCell>Author</TableHeaderCell>
@@ -321,6 +451,16 @@ const BlogManagement: React.FC = () => {
           <tbody>
             {posts.map((post) => (
               <TableRow key={post._id}>
+                <TableCell>
+                  <RowCheckbox
+                    type="checkbox"
+                    checked={selectedIds.has(String(post._id))}
+                    onChange={(e) =>
+                      toggleSelectOne(String(post._id), e.target.checked)
+                    }
+                    aria-label="Select post"
+                  />
+                </TableCell>
                 <TableCell>{post.title}</TableCell>
                 <TableCell>
                   <StatusBadge status={post.status}>{post.status}</StatusBadge>
@@ -371,6 +511,13 @@ const BlogManagement: React.FC = () => {
     </Container>
   );
 };
+
+const RowCheckbox = styled.input`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #0e7490;
+`;
 
 const TitleSkeleton = styled.div`
   height: 22px;

@@ -1,7 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { deleteUser, fetchUsers, updateUserStatus } from "../../apis/apis";
+import {
+  bulkDeleteUsers,
+  deleteUser,
+  fetchUsers,
+  updateUserStatus,
+} from "../../apis/apis";
 
 import {
   Container,
@@ -21,8 +26,11 @@ import {
   ErrorMessage,
 } from "../DashboardLoading/DashboardLoading";
 import AdminListPagination from "./AdminListPagination";
+import AdminListFilters, { AdminBulkBar } from "./AdminListFilters";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import styled from "styled-components";
+import type { DatePreset } from "../../utils/adminDateRange";
+import { presetToDateStrings } from "../../utils/adminDateRange";
 
 interface User {
   _id: string;
@@ -53,32 +61,122 @@ const User: React.FC = () => {
   );
   const [actionLoading, setActionLoading] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [datePreset, setDatePreset] = useState<DatePreset>("all");
+  const [customDateFrom, setCustomDateFrom] = useState("");
+  const [customDateTo, setCustomDateTo] = useState("");
+  const { dateFrom: apiDateFrom, dateTo: apiDateTo } = useMemo(
+    () => presetToDateStrings(datePreset, customDateFrom, customDateTo),
+    [datePreset, customDateFrom, customDateTo],
+  );
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const filterInit = useRef(true);
+  const selectAllRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const res = await fetchUsers({ page, limit: USERS_PAGE_SIZE });
-        setUsers(res.users as User[]);
-        setTotal(res.total);
-        setTotalPages(res.totalPages);
-        setPageSizeLabel(res.limit || USERS_PAGE_SIZE);
-        if (res.users.length === 0 && page > 1) {
-          setPage((p) => Math.max(1, p - 1));
-        }
-      } catch (err: any) {
-        const msg =
-          typeof err === "string" ? err : err?.message || "Failed to load users";
-        setError(msg);
-        toast.error(msg);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const t = window.setTimeout(() => {
+      setDebouncedSearch(searchInput.trim());
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [searchInput]);
 
+  useEffect(() => {
+    if (filterInit.current) {
+      filterInit.current = false;
+      return;
+    }
+    setPage(1);
+  }, [debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  useEffect(() => {
+    setSelectedIds(new Set());
+  }, [page, debouncedSearch, datePreset, customDateFrom, customDateTo]);
+
+  const loadUsers = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetchUsers({
+        page,
+        limit: USERS_PAGE_SIZE,
+        search: debouncedSearch || undefined,
+        dateFrom: apiDateFrom || undefined,
+        dateTo: apiDateTo || undefined,
+      });
+      setUsers(res.users as User[]);
+      setTotal(res.total);
+      setTotalPages(res.totalPages);
+      setPageSizeLabel(res.limit || USERS_PAGE_SIZE);
+      if (res.users.length === 0 && page > 1) {
+        setPage((p) => Math.max(1, p - 1));
+      }
+    } catch (err: any) {
+      const msg =
+        typeof err === "string" ? err : err?.message || "Failed to load users";
+      setError(msg);
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, debouncedSearch, apiDateFrom, apiDateTo]);
+
+  useEffect(() => {
     void loadUsers();
-  }, [page]);
+  }, [loadUsers]);
+
+  const pageUserIds = users.map((u) => u.userId);
+  const allOnPageSelected =
+    pageUserIds.length > 0 &&
+    pageUserIds.every((id) => selectedIds.has(id));
+  const someOnPageSelected = pageUserIds.some((id) => selectedIds.has(id));
+
+  useEffect(() => {
+    const el = selectAllRef.current;
+    if (el) {
+      el.indeterminate = someOnPageSelected && !allOnPageSelected;
+    }
+  }, [someOnPageSelected, allOnPageSelected]);
+
+  const toggleSelectOne = (userId: string, checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) n.add(userId);
+      else n.delete(userId);
+      return n;
+    });
+  };
+
+  const toggleSelectAllOnPage = (checked: boolean) => {
+    setSelectedIds((prev) => {
+      const n = new Set(prev);
+      if (checked) pageUserIds.forEach((id) => n.add(id));
+      else pageUserIds.forEach((id) => n.delete(id));
+      return n;
+    });
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    const ids = [...selectedIds];
+    if (ids.length === 0) return;
+    try {
+      setActionLoading(true);
+      await bulkDeleteUsers(ids);
+      setBulkDeleteOpen(false);
+      setSelectedIds(new Set());
+      toast.success(`Deleted ${ids.length} user(s)`);
+      await loadUsers();
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Bulk delete failed",
+      );
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -89,6 +187,7 @@ const User: React.FC = () => {
         <Table>
           <thead>
             <tr>
+              <TableHeader className="checkbox-column" aria-label="Select" />
               <TableHeader className="id-column">ID</TableHeader>
               <TableHeader>Name</TableHeader>
               <TableHeader className="email-column">Email</TableHeader>
@@ -97,7 +196,7 @@ const User: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            <TableSkeleton rows={8} cols={5} />
+            <TableSkeleton rows={8} cols={6} />
           </tbody>
         </Table>
       </Container>
@@ -160,6 +259,11 @@ const User: React.FC = () => {
         ),
       );
       setUserToDelete(null);
+      setSelectedIds((prev) => {
+        const n = new Set(prev);
+        n.delete(userToDelete.userId);
+        return n;
+      });
       toast.success("User deleted successfully");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to delete user");
@@ -188,6 +292,7 @@ const User: React.FC = () => {
         <Table>
           <thead>
             <tr>
+              <TableHeader className="checkbox-column" aria-label="Select" />
               <TableHeader className="id-column">ID</TableHeader>
               <TableHeader>Name</TableHeader>
               <TableHeader className="email-column">Email</TableHeader>
@@ -196,7 +301,7 @@ const User: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            <TableSkeleton rows={8} cols={5} />
+            <TableSkeleton rows={8} cols={6} />
           </tbody>
         </Table>
       </Container>
@@ -205,6 +310,17 @@ const User: React.FC = () => {
 
   return (
     <Container>
+      <ConfirmModal
+        open={bulkDeleteOpen}
+        title="Delete selected users"
+        message={`Delete ${selectedIds.size} user(s)? This cannot be undone.`}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={handleBulkDeleteConfirm}
+        onCancel={() => {
+          if (!actionLoading) setBulkDeleteOpen(false);
+        }}
+      />
       <ConfirmModal
         open={!!userToDelete}
         title="Delete user"
@@ -236,9 +352,38 @@ const User: React.FC = () => {
         </div>
       </HeaderSection>
 
+      <AdminListFilters
+        searchLabel="Search users"
+        searchPlaceholder="Name, email, role, user ID…"
+        searchValue={searchInput}
+        onSearchChange={setSearchInput}
+        datePreset={datePreset}
+        onDatePresetChange={setDatePreset}
+        customDateFrom={customDateFrom}
+        customDateTo={customDateTo}
+        onCustomDateFromChange={setCustomDateFrom}
+        onCustomDateToChange={setCustomDateTo}
+      />
+
+      <AdminBulkBar
+        selectedCount={selectedIds.size}
+        itemLabel="selected"
+        disabled={actionLoading}
+        onDeleteClick={() => setBulkDeleteOpen(true)}
+      />
+
       <Table>
         <thead>
           <tr>
+            <TableHeader className="checkbox-column">
+              <SelectAllInput
+                ref={selectAllRef}
+                type="checkbox"
+                checked={allOnPageSelected}
+                onChange={(e) => toggleSelectAllOnPage(e.target.checked)}
+                aria-label="Select all on this page"
+              />
+            </TableHeader>
             <TableHeader className="id-column">ID</TableHeader>
             <TableHeader>Name</TableHeader>
             <TableHeader className="email-column">Email</TableHeader>
@@ -250,7 +395,7 @@ const User: React.FC = () => {
           {error ? (
             <TableRow>
               <TableData
-                colSpan={5}
+                colSpan={6}
                 style={{ textAlign: "center", padding: "40px" }}
               >
                 {error && <ErrorMessageText>Error: {error}</ErrorMessageText>}
@@ -259,6 +404,16 @@ const User: React.FC = () => {
           ) : users.length > 0 ? (
             users.map((user, index) => (
               <TableRow key={user.userId}>
+                <TableData className="checkbox-column">
+                  <SelectAllInput
+                    type="checkbox"
+                    checked={selectedIds.has(user.userId)}
+                    onChange={(e) =>
+                      toggleSelectOne(user.userId, e.target.checked)
+                    }
+                    aria-label={`Select ${user.firstName} ${user.lastName}`}
+                  />
+                </TableData>
                 <TableData className="id-column">
                   {(page - 1) * USERS_PAGE_SIZE + index + 1}
                 </TableData>
@@ -329,7 +484,7 @@ const User: React.FC = () => {
           ) : (
             <TableRow>
               <TableData
-                colSpan={5}
+                colSpan={6}
                 style={{ textAlign: "center", padding: "40px" }}
               >
                 <EmptyMessage>No users found</EmptyMessage>
@@ -437,6 +592,13 @@ const ErrorMessageText = styled.div`
   color: #dc2626;
   font-size: 13px;
   font-weight: 500;
+`;
+
+const SelectAllInput = styled.input`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #0e7490;
 `;
 
 export default User;

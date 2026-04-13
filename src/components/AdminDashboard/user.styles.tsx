@@ -78,6 +78,12 @@ export const TableHeader = styled.th`
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+
+  &.checkbox-column {
+    width: 40px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
   text-align: center;
 
   @media (max-width: 768px) {
@@ -122,6 +128,11 @@ export const TableData = styled.td`
     display: block; /* Show as block for mobile view */
     width: 100%;
     margin-left: 0; /* Remove margin-left to prevent shifting */
+  }
+
+  &.checkbox-column {
+    vertical-align: middle;
+    width: 40px;
   }
 
   &.id-column {

@@ -13,8 +13,7 @@ const FormOrder: React.FC = () => {
   // Retrieve the passed order data from the location state
   const orderData = location.state;
 
-  // Destructure the orderData to pre-populate the form if needed
-  const { userId, packageId, addOnIds } = orderData;
+  const { userId, packageId, addOnIds } = orderData ?? {};
 
   // const [preferences, setPreferences] = useState("");
   // const [payment, setPayment] = useState("one");
@@ -46,32 +45,61 @@ const FormOrder: React.FC = () => {
     "Fiction",
   ];
 
+  const validateForm = (): string | null => {
+    if (!userId || !packageId) {
+      return "Missing package selection. Please go back and choose a package again.";
+    }
+    if (!name.trim()) {
+      return "Please enter your name.";
+    }
+    if (!bookTitle.trim()) {
+      return "Please enter the book title.";
+    }
+    if (!genre.trim()) {
+      return "Please select a genre.";
+    }
+    if (!seriesContinuation) {
+      return "Please select whether this book continues as a series.";
+    }
+    if (!prefferedCoverStyle.trim()) {
+      return "Please select a preferred cover style.";
+    }
+    if (!shareOnPortfolio) {
+      return "Please tell us if we may share your cover on social media and website.";
+    }
+    if (!order) {
+      return "Please answer whether this is your first order with Lumeart Studio.";
+    }
+    return null;
+  };
+
   const handleReview = async () => {
+    const validationMsg = validateForm();
+    if (validationMsg) {
+      toast.error(validationMsg);
+      return;
+    }
+
     setLoading(true);
     const formData = {
       userId: String(userId),
       packageId: String(packageId),
       addOnIds: Array.isArray(addOnIds) ? addOnIds : [],
-      name,
-      bookTitle,
-      bookSubtitle,
-      narratorName,
-      genre,
+      name: name.trim(),
+      bookTitle: bookTitle.trim(),
+      bookSubtitle: bookSubtitle.trim(),
+      narratorName: narratorName.trim(),
+      genre: genre.trim(),
       seriesContinuation,
-      summary,
+      summary: summary.trim(),
       prefferedCoverStyle,
-      likeToSeeOnCover,
-      // preferences,
-      // payment,
+      likeToSeeOnCover: likeToSeeOnCover.trim(),
       status: "Submitted",
-      userContacts: userContacts ? userContacts.split(",") : [],
-      // coverMood: "", // Add missing fields with default values
-      // colorPalette: "",
-      // examples: "",
-      firstOrder: false, // ✅ Add this property
-      shareOnPortfolio: true, // ✅ Add this property
-      // paymentMethod: "", // ✅ Add this property
-      // file: "",
+      userContacts: userContacts
+        ? userContacts.split(",").map((s) => s.trim()).filter(Boolean)
+        : [],
+      firstOrder: order === "yes",
+      shareOnPortfolio,
     };
 
     try {
@@ -93,7 +121,9 @@ const FormOrder: React.FC = () => {
         status: formData.status,
         userContacts: formData.userContacts || [],
         firstOrder: formData.firstOrder,
-        shareOnPortfolio: formData.shareOnPortfolio,
+        shareOnPortfolio:
+          formData.shareOnPortfolio === "yes" ||
+          formData.shareOnPortfolio === "unknown",
       });
       toast.success("Order created successfully!");
 
@@ -101,9 +131,15 @@ const FormOrder: React.FC = () => {
       setTimeout(() => {
         navigate("/portal/orders", { state: response });
       }, 1500); // Delay navigation by 1500ms (1.5 seconds)
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error creating order:", error);
-      toast.error("Error creating order. Please try again.");
+      const msg =
+        typeof error === "string"
+          ? error
+          : error instanceof Error
+            ? error.message
+            : "Error creating order. Please try again.";
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
