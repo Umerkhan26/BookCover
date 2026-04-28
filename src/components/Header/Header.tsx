@@ -6,6 +6,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import userlogo from "../../assets//userlogo (1).webp";
 import LoginModal from "../Login/LoginModel";
 import RegisterModal from "../register/RegisterModal";
+import { getDefaultRouteForRole } from "../../utils/role.util";
 
 import {
   Nav,
@@ -56,14 +57,7 @@ function Header() {
     if (!isAuthenticated) {
       setShowLoginModal(true); // Show the login modal
     } else {
-      const userRole = userData.role;
-      if (userRole === "admin") {
-        navigate("/admin/users");
-      } else if (userRole === "seo") {
-        navigate("/admin/blog");
-      } else {
-        navigate("/portal/orders");
-      }
+      navigate(getDefaultRouteForRole(userData.role));
     }
   };
   const handleLoginSuccess = () => {

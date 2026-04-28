@@ -45,9 +45,9 @@ export const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0;
   background: white;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -85,11 +85,11 @@ export const CoverIdeasTable = styled(Table)`
 `;
 
 export const TableHeader = styled.th`
-  background-color: #f8fafc;
+  background-color: #6dc7d1;
   text-align: left;
   padding: 8px 10px;
   font-size: 11px;
-  color: #0f172a;
+  color: #ffffff;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -200,11 +200,11 @@ export const TableRow = styled.tr`
   transition: background-color 0.2s ease;
 
   &:nth-child(even) {
-    background-color: #f9fafb;
+    background-color: #f8f9fa;
   }
 
   &:hover {
-    background-color: #f3f4f6;
+    background-color: #e9ecef;
   }
 
   @media (max-width: 768px) {

@@ -117,12 +117,21 @@ import {
   faUser,
   faFileAlt,
   faNewspaper,
+  faFilter,
+  faEnvelope,
+  faChartLine,
+  faTableList,
+  faClockRotateLeft,
   faArrowLeft,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import logo from "../../assets/logo/Lumestudio-1.webp";
+import logo from "../../assets/logo/Lumestudio-10.webp";
+import {
+  getDefaultRouteForRole,
+  normalizeRole,
+} from "../../utils/role.util";
 
 interface CollapsibleProps {
   collapsed: boolean;
@@ -192,8 +201,7 @@ const Logo = styled.img<CollapsibleProps>`
   margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
   transition: margin-right 0.3s ease;
 
-  /* Hide logo when collapsed on any screen size */
-  display: ${(props) => (props.collapsed ? "none" : "block")};
+  display: block;
 `;
 
 const BrandName = styled.span<CollapsibleProps>`
@@ -280,8 +288,12 @@ const UserDashboard: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout, user } = useAuth();
-  const isSeo = user?.role === "seo";
-  const isAdmin = user?.role === "admin";
+  const normalizedRole = normalizeRole(user?.role);
+  const isSuperadmin = normalizedRole === "superadmin";
+  const isSeo = normalizedRole === "seo";
+  const isMarketing = normalizedRole === "marketing";
+  const isAdmin = normalizedRole === "admin";
+  const isAdminLike = isAdmin || isSuperadmin;
 
   // No user (e.g. signing out): redirect to home immediately so we don't flash other dashboard
   useEffect(() => {
@@ -289,29 +301,45 @@ const UserDashboard: React.FC = () => {
       navigate("/", { replace: true });
       return;
     }
-    if (user.role !== "admin" && user.role !== "seo") {
+    const role = normalizeRole(user.role);
+    if (
+      role !== "admin" &&
+      role !== "superadmin" &&
+      role !== "seo" &&
+      role !== "marketing"
+    ) {
       navigate("/portal/orders", { replace: true });
     }
   }, [user, navigate]);
 
-  // SEO: only allow /admin/blog (and blog edit/new); redirect everything else to /admin/blog
+  // Limited admin roles: lock SEO/Marketing to their allowed sections.
   useEffect(() => {
     if (!user) return;
-    if (user.role === "seo") {
-      const path = location.pathname;
-      const allowed = path === "/admin/blog" || path.startsWith("/admin/blog/");
-      if (!allowed) {
-        navigate("/admin/blog", { replace: true });
-      }
+    const role = normalizeRole(user.role);
+    const path = location.pathname;
+    if (role === "seo") {
+      const seoAllowed = path === "/admin/blog" || path.startsWith("/admin/blog/");
+      if (!seoAllowed) navigate("/admin/blog", { replace: true });
+      return;
+    }
+
+    if (role === "marketing") {
+      const marketingAllowed =
+        path === "/admin/funnel" ||
+        path === "/admin/email-templates" ||
+        path === "/admin/templates" ||
+        path === "/admin/analytics" ||
+        path === "/admin/categories" ||
+        path === "/admin/campaign-history";
+      if (!marketingAllowed) navigate("/admin/funnel", { replace: true });
     }
   }, [user, location.pathname, navigate]);
 
-  // Index redirect: /admin -> admin goes to users, seo goes to blog
+  // Index redirect: /admin -> role-specific default section.
   useEffect(() => {
     if (!user) return;
     if (location.pathname === "/admin" || location.pathname === "/admin/") {
-      if (user.role === "admin") navigate("/admin/users", { replace: true });
-      else if (user.role === "seo") navigate("/admin/blog", { replace: true });
+      navigate(getDefaultRouteForRole(user.role), { replace: true });
     }
   }, [user, location.pathname, navigate]);
 
@@ -351,44 +379,90 @@ const UserDashboard: React.FC = () => {
         </SidebarHeader>
 
         <NavList>
-          {!isSeo && (
+          {(isAdminLike || isSeo) && (
             <>
               <NavTitle collapsed={collapsed}>Activity</NavTitle>
-              <NavItem>
-                <NavLink as={Link} to="/admin/users" aria-label="All Users">
-                  <Icon icon={faListAlt} collapsed={collapsed} />
-                  <LinkText collapsed={collapsed}>All Users</LinkText>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink as={Link} to="/admin/orders" aria-label="Orders">
-                  <Icon icon={faUser} collapsed={collapsed} />
-                  <LinkText collapsed={collapsed}>Orders</LinkText>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink as={Link} to="/admin/coverIdeas" aria-label="Cover Ideas">
-                  <Icon icon={faFileAlt} collapsed={collapsed} />
-                  <LinkText collapsed={collapsed}>Cover Ideas</LinkText>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink as={Link} to="/admin/contacts" aria-label="Contacts">
-                  <Icon icon={faMessage} collapsed={collapsed} />
-                  <LinkText collapsed={collapsed}>Contacts</LinkText>
-                </NavLink>
-              </NavItem>
+              {isAdminLike ? (
+                <>
+                  <NavItem>
+                    <NavLink as={Link} to="/admin/users" aria-label="All Users">
+                      <Icon icon={faListAlt} collapsed={collapsed} />
+                      <LinkText collapsed={collapsed}>All Users</LinkText>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink as={Link} to="/admin/orders" aria-label="Orders">
+                      <Icon icon={faUser} collapsed={collapsed} />
+                      <LinkText collapsed={collapsed}>Orders</LinkText>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink as={Link} to="/admin/coverIdeas" aria-label="Cover Ideas">
+                      <Icon icon={faFileAlt} collapsed={collapsed} />
+                      <LinkText collapsed={collapsed}>Cover Ideas</LinkText>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink as={Link} to="/admin/contacts" aria-label="Contacts">
+                      <Icon icon={faMessage} collapsed={collapsed} />
+                      <LinkText collapsed={collapsed}>Contacts</LinkText>
+                    </NavLink>
+                  </NavItem>
+                </>
+              ) : null}
+              {!isMarketing && (isAdminLike || isSeo) ? (
+                <NavItem>
+                  <NavLink as={Link} to="/admin/blog" aria-label="Blog Management">
+                    <Icon icon={faNewspaper} collapsed={collapsed} />
+                    <LinkText collapsed={collapsed}>Blog</LinkText>
+                  </NavLink>
+                </NavItem>
+              ) : null}
             </>
           )}
 
-          {/* Blog: visible for admin and seo only */}
-          {(isAdmin || isSeo) && (
-            <NavItem>
-              <NavLink as={Link} to="/admin/blog" aria-label="Blog Management">
-                <Icon icon={faNewspaper} collapsed={collapsed} />
-                <LinkText collapsed={collapsed}>Blog</LinkText>
-              </NavLink>
-            </NavItem>
+          {(isSuperadmin || isMarketing) && (
+            <>
+              <NavTitle collapsed={collapsed}>Marketing Modules</NavTitle>
+              <NavItem>
+                <NavLink as={Link} to="/admin/funnel" aria-label="Funnel Module">
+                  <Icon icon={faFilter} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Funnel</LinkText>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  as={Link}
+                  to="/admin/templates"
+                  aria-label="Templates Module"
+                >
+                  <Icon icon={faEnvelope} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Templates</LinkText>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink as={Link} to="/admin/categories" aria-label="Categories Module">
+                  <Icon icon={faTableList} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Categories</LinkText>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink as={Link} to="/admin/analytics" aria-label="Analytics Module">
+                  <Icon icon={faChartLine} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Analytics</LinkText>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  as={Link}
+                  to="/admin/campaign-history"
+                  aria-label="Campaign History"
+                >
+                  <Icon icon={faClockRotateLeft} collapsed={collapsed} />
+                  <LinkText collapsed={collapsed}>Campaign History</LinkText>
+                </NavLink>
+              </NavItem>
+            </>
           )}
 
           <NavItem>
@@ -398,10 +472,10 @@ const UserDashboard: React.FC = () => {
             </NavLink>
           </NavItem>
 
-          {!isSeo && (
+          {isAdminLike && (
             <NavTitle collapsed={collapsed}>Reviews and tips</NavTitle>
           )}
-          {!isSeo && (
+          {isAdminLike && (
             <NavItem>
               <NavLink
                 href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
@@ -412,7 +486,6 @@ const UserDashboard: React.FC = () => {
               </NavLink>
             </NavItem>
           )}
-
           <NavItem>
             <NavLink as="button" onClick={handleLogout}>
               <Icon icon={faSignOutAlt} collapsed={collapsed} />

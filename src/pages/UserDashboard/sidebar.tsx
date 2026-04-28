@@ -10,8 +10,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import logo from "../../assets/logo/Lumestudio-1.webp";
+import logo from "../../assets/logo/Lumestudio-10.webp";
 import { Helmet } from "react-helmet-async";
+import { getDefaultRouteForRole, normalizeRole } from "../../utils/role.util";
 
 interface CollapsibleProps {
   collapsed: boolean;
@@ -78,8 +79,7 @@ const Logo = styled.img<CollapsibleProps>`
   margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
   transition: margin-right 0.3s ease;
 
-  /* Hide logo when collapsed on any screen size */
-  display: ${(props) => (props.collapsed ? "none" : "block")};
+  display: block;
 `;
 
 const BrandName = styled.span<CollapsibleProps>`
@@ -166,10 +166,12 @@ const UserDashboard: React.FC = () => {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
 
-  // SEO users must use /admin/blog only; never show portal (orders, etc.)
+  // Non-client users should be moved to their own dashboard section.
   useEffect(() => {
-    if (user?.role === "seo") {
-      navigate("/admin/blog", { replace: true });
+    if (!user?.role) return;
+    const role = normalizeRole(user.role);
+    if (role !== "client" && role !== "designer") {
+      navigate(getDefaultRouteForRole(role), { replace: true });
     }
   }, [user, navigate]);
 

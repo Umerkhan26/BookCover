@@ -872,7 +872,7 @@ const OrderActionCell = styled.div`
 
 const ViewInfoButton = styled.button`
   padding: 6px 12px;
-  background-color: #6dc7d1;
+  background-color: #3498db;
   border: none;
   border-radius: 7px;
   color: #fff;
@@ -886,13 +886,13 @@ const ViewInfoButton = styled.button`
   gap: 6px;
 
   &:hover {
-    background-color: #5ab8c2;
+    opacity: 0.9;
   }
 `;
 
 const DeleteOrderButton = styled.button`
   padding: 6px 12px;
-  background-color: #dc2626;
+  background-color: #e74c3c;
   border: none;
   border-radius: 6px;
   color: #fff;
@@ -905,7 +905,7 @@ const DeleteOrderButton = styled.button`
     opacity 0.15s ease;
 
   &:hover:not(:disabled) {
-    background-color: #b91c1c;
+    opacity: 0.9;
   }
 
   &:disabled {

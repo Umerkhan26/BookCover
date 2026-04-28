@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 import ForgotPasswordModal from "../ForgotPassword/ForgotPasswordModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  getDefaultRouteForRole,
+  isAdminPanelRole,
+  normalizeRole,
+} from "../../utils/role.util";
 
 interface LoginModalProps {
   show: boolean;
@@ -33,38 +38,32 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [showForgotModal, setShowForgotModal] = useState(false);
 
   const navigateUser = (role: string) => {
+    const normalizedRole = normalizeRole(role);
     const redirectPath = localStorage.getItem("redirectAfterLogin");
     localStorage.removeItem("redirectAfterLogin");
 
     // If a guarded action set a destination before login, honor it first
     // for non-admin routes so users can continue where they intended.
-    if (redirectPath && role !== "admin" && role !== "seo") {
+    if (redirectPath && !isAdminPanelRole(normalizedRole)) {
       toast.success("Redirecting...");
       navigate(redirectPath, { replace: true });
       return;
     }
 
-    switch (role) {
-      case "admin":
-        toast.success("Redirecting to Admin Dashboard...");
-        navigate("/admin/users", { replace: true });
-        break;
-      case "seo":
-        toast.success("Redirecting to Blog...");
-        navigate("/admin/blog", { replace: true });
-        break;
-      case "client":
-        toast.success("Logged in successfully.");
-        onClose();
-        break;
-      case "designer":
-        toast.success("You are logged in as a User.");
-        onClose();
-        break;
-      default:
-        toast.success("Redirecting to Home...");
-        navigate("/", { replace: true });
+    const destination = getDefaultRouteForRole(normalizedRole);
+    if (normalizedRole === "client" || normalizedRole === "designer") {
+      toast.success("Logged in successfully.");
+      onClose();
+      return;
     }
+
+    if (normalizedRole === "seo") toast.success("Redirecting to Blog...");
+    else if (normalizedRole === "marketing")
+      toast.success("Redirecting to Marketing...");
+    else if (normalizedRole === "superadmin" || normalizedRole === "admin")
+      toast.success("Redirecting to Admin Dashboard...");
+    else toast.success("Redirecting to Home...");
+    navigate(destination, { replace: true });
   };
 
   const handleLogin = async (e: React.FormEvent) => {

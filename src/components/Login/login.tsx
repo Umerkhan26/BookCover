@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { loginAPI } from "../../apis/apis";
 import { useAuth } from "../../context/authContext";
 import {
+  getDefaultRouteForRole,
+  isAdminPanelRole,
+  normalizeRole,
+} from "../../utils/role.util";
+import {
   Button,
   Container,
   Form,
@@ -34,34 +39,28 @@ const Login: React.FC<LoginProps> = ({
 
   // Handle role-based navigation
   const navigateUser = (role: string) => {
+    const normalizedRole = normalizeRole(role);
     const redirectPath = localStorage.getItem("redirectAfterLogin");
     localStorage.removeItem("redirectAfterLogin");
 
-    // SEO and admin always go to their dashboard, never to /portal
-    if (redirectPath && role !== "seo" && role !== "admin") {
+    // Admin panel roles should always land on their own section.
+    if (redirectPath && !isAdminPanelRole(normalizedRole)) {
       toast.success("Redirecting...");
       setTimeout(() => navigate(redirectPath), 1000);
       return;
     }
 
-    switch (role) {
-      case "admin":
-        toast.success("Redirecting to Admin Dashboard...");
-        setTimeout(() => navigate("/admin/users"), 1000);
-        break;
-      case "seo":
-        toast.success("Redirecting to Blog...");
-        setTimeout(() => navigate("/admin/blog"), 1000);
-        break;
-      case "client":
-        toast.success("Redirecting to Portal...");
-        navigate("/portal/orders", { replace: true });
-        break;
-      case "designer":
-      default:
-        toast.success("Redirecting to Home...");
-        navigate("/", { replace: true });
-    }
+    const destination = getDefaultRouteForRole(normalizedRole);
+    if (normalizedRole === "seo") toast.success("Redirecting to Blog...");
+    else if (normalizedRole === "marketing")
+      toast.success("Redirecting to Marketing...");
+    else if (normalizedRole === "superadmin" || normalizedRole === "admin")
+      toast.success("Redirecting to Admin Dashboard...");
+    else if (normalizedRole === "client")
+      toast.success("Redirecting to Portal...");
+    else toast.success("Redirecting to Home...");
+
+    navigate(destination, { replace: true });
   };
 
   // Handle login

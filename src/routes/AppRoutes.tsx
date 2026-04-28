@@ -126,6 +126,15 @@ const BlogManagement = lazy(
 );
 const BlogEditor = lazy(() => import("../pages/Admin/BlogEditor"));
 const Ebook = lazy(() => import("../pages/Ebook/Ebook"));
+const FunnelModule = lazy(() => import("../pages/SuperAdmin/FunnelModule"));
+const TemplatesModule = lazy(() => import("../pages/SuperAdmin/TemplatesModule"));
+const AnalyticsModule = lazy(() => import("../pages/SuperAdmin/AnalyticsModule"));
+const BulkEmailCampaignHistory = lazy(
+  () => import("../pages/SuperAdmin/BulkEmailCampaignHistory"),
+);
+const CategoriesModule = lazy(
+  () => import("../pages/SuperAdmin/CategoriesModule"),
+);
 
 // import TopBar from "../components/TopBar/TopBar";
 // import PortfolioWrapperWithTabs from "../pages/Portfolio/Portfolio";
@@ -247,83 +256,137 @@ const AppRoutes: React.FC = () => {
             <Route path="orders/preview" element={<PreviewPage />} />
             <Route path="orders/submitted" element={<OrderSubmittedPage />} />
           </Route>
+          <Route
+            path="/admin"
+            element={
+              <Suspense fallback={null}>
+                <Admin />
+              </Suspense>
+            }
+          >
+            <Route
+              path="users"
+              element={
+                <Suspense fallback={null}>
+                  <User />
+                </Suspense>
+              }
+            />
+            <Route
+              path="orders"
+              element={
+                <Suspense fallback={null}>
+                  <Order />
+                </Suspense>
+              }
+            />
+            <Route
+              path="coverIdeas"
+              element={
+                <Suspense fallback={null}>
+                  <AdminCoverIdea />
+                </Suspense>
+              }
+            />
+            <Route
+              path="coverIdeas/:id"
+              element={
+                <Suspense fallback={null}>
+                  <AdminCoverIdeaDetails />
+                </Suspense>
+              }
+            />
+            <Route
+              path="contacts"
+              element={
+                <Suspense fallback={null}>
+                  <AdminContacts />
+                </Suspense>
+              }
+            />
+            <Route
+              path="blog"
+              element={
+                <Suspense fallback={null}>
+                  <BlogManagement />
+                </Suspense>
+              }
+            />
+            <Route
+              path="blog/edit/:id"
+              element={
+                <Suspense fallback={null}>
+                  <BlogEditor />
+                </Suspense>
+              }
+            />
+            <Route
+              path="blog/new"
+              element={
+                <Suspense fallback={null}>
+                  <BlogEditor />
+                </Suspense>
+              }
+            />
+            <Route
+              path="funnel"
+              element={
+                <Suspense fallback={null}>
+                  <FunnelModule />
+                </Suspense>
+              }
+            />
+            <Route
+              path="email-templates"
+              element={
+                <Suspense fallback={null}>
+                  <TemplatesModule />
+                </Suspense>
+              }
+            />
+            <Route
+              path="templates"
+              element={
+                <Suspense fallback={null}>
+                  <TemplatesModule />
+                </Suspense>
+              }
+            />
+            <Route
+              path="analytics"
+              element={
+                <Suspense fallback={null}>
+                  <AnalyticsModule />
+                </Suspense>
+              }
+            />
+            <Route
+              path="categories"
+              element={
+                <Suspense fallback={null}>
+                  <CategoriesModule />
+                </Suspense>
+              }
+            />
+            <Route
+              path="email-campaigns"
+              element={
+                <Suspense fallback={null}>
+                  <Navigate to="/admin/templates" replace />
+                </Suspense>
+              }
+            />
+            <Route
+              path="campaign-history"
+              element={
+                <Suspense fallback={null}>
+                  <BulkEmailCampaignHistory />
+                </Suspense>
+              }
+            />
+          </Route>
         </Route>
-
         <Route path="/order/:packageId" element={<OrderForm />} />
-
-        <Route
-          path="/admin"
-          element={
-            <Suspense fallback={null}>
-              <Admin />
-            </Suspense>
-          }
-        >
-          <Route
-            path="users"
-            element={
-              <Suspense fallback={null}>
-                <User />
-              </Suspense>
-            }
-          />
-          <Route
-            path="orders"
-            element={
-              <Suspense fallback={null}>
-                <Order />
-              </Suspense>
-            }
-          />
-          <Route
-            path="coverIdeas"
-            element={
-              <Suspense fallback={null}>
-                <AdminCoverIdea />
-              </Suspense>
-            }
-          />
-          <Route
-            path="coverIdeas/:id"
-            element={
-              <Suspense fallback={null}>
-                <AdminCoverIdeaDetails />
-              </Suspense>
-            }
-          />
-          <Route
-            path="contacts"
-            element={
-              <Suspense fallback={null}>
-                <AdminContacts />
-              </Suspense>
-            }
-          />
-          <Route
-            path="blog"
-            element={
-              <Suspense fallback={null}>
-                <BlogManagement />
-              </Suspense>
-            }
-          />
-          <Route
-            path="blog/edit/:id"
-            element={
-              <Suspense fallback={null}>
-                <BlogEditor />
-              </Suspense>
-            }
-          />
-          <Route
-            path="blog/new"
-            element={
-              <Suspense fallback={null}>
-                <BlogEditor />
-              </Suspense>
-            }
-          />
-        </Route>
 
         {/* Catch-all route: redirect any unmatched URLs to home */}
         <Route path="*" element={<Navigate to="/" replace />} />

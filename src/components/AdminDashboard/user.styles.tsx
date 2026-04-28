@@ -55,6 +55,10 @@ export const UserCount = styled.span`
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center; /* Center-align the content of the table */
 
   @media (max-width: 768px) {
@@ -71,8 +75,8 @@ export const Table = styled.table`
 `;
 
 export const TableHeader = styled.th`
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: #6dc7d1;
+  color: #ffffff;
   padding: 8px 6px;
   font-size: 11px;
   font-weight: 700;
@@ -104,10 +108,13 @@ export const TableHeader = styled.th`
 `;
 
 export const TableRow = styled.tr`
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e5e7eb;
+  &:nth-child(even) {
+    background: #f8f9fa;
+  }
 
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #e9ecef;
   }
 
   @media (max-width: 768px) {
@@ -196,7 +203,7 @@ export const Button = styled.button<ButtonProps>`
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   transition: all 0.15s ease;
   display: inline-flex;

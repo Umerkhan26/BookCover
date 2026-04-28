@@ -5,62 +5,65 @@ import type { DatePreset } from "../../utils/adminDateRange";
 const Bar = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 10px 14px;
-  margin-bottom: 14px;
-  padding: 10px 12px;
-  background: #f8fafc;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
 `;
 
 const Field = styled.label`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #475569;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  display: block;
 `;
 
 const Input = styled.input`
-  padding: 7px 10px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  padding: 5px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
   font-size: 13px;
   min-width: 160px;
-  color: #0f172a;
+  height: 32px;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155;
+  background: #fff !important;
+  caret-color: #334155;
+
+  &::placeholder {
+    color: #64748b;
+    opacity: 1;
+  }
+
   &:focus {
     outline: none;
     border-color: #6dc7d1;
-    box-shadow: 0 0 0 2px rgba(109, 199, 209, 0.25);
   }
 `;
 
 const Select = styled.select`
-  padding: 8px 36px 8px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  padding: 5px 30px 5px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
   font-size: 13px;
-  min-width: 180px;
-  color: #0f172a;
-  background-color: #fff;
+  min-width: 120px;
+  height: 32px;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155;
+  background-color: #fff !important;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231e293b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364758b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px 16px;
-  line-height: 1.35;
+  background-position: right 10px center;
+  background-size: 14px 14px;
+
+  option {
+    color: #334155 !important;
+    background: #fff;
+  }
 
   &:focus {
     outline: none;
     border-color: #6dc7d1;
-    box-shadow: 0 0 0 2px rgba(109, 199, 209, 0.25);
   }
 `;
 
@@ -89,7 +92,7 @@ export type AdminListFiltersProps = {
 };
 
 const PRESET_OPTIONS: { value: DatePreset; label: string }[] = [
-  { value: "all", label: "All time" },
+  { value: "all", label: "All dates" },
   { value: "today", label: "Today" },
   { value: "yesterday", label: "Yesterday" },
   { value: "weekly", label: "This week" },
@@ -111,7 +114,6 @@ const AdminListFilters: React.FC<AdminListFiltersProps> = ({
 }) => (
   <Bar>
     <Field>
-      {searchLabel}
       <Input
         type="search"
         value={searchValue}
@@ -121,7 +123,6 @@ const AdminListFilters: React.FC<AdminListFiltersProps> = ({
       />
     </Field>
     <Field>
-      Period
       <Select
         value={datePreset}
         onChange={(e) => onDatePresetChange(e.target.value as DatePreset)}
