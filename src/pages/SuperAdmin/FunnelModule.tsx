@@ -743,13 +743,13 @@ const FilterRow = styled.div`
 
 const FilterInput = styled.input`
   border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 5px 10px;
+  border-radius: 8px;
+  padding: 6px 12px;
   min-width: 160px;
   font-size: 13px;
-  height: 32px;
+  height: 36px;
   color: #334155 !important;
-  background: #fff !important;
+  background-color: #fff;
 
   &::placeholder {
     color: #64748b;
@@ -762,30 +762,40 @@ const FilterInput = styled.input`
   }
 `;
 
+const funnelDateChevron = encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>",
+);
+
 const FilterSelect = styled.select`
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 5px 32px 5px 10px;
-  min-width: 120px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px 36px 6px 12px;
+  min-width: 140px;
   font-size: 13px;
-  background: #fff !important;
+  background-color: #fff;
   color: #334155 !important;
-  height: 32px;
+  height: 36px;
+  cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364758b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,${funnelDateChevron}");
   background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 14px 14px;
+  background-position: right 12px center;
+  background-size: 16px 16px;
 
   option {
     color: #334155 !important;
   }
 
+  &:hover {
+    border-color: #94a3b8;
+  }
+
   &:focus {
     outline: none;
     border-color: #6dc7d1;
+    box-shadow: 0 0 0 3px rgba(109, 199, 209, 0.25);
   }
 `;
 
@@ -798,7 +808,7 @@ const ApplyBtn = styled.button`
   padding: 5px 12px;
   border-radius: 6px;
   cursor: pointer;
-  height: 32px;
+  height: 36px;
   transition: all 0.2s ease;
 
   &:hover {
@@ -815,7 +825,7 @@ const ClearBtn = styled.button`
   padding: 5px 12px;
   border-radius: 6px;
   cursor: pointer;
-  height: 32px;
+  height: 36px;
   transition: all 0.2s ease;
 
   &:hover {

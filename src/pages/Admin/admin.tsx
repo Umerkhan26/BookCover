@@ -127,7 +127,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import logo from "../../assets/logo/Lumestudio-10.webp";
+import logo from "../../assets/logo/Lumestudio-9.webp";
+import fallbackLogo from "../../assets/logoBrand.png";
 import {
   getDefaultRouteForRole,
   normalizeRole,
@@ -195,12 +196,15 @@ const SidebarHeader = styled.div`
 `;
 
 const Logo = styled.img<CollapsibleProps>`
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 4px;
+  background: #ffffff;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
   transition: margin-right 0.3s ease;
-
+  object-fit: contain;
   display: block;
 `;
 
@@ -357,6 +361,13 @@ const UserDashboard: React.FC = () => {
   }, []);
 
   const toggleCollapse = () => setCollapsed(!collapsed);
+  const handleLogoError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>,
+  ) => {
+    if (event.currentTarget.dataset.fallbackApplied === "true") return;
+    event.currentTarget.dataset.fallbackApplied = "true";
+    event.currentTarget.src = fallbackLogo;
+  };
 
   const handleLogout = () => {
     logout(); // clear auth state and navigate to / ; avoids flashing other dashboard
@@ -371,7 +382,12 @@ const UserDashboard: React.FC = () => {
     <DashboardContainer>
       <SidebarContainer collapsed={collapsed}>
         <SidebarHeader>
-          <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />
+          <Logo
+            src={logo}
+            alt="Lumeart Studio"
+            collapsed={collapsed}
+            onError={handleLogoError}
+          />
           <BrandName collapsed={collapsed}>Lumeart Studio</BrandName>
           <CollapseButton onClick={toggleCollapse}>
             <FontAwesomeIcon icon={faArrowLeft} />

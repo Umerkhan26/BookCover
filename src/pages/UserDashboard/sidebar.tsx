@@ -10,7 +10,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import logo from "../../assets/logo/Lumestudio-10.webp";
+import logo from "../../assets/logo/Lumestudio-9.webp";
+import fallbackLogo from "../../assets/logoBrand.png";
 import { Helmet } from "react-helmet-async";
 import { getDefaultRouteForRole, normalizeRole } from "../../utils/role.util";
 
@@ -73,12 +74,15 @@ const SidebarHeader = styled.div`
 `;
 
 const Logo = styled.img<CollapsibleProps>`
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 4px;
+  background: #ffffff;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   margin-right: ${(props) => (props.collapsed ? "0" : "10px")};
   transition: margin-right 0.3s ease;
-
+  object-fit: contain;
   display: block;
 `;
 
@@ -198,6 +202,13 @@ const UserDashboard: React.FC = () => {
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
   };
+  const handleLogoError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>,
+  ) => {
+    if (event.currentTarget.dataset.fallbackApplied === "true") return;
+    event.currentTarget.dataset.fallbackApplied = "true";
+    event.currentTarget.src = fallbackLogo;
+  };
 
   const handleLogout = async () => {
     try {
@@ -222,7 +233,12 @@ const UserDashboard: React.FC = () => {
       </Helmet>
       <SidebarContainer collapsed={collapsed}>
         <SidebarHeader>
-          <Logo src={logo} alt="Lumeart Studio" collapsed={collapsed} />
+          <Logo
+            src={logo}
+            alt="Lumeart Studio"
+            collapsed={collapsed}
+            onError={handleLogoError}
+          />
           <BrandName collapsed={collapsed}>Lumeart Studio</BrandName>
           <CollapseButton onClick={toggleCollapse}>
             <FontAwesomeIcon icon={faArrowLeft} />

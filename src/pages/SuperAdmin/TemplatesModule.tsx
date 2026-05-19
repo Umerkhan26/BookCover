@@ -28,7 +28,7 @@ import {
 import type { DatePreset } from "../../utils/adminDateRange";
 import { presetToDateStrings } from "../../utils/adminDateRange";
 import AdminListPagination from "../../components/AdminDashboard/AdminListPagination";
-import logo from "../../assets/logo/Lumestudio-10.webp";
+import logo from "../../assets/logo/Lumestudio-9.webp";
 import {
   Container,
   HeaderSection,
