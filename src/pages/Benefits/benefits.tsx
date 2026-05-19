@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect } from "react";
-import "aos/dist/aos.css";
-import AOS from "aos";
+import { ensureAos } from "../../utils/aos";
 import {
   BenefitsWrap,
   Container,
@@ -38,8 +37,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
   const delayIncrement = 200;
 
   useEffect(() => {
-    // Refresh AOS when component mounts to ensure animations work on refresh
-    AOS.refresh();
+    ensureAos(true);
   }, []);
 
   return (

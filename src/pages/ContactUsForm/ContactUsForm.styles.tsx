@@ -25,7 +25,6 @@ export const MainContainer = styled.div`
   margin: 0px auto 40px auto;
   max-width: 1200px;
   padding: 0 25px;
- 
 
   @media (max-width: 992px) {
     flex-direction: column;
@@ -101,10 +100,17 @@ export const SocialIconsWrapper = styled.div`
   display: flex;
   gap: 20px;
 
+  a {
+    pointer-events: auto; /* Ensure link is clickable */
+    text-decoration: none;
+  }
+
   .social-icon {
     font-size: 1.8em;
     color: ${colors.socialIcon};
-    transition: color 0.3s ease, transform 0.2s ease;
+    transition:
+      color 0.3s ease,
+      transform 0.2s ease;
 
     &:hover {
       color: ${colors.primary};
@@ -158,7 +164,9 @@ export const Input = styled.input`
   font-size: 1em;
   color: ${colors.text};
   background-color: #ffffff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 
   &:focus {
     outline: none;
@@ -190,7 +198,9 @@ export const Textarea = styled.textarea`
   resize: vertical;
   min-height: 120px;
   background-color: #ffffff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 
   &:focus {
     outline: none;
@@ -274,7 +284,9 @@ export const Button = styled.button`
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
   text-align: center;
   max-width: 250px;
   margin: 20px auto 0 auto;

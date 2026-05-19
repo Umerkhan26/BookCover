@@ -302,7 +302,7 @@ const Footer: React.FC<FooterProps> = ({
                       <FaThreads size={20} />
                     </IconSocNet>
                     <IconSocNet
-                      href="https://www.instagram.com/lumeart_studio?igsh=MXFsd29mdmo4YWxtMg=="
+                      href="https://www.instagram.com/lumeart_studios/"
                       target="_blank"
                       color="#E4405F"
                     >
@@ -323,7 +323,11 @@ const Footer: React.FC<FooterProps> = ({
                             {link.text}
                           </FooterNavLink>
                         ) : (
-                          <FooterAnchor href={link.href} target="_blank" rel="noopener noreferrer">
+                          <FooterAnchor
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             {link.text}
                           </FooterAnchor>
                         )}

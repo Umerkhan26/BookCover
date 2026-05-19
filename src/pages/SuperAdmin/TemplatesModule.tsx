@@ -7,7 +7,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
   fetchReadyEmailDesignTemplates,
-  type ReadyEmailDesignTemplate,
   type EmailTemplate,
 } from "../../services/emailTemplates.service";
 import {
@@ -53,12 +52,8 @@ const TemplatesModule: React.FC = () => {
   const [templateLoading, setTemplateLoading] = useState(true);
   const [rowsLoading, setRowsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [htmlWrapper, setHtmlWrapper] = useState("");
   const [placeholders, setPlaceholders] = useState<string[]>([]);
   const [templates, setTemplates] = useState<EmailTemplate[]>([]);
-  const [designTemplates, setDesignTemplates] = useState<ReadyEmailDesignTemplate[]>(
-    [],
-  );
   const [selectedTemplateId, setSelectedTemplateId] = useState("");
   const [templatesTotal, setTemplatesTotal] = useState(0);
   const [templateSearch, setTemplateSearch] = useState("");
@@ -132,9 +127,7 @@ const TemplatesModule: React.FC = () => {
       try {
         setTemplateLoading(true);
         const readyDesigns = await fetchReadyEmailDesignTemplates();
-        setHtmlWrapper("");
         setPlaceholders(readyDesigns[0]?.placeholders || []);
-        setDesignTemplates(readyDesigns);
         const mappedTemplates: EmailTemplate[] = readyDesigns.map((d) => ({
           id: d.id,
           name: d.name,
@@ -388,6 +381,7 @@ const TemplatesModule: React.FC = () => {
         recipientCount: ids.length,
         sentCount: 0,
         failedCount: 0,
+        skippedCount: 0,
       });
       setSelectedIds(new Set());
       toast.success("Bulk email queued successfully");
@@ -427,6 +421,7 @@ const TemplatesModule: React.FC = () => {
       <HeaderSection>
         <Title>Email Templates Module</Title>
       </HeaderSection>
+      {error ? <ErrorText role="alert">{error}</ErrorText> : null}
 
       <Card>
         <TopRow>
@@ -823,12 +818,6 @@ const Label = styled.h3`
   color: #0f172a;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-`;
-
-const Text = styled.p`
-  margin: 0;
-  color: #334155 !important;
-  font-size: 12px;
 `;
 
 const PreviewFrame = styled.iframe`

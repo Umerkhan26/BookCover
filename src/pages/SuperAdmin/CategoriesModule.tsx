@@ -305,7 +305,9 @@ const CategoriesModule: React.FC = () => {
                   <TableData>{r.name}</TableData>
                   <TableData>{r.slug || "—"}</TableData>
                   <TableData>
-                    {new Date(r.createdAt).toLocaleDateString()}
+                    {r.createdAt
+                      ? new Date(r.createdAt).toLocaleDateString()
+                      : "—"}
                   </TableData>
                   <TableData>
                     <ActionWrap>

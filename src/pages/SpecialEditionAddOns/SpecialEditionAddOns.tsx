@@ -13,8 +13,7 @@ import { useNavigate } from "react-router-dom";
 import LoginModal from "../../components/Login/LoginModel";
 import RegisterModal from "../../components/register/RegisterModal";
 import { useState, useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { ensureAos } from "../../utils/aos";
 const addOns = [
   {
     title: "Sprayed edges design",
@@ -44,7 +43,7 @@ const SpecialEditionAddOns = () => {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   useEffect(() => {
-    AOS.refresh();
+    ensureAos(true);
   }, []);
 
   const handleLoginSuccess = (token: string) => {

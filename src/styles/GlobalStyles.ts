@@ -40,6 +40,12 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* If AOS never inits, keep content visible (opacity: 0 would hide entire sections). */
+  body:not(.aos-init) [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 `;
 
 export default GlobalStyle;

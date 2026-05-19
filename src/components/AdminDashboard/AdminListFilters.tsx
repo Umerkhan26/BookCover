@@ -118,6 +118,7 @@ const AdminListFilters: React.FC<AdminListFiltersProps> = ({
         type="search"
         value={searchValue}
         placeholder={searchPlaceholder}
+        aria-label={searchLabel}
         onChange={(e) => onSearchChange(e.target.value)}
         autoComplete="off"
       />
