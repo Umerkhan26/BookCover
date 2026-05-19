@@ -1,7 +1,7 @@
 import axios from "axios";
+import { getApiBaseUrl } from "../config/apiBaseUrl";
 
-// const API_BASE_URL = "http://13.60.184.141/api";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = getApiBaseUrl();
 
 export const registerUser = async (userData: {
   firstName: string;
