@@ -163,12 +163,19 @@ export const BannerImage = styled.div`
   }
 `;
 
-export const BannerContent = styled.div<{ alignCenter?: boolean }>`
+export const BannerContent = styled.div<{
+  alignCenter?: boolean;
+  alignTop?: boolean;
+}>`
   position: absolute;
-  top: 50%;
+  top: ${({ alignTop }) => (alignTop ? "32px" : "50%")};
   left: ${({ alignCenter }) => (alignCenter ? "50%" : "0")};
-  transform: ${({ alignCenter }) =>
-    alignCenter ? "translate(-50%, -50%)" : "translateY(-50%)"};
+  transform: ${({ alignCenter, alignTop }) => {
+    if (alignTop) {
+      return alignCenter ? "translateX(-50%)" : "none";
+    }
+    return alignCenter ? "translate(-50%, -50%)" : "translateY(-50%)";
+  }};
   padding-left: ${({ alignCenter }) =>
     alignCenter
       ? "0"
@@ -188,12 +195,14 @@ export const BannerContent = styled.div<{ alignCenter?: boolean }>`
   }
 
   @media (max-width: 1024px) {
+    top: ${({ alignTop }) => (alignTop ? "24px" : "50%")};
     max-width: ${({ alignCenter }) => (alignCenter ? "100%" : "55%")};
     padding-left: ${({ alignCenter }) =>
       alignCenter ? "0" : "20px"}; /* Match header Nav padding on tablet */
   }
 
   @media (max-width: 768px) {
+    top: ${({ alignTop }) => (alignTop ? "20px" : "50%")};
     max-width: ${({ alignCenter }) => (alignCenter ? "100%" : "50%")};
     padding-left: ${({ alignCenter }) =>
       alignCenter ? "0" : "20px"}; /* Match header Nav padding on mobile */
@@ -201,6 +210,7 @@ export const BannerContent = styled.div<{ alignCenter?: boolean }>`
   }
 
   @media (max-width: 480px) {
+    top: ${({ alignTop }) => (alignTop ? "16px" : "50%")};
     max-width: ${({ alignCenter }) => (alignCenter ? "100%" : "45%")};
     padding-left: ${({ alignCenter }) =>
       alignCenter
@@ -220,6 +230,38 @@ export const BannerContent = styled.div<{ alignCenter?: boolean }>`
   }
 `;
 
+export const BannerFormWrapper = styled.div`
+  position: absolute;
+  top: 32px;
+  right: 40px;
+  z-index: 3;
+  width: min(400px, 36%);
+
+  @media (min-width: 1280px) {
+    right: max(40px, calc((100% - 1200px) / 2));
+  }
+
+  @media (max-width: 1024px) {
+    top: 24px;
+    right: 20px;
+    width: min(360px, 44%);
+  }
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    padding: 0 20px 24px;
+    box-sizing: border-box;
+    margin-top: 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 16px 20px;
+  }
+`;
+
 export const CirclesContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -234,6 +276,15 @@ export const CirclesContainer = styled.div`
   @media (max-width: 480px) {
     gap: 4px;
     margin-bottom: 8px;
+  }
+`;
+
+export const TitleLine = styled.span`
+  display: block;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    white-space: normal;
   }
 `;
 

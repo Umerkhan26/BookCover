@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "../Layout";
 import Home from "../pages/Home/home";
-import fictonCoverImg from "../assets/PageBanner/1 (1).webp";
+import fictonCoverImg from "../assets/PageBanner/LUME-ART-WEB-PAGE-FICTION-COVER-2.webp";
 import BenefitsSection from "../pages/Benefits/benefits";
 import { benefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";
@@ -127,8 +127,12 @@ const BlogManagement = lazy(
 const BlogEditor = lazy(() => import("../pages/Admin/BlogEditor"));
 const Ebook = lazy(() => import("../pages/Ebook/Ebook"));
 const FunnelModule = lazy(() => import("../pages/SuperAdmin/FunnelModule"));
-const TemplatesModule = lazy(() => import("../pages/SuperAdmin/TemplatesModule"));
-const AnalyticsModule = lazy(() => import("../pages/SuperAdmin/AnalyticsModule"));
+const TemplatesModule = lazy(
+  () => import("../pages/SuperAdmin/TemplatesModule"),
+);
+const AnalyticsModule = lazy(
+  () => import("../pages/SuperAdmin/AnalyticsModule"),
+);
 const BulkEmailCampaignHistory = lazy(
   () => import("../pages/SuperAdmin/BulkEmailCampaignHistory"),
 );
@@ -150,9 +154,11 @@ const AppRoutes: React.FC = () => {
             element={
               <FictionCover
                 title="Book Cover Design For Indie Authors"
-                subtitle="Pay Only When You are Satisfied With The final result"
+                subtitle=""
+                // subtitle="Pay Only When You are Satisfied With The final result"
                 image={fictonCoverImg}
                 bookCoversText=""
+                textAlignTop
                 benefitsComponent={
                   <BenefitsSection
                     title={

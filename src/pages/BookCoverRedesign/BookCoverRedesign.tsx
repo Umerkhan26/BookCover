@@ -1,4 +1,4 @@
-import BookCoverRedesaign from "../../assets/PageBanner/7.webp";
+import BookCoverRedesaign from "../../assets/PageBanner/LUME-ART-WEB-PAGE-FICTION-COVER-5.webp";
 import Packages from "../ourPackages/packages";
 import SpecialEditionAddOns from "../SpecialEditionAddOns/SpecialEditionAddOns";
 import RedesignExamples from "./RedesignExamples";
@@ -28,9 +28,11 @@ const BookCoverRedesign = () => {
       <FictionsCover
         title="Book Cover Redesign"
         subtitle=""
+        // subtitle=""
         image={BookCoverRedesaign}
         bookCoversText=""
         showCircles={false}
+        textAlignTop
       />
       <Packages />
       <SpecialEditionAddOns />

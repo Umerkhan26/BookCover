@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import nonFictionImg from "../../assets/PageBanner/3.webp";
+import nonFictionImg from "../../assets/PageBanner/LUME-ART-WEB-PAGE-FICTION-COVER-3.webp";
 import BenefitsSection from "../Benefits/benefits";
 import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../DesignProcess/designProcess";
@@ -27,9 +27,11 @@ const NonFictonalCover: React.FC = () => {
       </Helmet>
       <FictionsCover
         title="Non-Fiction Book Cover Design"
-        subtitle="Professional covers for non-fiction books"
+        subtitle=""
+        // subtitle="Professional covers for non-fiction books"
         image={nonFictionImg}
         bookCoversText=""
+        textAlignTop
         benefitsComponent={
           <BenefitsSection
             title={

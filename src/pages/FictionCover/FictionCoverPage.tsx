@@ -2,12 +2,17 @@ import {
   BannerSection,
   BannerImage,
   BannerContent,
+  BannerFormWrapper,
   Title,
-  Subtitle,
+  TitleLine,
+  // Subtitle,
   BenifitsComponent,
   CirclesContainer,
   Circle,
 } from "./FictionCover.styles";
+import ServiceBannerForm from "../../components/ServiceBannerForm/ServiceBannerForm";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FictionCoverProps {
   title: string;
@@ -16,6 +21,8 @@ interface FictionCoverProps {
   image?: string;
   showCircles?: boolean;
   formatSubtitle?: boolean;
+  textAlignTop?: boolean;
+  showBannerForm?: boolean;
 
   benefitsComponent?: JSX.Element;
   designProcessComponent?: JSX.Element;
@@ -26,11 +33,13 @@ interface FictionCoverProps {
 
 const FictionsCover = ({
   title,
-  subtitle,
+  subtitle: _subtitle,
   image,
   bookCoversText: _bookCoversText,
   showCircles = false,
-  formatSubtitle = true,
+  formatSubtitle: _formatSubtitle = true,
+  textAlignTop = false,
+  showBannerForm,
   benefitsComponent,
   designProcessComponent,
   packagesComponent,
@@ -136,6 +145,20 @@ const FictionsCover = ({
       };
     }
 
+    if (title.includes("Non-Fiction Book Cover Design")) {
+      return {
+        firstPart: "Non-Fiction Book",
+        secondPart: "Cover Design",
+      };
+    }
+
+    if (title.includes("Custom Logo Design and Branding")) {
+      return {
+        firstPart: "Custom Logo Design",
+        secondPart: "and Branding",
+      };
+    }
+
     if (title.includes("Logo & Branding Design")) {
       return {
         firstPart: "Logo & Branding",
@@ -156,6 +179,83 @@ const FictionsCover = ({
   };
 
   const { firstPart, secondPart } = getTitleParts();
+  const displayBannerForm = showBannerForm ?? textAlignTop;
+
+  const isCenterAligned =
+    title.includes("Partner With Lume Art Studio") ||
+    title.includes("Welcome to Lume Art Studio") ||
+    title.includes("Custom Book Cover Design Portfolio") ||
+    title.includes("Meet Our Team") ||
+    title.includes("Frequently Asked Questions") ||
+    title.includes("Contact Us") ||
+    title.includes("Terms And Conditions") ||
+    title.includes("Privacy And Policy") ||
+    title.includes(
+      "We Help Authors Make Book Cover Design Their Best Marketing Tool",
+    );
+
+  const isSingleLineTitle =
+    (title.includes("Partner With Lume Art Studio") ||
+      title.includes("Welcome to Lume Art Studio") ||
+      title.includes("Custom Book Cover Design Portfolio") ||
+      title.includes("Meet Our Team") ||
+      title.includes("Frequently Asked Questions") ||
+      title.includes("Contact Us") ||
+      title.includes("Terms And Conditions") ||
+      title.includes("Privacy And Policy") ||
+      title.includes(
+        "We Help Authors Make Book Cover Design Their Best Marketing Tool",
+      )) &&
+    !secondPart;
+
+  // const isSingleLineSubtitle =
+  //   title.includes("Custom Book Cover Design Portfolio") ||
+  //   ((title.includes("Partner With Lume Art Studio") ||
+  //     title.includes("Welcome to Lume Art Studio") ||
+  //     title.includes("Meet Our Team") ||
+  //     title.includes("Frequently Asked Questions") ||
+  //     title.includes("Terms And Conditions") ||
+  //     title.includes("Privacy And Policy") ||
+  //     title.includes(
+  //       "We Help Authors Make Book Cover Design Their Best Marketing Tool",
+  //     )) &&
+  //     !secondPart);
+
+  const bannerTextContent = (
+    <>
+      {showCircles && (
+        <CirclesContainer>
+          <Circle />
+          <Circle />
+          <Circle />
+        </CirclesContainer>
+      )}
+      <Title singleLine={isSingleLineTitle}>
+        {textAlignTop && secondPart ? (
+          <>
+            <TitleLine>{firstPart}</TitleLine>
+            <TitleLine>{secondPart}</TitleLine>
+          </>
+        ) : (
+          <>
+            {firstPart}
+            {secondPart && (
+              <>
+                <br />
+                {secondPart}
+              </>
+            )}
+          </>
+        )}
+      </Title>
+      {/* <Subtitle singleLine={isSingleLineSubtitle}>
+        {typeof subtitle === "string"
+          ? subtitle &&
+            (formatSubtitle ? `>> ${subtitle.toUpperCase()}` : subtitle)
+          : subtitle}
+      </Subtitle> */}
+    </>
+  );
 
   return (
     <div>
@@ -172,75 +272,23 @@ const FictionsCover = ({
               decoding="sync"
             />
             <BannerContent
-              alignCenter={
-                title.includes("Partner With Lume Art Studio") ||
-                title.includes("Welcome to Lume Art Studio") ||
-                title.includes("Custom Book Cover Design Portfolio") ||
-                title.includes("Meet Our Team") ||
-                title.includes("Frequently Asked Questions") ||
-                title.includes("Contact Us") ||
-                title.includes("Terms And Conditions") ||
-                title.includes("Privacy And Policy") ||
-                title.includes(
-                  "We Help Authors Make Book Cover Design Their Best Marketing Tool",
-                )
-              }
+              alignCenter={isCenterAligned}
+              alignTop={textAlignTop}
             >
-              {showCircles && (
-                <CirclesContainer>
-                  <Circle />
-                  <Circle />
-                  <Circle />
-                </CirclesContainer>
-              )}
-              <Title
-                singleLine={
-                  (title.includes("Partner With Lume Art Studio") ||
-                    title.includes("Welcome to Lume Art Studio") ||
-                    title.includes("Custom Book Cover Design Portfolio") ||
-                    title.includes("Meet Our Team") ||
-                    title.includes("Frequently Asked Questions") ||
-                    title.includes("Contact Us") ||
-                    title.includes("Terms And Conditions") ||
-                    title.includes("Privacy And Policy") ||
-                    title.includes(
-                      "We Help Authors Make Book Cover Design Their Best Marketing Tool",
-                    )) &&
-                  !secondPart
-                }
-              >
-                {firstPart}
-                {secondPart && (
-                  <>
-                    <br />
-                    {secondPart}
-                  </>
-                )}
-              </Title>
-              <Subtitle
-                singleLine={
-                  title.includes("Custom Book Cover Design Portfolio") ||
-                  ((title.includes("Partner With Lume Art Studio") ||
-                    title.includes("Welcome to Lume Art Studio") ||
-                    title.includes("Meet Our Team") ||
-                    title.includes("Frequently Asked Questions") ||
-                    title.includes("Terms And Conditions") ||
-                    title.includes("Privacy And Policy") ||
-                    title.includes(
-                      "We Help Authors Make Book Cover Design Their Best Marketing Tool",
-                    )) &&
-                    !secondPart)
-                }
-              >
-                {typeof subtitle === "string"
-                  ? subtitle &&
-                    (formatSubtitle ? `>> ${subtitle.toUpperCase()}` : subtitle)
-                  : subtitle}
-              </Subtitle>
+              {bannerTextContent}
             </BannerContent>
+            {displayBannerForm && (
+              <BannerFormWrapper>
+                <ServiceBannerForm serviceName={title} />
+              </BannerFormWrapper>
+            )}
           </BannerImage>
         )}
       </BannerSection>
+
+      {displayBannerForm && (
+        <ToastContainer position="bottom-right" autoClose={5000} />
+      )}
 
       {benefitsComponent && (
         <BenifitsComponent>{benefitsComponent}</BenifitsComponent>
