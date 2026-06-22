@@ -22,7 +22,7 @@ export const MainContainer = styled.div`
   align-items: stretch;
   justify-content: center;
   gap: 20px;
-  margin: 0px auto 40px auto;
+  margin: 48px auto 40px auto;
   max-width: 1200px;
   padding: 0 25px;
 
@@ -41,6 +41,7 @@ export const InfoWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   padding: 40px;
+  padding-top: 80px;
   border-radius: 8px;
   background-color: ${colors.infoBackground};
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -55,6 +56,7 @@ export const InfoWrapper = styled.div`
   @media (max-width: 992px) {
     width: 100%;
     padding: 30px;
+    padding-top: 44px;
   }
 `;
 
@@ -125,12 +127,14 @@ export const ContactFormWrapper = styled.div`
   width: 100%;
   margin: 0;
   padding: 40px;
+  padding-top: 80px;
   background: ${colors.formBackground}; /* Pure white for the form itself */
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 992px) {
     padding: 30px;
+    padding-top: 44px;
     margin: 0 auto;
   }
 `;

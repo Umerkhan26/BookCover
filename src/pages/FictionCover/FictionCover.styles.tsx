@@ -233,17 +233,17 @@ export const BannerContent = styled.div<{
 export const BannerFormWrapper = styled.div`
   position: absolute;
   top: 32px;
-  right: 40px;
+  right: 100px;
   z-index: 3;
   width: min(400px, 36%);
 
   @media (min-width: 1280px) {
-    right: max(40px, calc((100% - 1200px) / 2));
+    right: max(100px, calc((100% - 1200px) / 2 + 80px));
   }
 
   @media (max-width: 1024px) {
     top: 24px;
-    right: 20px;
+    right: 60px;
     width: min(360px, 44%);
   }
 

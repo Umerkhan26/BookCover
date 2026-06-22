@@ -5,7 +5,7 @@ import {
   BannerFormWrapper,
   Title,
   TitleLine,
-  // Subtitle,
+  Subtitle,
   BenifitsComponent,
   CirclesContainer,
   Circle,
@@ -33,11 +33,11 @@ interface FictionCoverProps {
 
 const FictionsCover = ({
   title,
-  subtitle: _subtitle,
+  subtitle,
   image,
   bookCoversText: _bookCoversText,
   showCircles = false,
-  formatSubtitle: _formatSubtitle = true,
+  formatSubtitle = true,
   textAlignTop = false,
   showBannerForm,
   benefitsComponent,
@@ -208,18 +208,18 @@ const FictionsCover = ({
       )) &&
     !secondPart;
 
-  // const isSingleLineSubtitle =
-  //   title.includes("Custom Book Cover Design Portfolio") ||
-  //   ((title.includes("Partner With Lume Art Studio") ||
-  //     title.includes("Welcome to Lume Art Studio") ||
-  //     title.includes("Meet Our Team") ||
-  //     title.includes("Frequently Asked Questions") ||
-  //     title.includes("Terms And Conditions") ||
-  //     title.includes("Privacy And Policy") ||
-  //     title.includes(
-  //       "We Help Authors Make Book Cover Design Their Best Marketing Tool",
-  //     )) &&
-  //     !secondPart);
+  const isSingleLineSubtitle =
+    title.includes("Custom Book Cover Design Portfolio") ||
+    ((title.includes("Partner With Lume Art Studio") ||
+      title.includes("Welcome to Lume Art Studio") ||
+      title.includes("Meet Our Team") ||
+      title.includes("Frequently Asked Questions") ||
+      title.includes("Terms And Conditions") ||
+      title.includes("Privacy And Policy") ||
+      title.includes(
+        "We Help Authors Make Book Cover Design Their Best Marketing Tool",
+      )) &&
+      !secondPart);
 
   const bannerTextContent = (
     <>
@@ -248,12 +248,15 @@ const FictionsCover = ({
           </>
         )}
       </Title>
-      {/* <Subtitle singleLine={isSingleLineSubtitle}>
-        {typeof subtitle === "string"
-          ? subtitle &&
-            (formatSubtitle ? `>> ${subtitle.toUpperCase()}` : subtitle)
-          : subtitle}
-      </Subtitle> */}
+      {subtitle && (
+        <Subtitle singleLine={isSingleLineSubtitle}>
+          {typeof subtitle === "string"
+            ? formatSubtitle
+              ? `>> ${subtitle.toUpperCase()}`
+              : subtitle
+            : subtitle}
+        </Subtitle>
+      )}
     </>
   );
 

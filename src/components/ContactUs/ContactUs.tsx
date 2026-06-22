@@ -33,7 +33,7 @@ const ContactUs = () => {
           formatSubtitle={false}
         />
       </div>
-      <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
+      <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-8 md:mt-14">
         <ContactUsForm />
       </div>
     </div>

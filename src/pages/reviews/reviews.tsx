@@ -1,245 +1,202 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {
-  Button,
-  CardsWrapper,
+  Avatar,
+  ButtonWrap,
+  CardFooter,
+  CardHeader,
+  CarouselOuter,
+  CarouselTrack,
+  CarouselViewport,
+  Container,
+  Heading,
+  HeadingWrapper,
+  NavButton,
+  ReviewButton,
   ReviewCard,
-  ReviewsWrapper,
+  ReviewText,
+  ReviewerName,
+  Section,
+  Stars,
 } from "./reviews.styles";
 
-const ReviewsContainer = styled.div`
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-  padding-left: clamp(20px, 5vw, 0px);
-  padding-right: clamp(20px, 5vw, 0px);
+const GAP = 16;
 
-  @media (min-width: 1200px) {
-    padding-left: 0;
-    padding-right: 0;
-  }
+const reviewsData = [
+  {
+    name: "Adriana Pridemore Author",
+    avatar: "https://randomuser.me/api/portraits/women/12.jpg",
+    text: "Lumeart Studio turned my fiction cover idea into a clean, professional design that matched my vision perfectly. Communication was smooth, and revisions were handled quickly.",
+    timeAgo: "2 weeks ago",
+  },
+  {
+    name: "David Lyons Author",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    text: "The Lumeart team is super patient and approachable, but they're also talented book cover designers who are always open to collaboration. My fantasy cover looks incredible on Amazon.",
+    timeAgo: "3 weeks ago",
+  },
+  {
+    name: "Kate Myers Author",
+    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    text: "The entire Lumeart team is super friendly and they spend a lot of time making sure that you get what you want. I recommend them to every indie author I know.",
+    timeAgo: "1 month ago",
+  },
+  {
+    name: "Sarah Johnson Author",
+    avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+    text: "I've used Lumeart for three book covers now and each one has been better than the last. They truly understand author needs and deliver exceptional quality every time.",
+    timeAgo: "5 days ago",
+  },
+  {
+    name: "Michael Daniels Author",
+    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+    text: "I was impressed with how quickly Lumeart understood my non-fiction genre and audience. The cover they created helped boost my book sales significantly after launch.",
+    timeAgo: "2 weeks ago",
+  },
+  {
+    name: "Emily Carter Author",
+    avatar: "https://randomuser.me/api/portraits/women/28.jpg",
+    text: "From concept to completion, the Lumeart team exceeded my expectations. My illustrated cover design brought my story world to life in a way I couldn't have imagined.",
+    timeAgo: "4 days ago",
+  },
+  {
+    name: "James Turner Author",
+    avatar: "https://randomuser.me/api/portraits/men/52.jpg",
+    text: "Lumeart's creative talent made my audiobook cover redesign seamless. The square format looks sharp on Audible and the branding feels consistent across all my titles.",
+    timeAgo: "1 week ago",
+  },
+  {
+    name: "Laura Bennett Author",
+    avatar: "https://randomuser.me/api/portraits/women/36.jpg",
+    text: "Absolutely phenomenal experience! The process was smooth, communication was clear, and my romance cover design was exactly what I wanted for my new release.",
+    timeAgo: "3 days ago",
+  },
+  {
+    name: "Olivia Hughes Author",
+    avatar: "https://randomuser.me/api/portraits/women/52.jpg",
+    text: "The team really listens and cares. They went the extra mile on my logo and author branding package. I'll definitely work with Lumeart again for my next series.",
+    timeAgo: "6 days ago",
+  },
+  {
+    name: "John Smith Author",
+    avatar: "https://randomuser.me/api/portraits/men/22.jpg",
+    text: "Stunning work by Lumeart Studio! My book cover redesign was modern, sharp, and exactly what I had imagined. It gave my backlist a fresh, professional look.",
+    timeAgo: "1 week ago",
+  },
+];
 
-  @media (max-width: 1199px) {
-    padding-left: clamp(20px, 5vw, 32px);
-    padding-right: clamp(20px, 5vw, 32px);
-  }
-`;
+const STAR_COUNT = 5;
 
 const Reviews = () => {
-  return (
-    <div
-      className="bg-gray-100 text-gray-600 dark:text-gray-300 py-12 md:py-16"
-      id="reviews"
-      style={{ width: "100%", overflowX: "hidden" }}
-    >
-      <ReviewsContainer>
-        <ReviewsHeadingWrapper>
-          <h2
-            style={{
-              fontSize: "clamp(22px, 5vw, 40px)",
-              fontWeight: 700,
-              color: "#000",
-              textAlign: "center",
-              marginBottom: "4px",
-              padding: "0",
-              display: "block",
-              visibility: "visible",
-              width: "100%",
-              maxWidth: "100%",
-              lineHeight: "1.3",
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              boxSizing: "border-box",
-            }}
-            className="mt-10 md:mt-0"
-          >
-            <span style={{ color: "#000", display: "inline" }}>
-              What Do Our
-            </span>{" "}
-            <span style={{ color: "#6dc7d1", display: "inline" }}>
-              Clients Say
-            </span>
-          </h2>
-        </ReviewsHeadingWrapper>
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsToShow, setCardsToShow] = useState(3);
+  const [cardWidth, setCardWidth] = useState(300);
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "40px",
-          }}
-        >
-          <a
+  useEffect(() => {
+    const updateLayout = () => {
+      const width = window.innerWidth;
+      let visible = 3;
+
+      if (width < 640) {
+        visible = 1;
+      } else if (width < 992) {
+        visible = 2;
+      }
+
+      const carouselWidth = Math.min(width, 1200) - 40 - 96;
+      const calculatedWidth = Math.floor(
+        (carouselWidth - GAP * (visible - 1)) / visible,
+      );
+
+      setCardsToShow(visible);
+      setCardWidth(Math.max(calculatedWidth, 260));
+      setCurrentIndex((prev) =>
+        Math.min(prev, Math.max(0, reviewsData.length - visible)),
+      );
+    };
+
+    updateLayout();
+    window.addEventListener("resize", updateLayout);
+    return () => window.removeEventListener("resize", updateLayout);
+  }, []);
+
+  const maxIndex = Math.max(0, reviewsData.length - cardsToShow);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
+
+  return (
+    <Section id="reviews">
+      <Container>
+        <HeadingWrapper>
+          <Heading>
+            What Do Our <span>Clients Say</span>
+          </Heading>
+        </HeadingWrapper>
+
+        <ButtonWrap>
+          <ReviewButton
             href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ textDecoration: "none" }}
           >
-            <Button>Leave A Review</Button>
-          </a>
-        </div>
+            Leave A Review
+          </ReviewButton>
+        </ButtonWrap>
 
-        <ReviewsWrapper>
-          <CardsWrapper>
-            {/* Card 1 */}
-            <ReviewCard>
-              <div className="flex gap-4 text-black">
-                <img
-                  className="w-12 h-12 rounded-full"
-                  src="https://randomuser.me/api/portraits/women/12.jpg"
-                  alt="user avatar"
-                  width="400"
-                  height="400"
-                  loading="lazy"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-black-700 dark:">
-                    Daniella Doe
-                  </h3>
-                  <p className="text-sm text-black-500 dark:text-black-300">
-                    Mobile dev
-                  </p>
-                  <div className="flex text-yellow-500">
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-8 text-black">
-                Lumeart Studio turned my idea into a clean, professional cover
-                that matched my vision perfectly. Communication was smooth, and
-                revisions were handled quickly. I'm very pleased with the final
-                design and the overall experience.
-              </p>
-            </ReviewCard>
+        <CarouselOuter>
+          <NavButton type="button" onClick={handlePrev} aria-label="Previous">
+            <FaChevronLeft />
+          </NavButton>
 
-            {/* Card 2 */}
-            <ReviewCard>
-              <div className="flex gap-4 text-black">
-                <img
-                  className="w-12 h-12 rounded-full"
-                  src="https://randomuser.me/api/portraits/women/14.jpg"
-                  alt="user avatar"
-                  width="200"
-                  height="200"
-                  loading="lazy"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-black-700 dark:">
-                    Jane doe
-                  </h3>
-                  <p className="text-sm text-black-500 dark:text-black-300">
-                    Marketing
-                  </p>
-                  <div className="flex text-yellow-500">
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-8 text-black">
-                Professional, fast, and creative! I needed a standout cover for
-                my digital product, and Lumeart Studio nailed it. The design was
-                polished, the style was unique, and revisions were handled
-                quickly. Highly recommended!
-              </p>
-            </ReviewCard>
+          <CarouselViewport>
+            <CarouselTrack
+              $offset={currentIndex}
+              $cardWidth={cardWidth}
+              $gap={GAP}
+            >
+              {reviewsData.map((review) => (
+                <ReviewCard key={review.name} $cardWidth={cardWidth}>
+                  <CardHeader>
+                    <Avatar
+                      src={review.avatar}
+                      alt={review.name}
+                      loading="lazy"
+                    />
+                    <ReviewerName>{review.name}</ReviewerName>
+                  </CardHeader>
 
-            {/* Card 3 */}
-            <ReviewCard>
-              <div className="flex gap-4 text-black">
-                <img
-                  className="w-12 h-12 rounded-full"
-                  src="https://randomuser.me/api/portraits/women/18.jpg"
-                  alt="user avatar"
-                  width="200"
-                  height="200"
-                  loading="lazy"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-black-700 dark:">
-                    Yanick Doe
-                  </h3>
-                  <p className="text-sm text-black-500 dark:text-black-300">
-                    Developer
-                  </p>
-                  <div className="flex text-yellow-500">
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-8 text-black">
-                Absolutely loved the creativity! Lumeart delivered a cover
-                design that was not only visually appealing but also matched my
-                brand perfectly. The process was smooth, communication was
-                great, and the final result exceeded my expectations.
-              </p>
-            </ReviewCard>
+                  <Stars aria-label="5 out of 5 stars">
+                    {Array.from({ length: STAR_COUNT }).map((_, i) => (
+                      <span key={i}>★</span>
+                    ))}
+                  </Stars>
 
-            {/* Card 4 - New Review */}
-            <ReviewCard>
-              <div className="flex gap-4 text-black">
-                <img
-                  className="w-12 h-12 rounded-full"
-                  src="https://randomuser.me/api/portraits/men/22.jpg"
-                  alt="user avatar"
-                  width="200"
-                  height="200"
-                  loading="lazy"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-black-700 dark:">
-                    John Smith
-                  </h3>
-                  <p className="text-sm text-black-500 dark:text-black-300">
-                    Designer
-                  </p>
-                  <div className="flex text-yellow-500">
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-8 text-black">
-                Stunning work by Lumeart Studio! The cover design I received was
-                modern, sharp, and exactly what I had imagined. Their attention
-                to detail and unique design style really set them apart. I'll
-                definitely be coming back for future projects!
-              </p>
-            </ReviewCard>
-          </CardsWrapper>
-        </ReviewsWrapper>
-      </ReviewsContainer>
-    </div>
+                  <ReviewText>
+                    {review.text}{" "}
+                    <a href="#reviews" onClick={(e) => e.preventDefault()}>
+                      See More
+                    </a>
+                  </ReviewText>
+
+                  <CardFooter>{review.timeAgo}</CardFooter>
+                </ReviewCard>
+              ))}
+            </CarouselTrack>
+          </CarouselViewport>
+
+          <NavButton type="button" onClick={handleNext} aria-label="Next">
+            <FaChevronRight />
+          </NavButton>
+        </CarouselOuter>
+      </Container>
+    </Section>
   );
 };
 
 export default Reviews;
-
-export const ReviewsHeadingWrapper = styled.div`
-  text-align: center;
-  margin-bottom: 10px;
-  padding-bottom: 20px;
-  box-sizing: border-box;
-
-  /* MOBILE ONLY */
-  margin-top: 50px;
-
-  /* DESKTOP & UP */
-  @media (min-width: 768px) {
-    margin-top: 20px;
-  }
-`;

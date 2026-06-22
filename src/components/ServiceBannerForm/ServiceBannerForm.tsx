@@ -8,7 +8,6 @@ import {
   FormSubtitle,
   FormTitle,
   Input,
-  NameRow,
   SubmitButton,
   Textarea,
 } from "./ServiceBannerForm.styles";
@@ -21,8 +20,7 @@ const ServiceBannerForm: React.FC<ServiceBannerFormProps> = ({
   serviceName,
 }) => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     phone: "",
     message: "",
@@ -42,18 +40,17 @@ const ServiceBannerForm: React.FC<ServiceBannerFormProps> = ({
     e.preventDefault();
     setIsLoading(true);
 
-    const { firstName, lastName, email, phone, message } = formData;
+    const { fullName, email, phone, message } = formData;
 
-    if (
-      !firstName.trim() ||
-      !lastName.trim() ||
-      !email.trim() ||
-      !message.trim()
-    ) {
+    if (!fullName.trim() || !email.trim() || !message.trim()) {
       toast.error("Please fill in all required fields.");
       setIsLoading(false);
       return;
     }
+
+    const nameParts = fullName.trim().split(/\s+/);
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(" ") || firstName;
 
     if (!validateEmail(email)) {
       toast.error("Please enter a valid email address.");
@@ -90,8 +87,7 @@ const ServiceBannerForm: React.FC<ServiceBannerFormProps> = ({
       );
 
       setFormData({
-        firstName: "",
-        lastName: "",
+        fullName: "",
         email: "",
         phone: "",
         message: "",
@@ -112,24 +108,14 @@ const ServiceBannerForm: React.FC<ServiceBannerFormProps> = ({
       <FormTitle>Get a Free Quote</FormTitle>
       <FormSubtitle>We&apos;ll get back to you within 24 hours.</FormSubtitle>
       <Form onSubmit={handleSubmit}>
-        <NameRow>
-          <Input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="First Name *"
-            required
-          />
-          <Input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Last Name *"
-            required
-          />
-        </NameRow>
+        <Input
+          type="text"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
+          placeholder="Full Name *"
+          required
+        />
 
         <Input
           type="email"

@@ -1,160 +1,198 @@
 ﻿import styled from "styled-components";
 
-export const Button = styled.a`
+export const Section = styled.section`
+  width: 100%;
+  background: #f3f4f6;
+  padding: 48px 0 64px;
+  font-family: "Manrope", sans-serif;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 48px 0 48px;
+  }
+`;
+
+export const Container = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+`;
+
+export const HeadingWrapper = styled.div`
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+  margin-top: 0;
+
+  @media (min-width: 768px) {
+    margin-top: 20px;
+  }
+`;
+
+export const Heading = styled.h2`
+  text-align: center;
+  font-size: clamp(22px, 5vw, 40px);
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 4px;
+  line-height: 1.3;
+  padding: 0;
+
+  span {
+    color: #6dc7d1;
+  }
+`;
+
+export const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+`;
+
+export const ReviewButton = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: auto;
-  min-width: 200px;
   padding: 12px 32px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: white;
-  border: 2px solid #6dc7d1;
+  color: #ffffff;
   background: #6dc7d1;
-  text-align: center;
+  border: 2px solid #6dc7d1;
   border-radius: 5px;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
   text-decoration: none;
   font-family: "Manrope", sans-serif;
+  transition: all 0.3s ease;
 
   &:hover {
     background: #5ab8c2;
     border-color: #5ab8c2;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(109, 199, 209, 0.3);
-  }
-
-  @media (max-width: 768px) {
-    min-width: 180px;
-    padding: 10px 24px;
-    font-size: 14px;
   }
 `;
 
-export const ReviewsWrapper = styled.div`
-  /* border: 2px solid red; */
-  width: 100%;
-  font-family: "Manrope", sans-serif;
-  overflow: hidden; /* Ensures no horizontal scrolling */
+export const CarouselOuter = styled.div`
+  position: relative;
   display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const NavButton = styled.button`
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: #cccccc;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  
-  /* Desktop: Ensure proper centering */
-  @media (min-width: 1200px) {
-    justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #999999;
+  }
+
+  @media (max-width: 640px) {
+    width: 28px;
+    font-size: 1.5rem;
   }
 `;
 
-export const CardsWrapper = styled.div`
+export const CarouselViewport = styled.div`
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+`;
+
+export const CarouselTrack = styled.div<{
+  $offset: number;
+  $cardWidth: number;
+  $gap: number;
+}>`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 2rem;
-  width: 100%; /* Make sure it takes full width */
+  gap: ${({ $gap }) => `${$gap}px`};
+  transition: transform 0.35s ease;
+  transform: translateX(
+    ${({ $offset, $cardWidth, $gap }) =>
+      `-${$offset * ($cardWidth + $gap)}px`}
+  );
+`;
+
+export const ReviewCard = styled.article<{ $cardWidth: number }>`
+  flex: 0 0 ${({ $cardWidth }) => `${$cardWidth}px`};
+  width: ${({ $cardWidth }) => `${$cardWidth}px`};
+  max-width: ${({ $cardWidth }) => `${$cardWidth}px`};
   box-sizing: border-box;
-  padding-left: 0;
-  padding-right: 0;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 18px 16px 14px;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+`;
 
-  /* Desktop: Align cards to the start (left) */
-  @media (min-width: 1200px) {
-    justify-content: flex-start;
-    width: 100%;
-    margin: 0 auto;
-  }
+export const CardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+`;
 
-  /* Laptop: Keep space-between */
-  @media (min-width: 769px) and (max-width: 1199px) {
-    justify-content: space-between;
-  }
+export const Avatar = styled.img`
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+`;
 
-  @media (max-width: 768px) {
-    gap: 1.5rem; /* Maintain gap on mobile */
-    padding-left: clamp(12px, 3vw, 20px); /* Left padding on mobile */
-    padding-right: clamp(12px, 3vw, 20px); /* Right padding on mobile */
-  }
+export const ReviewerName = styled.h3`
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+  line-height: 1.3;
+`;
 
-  @media (max-width: 480px) {
-    gap: 1.25rem; /* Slightly smaller gap on very small screens */
-    padding-left: clamp(
-      10px,
-      2.5vw,
-      16px
-    ); /* Left padding on very small screens */
-    padding-right: clamp(
-      10px,
-      2.5vw,
-      16px
-    ); /* Right padding on very small screens */
+export const Stars = styled.div`
+  display: flex;
+  gap: 2px;
+  color: #f5b301;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+`;
+
+export const ReviewText = styled.p`
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #444444;
+  margin: 0 0 auto;
+  flex: 1;
+
+  a {
+    color: #6dc7d1;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
-export const ReviewCard = styled.div`
-  min-width: 250px; /* Ensure cards have a minimum width */
-  max-width: 350px; /* Max width to avoid excessive stretching */
-  flex: 1 1 100%; /* Allow the card to grow and shrink */
-  margin-bottom: 2rem;
-  padding: 2rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  border: 2px solid rgba(109, 199, 209, 0.6);
-  border-radius: 1rem;
-  background: #fff;
-  box-shadow: 0 3px 12px rgba(212, 167, 89, 0.3);
-  transition: 0.3s;
-  box-sizing: border-box;
-
-  /* Desktop: Ensure cards don't stretch too much */
-  @media (min-width: 1200px) {
-    flex: 0 1 auto; /* Don't grow, just use natural width */
-    min-width: 280px;
-    max-width: 320px;
-  }
-
-  /* Responsive card adjustments */
-  @media (max-width: 768px) {
-    min-width: 100%; /* Full width on smaller screens */
-    padding-left: 1.5rem; /* Internal left padding on mobile */
-    padding-right: 1.5rem; /* Internal right padding on mobile */
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-
-  @media (max-width: 480px) {
-    padding-left: 1.25rem; /* Internal padding on very small screens */
-    padding-right: 1.25rem;
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-  }
-
-  .flex {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-  }
-
-  .text-lg {
-    font-size: 1.25rem;
-  }
-
-  .text-sm {
-    font-size: 0.875rem;
-  }
-
-  .text-yellow-500 {
-    color: #facc15;
-  }
-
-  .mt-8 {
-    margin-top: 2rem;
-  }
+export const CardFooter = styled.div`
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: #999999;
 `;
