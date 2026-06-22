@@ -22,6 +22,7 @@ const Illustrated = () => {
         image={illustratedCover} // Can be dynamic as well
         bookCoversText=""
         textAlignTop
+        mobileBannerKey="illustrated"
         // packagesComponent={<Packages />}
         // reviewsComponent={<Reviews />}
       />

@@ -32,6 +32,7 @@ const NonFictonalCover: React.FC = () => {
         image={nonFictionImg}
         bookCoversText=""
         textAlignTop
+        mobileBannerKey="nonFiction"
         benefitsComponent={
           <BenefitsSection
             title={

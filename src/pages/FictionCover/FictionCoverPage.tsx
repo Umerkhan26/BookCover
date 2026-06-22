@@ -3,6 +3,12 @@ import {
   BannerImage,
   BannerContent,
   BannerFormWrapper,
+  BannerMobileForm,
+  BannerMobileInner,
+  BannerMobileTitle,
+  BannerMobileVisual,
+  DesktopBannerLayer,
+  MobileBannerTitle,
   Title,
   TitleLine,
   Subtitle,
@@ -11,6 +17,11 @@ import {
   Circle,
 } from "./FictionCover.styles";
 import ServiceBannerForm from "../../components/ServiceBannerForm/ServiceBannerForm";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import {
+  serviceMobileBanners,
+  ServiceMobileBannerKey,
+} from "../../config/serviceMobileBanners";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +34,7 @@ interface FictionCoverProps {
   formatSubtitle?: boolean;
   textAlignTop?: boolean;
   showBannerForm?: boolean;
+  mobileBannerKey?: ServiceMobileBannerKey;
 
   benefitsComponent?: JSX.Element;
   designProcessComponent?: JSX.Element;
@@ -40,6 +52,7 @@ const FictionsCover = ({
   formatSubtitle = true,
   textAlignTop = false,
   showBannerForm,
+  mobileBannerKey,
   benefitsComponent,
   designProcessComponent,
   packagesComponent,
@@ -180,6 +193,12 @@ const FictionsCover = ({
 
   const { firstPart, secondPart } = getTitleParts();
   const displayBannerForm = showBannerForm ?? textAlignTop;
+  const isMobileViewport = useMediaQuery("(max-width: 768px)");
+  const mobileBanner =
+    mobileBannerKey != null ? serviceMobileBanners[mobileBannerKey] : null;
+  const useMobileBanner = displayBannerForm && mobileBanner != null;
+  const showDesktopBanner = !useMobileBanner || !isMobileViewport;
+  const showMobileBanner = useMobileBanner && isMobileViewport && mobileBanner;
 
   const isCenterAligned =
     title.includes("Partner With Lume Art Studio") ||
@@ -221,7 +240,9 @@ const FictionsCover = ({
       )) &&
       !secondPart);
 
-  const bannerTextContent = (
+  const renderBannerText = (
+    TitleComponent: typeof Title | typeof MobileBannerTitle = Title,
+  ) => (
     <>
       {showCircles && (
         <CirclesContainer>
@@ -230,7 +251,7 @@ const FictionsCover = ({
           <Circle />
         </CirclesContainer>
       )}
-      <Title singleLine={isSingleLineTitle}>
+      <TitleComponent singleLine={isSingleLineTitle}>
         {textAlignTop && secondPart ? (
           <>
             <TitleLine>{firstPart}</TitleLine>
@@ -247,7 +268,7 @@ const FictionsCover = ({
             )}
           </>
         )}
-      </Title>
+      </TitleComponent>
       {subtitle && (
         <Subtitle singleLine={isSingleLineSubtitle}>
           {typeof subtitle === "string"
@@ -260,12 +281,16 @@ const FictionsCover = ({
     </>
   );
 
+  const bannerTextContent = renderBannerText(Title);
+  const mobileBannerTextContent = renderBannerText(MobileBannerTitle);
+
   return (
     <div>
       <BannerSection>
         {image && (
-          <BannerImage>
+          <BannerImage $withMobileBanner={useMobileBanner}>
             <img
+              className="desktop-banner-img"
               src={image}
               alt="Book Cover Banner"
               width={1200}
@@ -274,16 +299,35 @@ const FictionsCover = ({
               fetchPriority="high"
               decoding="sync"
             />
-            <BannerContent
-              alignCenter={isCenterAligned}
-              alignTop={textAlignTop}
-            >
-              {bannerTextContent}
-            </BannerContent>
-            {displayBannerForm && (
-              <BannerFormWrapper>
-                <ServiceBannerForm serviceName={title} />
-              </BannerFormWrapper>
+
+            <DesktopBannerLayer $hideOnMobile={false}>
+              {showDesktopBanner && (
+                <>
+                  <BannerContent
+                    alignCenter={isCenterAligned}
+                    alignTop={textAlignTop}
+                  >
+                    {bannerTextContent}
+                  </BannerContent>
+                  {displayBannerForm && (
+                    <BannerFormWrapper>
+                      <ServiceBannerForm serviceName={title} />
+                    </BannerFormWrapper>
+                  )}
+                </>
+              )}
+            </DesktopBannerLayer>
+
+            {showMobileBanner && (
+              <BannerMobileInner $bgImage={mobileBanner.background}>
+                <BannerMobileTitle>{mobileBannerTextContent}</BannerMobileTitle>
+                <BannerMobileVisual>
+                  <img src={mobileBanner.visual} alt="" loading="lazy" />
+                </BannerMobileVisual>
+                <BannerMobileForm>
+                  <ServiceBannerForm serviceName={title} />
+                </BannerMobileForm>
+              </BannerMobileInner>
             )}
           </BannerImage>
         )}

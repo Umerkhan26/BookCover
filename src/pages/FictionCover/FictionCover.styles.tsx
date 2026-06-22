@@ -149,7 +149,7 @@ export const BannerSection = styled.section`
   }
 `;
 
-export const BannerImage = styled.div`
+export const BannerImage = styled.div<{ $withMobileBanner?: boolean }>`
   position: relative;
   width: 100%;
   height: auto;
@@ -161,6 +161,72 @@ export const BannerImage = styled.div`
     display: block;
     object-fit: cover;
   }
+
+  @media (max-width: 768px) {
+    ${({ $withMobileBanner }) =>
+      $withMobileBanner &&
+      `
+      .desktop-banner-img {
+        display: none;
+      }
+    `}
+  }
+`;
+
+export const DesktopBannerLayer = styled.div<{ $hideOnMobile?: boolean }>`
+  @media (max-width: 768px) {
+    ${({ $hideOnMobile }) => $hideOnMobile && "display: none;"}
+  }
+`;
+
+export const BannerMobileInner = styled.div<{ $bgImage?: string }>`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-image: url(${({ $bgImage }) => $bgImage || "none"});
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    padding: 20px 20px 24px;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 16px 20px;
+  }
+`;
+
+export const BannerMobileTitle = styled.div`
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 14px;
+`;
+
+export const BannerMobileVisual = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 12px;
+
+  img {
+    width: min(88%, 340px);
+    height: auto;
+    display: block;
+    margin-left: 0;
+    object-fit: contain;
+    object-position: left top;
+  }
+`;
+
+export const BannerMobileForm = styled.div`
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 export const BannerContent = styled.div<{
@@ -248,17 +314,13 @@ export const BannerFormWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    position: relative;
+    position: absolute;
     top: auto;
     right: auto;
     width: 100%;
-    padding: 0 20px 24px;
+    padding: 0;
     box-sizing: border-box;
     margin-top: 0;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0 16px 20px;
   }
 `;
 
@@ -343,6 +405,22 @@ export const Title = styled.h1<{ singleLine?: boolean }>`
     font-size: clamp(14px, 3.5vw, 20px);
     margin-bottom: 6px;
     line-height: 1.1;
+  }
+`;
+
+export const MobileBannerTitle = styled.h1<{ singleLine?: boolean }>`
+  font-size: clamp(24px, 6.2vw, 32px);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: left;
+  line-height: 1.2;
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  white-space: normal;
+
+  @media (max-width: 480px) {
+    font-size: clamp(22px, 5.8vw, 28px);
   }
 `;
 

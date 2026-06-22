@@ -33,6 +33,7 @@ const BookCoverRedesign = () => {
         bookCoversText=""
         showCircles={false}
         textAlignTop
+        mobileBannerKey="redesign"
       />
       <Packages />
       <SpecialEditionAddOns />

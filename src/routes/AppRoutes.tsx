@@ -159,6 +159,7 @@ const AppRoutes: React.FC = () => {
                 image={fictonCoverImg}
                 bookCoversText=""
                 textAlignTop
+                mobileBannerKey="fiction"
                 benefitsComponent={
                   <BenefitsSection
                     title={

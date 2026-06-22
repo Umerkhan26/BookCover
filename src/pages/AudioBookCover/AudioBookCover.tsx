@@ -30,6 +30,7 @@ const AudioBookCover = () => {
         image={AudioCover}
         bookCoversText=""
         textAlignTop
+        mobileBannerKey="audiobook"
       />
 
       {/* <AudioBookCoverAnimationSection /> */}

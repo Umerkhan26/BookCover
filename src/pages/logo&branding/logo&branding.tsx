@@ -34,6 +34,7 @@ const LogoBranding: React.FC = () => {
         showCircles={false}
         formatSubtitle={false}
         textAlignTop
+        mobileBannerKey="logoBranding"
         benefitsComponent={
           <BenefitsSection
             title={
