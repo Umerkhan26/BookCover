@@ -22,9 +22,6 @@ import {
   serviceMobileBanners,
   ServiceMobileBannerKey,
 } from "../../config/serviceMobileBanners";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 interface FictionCoverProps {
   title: string;
   subtitle: React.ReactNode;
@@ -332,10 +329,6 @@ const FictionsCover = ({
           </BannerImage>
         )}
       </BannerSection>
-
-      {displayBannerForm && (
-        <ToastContainer position="bottom-right" autoClose={5000} />
-      )}
 
       {benefitsComponent && (
         <BenifitsComponent>{benefitsComponent}</BenifitsComponent>
