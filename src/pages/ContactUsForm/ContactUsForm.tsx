@@ -131,13 +131,37 @@ const ContactUsForm: React.FC = () => {
               www.lumeart.com
             </a>
           </ContactDetail> */}
-          <ContactDetail>
+          {/* <ContactDetail>
             <FaPhone className="icon" />
             <a href="tel:+13153332077">+1 (315) 333-2077</a>
           </ContactDetail>
           <ContactDetail>
             <FaEnvelope className="icon" />
             <a href="mailto:contact@lumeart.com">studioslumeart@gmail.com</a>
+          </ContactDetail> */}
+          <ContactDetail>
+            <FaEnvelope className="icon" />
+            <a href="mailto:wasimakram@lumeartstudio.com">
+              wasimakram@lumeartstudio.com
+            </a>
+          </ContactDetail>
+          <ContactDetail>
+            <FaEnvelope className="icon" />
+            <a href="mailto:lefty.akram@gmail.com">lefty.akram@gmail.com</a>
+          </ContactDetail>
+          <ContactDetail>
+            <FaEnvelope className="icon" />
+            <a href="mailto:studioslumeart@gmail.com">
+              studioslumeart@gmail.com
+            </a>
+          </ContactDetail>
+          <ContactDetail>
+            <FaPhone className="icon" />
+            <a href="tel:+923455334225">+92 (345) 533-4225</a>
+          </ContactDetail>
+          <ContactDetail>
+            <FaPhone className="icon" />
+            <a href="tel:+13153332077">+1 (315) 333-2077</a>
           </ContactDetail>
 
           <SocialIconsWrapper>
