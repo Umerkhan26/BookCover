@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  ProcessSection,
   Container,
   ImageContainer,
   SmallImage,
@@ -11,17 +12,12 @@ import {
 } from "./illustratedDesignProcess.styles";
 import image1 from "../../../assets/pacakge1.webp";
 import image2 from "../../../assets/package2.webp";
-// import Packages from "../../ourPackages/packages";
-import Reviews from "../../reviews/reviews";
-// import { myPackagesData } from "../../ourPackages/packagesData";
-// import IllustratedPackages from "../../ourPackages/illustratedpackage";
-import Packages from "../../ourPackages/packages";
 
 const DesignProcess = () => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div>
+    <ProcessSection>
       <Title>
         Our Illustrated Book Cover{" "}
         <span className="text-[#6dc7d1] !important">Design Process</span>
@@ -83,12 +79,7 @@ const DesignProcess = () => {
           </Step>
         </StepsContainer>
       </Container>
-      <Packages />
-      {/* <IllustratedPackages packagesData={myPackagesData} /> */}
-      <div>
-        <Reviews />
-      </div>
-    </div>
+    </ProcessSection>
   );
 };
 

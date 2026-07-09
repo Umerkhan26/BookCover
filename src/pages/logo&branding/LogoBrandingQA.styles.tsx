@@ -3,13 +3,16 @@ import styled from "styled-components";
 export const Section = styled.section`
   max-width: 900px;
   margin: 0 auto;
-  padding: 3rem 0.5rem;
+  padding: 24px 0.5rem 48px;
   font-family: "Manrope", sans-serif;
   text-align: left;
-  margin-bottom: 20px;
+
+  @media (max-width: 1024px) {
+    padding: 20px 1rem 40px;
+  }
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
+    padding: 14px 1rem 36px;
   }
 `;
 

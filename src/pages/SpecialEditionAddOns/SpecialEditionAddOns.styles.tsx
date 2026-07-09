@@ -2,10 +2,15 @@ import styled from "styled-components";
 
 export const AddOnsContainer = styled.div`
   text-align: center;
-  padding: 3rem 1.5rem;
+  padding: 24px 1.5rem 48px;
   background-color: #f8f8f8;
+
+  @media (max-width: 1024px) {
+    padding: 20px 1.5rem 40px;
+  }
+
   @media (max-width: 768px) {
-    margin-bottom: -30px;
+    padding: 14px 1rem 36px;
   }
 `;
 

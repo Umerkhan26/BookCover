@@ -322,18 +322,18 @@ export const SectionTestimonials = styled.section`
 
 export const WrapTestimonials = styled.div`
   background: #d5e7fc;
-  padding-top: 114px;
-  padding-bottom: 120px;
+  padding-top: 24px;
+  padding-bottom: 48px;
   position: relative;
 
-  @media (max-width: 768px) {
-    padding-top: 80px;
-    padding-bottom: 90px;
+  @media (max-width: 1024px) {
+    padding-top: 20px;
+    padding-bottom: 40px;
   }
 
-  @media (max-width: 480px) {
-    padding-top: 60px;
-    padding-bottom: 70px;
+  @media (max-width: 768px) {
+    padding-top: 14px;
+    padding-bottom: 36px;
   }
 `;
 

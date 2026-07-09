@@ -6,8 +6,18 @@ export const FeatureContainer = styled.div`
   font-family: "Manrope", sans-serif;
   align-items: center;
   gap: 120px;
-  padding: 20px;
-  margin-bottom: 80px;
+  padding: 24px 20px 48px;
+
+  @media (max-width: 1024px) {
+    padding: 20px 20px 40px;
+    gap: 60px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px 16px 36px;
+    flex-direction: column;
+    gap: 24px;
+  }
 `;
 
 export const FeatureItem = styled.div`

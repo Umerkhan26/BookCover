@@ -2,9 +2,17 @@ import styled from "styled-components";
 
 // Main Section Styling
 export const Section = styled.section`
-  padding: 60px 0;
+  padding: 24px 0 48px;
   font-family: "Manrope", sans-serif;
   background-color: #eaeaea;
+
+  @media (max-width: 1024px) {
+    padding: 20px 0 40px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px 0 36px;
+  }
 `;
 
 export const Container = styled.div`

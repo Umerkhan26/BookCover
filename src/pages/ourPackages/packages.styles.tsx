@@ -27,7 +27,7 @@ const float = keyframes`
 // Styled components
 export const PackageContainer = styled.div`
   text-align: center;
-  padding: 2.5rem 2rem;
+  padding: 24px 2rem 48px;
   margin: 0 auto;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
   position: relative;
@@ -52,12 +52,12 @@ export const PackageContainer = styled.div`
     justify-content: center;
   }
 
-  @media (max-width: 1200px) {
-    padding: 4rem 1.5rem;
+  @media (max-width: 1024px) {
+    padding: 20px 1.5rem 40px;
   }
 
   @media (max-width: 768px) {
-    padding: 3rem 1rem;
+    padding: 14px 1rem 36px;
 
     .packages-wrapper {
       grid-template-columns: 1fr;

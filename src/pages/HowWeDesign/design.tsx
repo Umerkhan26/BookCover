@@ -5,9 +5,17 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Section = styled.section`
-  padding: 60px 0px;
+  padding: 24px 0 48px;
   font-family: "Manrope", sans-serif;
   background-color: #f2f2f2;
+
+  @media (max-width: 1024px) {
+    padding: 20px 0 40px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px 0 36px;
+  }
 `;
 
 const Container = styled.div`
@@ -23,7 +31,6 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center; /* Center align on small screens */
     text-align: center; /* Center text on small screens */
-    margin-bottom: -30px;
   }
 `;
 

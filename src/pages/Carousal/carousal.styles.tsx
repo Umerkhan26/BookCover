@@ -6,14 +6,18 @@ export const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 40px 5px;
+  padding: 20px 5px 48px;
+
+  @media (max-width: 1024px) {
+    padding: 16px 15px 40px;
+  }
 
   @media (max-width: 768px) {
-    padding: 20px 15px;
+    padding: 12px 15px 36px;
   }
 
   @media (max-width: 390px) {
-    padding: 20px 10px;
+    padding: 12px 10px 36px;
   }
 `;
 
@@ -33,7 +37,7 @@ export const Title = styled.h2`
   color: #25293f;
   position: relative;
   padding: 0px;
-  margin-bottom: 20px;
+  margin: 0 0 20px;
   width: 100%;
   max-width: 500px;
   line-height: 1.3;
@@ -45,18 +49,15 @@ export const Title = styled.h2`
   @media (max-width: 800px) {
     font-size: 28px;
     text-align: center;
-    margin-top: 30px;
   }
 
   @media (max-width: 600px) {
     font-size: 28px;
     text-align: center;
-    margin-top: 30px;
   }
 
   @media (max-width: 390px) {
     font-size: 1.8rem;
-    margin-top: 20px;
   }
 `;
 

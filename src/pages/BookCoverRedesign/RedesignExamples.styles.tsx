@@ -61,8 +61,16 @@ export const ImageLabel = styled.span`
 export const Container = styled.div`
   max-width: 1400px; /* Increased for larger screens */
   margin: 0 auto;
-  padding: 50px 20px;
+  padding: 24px 20px 48px;
   font-family: "Manrope", sans-serif;
+
+  @media (max-width: 1024px) {
+    padding: 20px 20px 40px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px 16px 36px;
+  }
 `;
 
 export const Example = styled.div<ExampleProps>`

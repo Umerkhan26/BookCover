@@ -519,22 +519,20 @@ export const BenifitsComponent = styled.div`
   font-weight: 200;
   font-size: 57px;
   width: 100%;
-  /* margin-top: 70px;  */
   text-align: center;
+  margin: 0;
+  padding: 0;
 
   @media (max-width: 1200px) {
     font-size: 50px;
-    margin-left: 20px;
   }
 
   @media (max-width: 1024px) {
     font-size: 45px;
-    margin-left: 10px;
   }
 
   @media (max-width: 768px) {
     font-size: 35px;
-    margin-left: 0;
   }
 
   @media (max-width: 480px) {

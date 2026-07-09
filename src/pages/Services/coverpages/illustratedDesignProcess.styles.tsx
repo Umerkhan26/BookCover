@@ -2,21 +2,30 @@ import styled from "styled-components";
 interface LargeImageWrapperProps {
   expanded: boolean;
 }
+export const ProcessSection = styled.section`
+  width: 100%;
+  background-color: #eef5f6;
+  box-sizing: border-box;
+`;
+
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Manrope", sans-serif;
   gap: 60px;
-  padding: 60px 10%;
+  padding: 24px 10% 48px;
   color: #666;
+
+  @media (max-width: 1024px) {
+    padding: 20px 5% 40px;
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    padding: 40px 5%;
-    margin-bottom: -30px;
+    padding: 14px 5% 36px;
   }
 `;
 
@@ -24,23 +33,25 @@ export const Title = styled.h2`
   font-size: 34px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 1rem;
-  margin-top: 24px;
+  margin: 0;
+  padding: 24px 20px 0;
   text-align: center;
-  margin-bottom: -25px;
 
   span {
     display: block;
     font-size: 1.8rem;
-    color: #6dc7d1; /* Your theme color */
+    color: #6dc7d1;
     font-weight: bold;
+  }
+
+  @media (max-width: 1024px) {
+    padding-top: 20px;
   }
 
   @media (max-width: 768px) {
     font-size: 28px;
     text-align: center;
-    margin-bottom: -25px;
-    margin-top: 90px;
+    padding-top: 14px;
   }
 `;
 

@@ -6,14 +6,18 @@ const glowSoft = "rgba(78, 195, 209, 0.45)";
 
 export const PortfolioSection = styled.section`
   width: 100%;
-  padding: 56px 40px 72px;
+  padding: 24px 40px 48px;
   background: linear-gradient(180deg, #0b1c22 0%, #061015 100%);
   font-family: "Manrope", sans-serif;
   box-sizing: border-box;
   overflow: hidden;
 
+  @media (max-width: 1024px) {
+    padding: 20px 20px 40px;
+  }
+
   @media (max-width: 768px) {
-    padding: 44px 20px 56px;
+    padding: 14px 20px 36px;
   }
 `;
 

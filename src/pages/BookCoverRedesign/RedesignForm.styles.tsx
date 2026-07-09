@@ -1,16 +1,21 @@
 import styled from "styled-components";
 export const FullWidthContainer = styled.div`
   width: 100%;
-  height: 230px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-family: "Manrope", sans-serif;
   align-items: center;
   background-color: #dcf3f4;
+  padding: 24px 20px 48px;
+  box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    padding: 20px 20px 40px;
+  }
 
   @media (max-width: 768px) {
-    margin-bottom: 0px;
+    padding: 14px 16px 36px;
   }
 `;
 

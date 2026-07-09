@@ -6,14 +6,18 @@ export const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 40px 5px;
+  padding: 24px 5px 48px;
+
+  @media (max-width: 1024px) {
+    padding: 20px 15px 40px;
+  }
 
   @media (max-width: 768px) {
-    padding: 20px 15px;
+    padding: 14px 15px 36px;
   }
 
   @media (max-width: 390px) {
-    padding: 20px 10px;
+    padding: 14px 10px 36px;
   }
 `;
 

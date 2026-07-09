@@ -5,15 +5,15 @@ import CountUp from "react-countup"; // Import CountUp
 // Styled Components
 const CounterSectionWrapper = styled.section`
   background: linear-gradient(90deg, #e4e7f9, #efe6ef);
-  padding: 4rem 0;
+  padding: 24px 0 48px;
   font-family: "Manrope", sans-serif;
 
-  @media (max-width: 768px) {
-    padding: 3rem 0;
+  @media (max-width: 1024px) {
+    padding: 20px 0 40px;
   }
 
-  @media (max-width: 480px) {
-    padding: 2rem 0;
+  @media (max-width: 768px) {
+    padding: 14px 0 36px;
   }
 `;
 

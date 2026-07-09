@@ -13,22 +13,21 @@ export const BenefitsWrap = styled.section`
   --body: ${body};
   --border: ${border};
 
-  padding: 48px 40px 64px;
+  padding: 24px 40px 48px;
   font-family: "Manrope", sans-serif;
   background-color: #f4f7f8;
   box-sizing: border-box;
 
   @media (max-width: 1024px) {
-    padding: 40px 20px 56px;
+    padding: 20px 20px 40px;
   }
 
   @media (max-width: 768px) {
-    padding: 36px 20px 48px;
-    margin-bottom: -30px;
+    padding: 14px 20px 36px;
   }
 
   @media (max-width: 480px) {
-    padding: 32px 16px 40px;
+    padding: 14px 16px 36px;
   }
 `;
 

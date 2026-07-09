@@ -7,15 +7,20 @@ interface StepCircleProps {
 // Container for the overall layout
 export const ProcessContainer = styled.div`
   margin: 0 auto;
-  padding: 40px;
+  padding: 24px 40px 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
+  background-color: #eef5f6;
+  box-sizing: border-box;
+  width: 100%;
+
+  @media (max-width: 1024px) {
+    padding: 20px 24px 40px;
+  }
 
   @media (max-width: 768px) {
-    padding: 20px;
-    margin-bottom: -30px;
+    padding: 14px 20px 36px;
   }
 `;
 
