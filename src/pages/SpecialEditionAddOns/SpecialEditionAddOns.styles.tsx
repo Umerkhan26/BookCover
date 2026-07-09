@@ -44,6 +44,11 @@ export const AddOnsGrid = styled.div`
   max-width: 1200px;
   width: 100%;
 
+  @media (min-width: 1440px) {
+    max-width: 1400px;
+    gap: 28px;
+  }
+
   @media (max-width: 1100px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: 720px;

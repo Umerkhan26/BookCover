@@ -24,7 +24,7 @@ export const Container = styled.div`
   box-sizing: border-box;
 
   @media (min-width: 1440px) {
-    max-width: 1400px;
+    max-width: 1520px;
   }
 `;
 
@@ -127,8 +127,7 @@ export const CarouselTrack = styled.div<{
   gap: ${({ $gap }) => `${$gap}px`};
   transition: transform 0.35s ease;
   transform: translateX(
-    ${({ $offset, $cardWidth, $gap }) =>
-      `-${$offset * ($cardWidth + $gap)}px`}
+    ${({ $offset, $cardWidth, $gap }) => `-${$offset * ($cardWidth + $gap)}px`}
   );
 `;
 

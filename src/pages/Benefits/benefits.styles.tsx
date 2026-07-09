@@ -35,12 +35,20 @@ export const Container = styled.div`
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
+
+  @media (min-width: 1440px) {
+    max-width: 1400px;
+  }
 `;
 
 export const BenefitsHeader = styled.div`
   text-align: center;
   max-width: 700px;
   margin: 0 auto 36px;
+
+  @media (min-width: 1440px) {
+    max-width: 820px;
+  }
 `;
 
 export const Eyebrow = styled.span`

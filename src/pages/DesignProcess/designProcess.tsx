@@ -1,11 +1,16 @@
 import { useState } from "react";
 import {
   ProcessContainer,
+  Header,
   Title,
+  HeaderSubtitle,
   StepsContainer,
+  StepItem,
   StepCircle,
+  StepLabel,
   ContentWrapper,
   LeftContent,
+  StepBadge,
   StepTitle,
   StepDescription,
   RightContent,
@@ -18,6 +23,7 @@ import coverprocess4 from "../../assets/coverprocess4.webp";
 
 interface Step {
   id: number;
+  shortLabel: string;
   title: string;
   description: string;
   imgSrc: string;
@@ -26,6 +32,7 @@ interface Step {
 const steps: Step[] = [
   {
     id: 1,
+    shortLabel: "Order",
     title: "Place an order",
     description:
       "After choosing a package, you’ll be redirected to our client portal. Note, that we don’t take pre-payment for some services, so you might see a $0 price at the checkout.",
@@ -33,13 +40,15 @@ const steps: Step[] = [
   },
   {
     id: 2,
+    shortLabel: "Brief",
     title: "Fill out a brief",
     description:
-      "Fill out the brief in your client portal to confirm your order. After that, our customer success manager will reach out to you to discuss details..",
+      "Fill out the brief in your client portal to confirm your order. After that, our customer success manager will reach out to you to discuss details.",
     imgSrc: coverprocess2,
   },
   {
     id: 3,
+    shortLabel: "Draft",
     title: "Get the first draft",
     description:
       "After getting the first draft, feel free to add your suggestions. We don’t limit the number of revisions.",
@@ -47,6 +56,7 @@ const steps: Step[] = [
   },
   {
     id: 4,
+    shortLabel: "Payment",
     title: "Make a payment",
     description:
       "Once you are completely satisfied with the design, we will send you a payment link. Meanwhile, your designer will prepare the final files, all formatted and ready to use.",
@@ -57,10 +67,6 @@ const steps: Step[] = [
 const DesignProcess = () => {
   const [activeStep, setActiveStep] = useState<number>(1);
 
-  const handleStepClick = (stepId: number) => {
-    setActiveStep(stepId);
-  };
-
   const activeStepData = steps.find((step) => step.id === activeStep);
 
   if (!activeStepData) {
@@ -69,26 +75,35 @@ const DesignProcess = () => {
 
   return (
     <ProcessContainer>
-      <Title>
-        Our Book Cover Design{" "}
-        <span className="text-[#6dc7d1]">Process</span>{" "}
-      </Title>
+      <Header>
+        <Title>
+          Our Book Cover Design <span>Process</span>
+        </Title>
+        <HeaderSubtitle>
+          A simple 4-step flow from order to final files — clear, guided, and
+          revision-friendly.
+        </HeaderSubtitle>
+      </Header>
 
-      {/* Steps container */}
       <StepsContainer>
         {steps.map((step) => (
-          <StepCircle
+          <StepItem
             key={step.id}
-            isActive={step.id === activeStep}
-            onClick={() => handleStepClick(step.id)}
+            type="button"
+            onClick={() => setActiveStep(step.id)}
+            aria-label={`Step ${step.id}: ${step.title}`}
           >
-            {step.id}
-          </StepCircle>
+            <StepCircle isActive={step.id === activeStep}>{step.id}</StepCircle>
+            <StepLabel $active={step.id === activeStep}>
+              {step.shortLabel}
+            </StepLabel>
+          </StepItem>
         ))}
       </StepsContainer>
 
       <ContentWrapper>
         <LeftContent>
+          <StepBadge>Step {activeStepData.id} of 4</StepBadge>
           <StepTitle>{activeStepData.title}</StepTitle>
           <StepDescription>{activeStepData.description}</StepDescription>
         </LeftContent>
@@ -97,11 +112,8 @@ const DesignProcess = () => {
           <img src={activeStepData.imgSrc} alt={`Step ${activeStep}`} />
         </RightContent>
       </ContentWrapper>
-      <div>
-        <Button href="/faqs" className="mb-4">
-          See Our FAQs
-        </Button>
-      </div>
+
+      <Button href="/faqs">See Our FAQs</Button>
     </ProcessContainer>
   );
 };

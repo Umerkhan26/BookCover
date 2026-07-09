@@ -141,7 +141,7 @@ const Reviews = () => {
         visible = 4;
       }
 
-      const containerMax = width >= 1440 ? 1400 : 1200;
+      const containerMax = width >= 1440 ? 1520 : 1200;
       const carouselWidth = Math.min(width, containerMax) - 40 - 96;
       const calculatedWidth = Math.floor(
         (carouselWidth - GAP * (visible - 1)) / visible,
