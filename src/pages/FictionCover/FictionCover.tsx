@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import FictionsCover from "./FictionCoverPage";
 import type { ServiceMobileBannerKey } from "../../config/serviceMobileBanners";
 
+import type { ServiceModernHeroKey } from "../../config/serviceModernHeroContent";
+
 interface FictionCoverProps {
   title: string;
   subtitle: React.ReactNode;
@@ -12,6 +14,8 @@ interface FictionCoverProps {
   textAlignTop?: boolean;
   showBannerForm?: boolean;
   mobileBannerKey?: ServiceMobileBannerKey;
+  layoutVariant?: "default" | "modern";
+  modernHeroKey?: ServiceModernHeroKey;
 
   benefitsComponent?: JSX.Element;
   designProcessComponent?: JSX.Element;

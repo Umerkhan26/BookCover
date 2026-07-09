@@ -1,4 +1,3 @@
-import AudioCover from "../../assets/PageBanner/LUME-ART-WEB-PAGE-FICTION-COVER.webp";
 import BenefitsSection from "../Benefits/benefits";
 import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../HowWeDesign/design";
@@ -26,11 +25,9 @@ const AudioBookCover = () => {
       <FictionsCover
         title="Custom Audiobook Cover Design"
         subtitle=""
-        // subtitle="Pay Only When You're Satisfied With The Final Result"
-        image={AudioCover}
         bookCoversText=""
-        textAlignTop
-        mobileBannerKey="audiobook"
+        layoutVariant="modern"
+        modernHeroKey="audiobook"
       />
 
       {/* <AudioBookCoverAnimationSection /> */}

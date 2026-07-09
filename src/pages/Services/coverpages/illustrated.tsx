@@ -1,4 +1,3 @@
-import illustratedCover from "../../../assets/PageBanner/LUME-ART-WEB-PAGE-FICTION-COVER-4.webp";
 import IllusratedDesignProcess from "./illustratedDesignProcess";
 import { Helmet } from "react-helmet-async";
 import FictionsCover from "../../FictionCover/FictionCoverPage";
@@ -18,13 +17,9 @@ const Illustrated = () => {
       <FictionsCover
         title="Illustrated Book Cover Design From Scratch"
         subtitle=""
-        // subtitle="Immerse readers into your world"
-        image={illustratedCover} // Can be dynamic as well
         bookCoversText=""
-        textAlignTop
-        mobileBannerKey="illustrated"
-        // packagesComponent={<Packages />}
-        // reviewsComponent={<Reviews />}
+        layoutVariant="modern"
+        modernHeroKey="illustrated"
       />
       <IllusratedDesignProcess />
     </div>

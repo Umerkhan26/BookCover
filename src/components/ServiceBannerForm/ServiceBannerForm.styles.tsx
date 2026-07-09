@@ -189,3 +189,89 @@ export const SubmitButton = styled.button`
     opacity: 0.85;
   }
 `;
+
+export const ConsultationFormCard = styled.div`
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 32px 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  font-family: "Manrope", sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 22px 18px 24px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 32px 40px 36px;
+  }
+`;
+
+export const ConsultationFormTitle = styled.h2`
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 800;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 0 0 24px;
+  line-height: 1.3;
+`;
+
+export const ConsultationForm = styled.form`
+  width: 100%;
+`;
+
+export const ConsultationFieldsRow = styled.div`
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr 1fr 1.4fr auto;
+  gap: 12px;
+  align-items: stretch;
+
+  ${Input}, ${Textarea} {
+    margin: 0;
+  }
+
+  ${Textarea} {
+    min-height: 46px;
+    max-height: 46px;
+    resize: none;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  ${SubmitButton} {
+    margin-top: 0;
+    align-self: stretch;
+    min-height: 46px;
+    padding: 0 24px;
+    white-space: nowrap;
+    border-radius: 8px;
+  }
+
+  @media (min-width: 1440px) {
+    gap: 14px;
+    grid-template-columns: 1.15fr 1.15fr 1fr 1.5fr auto;
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+
+    ${Textarea} {
+      grid-column: 1 / -1;
+      min-height: 72px;
+      max-height: 120px;
+      resize: vertical;
+    }
+
+    ${SubmitButton} {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;

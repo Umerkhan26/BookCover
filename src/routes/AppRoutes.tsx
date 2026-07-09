@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "../Layout";
 import Home from "../pages/Home/home";
-import fictonCoverImg from "../assets/PageBanner/LUME-ART-WEB-PAGE-FICTION-COVER-2.webp";
 import BenefitsSection from "../pages/Benefits/benefits";
 import { benefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";
@@ -155,11 +154,9 @@ const AppRoutes: React.FC = () => {
               <FictionCover
                 title="Book Cover Design For Indie Authors"
                 subtitle=""
-                // subtitle="Pay Only When You are Satisfied With The final result"
-                image={fictonCoverImg}
                 bookCoversText=""
-                textAlignTop
-                mobileBannerKey="fiction"
+                layoutVariant="modern"
+                modernHeroKey="fiction"
                 benefitsComponent={
                   <BenefitsSection
                     title={

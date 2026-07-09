@@ -1,7 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import FictionCover from "../FictionCover/FictionCover";
-import logoBrandingImg from "../../assets/PageBanner/LUME-ART-WEB-PAGE-FICTION-COVER-6.webp";
 import BenefitsSection from "../Benefits/benefits";
 import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../DesignProcess/designProcess";
@@ -28,13 +27,11 @@ const LogoBranding: React.FC = () => {
       <FictionCover
         title="Custom Logo Design and Branding"
         subtitle=""
-        // subtitle="If you Let's cooperate to make the self-publishing industry better!"
-        image={logoBrandingImg}
         bookCoversText=""
         showCircles={false}
         formatSubtitle={false}
-        textAlignTop
-        mobileBannerKey="logoBranding"
+        layoutVariant="modern"
+        modernHeroKey="logoBranding"
         benefitsComponent={
           <BenefitsSection
             title={

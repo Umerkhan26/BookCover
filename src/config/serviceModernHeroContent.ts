@@ -1,0 +1,58 @@
+export const serviceModernHeroContent = {
+  fiction: {
+    badge: "Premium Book Cover Design Studio",
+    titlePrefix: "Professional ",
+    titleHighlight: "Fiction Book Cover Design",
+    titleSuffix: " That Makes Your Story Stand Out",
+    description:
+      "Lumeart Studio creates custom fiction book covers that capture your story, attract your ideal readers, and build a strong visual identity for your book.",
+    visualPlaceholder: "Fiction Book Cover Design Samples",
+  },
+  audiobook: {
+    badge: "Premium Audiobook Cover Design Studio",
+    titlePrefix: "Professional ",
+    titleHighlight: "Audiobook Cover Design",
+    titleSuffix: " That Makes Your Story Stand Out",
+    description:
+      "Lumeart Studio creates custom audiobook covers that capture your story, attract your ideal listeners, and build a strong visual identity across every platform.",
+    visualPlaceholder: "Audiobook Cover Design Samples",
+  },
+  redesign: {
+    badge: "Premium Book Cover Redesign Studio",
+    titlePrefix: "Professional ",
+    titleHighlight: "Book Cover Redesign",
+    titleSuffix: " That Gives Your Book A Second Life",
+    description:
+      "Lumeart Studio refreshes outdated or underperforming book covers with a modern design that better captures your story, attracts your ideal readers, and boosts your book sales.",
+    visualPlaceholder: "Book Cover Redesign Before And After Samples",
+  },
+  illustrated: {
+    badge: "Premium Illustrated Cover Design Studio",
+    titlePrefix: "Professional ",
+    titleHighlight: "Illustrated Cover Design",
+    titleSuffix: " That Makes Your Story Stand Out",
+    description:
+      "Lumeart Studio creates custom illustrated book covers with original hand drawn artwork that captures your story, attracts your ideal readers, and builds a strong visual identity for your book.",
+    visualPlaceholder: "Illustrated Book Cover Design Samples",
+  },
+  logoBranding: {
+    badge: "Premium Logo & Branding Studio",
+    titlePrefix: "Professional ",
+    titleHighlight: "Logo & Branding Design",
+    titleSuffix: " That Makes Your Business Stand Out",
+    description:
+      "Lumeart Studio creates custom logos and complete brand identities that capture your vision, connect with your ideal customers, and build a strong, consistent presence across every platform.",
+    visualPlaceholder: "Logo And Branding Design Samples",
+  },
+  nonFiction: {
+    badge: "Premium Non-Fiction Book Cover Design Studio",
+    titlePrefix: "Professional ",
+    titleHighlight: "Non-Fiction Book Cover Design",
+    titleSuffix: " That Makes Your Book Stand Out",
+    description:
+      "Lumeart Studio creates custom non-fiction book covers that capture your message, attract your ideal readers, and build a strong visual identity for your book.",
+    visualPlaceholder: "Non-Fiction Book Cover Design Samples",
+  },
+} as const;
+
+export type ServiceModernHeroKey = keyof typeof serviceModernHeroContent;

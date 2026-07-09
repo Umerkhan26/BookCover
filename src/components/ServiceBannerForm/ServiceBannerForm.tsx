@@ -11,16 +11,22 @@ import {
   Input,
   SubmitButton,
   Textarea,
+  ConsultationFormCard,
+  ConsultationForm,
+  ConsultationFormTitle,
+  ConsultationFieldsRow,
 } from "./ServiceBannerForm.styles";
 
 interface ServiceBannerFormProps {
   serviceName?: string;
+  variant?: "default" | "consultation";
 }
 
 const SERVICE_FORM_TOAST_ID = "service-banner-form";
 
 const ServiceBannerForm: React.FC<ServiceBannerFormProps> = ({
   serviceName,
+  variant = "default",
 }) => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -111,51 +117,107 @@ const ServiceBannerForm: React.FC<ServiceBannerFormProps> = ({
     }
   };
 
+  const isConsultation = variant === "consultation";
+  const Card = isConsultation ? ConsultationFormCard : FormCard;
+  const FormWrapper = isConsultation ? ConsultationForm : Form;
+
   return (
     <>
-      <FormCard>
-        <FormTitle>Get a Free Quote</FormTitle>
-        <FormSubtitle>We&apos;ll get back to you within 24 hours.</FormSubtitle>
-        <Form onSubmit={handleSubmit}>
-          <Input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            placeholder="Full Name *"
-            required
-          />
+      <Card>
+        {isConsultation ? (
+          <ConsultationFormTitle>
+            Book a Consultation with our Team
+          </ConsultationFormTitle>
+        ) : (
+          <>
+            <FormTitle>Get a Free Quote</FormTitle>
+            <FormSubtitle>
+              We&apos;ll get back to you within 24 hours.
+            </FormSubtitle>
+          </>
+        )}
+        <FormWrapper onSubmit={handleSubmit}>
+          {isConsultation ? (
+            <>
+              <ConsultationFieldsRow>
+                <Input
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  placeholder="Full Name *"
+                  required
+                />
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email *"
+                  required
+                />
+                <Input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                />
+                <Textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Message *"
+                  required
+                />
+                <SubmitButton type="submit" disabled={isLoading}>
+                  {isLoading ? "Sending..." : "Submit"}
+                </SubmitButton>
+              </ConsultationFieldsRow>
+            </>
+          ) : (
+            <>
+              <Input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="Full Name *"
+                required
+              />
 
-          <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email *"
-            required
-          />
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email *"
+                required
+              />
 
-          <Input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Phone Number"
-          />
+              <Input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone Number"
+              />
 
-          <Textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Message *"
-            required
-          />
+              <Textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Message *"
+                required
+              />
 
-          <SubmitButton type="submit" disabled={isLoading}>
-            {isLoading ? "Sending..." : "Send Message"}
-          </SubmitButton>
-        </Form>
-      </FormCard>
+              <SubmitButton type="submit" disabled={isLoading}>
+                {isLoading ? "Sending..." : "Send Message"}
+              </SubmitButton>
+            </>
+          )}
+        </FormWrapper>
+      </Card>
       <ToastContainer
         containerId={SERVICE_FORM_TOAST_ID}
         position="top-right"
