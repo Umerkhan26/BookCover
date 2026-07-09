@@ -5,6 +5,9 @@ import RedesignForm from "./RedesignForm";
 import { examples } from "./RedesignExampleData";
 import { Helmet } from "react-helmet-async";
 import FictionsCover from "../FictionCover/FictionCoverPage";
+import BenefitsSection from "../Benefits/benefits";
+import { benefitsData } from "../../services/benefits";
+import Reviews from "../reviews/reviews";
 
 const BookCoverRedesign = () => {
   return (
@@ -31,9 +34,20 @@ const BookCoverRedesign = () => {
         showCircles={false}
         layoutVariant="modern"
         modernHeroKey="redesign"
+        benefitsComponent={
+          <BenefitsSection
+            title={
+              <>
+                Here's What Benefits <span>You Get</span>
+              </>
+            }
+            benefits={benefitsData}
+          />
+        }
+        reviewsComponent={<Reviews />}
+        packagesComponent={<Packages />}
+        specialEditionAddOnsComponent={<SpecialEditionAddOns />}
       />
-      <Packages />
-      <SpecialEditionAddOns />
       <RedesignExamples
         heading="Our Book Cover Redesign Examples"
         examples={examples}

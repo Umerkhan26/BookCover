@@ -24,6 +24,7 @@ import {
 } from "../../config/serviceMobileBanners";
 import ServiceModernHero from "./ServiceModernHero";
 import { ServiceModernHeroKey } from "../../config/serviceModernHeroContent";
+import ServicePortfolioShowcase from "../../components/ServicePortfolioShowcase/ServicePortfolioShowcase";
 
 interface FictionCoverProps {
   title: string;
@@ -346,9 +347,12 @@ const FictionsCover = ({
       {benefitsComponent && (
         <BenifitsComponent>{benefitsComponent}</BenifitsComponent>
       )}
+      {modernHeroKey && (
+        <ServicePortfolioShowcase portfolioKey={modernHeroKey} />
+      )}
       {reviewsComponent}
-      {designProcessComponent}
       {packagesComponent}
+      {designProcessComponent}
       {specialEditionAddOnsComponent}
     </div>
   );

@@ -1,8 +1,11 @@
 import IllusratedDesignProcess from "./illustratedDesignProcess";
 import { Helmet } from "react-helmet-async";
 import FictionsCover from "../../FictionCover/FictionCoverPage";
-// import Reviews from '../../reviews/reviews'
-// import Packages from '../../ourPackages/packages'
+import BenefitsSection from "../../Benefits/benefits";
+import { benefitsData } from "../../../services/benefits";
+import Reviews from "../../reviews/reviews";
+import Packages from "../../ourPackages/packages";
+
 const Illustrated = () => {
   return (
     <div className="text-black ">
@@ -20,6 +23,18 @@ const Illustrated = () => {
         bookCoversText=""
         layoutVariant="modern"
         modernHeroKey="illustrated"
+        benefitsComponent={
+          <BenefitsSection
+            title={
+              <>
+                Here's What Benefits <span>You Get</span>
+              </>
+            }
+            benefits={benefitsData}
+          />
+        }
+        reviewsComponent={<Reviews />}
+        packagesComponent={<Packages />}
       />
       <IllusratedDesignProcess />
     </div>

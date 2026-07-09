@@ -3,7 +3,6 @@ import { benefitsData } from "../../services/benefits";
 import DesignProcess from "../HowWeDesign/design";
 import RedesignForm from "../BookCoverRedesign/RedesignForm";
 import Reviews from "../reviews/reviews";
-// import AudioBookCoverAnimationSection from "./AudioBookCoverAnimationSection";
 import Packages from "../ourPackages/packages";
 import { Helmet } from "react-helmet-async";
 import FictionsCover from "../FictionCover/FictionCoverPage";
@@ -28,19 +27,19 @@ const AudioBookCover = () => {
         bookCoversText=""
         layoutVariant="modern"
         modernHeroKey="audiobook"
-      />
-
-      {/* <AudioBookCoverAnimationSection /> */}
-      {<Packages />}
-      <DesignProcess />
-
-      <BenefitsSection
-        title={
-          <>
-            We Create Audiobook Covers <span>That Pop</span>
-          </>
+        benefitsComponent={
+          <BenefitsSection
+            title={
+              <>
+                We Create Audiobook Covers <span>That Pop</span>
+              </>
+            }
+            benefits={benefitsData}
+          />
         }
-        benefits={benefitsData}
+        reviewsComponent={<Reviews />}
+        packagesComponent={<Packages />}
+        designProcessComponent={<DesignProcess />}
       />
 
       <RedesignForm
@@ -49,8 +48,6 @@ const AudioBookCover = () => {
 "
         buttonText="Get a Cover For Free"
       />
-
-      <Reviews />
     </div>
   );
 };
