@@ -3,6 +3,9 @@ import {
   Title,
   AddOnsGrid,
   AddOnCard,
+  ImageFrame,
+  CardBody,
+  CardTitle,
   OrderButton,
 } from "./SpecialEditionAddOns.styles";
 import specialadd1 from "../../assets/specialadd1.webp";
@@ -90,11 +93,15 @@ const SpecialEditionAddOns = () => {
             data-aos-duration="1000"
             data-aos-once="false"
           >
-            <img src={item.image} alt={item.title} />
-            <p>{item.title}</p>
-            <OrderButton onClick={() => handleOrderNow(item.packageId)}>
-              Order Now
-            </OrderButton>
+            <ImageFrame>
+              <img src={item.image} alt={item.title} />
+            </ImageFrame>
+            <CardBody>
+              <CardTitle>{item.title}</CardTitle>
+              <OrderButton onClick={() => handleOrderNow(item.packageId)}>
+                Order Now
+              </OrderButton>
+            </CardBody>
           </AddOnCard>
         ))}
       </AddOnsGrid>
