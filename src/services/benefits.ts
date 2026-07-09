@@ -1,37 +1,55 @@
-type BenefitItem = {
-  image: string;
+export type BenefitIconKey =
+  | "revisions"
+  | "genre"
+  | "print"
+  | "illustration"
+  | "turnaround"
+  | "direct";
+
+export type BenefitItem = {
+  icon: BenefitIconKey;
   title: string;
   subtitle: string;
 };
 
-export const benefitsData: BenefitItem[] = [
+export const fictionBenefitsData: BenefitItem[] = [
   {
-    image: "https://miblart.com/wp-content/uploads/2024/03/benefit1.svg",
-    title: "Unlimited number of revisions",
+    icon: "revisions",
+    title: "Unlimited Revisions",
     subtitle:
-      "We bring all your ideas to life until you say “Wow, that’s what I was looking for!”",
+      "We refine every layout, font, and color until the cover matches the story you set out to tell.",
   },
   {
-    image: "https://miblart.com/wp-content/uploads/2024/03/benefit2.svg",
-    title: "No <br> prepayment",
+    icon: "genre",
+    title: "Genre-Perfect Design",
     subtitle:
-      "Pay only when you love the result (for stock photo-manipulated covers)",
+      "Your cover follows the visual language readers expect in your genre — moody thriller or sweeping fantasy epic.",
   },
   {
-    image: "https://miblart.com/wp-content/uploads/2024/03/benefit3.svg",
-    title: "Pay <br> In Installments",
+    icon: "print",
+    title: "Print & eBook Ready",
     subtitle:
-      "Divide your sum for our services into two equal monthly installments.",
+      "Every file is formatted for KDP, IngramSpark, and every major retailer — print and digital alike.",
   },
   {
-    image: "https://miblart.com/wp-content/uploads/2024/03/benefit4.svg",
-    title: "Quick <br> turnaround",
-    subtitle: "Get your first concept within 9 business days.",
+    icon: "illustration",
+    title: "Original Illustration & Type",
+    subtitle:
+      "No stock templates. Custom artwork and hand-set typography built around your story.",
   },
   {
-    image: "https://miblart.com/wp-content/uploads/2024/03/benefit5.svg",
-    title: "Get points from each <br> order",
+    icon: "turnaround",
+    title: "Fast Turnaround",
     subtitle:
-      "Each time you order cover design, you get points which you can spend for our additional services.",
+      "A finished cover in your hands within days, not months, without cutting corners.",
+  },
+  {
+    icon: "direct",
+    title: "Direct With Your Designer",
+    subtitle:
+      "Talk straight to the person designing your cover — no account managers in between.",
   },
 ];
+
+/** @deprecated Use fictionBenefitsData or page-specific benefits — kept for existing pages */
+export const benefitsData: BenefitItem[] = fictionBenefitsData;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {
   Avatar,
@@ -83,14 +83,48 @@ const reviewsData = [
     text: "Stunning work by Lumeart Studio! My book cover redesign was modern, sharp, and exactly what I had imagined. It gave my backlist a fresh, professional look.",
     timeAgo: "1 week ago",
   },
+  {
+    name: "Rachel Kim Author",
+    avatar: "https://randomuser.me/api/portraits/women/17.jpg",
+    text: "My thriller cover needed to feel tense and cinematic — Lumeart nailed the mood on the first concept. Revisions were fast and the final files were print-ready.",
+    timeAgo: "4 days ago",
+  },
+  {
+    name: "Thomas Wright Author",
+    avatar: "https://randomuser.me/api/portraits/men/41.jpg",
+    text: "Professional from start to finish. They guided me through typography, layout, and genre expectations without ever making the process feel overwhelming.",
+    timeAgo: "2 weeks ago",
+  },
+  {
+    name: "Nina Patel Author",
+    avatar: "https://randomuser.me/api/portraits/women/33.jpg",
+    text: "I loved how collaborative the team was on my memoir cover. Every round of feedback was taken seriously and the result feels authentic to my story.",
+    timeAgo: "8 days ago",
+  },
+  {
+    name: "Marcus Allen Author",
+    avatar: "https://randomuser.me/api/portraits/men/67.jpg",
+    text: "Great value and even better quality. My series now has a cohesive look across all three books, and readers have complimented the covers on social media.",
+    timeAgo: "5 days ago",
+  },
+  {
+    name: "Sophie Laurent Author",
+    avatar: "https://randomuser.me/api/portraits/women/48.jpg",
+    text: "Lumeart transformed a rough idea into a polished cover that stands out in my category. Communication was clear and turnaround was quicker than I expected.",
+    timeAgo: "3 weeks ago",
+  },
 ];
 
 const STAR_COUNT = 5;
+
+const AUTO_SCROLL_MS = 4500;
 
 const Reviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsToShow, setCardsToShow] = useState(3);
   const [cardWidth, setCardWidth] = useState(300);
+  const [isPaused, setIsPaused] = useState(false);
+  const maxIndexRef = useRef(0);
 
   useEffect(() => {
     const updateLayout = () => {
@@ -101,15 +135,20 @@ const Reviews = () => {
         visible = 1;
       } else if (width < 992) {
         visible = 2;
+      } else if (width < 1440) {
+        visible = 3;
+      } else {
+        visible = 4;
       }
 
-      const carouselWidth = Math.min(width, 1200) - 40 - 96;
+      const containerMax = width >= 1440 ? 1400 : 1200;
+      const carouselWidth = Math.min(width, containerMax) - 40 - 96;
       const calculatedWidth = Math.floor(
         (carouselWidth - GAP * (visible - 1)) / visible,
       );
 
       setCardsToShow(visible);
-      setCardWidth(Math.max(calculatedWidth, 260));
+      setCardWidth(Math.max(calculatedWidth, visible === 4 ? 240 : 260));
       setCurrentIndex((prev) =>
         Math.min(prev, Math.max(0, reviewsData.length - visible)),
       );
@@ -121,21 +160,32 @@ const Reviews = () => {
   }, []);
 
   const maxIndex = Math.max(0, reviewsData.length - cardsToShow);
+  maxIndexRef.current = maxIndex;
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev >= maxIndexRef.current ? 0 : prev + 1));
+  }, []);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  };
+  useEffect(() => {
+    if (isPaused || maxIndex === 0) return;
+
+    const timer = window.setInterval(() => {
+      handleNext();
+    }, AUTO_SCROLL_MS);
+
+    return () => window.clearInterval(timer);
+  }, [isPaused, maxIndex, handleNext]);
 
   return (
     <Section id="reviews">
       <Container>
         <HeadingWrapper>
           <Heading>
-            What Do Our <span>Clients Say</span>
+            Customer <span>Feedback</span>
           </Heading>
         </HeadingWrapper>
 
@@ -149,7 +199,12 @@ const Reviews = () => {
           </ReviewButton>
         </ButtonWrap>
 
-        <CarouselOuter>
+        <CarouselOuter
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocus={() => setIsPaused(true)}
+          onBlur={() => setIsPaused(false)}
+        >
           <NavButton type="button" onClick={handlePrev} aria-label="Previous">
             <FaChevronLeft />
           </NavButton>
@@ -160,8 +215,8 @@ const Reviews = () => {
               $cardWidth={cardWidth}
               $gap={GAP}
             >
-              {reviewsData.map((review) => (
-                <ReviewCard key={review.name} $cardWidth={cardWidth}>
+              {reviewsData.map((review, index) => (
+                <ReviewCard key={`${review.name}-${index}`} $cardWidth={cardWidth}>
                   <CardHeader>
                     <Avatar
                       src={review.avatar}

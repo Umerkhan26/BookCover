@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "../Layout";
 import Home from "../pages/Home/home";
 import BenefitsSection from "../pages/Benefits/benefits";
-import { benefitsData } from "../services/benefits";
+import { fictionBenefitsData } from "../services/benefits";
 import Reviews from "../pages/reviews/reviews";
 import DesignProcess from "../pages/DesignProcess/designProcess";
 import Packages from "../pages/ourPackages/packages";
@@ -161,10 +161,11 @@ const AppRoutes: React.FC = () => {
                   <BenefitsSection
                     title={
                       <>
-                        Here's What Benefits <span>You Get</span>
+                        Benefits you get with our{" "}
+                        <span>fiction book cover design</span>
                       </>
                     }
-                    benefits={benefitsData}
+                    benefits={fictionBenefitsData}
                   />
                 }
                 designProcessComponent={<DesignProcess />}

@@ -3,12 +3,12 @@
 export const Section = styled.section`
   width: 100%;
   background: #f3f4f6;
-  padding: 48px 0 64px;
+  padding: 36px 0 64px;
   font-family: "Manrope", sans-serif;
   overflow: hidden;
 
   @media (max-width: 768px) {
-    padding: 48px 0 48px;
+    padding: 32px 0 48px;
   }
 `;
 
@@ -18,18 +18,18 @@ export const Container = styled.div`
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
+
+  @media (min-width: 1440px) {
+    max-width: 1400px;
+  }
 `;
 
 export const HeadingWrapper = styled.div`
   text-align: center;
   margin-bottom: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 16px;
   box-sizing: border-box;
   margin-top: 0;
-
-  @media (min-width: 768px) {
-    margin-top: 20px;
-  }
 `;
 
 export const Heading = styled.h2`
