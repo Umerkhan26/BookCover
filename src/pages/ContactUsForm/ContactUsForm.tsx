@@ -133,7 +133,7 @@ const ContactUsForm: React.FC = () => {
           </ContactDetail> */}
           {/* <ContactDetail>
             <FaPhone className="icon" />
-            <a href="tel:+13153332077">+1 (315) 333-2077</a>
+              <a href="tel:+13153332077">+1 (315) 333-2077</a>
           </ContactDetail>
           <ContactDetail>
             <FaEnvelope className="icon" />
