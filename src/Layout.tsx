@@ -82,7 +82,7 @@ const Layout: React.FC = () => {
       <main>
         <Outlet />
       </main>
-      <Footer {...footerData} />,
+      <Footer {...footerData} />
     </>
   );
 };

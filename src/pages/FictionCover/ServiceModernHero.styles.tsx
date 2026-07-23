@@ -68,6 +68,7 @@ export const ModernHeroContent = styled.div`
   text-align: left;
   align-self: start;
   padding-top: 0;
+  margin-top: 0;
 `;
 
 export const HeroBadge = styled.span`
@@ -151,7 +152,6 @@ export const ModernHeroVisual = styled.div`
   padding: 20px 24px;
   box-sizing: border-box;
   align-self: start;
-  margin-top: 0;
 
   @media (min-width: 993px) and (max-width: 1439px) {
     min-height: 300px;
@@ -167,6 +167,21 @@ export const ModernHeroVisual = styled.div`
 
   @media (max-width: 768px) {
     min-height: 220px;
+  }
+`;
+
+export const ModernHeroVisualImage = styled.img`
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  align-self: start;
+  margin: 0;
+  /* Allow grid column to shrink — without this, intrinsic PNG width overflows and clips the 3rd book */
+  min-width: 0;
+
+  @media (max-width: 992px) {
+    margin: 0;
   }
 `;
 

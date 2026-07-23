@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 // Styled Components
 const Section = styled.section`
@@ -64,6 +65,10 @@ const Title = styled.h2`
 
   span {
     color: #6dc7d1;
+  }
+
+  @media (min-width: 1440px) {
+    padding-top: 28px;
   }
 
   @media (max-width: 768px) {
@@ -132,8 +137,22 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
   title,
   subtitle,
   buttonText,
+  buttonLink = "/get-a-cover",
   onButtonClick,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (onButtonClick) {
+      onButtonClick();
+      return;
+    }
+    if (buttonLink) {
+      navigate(buttonLink);
+    }
+  };
+
   return (
     <Section className="section-share-ideas">
       {/* SVG Blocks */}
@@ -163,28 +182,10 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
         </svg>
       </SvgBlock>
 
-      {/* <SvgBlock className="top-right">
-        <svg width="99" height="97" viewBox="0 0 99 97" fill="none">
-          <circle cx="1.40276" cy="32.7859" r="31.8231" stroke="#38555F" />
-          <circle cx="66.0446" cy="32.7859" r="31.8231" stroke="#38555F" />
-          <circle cx="66.0446" cy="97.4322" r="31.8231" stroke="#38555F" />
-        </svg>
-      </SvgBlock>
-      <SvgBlock className="bottom-right">
-        <svg width="348" height="69" viewBox="0 0 348 69" fill="none">
-          <path
-            d="M347 69.5C347.003 60.5037 345.13 51.5951 341.49 43.2832C337.85 34.9712 332.513 27.4188 325.784 21.0575C319.056 14.6961 311.067 9.65053 302.275 6.209C293.483 2.76746 284.06 0.99742 274.544 1L-11 0.999987L-11 138L274.544 138C293.761 138 312.19 130.783 325.778 117.937C339.366 105.091 347 87.6673 347 69.5V69.5Z"
-            stroke="#38555F"
-            strokeMiterlimit="10"
-          />
-        </svg>
-      </SvgBlock> */}
-
       {/* Content */}
       <Container className="container">
         <SectionTitle className="section-title">
           <Title dangerouslySetInnerHTML={{ __html: title as string }} />
-          {/* Render HTML */}
           <SvgSphere width="40" height="10" viewBox="0 0 40 10" fill="none">
             <circle cx="4.85442" cy="4.85549" r="4.35549" stroke="#212121" />
             <path
@@ -196,10 +197,7 @@ const ShareIdeasSection: React.FC<ShareIdeasSectionProps> = ({
           <Subtitle>{subtitle}</Subtitle>
         </SectionTitle>
         <div className="text-center">
-          <LinkButton
-            href="#"
-            onClick={onButtonClick ? onButtonClick : undefined}
-          >
+          <LinkButton href={buttonLink} onClick={handleClick}>
             {buttonText}
           </LinkButton>
         </div>

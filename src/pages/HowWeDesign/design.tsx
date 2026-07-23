@@ -245,6 +245,15 @@ const DesignProcess = ({
   ],
   buttonText = "Order Design",
   buttonLink = "/services",
+  showButton = true,
+}: {
+  title?: string;
+  highlight?: string;
+  subtitle?: string;
+  steps?: { number: string; title: string; description: string }[];
+  buttonText?: string;
+  buttonLink?: string;
+  showButton?: boolean;
 }) => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -307,16 +316,17 @@ const DesignProcess = ({
               </Step>
             ))}
           </StepsContainer>
-          <Button
-            onClick={handleButtonClick}
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            // Delay after the last step
-            data-aos-delay={400 + steps.length * staggerDelay + 200}
-            data-aos-once="true"
-          >
-            {buttonText}
-          </Button>
+          {showButton && (
+            <Button
+              onClick={handleButtonClick}
+              data-aos="fade-up"
+              data-aos-duration="1000"
+              data-aos-delay={400 + steps.length * staggerDelay + 200}
+              data-aos-once="true"
+            >
+              {buttonText}
+            </Button>
+          )}
         </RightColumn>
       </Container>
     </Section>

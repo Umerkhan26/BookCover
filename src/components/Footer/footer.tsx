@@ -1,15 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  IconSocNet,
-  SocialNetwork,
-} from "../../pages/Testimonial/testimonial.styles";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+  FaFacebook,
+  FaInstagram,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import { FaLinkedin, FaThreads } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo/Lumestudio-1.webp";
 
-// Interfaces
 interface IFooterLink {
   href: string;
   text: string;
@@ -36,328 +37,355 @@ export interface FooterProps {
   }[];
 }
 
-// Styled Components
-
-const FooterPartnerLogo = styled.div`
+const FooterShell = styled.footer`
+  background: #f7f9fa;
+  border-top: 1px solid #e8eef0;
   font-family: "Manrope", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  position: relative;
-  -webkit-font-smoothing: antialiased;
-  padding-right: 3.5rem;
-
-  @media (max-width: 768px) {
-    padding-right: 0;
-    text-align: center;
-  }
 `;
 
-const FooterName = styled.div`
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 17px;
-  text-transform: uppercase;
-  color: black;
-  margin-bottom: 24px;
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-    margin-top: -5px;
-  }
-`;
-
-const FooterContainer = styled.footer`
-  background-color: #fafafa;
-  padding: 35px 60px;
-
-  @media (max-width: 768px) {
-    padding: 50px 20px;
-  }
-`;
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-  margin-bottom: -20px;
-
-  @media (max-width: 768) {
-    margin-bottom: -30px;
-  }
-
-  @media (max-width: 480) {
-    margin-bottom: -40px;
-  }
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  // margin-bottom: 1rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-`;
-
-const FooterNav = styled.div`
-  display: flex;
-  color: #212529;
-  justify-content: flex-start;
-  justify-content: space-between;
-  // width: 100%;
-  gap: 50px;
-
-  @media (max-width: 1024px) {
-    gap: 30px;
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-`;
-
-const FooterCategoryWrapper = styled.div`
-  margin: 0 1rem;
-  text-align: left;
-  padding-right: 3.5rem;
-
-  @media (max-width: 768px) {
-    padding-right: 0;
-    text-align: center;
-  }
-`;
-
-const FooterList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 0;
-`;
-
-const FooterItem = styled.li`
-  list-style-type: none;
-`;
-
-const FooterAnchor = styled.a`
-  color: #000000;
-  text-decoration: none;
-  font-size: 15px;
-  white-space: nowrap;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-`;
-
-const FooterNavLink = styled(NavLink)`
-  color: #000000;
-  text-decoration: none;
-  font-size: 15px;
-  white-space: nowrap;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const FooterNote = styled.p`
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 14px;
-  color: #455a64;
-  margin-bottom: -1rem;
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-`;
-
-const BotFooter = styled.div`
-  // padding: 0.2rem 0;
-  text-align: center;
-`;
-
-const LogoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const FooterInner = styled.div`
   width: 100%;
-  margin-bottom: 20px; /* Add some spacing below */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 48px 0;
+  box-sizing: border-box;
 
-  @media (max-width: 768px) {
-    margin-bottom: 15px;
+  @media (max-width: 1439px) and (min-width: 993px) {
+    padding: 44px 56px 0;
+  }
+
+  @media (max-width: 992px) {
+    padding: 40px 32px 0;
+  }
+
+  @media (max-width: 640px) {
+    padding: 36px 20px 0;
+  }
+`;
+
+const FooterTop = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding-bottom: 36px;
+
+  @media (max-width: 992px) {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 28px;
+  }
+`;
+
+const BrandBlock = styled.div`
+  flex: 0 1 260px;
+  max-width: 280px;
+
+  @media (max-width: 992px) {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 const Logo = styled.img`
-  max-height: 65px;
-  width: auto;
-  object-fit: contain;
   display: block;
+  height: 52px;
+  width: auto;
+  margin-bottom: 14px;
+`;
 
-  @media (max-width: 768px) {
-    max-height: 84px;
-  }
+const BrandText = styled.p`
+  margin: 0 0 16px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #667085;
+`;
 
-  @media (max-width: 480px) {
-    max-height: 74px;
+const SocialRow = styled.div`
+  display: flex;
+  gap: 10px;
+
+  @media (max-width: 640px) {
+    justify-content: center;
   }
 `;
 
-const Paragraph = styled.p`
-  text-align: center;
-  font-size: 15px;
-  color: #000000;
-  max-width: 500px;
-  margin: 10px auto;
-  line-height: 1.5em;
-  max-height: 3em;
-  overflow: visible;
-  white-space: normal;
-  word-break: break-word;
+const SocialLink = styled.a`
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e4ebed;
+  background: #fff;
+  color: #344054;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 
-  @media (max-width: 600px) {
-    font-size: 15px;
-    max-width: 90%;
-    margin: 10px 5%;
+  &:hover {
+    background: #6dc7d1;
+    border-color: #6dc7d1;
+    color: #fff;
+  }
+`;
+
+const LinksBlock = styled.div`
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  min-width: 0;
+
+  @media (max-width: 992px) {
+    flex: 1 1 100%;
+    gap: 24px;
   }
 
-  @media (max-width: 400px) {
-    font-size: 15px;
-    margin-bottom: 26px;
+  @media (max-width: 640px) {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+`;
+
+const LinkCol = styled.div`
+  min-width: 0;
+
+  @media (max-width: 640px) {
     text-align: center;
   }
 `;
 
-// Footer Component
-const Footer: React.FC<FooterProps> = ({
-  // partnerLogo,
-  categories,
-  copyrightText,
-}) => {
+const ColTitle = styled.h3`
+  margin: 0 0 14px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #101828;
+`;
+
+const LinkList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+
+  @media (max-width: 640px) {
+    align-items: center;
+  }
+`;
+
+const StyledNavLink = styled(NavLink)`
+  color: #667085;
+  text-decoration: none;
+  font-size: 0.92rem;
+  line-height: 1.4;
+
+  &:hover {
+    color: #6dc7d1;
+  }
+`;
+
+const StyledAnchor = styled.a`
+  color: #667085;
+  text-decoration: none;
+  font-size: 0.92rem;
+  line-height: 1.4;
+
+  &:hover {
+    color: #6dc7d1;
+  }
+`;
+
+const ContactBlock = styled.div`
+  flex: 0 1 250px;
+  max-width: 280px;
+
+  @media (max-width: 992px) {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const ContactList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const ContactItem = styled.li`
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #667085;
+
+  .icon {
+    color: #6dc7d1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  a {
+    color: #667085;
+    text-decoration: none;
+    word-break: break-word;
+
+    &:hover {
+      color: #6dc7d1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+`;
+
+const FooterBottom = styled.div`
+  border-top: 1px solid #e8eef0;
+  padding: 14px 0;
+  text-align: center;
+`;
+
+const Copyright = styled.p`
+  margin: 0;
+  font-size: 0.84rem;
+  color: #98a2b3;
+  line-height: 1.4;
+`;
+
+const Footer: React.FC<FooterProps> = ({ categories, copyrightText }) => {
   return (
-    <>
-      <FooterContainer>
-        <Container>
-          <Row>
-            {/* Footer Navigation */}
-            <FooterNav>
-              {/* Partner Logo */}
-              <FooterPartnerLogo>
-                <LogoContainer>
-                  <NavLink to="/">
-                    <Logo src={logo} alt="Logo" />
-                  </NavLink>
-                </LogoContainer>
+    <FooterShell>
+      <FooterInner>
+        <FooterTop>
+          <BrandBlock>
+            <NavLink to="/">
+              <Logo src={logo} alt="Lumeart Studio" />
+            </NavLink>
+            <BrandText>
+              Lumeart Studio is a creative hub for book lovers, authors, and
+              publishers.
+            </BrandText>
+            <SocialRow>
+              <SocialLink
+                href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                <FaFacebook size={15} />
+              </SocialLink>
+              <SocialLink
+                href="https://www.linkedin.com/company/lumeart-studio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin size={15} />
+              </SocialLink>
+              <SocialLink
+                href="https://www.threads.com/@lumeart_studio?igshid=NTc4MTIwNjQ2YQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Threads"
+              >
+                <FaThreads size={15} />
+              </SocialLink>
+              <SocialLink
+                href="https://www.instagram.com/lumeart_studios/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <FaInstagram size={15} />
+              </SocialLink>
+            </SocialRow>
+          </BrandBlock>
 
-                <Paragraph>
-                  Lumeart Studio is a creative hub for book lovers, authors, and
-                  publishers.
-                </Paragraph>
+          <LinksBlock>
+            {categories.map((category) => (
+              <LinkCol key={category.name}>
+                <ColTitle>{category.name}</ColTitle>
+                <LinkList>
+                  {category.links.map((link) => (
+                    <li key={`${category.name}-${link.text}`}>
+                      {link.href.startsWith("/") || link.href === "" ? (
+                        <StyledNavLink to={link.href || "#"}>
+                          {link.text}
+                        </StyledNavLink>
+                      ) : (
+                        <StyledAnchor
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {link.text}
+                        </StyledAnchor>
+                      )}
+                    </li>
+                  ))}
+                </LinkList>
+              </LinkCol>
+            ))}
+          </LinksBlock>
 
-                <SocialNetwork
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      gap: "10px",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <IconSocNet
-                      href="https://www.facebook.com/share/1EreeG179x/?mibextid=wwXIfr"
-                      target="_blank"
-                      color="#3b5998"
-                    >
-                      <FaFacebook size={20} />
-                    </IconSocNet>
-                    <IconSocNet
-                      href="https://www.linkedin.com/company/lumeart-studio/"
-                      target="_blank"
-                      color="#3b5998"
-                    >
-                      <FaLinkedin size={20} />
-                    </IconSocNet>
-                    <IconSocNet
-                      href="https://www.threads.com/@lumeart_studio?igshid=NTc4MTIwNjQ2YQ=="
-                      target="_blank"
-                      color="#1da1f3"
-                    >
-                      <FaThreads size={20} />
-                    </IconSocNet>
-                    <IconSocNet
-                      href="https://www.instagram.com/lumeart_studios/"
-                      target="_blank"
-                      color="#E4405F"
-                    >
-                      <FaInstagram size={20} />
-                    </IconSocNet>
-                  </div>
-                  {/* Copyright Text */}
-                </SocialNetwork>
-              </FooterPartnerLogo>
-              {categories.map((category, index) => (
-                <FooterCategoryWrapper key={index}>
-                  <FooterName>{category.name}</FooterName>
-                  <FooterList>
-                    {category.links.map((link, idx) => (
-                      <FooterItem key={idx}>
-                        {link.href.startsWith("/") || link.href === "" ? (
-                          <FooterNavLink to={link.href || "#"}>
-                            {link.text}
-                          </FooterNavLink>
-                        ) : (
-                          <FooterAnchor
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {link.text}
-                          </FooterAnchor>
-                        )}
-                      </FooterItem>
-                    ))}
-                  </FooterList>
-                </FooterCategoryWrapper>
-              ))}
-            </FooterNav>
-          </Row>
-          {/* Social Links and Copyright Text */}
-        </Container>
-      </FooterContainer>
+          <ContactBlock>
+            <ColTitle>Contact</ColTitle>
+            <ContactList>
+              <ContactItem>
+                <FaMapMarkerAlt className="icon" size={14} />
+                <span>30 N Gould Ste R, Sheridan, WY 82801</span>
+              </ContactItem>
+              <ContactItem>
+                <FaEnvelope className="icon" size={14} />
+                <a href="mailto:studioslumeart@gmail.com">
+                  studioslumeart@gmail.com
+                </a>
+              </ContactItem>
+              <ContactItem>
+                <FaPhone className="icon" size={14} />
+                <a href="tel:+13153332077">+1 (315) 333-2077</a>
+              </ContactItem>
+            </ContactList>
+          </ContactBlock>
+        </FooterTop>
 
-      {/* Bottom Footer */}
-      <BotFooter>
-        <span
-          style={{
-            display: "block",
-            textAlign: "center",
-            fontWeight: 300,
-            fontSize: "13px",
-            lineHeight: "15px",
-            color: "#212121",
-          }}
-        >
-          <FooterNote>{copyrightText}</FooterNote>
-        </span>
-      </BotFooter>
-    </>
+        <FooterBottom>
+          <Copyright>{copyrightText}</Copyright>
+        </FooterBottom>
+      </FooterInner>
+    </FooterShell>
   );
 };
 

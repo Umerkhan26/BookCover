@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   ContentWrapper,
@@ -9,11 +10,17 @@ import {
   BenefitItem,
   Button,
 } from "./AffiliateBenefits.styles";
-// import defaultImage from "../../assets/pacakge1.jpeg"; // Default image
 import benfits2 from "../../assets/benifits2.jpg";
 
+interface AffiliateBenefitsProps {
+  benefits?: string[];
+  buttonText?: string;
+  buttonLink?: string;
+  image?: string;
+  onButtonClick?: () => void;
+}
+
 const AffiliateBenefits = ({
-  // title = "Benefits You Get",
   benefits = [
     "On-time monthly payments",
     "24/7 support",
@@ -21,8 +28,20 @@ const AffiliateBenefits = ({
     "A dashboard with all stats",
   ],
   buttonText = "Become an affiliate",
+  buttonLink = "/contact-us",
   image = benfits2,
-}) => {
+  onButtonClick,
+}: AffiliateBenefitsProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (onButtonClick) {
+      onButtonClick();
+      return;
+    }
+    navigate(buttonLink);
+  };
+
   return (
     <Container>
       <ContentWrapper>
@@ -38,7 +57,9 @@ const AffiliateBenefits = ({
               <BenefitItem key={index}>{benefit}</BenefitItem>
             ))}
           </BenefitsList>
-          <Button>{buttonText}</Button>
+          <Button type="button" onClick={handleClick}>
+            {buttonText}
+          </Button>
         </TextWrapper>
       </ContentWrapper>
     </Container>

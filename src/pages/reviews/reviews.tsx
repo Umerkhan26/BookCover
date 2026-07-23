@@ -221,8 +221,8 @@ const Reviews = () => {
                     <Avatar
                       src={review.avatar}
                       alt={review.name}
-                      loading="lazy"
-                    />
+                  loading="lazy"
+                />
                     <ReviewerName>{review.name}</ReviewerName>
                   </CardHeader>
 
@@ -240,7 +240,7 @@ const Reviews = () => {
                   </ReviewText>
 
                   <CardFooter>{review.timeAgo}</CardFooter>
-                </ReviewCard>
+            </ReviewCard>
               ))}
             </CarouselTrack>
           </CarouselViewport>

@@ -15,6 +15,7 @@ import {
   ModernHeroSection,
   ModernHeroTitle,
   ModernHeroVisual,
+  ModernHeroVisualImage,
   SecondaryCta,
   VisualPlaceholderLabel,
 } from "./ServiceModernHero.styles";
@@ -29,6 +30,7 @@ const ServiceModernHero: React.FC<ServiceModernHeroProps> = ({
   serviceName,
 }) => {
   const content = serviceModernHeroContent[heroKey];
+  const visualImage = content.visualImage;
 
   return (
     <ModernHeroSection>
@@ -47,11 +49,18 @@ const ServiceModernHero: React.FC<ServiceModernHeroProps> = ({
             </ModernCtaRow>
           </ModernHeroContent>
 
-          <ModernHeroVisual aria-hidden="true">
-            <VisualPlaceholderLabel>
-              {content.visualPlaceholder}
-            </VisualPlaceholderLabel>
-          </ModernHeroVisual>
+          {visualImage ? (
+            <ModernHeroVisualImage
+              src={visualImage}
+              alt={content.visualPlaceholder}
+            />
+          ) : (
+            <ModernHeroVisual>
+              <VisualPlaceholderLabel>
+                {content.visualPlaceholder}
+              </VisualPlaceholderLabel>
+            </ModernHeroVisual>
+          )}
         </ModernHeroGrid>
 
         <ConsultationFormSection>

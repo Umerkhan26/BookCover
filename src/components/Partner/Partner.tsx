@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DesignProcess from "../../pages/HowWeDesign/design";
 import AffiliateBenefits from "./AffiliateBenefits";
 import benfits1 from "../../assets/benifits1.jpg";
@@ -5,8 +7,31 @@ import ShareIdeasSection from "../../pages/IdeaSection/ideaSection";
 import { Helmet } from "react-helmet-async";
 import bannerImg from "../../assets/PageBanner/6.webp";
 import FictionsCover from "../../pages/FictionCover/FictionCoverPage";
+import LoginModal from "../Login/LoginModel";
+import RegisterModal from "../register/RegisterModal";
+import { getDefaultRouteForRole } from "../../utils/role.util";
 
 const Partner = () => {
+  const navigate = useNavigate();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+  const openAuthModal = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/portal/orders");
+      return;
+    }
+    setShowLoginModal(true);
+  };
+
+  const handleLoginSuccess = (token: string) => {
+    localStorage.setItem("token", token);
+    setShowLoginModal(false);
+    const role = localStorage.getItem("role");
+    navigate(getDefaultRouteForRole(role));
+  };
+
   return (
     <div>
       <Helmet>
@@ -58,10 +83,12 @@ const Partner = () => {
               "Commissions are paid each month on your PayPal account.",
           },
         ]}
-        buttonText="Get Started"
-        buttonLink="/custom-design"
+        showButton={false}
       />
-      <AffiliateBenefits />
+      <AffiliateBenefits
+        buttonText="Become an affiliate"
+        onButtonClick={openAuthModal}
+      />
 
       <DesignProcess
         title="Value-added reselling"
@@ -88,8 +115,7 @@ Work"
               "Expand the range of services your existing and potential clients might be looking for",
           },
         ]}
-        buttonText="Get Started"
-        buttonLink="/custom-design"
+        showButton={false}
       />
       <AffiliateBenefits
         benefits={[
@@ -99,14 +125,36 @@ Work"
           "White label reselling if requested",
         ]}
         buttonText="Join Now"
+        buttonLink="/contact-us"
         image={benfits1}
       />
       <ShareIdeasSection
         title="Not sure what kind of cooperation is best for you, <span>or want to get more info?</span>"
         subtitle="We are here to help and adapt to your special needs"
         buttonText="Book A call"
-        buttonLink=""
+        buttonLink="/contact-us"
       />
+
+      <LoginModal
+        show={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={handleLoginSuccess}
+        onRegisterClick={() => {
+          setShowLoginModal(false);
+          setShowRegisterModal(true);
+        }}
+      />
+
+      {showRegisterModal && (
+        <RegisterModal
+          show={showRegisterModal}
+          onClose={() => setShowRegisterModal(false)}
+          onLoginClick={() => {
+            setShowRegisterModal(false);
+            setShowLoginModal(true);
+          }}
+        />
+      )}
     </div>
   );
 };
