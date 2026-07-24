@@ -1,4 +1,6 @@
 /* Font is loaded in index.html for better performance */
 /* Removed duplicate font-face declaration */
 
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

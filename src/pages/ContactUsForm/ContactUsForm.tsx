@@ -150,7 +150,7 @@ const ContactUsForm: React.FC = () => {
           </ContactDetail>
           <ContactDetail>
             <FaPhone className="icon" />
-            <a href="tel:+923455334225">+92 (345) 533-4225</a>
+            <a href="tel:+923357771817">+92 (335)777-1817</a>
           </ContactDetail>
           {/* Temporary: last phone commented out — replaced with address
           <ContactDetail>
