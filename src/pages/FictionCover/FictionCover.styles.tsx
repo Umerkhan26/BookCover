@@ -449,11 +449,12 @@ export const Title = styled.h1<{ singleLine?: boolean; expanded?: boolean }>`
     margin-bottom: 8px;
     line-height: 1.15;
 
-    /* Match other mobile banner titles; keep Contact Us compact with CEO note */
+    /* Match FAQ mobile title: 15px / 700 */
     ${({ expanded }) =>
       expanded &&
       `
-      font-size: clamp(14px, 3.5vw, 18px);
+      font-size: 15px;
+      font-weight: 700;
       margin-bottom: 4px;
       line-height: 1.2;
     `}
@@ -467,7 +468,8 @@ export const Title = styled.h1<{ singleLine?: boolean; expanded?: boolean }>`
     ${({ expanded }) =>
       expanded &&
       `
-      font-size: clamp(13px, 3.2vw, 16px);
+      font-size: 15px;
+      font-weight: 700;
       margin-bottom: 2px;
     `}
   }
