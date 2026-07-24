@@ -440,8 +440,8 @@ export const Subtitle = styled.p<{ singleLine?: boolean; expanded?: boolean }>`
   /* Keep long subtitles (like Contact Us) readable + centered, without overflowing */
   max-width: ${({ expanded }) => (expanded ? "720px" : "1120px")};
   padding: 0 8px;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
+  overflow-wrap: ${({ expanded }) => (expanded ? "break-word" : "anywhere")};
+  text-wrap: ${({ expanded }) => (expanded ? "pretty" : "balance")};
 
   margin-left: 0;
   margin-right: 0;
@@ -459,29 +459,43 @@ export const Subtitle = styled.p<{ singleLine?: boolean; expanded?: boolean }>`
     `}
   }
 
-  @media (max-width: 768px) {
-    white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
-    overflow: ${({ singleLine }) => (singleLine ? "hidden" : "visible")};
-    text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
-  }
-
   @media (max-width: 1024px) {
     font-size: ${({ expanded }) =>
       expanded ? "clamp(12px, 1.6vw, 15px)" : "clamp(13px, 1.8vw, 16px)"};
   }
 
   @media (max-width: 768px) {
-    font-size: ${({ expanded }) =>
-      expanded ? "clamp(11px, 2.2vw, 13px)" : "clamp(10px, 1.8vw, 12px)"};
-    line-height: 1.4;
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+    overflow: ${({ singleLine }) => (singleLine ? "hidden" : "visible")};
+    text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
+    font-size: ${({ expanded }) =>
+      expanded ? "clamp(11px, 2.8vw, 13px)" : "clamp(10px, 1.8vw, 12px)"};
+    line-height: 1.4;
+
+    /* Wider CEO note on mobile so ~9–10 words fit per line; desktop unchanged */
+    ${({ expanded }) =>
+      expanded &&
+      `
+      width: 92vw;
+      max-width: 92vw;
+      padding: 0 10px;
+      box-sizing: border-box;
+    `}
   }
 
   @media (max-width: 480px) {
     font-size: ${({ expanded }) =>
-      expanded ? "clamp(10px, 2.4vw, 12px)" : "clamp(8px, 1.5vw, 10px)"};
+      expanded ? "clamp(10px, 3vw, 12px)" : "clamp(8px, 1.5vw, 10px)"};
     line-height: 1.35;
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      width: 94vw;
+      max-width: 94vw;
+      padding: 0 8px;
+    `}
   }
 `;
 
