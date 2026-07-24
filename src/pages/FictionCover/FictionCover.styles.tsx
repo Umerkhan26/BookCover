@@ -424,35 +424,39 @@ export const MobileBannerTitle = styled.h1<{ singleLine?: boolean }>`
   }
 `;
 
-export const Subtitle = styled.p<{ singleLine?: boolean }>`
-  font-size: clamp(14px, 1.5vw, 18px);
+export const Subtitle = styled.p<{ singleLine?: boolean; expanded?: boolean }>`
+  font-size: ${({ expanded }) =>
+    expanded ? "clamp(13px, 1.4vw, 16px)" : "clamp(14px, 1.5vw, 18px)"};
   font-weight: 400;
   color: rgba(255, 255, 255, 0.85);
   text-align: inherit;
   margin: 0;
-  line-height: 1.5;
+  line-height: ${({ expanded }) => (expanded ? "1.55" : "1.5")};
   font-family: "Manrope", sans-serif;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
   overflow: ${({ singleLine }) => (singleLine ? "hidden" : "visible")};
   text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
   /* Keep long subtitles (like Contact Us) readable + centered, without overflowing */
-  max-width: 1120px;
+  max-width: ${({ expanded }) => (expanded ? "720px" : "1120px")};
   padding: 0 8px;
   overflow-wrap: anywhere;
   text-wrap: balance;
-  // margin-left: auto;
-  // margin-right: auto;
 
   margin-left: 0;
   margin-right: 0;
-  width: max-content;
-  max-width: 100%;
+  width: ${({ expanded }) => (expanded ? "100%" : "max-content")};
+  max-width: ${({ expanded }) => (expanded ? "720px" : "100%")};
 
   @media (min-width: 1024px) and (max-width: 1279px) {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    ${({ singleLine, expanded }) =>
+      singleLine &&
+      !expanded &&
+      `
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    `}
   }
 
   @media (max-width: 768px) {
@@ -462,18 +466,21 @@ export const Subtitle = styled.p<{ singleLine?: boolean }>`
   }
 
   @media (max-width: 1024px) {
-    font-size: clamp(13px, 1.8vw, 16px);
+    font-size: ${({ expanded }) =>
+      expanded ? "clamp(12px, 1.6vw, 15px)" : "clamp(13px, 1.8vw, 16px)"};
   }
 
   @media (max-width: 768px) {
-    font-size: clamp(10px, 1.8vw, 12px);
+    font-size: ${({ expanded }) =>
+      expanded ? "clamp(11px, 2.2vw, 13px)" : "clamp(10px, 1.8vw, 12px)"};
     line-height: 1.4;
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
   }
 
   @media (max-width: 480px) {
-    font-size: clamp(8px, 1.5vw, 10px);
-    line-height: 1.3;
+    font-size: ${({ expanded }) =>
+      expanded ? "clamp(10px, 2.4vw, 12px)" : "clamp(8px, 1.5vw, 10px)"};
+    line-height: 1.35;
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
   }
 `;

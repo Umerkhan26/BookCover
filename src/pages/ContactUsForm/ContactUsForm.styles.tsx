@@ -74,14 +74,16 @@ export const InfoSectionTitle = styled.h2`
 
 export const ContactDetail = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 15px;
   font-size: 1.1rem;
   color: ${colors.lightText};
+  line-height: 1.5;
 
   .icon {
     /* color: ${colors.primary};   */
     margin-right: 10px;
+    margin-top: 3px;
     /* margin-left: 10px; */
     font-size: 1.3rem;
     min-width: 24px;

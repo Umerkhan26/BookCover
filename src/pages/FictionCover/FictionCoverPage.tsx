@@ -32,6 +32,8 @@ interface FictionCoverProps {
   textAlignTop?: boolean;
   showBannerForm?: boolean;
   mobileBannerKey?: ServiceMobileBannerKey;
+  /** Use larger, wrapping subtitle styles (e.g. temporary CEO note on Contact Us) */
+  expandedSubtitle?: boolean;
 
   benefitsComponent?: JSX.Element;
   designProcessComponent?: JSX.Element;
@@ -50,6 +52,7 @@ const FictionsCover = ({
   textAlignTop = false,
   showBannerForm,
   mobileBannerKey,
+  expandedSubtitle = false,
   benefitsComponent,
   designProcessComponent,
   packagesComponent,
@@ -267,7 +270,7 @@ const FictionsCover = ({
         )}
       </TitleComponent>
       {subtitle && (
-        <Subtitle singleLine={isSingleLineSubtitle}>
+        <Subtitle singleLine={isSingleLineSubtitle} expanded={expandedSubtitle}>
           {typeof subtitle === "string"
             ? formatSubtitle
               ? `>> ${subtitle.toUpperCase()}`
