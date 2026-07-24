@@ -26,8 +26,8 @@ const ContactUs = () => {
                 style={{
                   display: "block",
                   fontWeight: 700,
-                  fontSize: "1.15em",
-                  marginBottom: "10px",
+                  fontSize: "1.05em",
+                  marginBottom: "6px",
                 }}
               >
                 A Personal Note from the CEO
@@ -39,8 +39,7 @@ const ContactUs = () => {
               committed to delivering outstanding service and creative
               excellence.
               <br />
-              <br />
-              <span style={{ fontStyle: "italic" }}>
+              <span style={{ fontStyle: "italic", display: "block", marginTop: "6px" }}>
                 — Wasim Akram, Chief Executive Officer (Lume Art Studios)
               </span>
             </>

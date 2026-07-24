@@ -174,13 +174,13 @@ export const BannerImage = styled.div<{
       }
     `}
 
-    /* Expanded CEO note: grow banner height so title + signature aren't clipped */
+    /* Expanded CEO note: grow with content; keep height compact */
     ${({ $expanded }) =>
       $expanded &&
       `
       display: flex;
       flex-direction: column;
-      min-height: 280px;
+      min-height: 0;
 
       .desktop-banner-img {
         position: absolute;
@@ -305,7 +305,7 @@ export const BannerContent = styled.div<{
       transform: none;
       width: 100%;
       max-width: 100%;
-      padding: 18px 12px 22px;
+      padding: 10px 12px 12px;
       box-sizing: border-box;
     `}
   }
@@ -322,7 +322,7 @@ export const BannerContent = styled.div<{
       expanded &&
       `
       max-width: 100%;
-      padding: 14px 8px 18px;
+      padding: 8px 8px 10px;
       padding-left: 8px;
     `}
   }
@@ -419,7 +419,7 @@ export const Circle = styled.div`
   }
 `;
 
-export const Title = styled.h1<{ singleLine?: boolean }>`
+export const Title = styled.h1<{ singleLine?: boolean; expanded?: boolean }>`
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 700;
   color: #ffffff;
@@ -448,12 +448,28 @@ export const Title = styled.h1<{ singleLine?: boolean }>`
     font-size: clamp(18px, 4vw, 24px);
     margin-bottom: 8px;
     line-height: 1.15;
+
+    /* Match other mobile banner titles; keep Contact Us compact with CEO note */
+    ${({ expanded }) =>
+      expanded &&
+      `
+      font-size: clamp(14px, 3.5vw, 18px);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    `}
   }
 
   @media (max-width: 480px) {
     font-size: clamp(14px, 3.5vw, 20px);
     margin-bottom: 6px;
     line-height: 1.1;
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      font-size: clamp(13px, 3.2vw, 16px);
+      margin-bottom: 2px;
+    `}
   }
 `;
 
@@ -519,7 +535,7 @@ export const Subtitle = styled.p<{ singleLine?: boolean; expanded?: boolean }>`
     text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
     font-size: ${({ expanded }) =>
       expanded ? "clamp(11px, 2.8vw, 13px)" : "clamp(10px, 1.8vw, 12px)"};
-    line-height: 1.4;
+    line-height: ${({ expanded }) => (expanded ? "1.35" : "1.4")};
 
     /* Wider CEO note on mobile so ~9–10 words fit per line; desktop unchanged */
     ${({ expanded }) =>
@@ -535,7 +551,7 @@ export const Subtitle = styled.p<{ singleLine?: boolean; expanded?: boolean }>`
   @media (max-width: 480px) {
     font-size: ${({ expanded }) =>
       expanded ? "clamp(10px, 3vw, 12px)" : "clamp(8px, 1.5vw, 10px)"};
-    line-height: 1.35;
+    line-height: ${({ expanded }) => (expanded ? "1.3" : "1.35")};
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
 
     ${({ expanded }) =>

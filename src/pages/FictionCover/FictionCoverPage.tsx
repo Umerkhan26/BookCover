@@ -251,7 +251,10 @@ const FictionsCover = ({
           <Circle />
         </CirclesContainer>
       )}
-      <TitleComponent singleLine={isSingleLineTitle}>
+      <TitleComponent
+        singleLine={isSingleLineTitle}
+        {...(TitleComponent === Title ? { expanded: expandedSubtitle } : {})}
+      >
         {textAlignTop && secondPart ? (
           <>
             <TitleLine>{firstPart}</TitleLine>
