@@ -149,7 +149,10 @@ export const BannerSection = styled.section`
   }
 `;
 
-export const BannerImage = styled.div<{ $withMobileBanner?: boolean }>`
+export const BannerImage = styled.div<{
+  $withMobileBanner?: boolean;
+  $expanded?: boolean;
+}>`
   position: relative;
   width: 100%;
   height: auto;
@@ -168,6 +171,23 @@ export const BannerImage = styled.div<{ $withMobileBanner?: boolean }>`
       `
       .desktop-banner-img {
         display: none;
+      }
+    `}
+
+    /* Expanded CEO note: grow banner height so title + signature aren't clipped */
+    ${({ $expanded }) =>
+      $expanded &&
+      `
+      display: flex;
+      flex-direction: column;
+      min-height: 280px;
+
+      .desktop-banner-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     `}
   }
@@ -232,6 +252,7 @@ export const BannerMobileForm = styled.div`
 export const BannerContent = styled.div<{
   alignCenter?: boolean;
   alignTop?: boolean;
+  expanded?: boolean;
 }>`
   position: absolute;
   top: ${({ alignTop }) => (alignTop ? "32px" : "50%")};
@@ -273,6 +294,20 @@ export const BannerContent = styled.div<{
     padding-left: ${({ alignCenter }) =>
       alignCenter ? "0" : "20px"}; /* Match header Nav padding on mobile */
     text-align: ${({ alignCenter }) => (alignCenter ? "center" : "left")};
+
+    /* Flow in-document on mobile so full CEO note (title + signature) is visible */
+    ${({ expanded }) =>
+      expanded &&
+      `
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: 100%;
+      max-width: 100%;
+      padding: 18px 12px 22px;
+      box-sizing: border-box;
+    `}
   }
 
   @media (max-width: 480px) {
@@ -282,6 +317,14 @@ export const BannerContent = styled.div<{
       alignCenter
         ? "0"
         : "16px"}; /* Match header Nav padding on small mobile - moved right to align with logo */
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      max-width: 100%;
+      padding: 14px 8px 18px;
+      padding-left: 8px;
+    `}
   }
 
   @media (max-width: 390px) {
@@ -289,6 +332,12 @@ export const BannerContent = styled.div<{
       alignCenter
         ? "0"
         : "16px"}; /* Match header Nav padding on very small mobile */
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      padding-left: 8px;
+    `}
   }
 
   @media (min-width: 1024px) and (max-width: 1279px) {

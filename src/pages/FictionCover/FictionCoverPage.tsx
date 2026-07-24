@@ -288,7 +288,10 @@ const FictionsCover = ({
     <div>
       <BannerSection>
         {image && (
-          <BannerImage $withMobileBanner={useMobileBanner}>
+          <BannerImage
+            $withMobileBanner={useMobileBanner}
+            $expanded={expandedSubtitle}
+          >
             <img
               className="desktop-banner-img"
               src={image}
@@ -306,6 +309,7 @@ const FictionsCover = ({
                   <BannerContent
                     alignCenter={isCenterAligned}
                     alignTop={textAlignTop}
+                    expanded={expandedSubtitle}
                   >
                     {bannerTextContent}
                   </BannerContent>
