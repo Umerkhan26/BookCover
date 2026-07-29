@@ -22,10 +22,6 @@ import {
   serviceMobileBanners,
   ServiceMobileBannerKey,
 } from "../../config/serviceMobileBanners";
-import ServiceModernHero from "./ServiceModernHero";
-import { ServiceModernHeroKey } from "../../config/serviceModernHeroContent";
-import ServicePortfolioShowcase from "../../components/ServicePortfolioShowcase/ServicePortfolioShowcase";
-
 interface FictionCoverProps {
   title: string;
   subtitle: React.ReactNode;
@@ -347,12 +343,9 @@ const FictionsCover = ({
       {benefitsComponent && (
         <BenifitsComponent>{benefitsComponent}</BenifitsComponent>
       )}
-      {modernHeroKey && (
-        <ServicePortfolioShowcase portfolioKey={modernHeroKey} />
-      )}
       {reviewsComponent}
-      {packagesComponent}
       {designProcessComponent}
+      {packagesComponent}
       {specialEditionAddOnsComponent}
     </div>
   );
