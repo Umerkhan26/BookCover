@@ -149,7 +149,10 @@ export const BannerSection = styled.section`
   }
 `;
 
-export const BannerImage = styled.div<{ $withMobileBanner?: boolean }>`
+export const BannerImage = styled.div<{
+  $withMobileBanner?: boolean;
+  $expanded?: boolean;
+}>`
   position: relative;
   width: 100%;
   height: auto;
@@ -168,6 +171,23 @@ export const BannerImage = styled.div<{ $withMobileBanner?: boolean }>`
       `
       .desktop-banner-img {
         display: none;
+      }
+    `}
+
+    /* Expanded CEO note: grow with content; keep height compact */
+    ${({ $expanded }) =>
+      $expanded &&
+      `
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+
+      .desktop-banner-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     `}
   }
@@ -232,6 +252,7 @@ export const BannerMobileForm = styled.div`
 export const BannerContent = styled.div<{
   alignCenter?: boolean;
   alignTop?: boolean;
+  expanded?: boolean;
 }>`
   position: absolute;
   top: ${({ alignTop }) => (alignTop ? "32px" : "50%")};
@@ -273,6 +294,20 @@ export const BannerContent = styled.div<{
     padding-left: ${({ alignCenter }) =>
       alignCenter ? "0" : "20px"}; /* Match header Nav padding on mobile */
     text-align: ${({ alignCenter }) => (alignCenter ? "center" : "left")};
+
+    /* Flow in-document on mobile so full CEO note (title + signature) is visible */
+    ${({ expanded }) =>
+      expanded &&
+      `
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: 100%;
+      max-width: 100%;
+      padding: 10px 12px 12px;
+      box-sizing: border-box;
+    `}
   }
 
   @media (max-width: 480px) {
@@ -282,6 +317,14 @@ export const BannerContent = styled.div<{
       alignCenter
         ? "0"
         : "16px"}; /* Match header Nav padding on small mobile - moved right to align with logo */
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      max-width: 100%;
+      padding: 8px 8px 10px;
+      padding-left: 8px;
+    `}
   }
 
   @media (max-width: 390px) {
@@ -289,6 +332,12 @@ export const BannerContent = styled.div<{
       alignCenter
         ? "0"
         : "16px"}; /* Match header Nav padding on very small mobile */
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      padding-left: 8px;
+    `}
   }
 
   @media (min-width: 1024px) and (max-width: 1279px) {
@@ -370,7 +419,7 @@ export const Circle = styled.div`
   }
 `;
 
-export const Title = styled.h1<{ singleLine?: boolean }>`
+export const Title = styled.h1<{ singleLine?: boolean; expanded?: boolean }>`
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 700;
   color: #ffffff;
@@ -399,12 +448,30 @@ export const Title = styled.h1<{ singleLine?: boolean }>`
     font-size: clamp(18px, 4vw, 24px);
     margin-bottom: 8px;
     line-height: 1.15;
+
+    /* Match FAQ mobile title: 15px / 700 */
+    ${({ expanded }) =>
+      expanded &&
+      `
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    `}
   }
 
   @media (max-width: 480px) {
     font-size: clamp(14px, 3.5vw, 20px);
     margin-bottom: 6px;
     line-height: 1.1;
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    `}
   }
 `;
 
@@ -424,57 +491,78 @@ export const MobileBannerTitle = styled.h1<{ singleLine?: boolean }>`
   }
 `;
 
-export const Subtitle = styled.p<{ singleLine?: boolean }>`
-  font-size: clamp(14px, 1.5vw, 18px);
+export const Subtitle = styled.p<{ singleLine?: boolean; expanded?: boolean }>`
+  font-size: ${({ expanded }) =>
+    expanded ? "clamp(13px, 1.4vw, 16px)" : "clamp(14px, 1.5vw, 18px)"};
   font-weight: 400;
   color: rgba(255, 255, 255, 0.85);
   text-align: inherit;
   margin: 0;
-  line-height: 1.5;
+  line-height: ${({ expanded }) => (expanded ? "1.55" : "1.5")};
   font-family: "Manrope", sans-serif;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
   overflow: ${({ singleLine }) => (singleLine ? "hidden" : "visible")};
   text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
   /* Keep long subtitles (like Contact Us) readable + centered, without overflowing */
-  max-width: 1120px;
+  max-width: ${({ expanded }) => (expanded ? "720px" : "1120px")};
   padding: 0 8px;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
-  // margin-left: auto;
-  // margin-right: auto;
+  overflow-wrap: ${({ expanded }) => (expanded ? "break-word" : "anywhere")};
+  text-wrap: ${({ expanded }) => (expanded ? "pretty" : "balance")};
 
   margin-left: 0;
   margin-right: 0;
-  width: max-content;
-  max-width: 100%;
+  width: ${({ expanded }) => (expanded ? "100%" : "max-content")};
+  max-width: ${({ expanded }) => (expanded ? "720px" : "100%")};
 
   @media (min-width: 1024px) and (max-width: 1279px) {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    ${({ singleLine, expanded }) =>
+      singleLine &&
+      !expanded &&
+      `
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    `}
+  }
+
+  @media (max-width: 1024px) {
+    font-size: ${({ expanded }) =>
+      expanded ? "clamp(12px, 1.6vw, 15px)" : "clamp(13px, 1.8vw, 16px)"};
   }
 
   @media (max-width: 768px) {
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
     overflow: ${({ singleLine }) => (singleLine ? "hidden" : "visible")};
     text-overflow: ${({ singleLine }) => (singleLine ? "ellipsis" : "clip")};
-  }
+    font-size: ${({ expanded }) =>
+      expanded ? "clamp(11px, 2.8vw, 13px)" : "clamp(10px, 1.8vw, 12px)"};
+    line-height: ${({ expanded }) => (expanded ? "1.35" : "1.4")};
 
-  @media (max-width: 1024px) {
-    font-size: clamp(13px, 1.8vw, 16px);
-  }
-
-  @media (max-width: 768px) {
-    font-size: clamp(10px, 1.8vw, 12px);
-    line-height: 1.4;
-    white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+    /* Wider CEO note on mobile so ~9–10 words fit per line; desktop unchanged */
+    ${({ expanded }) =>
+      expanded &&
+      `
+      width: 92vw;
+      max-width: 92vw;
+      padding: 0 10px;
+      box-sizing: border-box;
+    `}
   }
 
   @media (max-width: 480px) {
-    font-size: clamp(8px, 1.5vw, 10px);
-    line-height: 1.3;
+    font-size: ${({ expanded }) =>
+      expanded ? "clamp(10px, 3vw, 12px)" : "clamp(8px, 1.5vw, 10px)"};
+    line-height: ${({ expanded }) => (expanded ? "1.3" : "1.35")};
     white-space: ${({ singleLine }) => (singleLine ? "nowrap" : "normal")};
+
+    ${({ expanded }) =>
+      expanded &&
+      `
+      width: 94vw;
+      max-width: 94vw;
+      padding: 0 8px;
+    `}
   }
 `;
 

@@ -36,8 +36,8 @@ interface FictionCoverProps {
   textAlignTop?: boolean;
   showBannerForm?: boolean;
   mobileBannerKey?: ServiceMobileBannerKey;
-  layoutVariant?: "default" | "modern";
-  modernHeroKey?: ServiceModernHeroKey;
+  /** Use larger, wrapping subtitle styles (e.g. temporary CEO note on Contact Us) */
+  expandedSubtitle?: boolean;
 
   benefitsComponent?: JSX.Element;
   designProcessComponent?: JSX.Element;
@@ -56,8 +56,7 @@ const FictionsCover = ({
   textAlignTop = false,
   showBannerForm,
   mobileBannerKey,
-  layoutVariant = "default",
-  modernHeroKey,
+  expandedSubtitle = false,
   benefitsComponent,
   designProcessComponent,
   packagesComponent,
@@ -256,7 +255,10 @@ const FictionsCover = ({
           <Circle />
         </CirclesContainer>
       )}
-      <TitleComponent singleLine={isSingleLineTitle}>
+      <TitleComponent
+        singleLine={isSingleLineTitle}
+        {...(TitleComponent === Title ? { expanded: expandedSubtitle } : {})}
+      >
         {textAlignTop && secondPart ? (
           <>
             <TitleLine>{firstPart}</TitleLine>
@@ -275,7 +277,7 @@ const FictionsCover = ({
         )}
       </TitleComponent>
       {subtitle && (
-        <Subtitle singleLine={isSingleLineSubtitle}>
+        <Subtitle singleLine={isSingleLineSubtitle} expanded={expandedSubtitle}>
           {typeof subtitle === "string"
             ? formatSubtitle
               ? `>> ${subtitle.toUpperCase()}`
@@ -291,40 +293,41 @@ const FictionsCover = ({
 
   return (
     <div>
-      {layoutVariant === "modern" && modernHeroKey ? (
-        <ServiceModernHero heroKey={modernHeroKey} serviceName={title} />
-      ) : (
-        <BannerSection>
-          {image && (
-            <BannerImage $withMobileBanner={useMobileBanner}>
-              <img
-                className="desktop-banner-img"
-                src={image}
-                alt="Book Cover Banner"
-                width={1200}
-                height={500}
-                loading="eager"
-                fetchPriority="high"
-                decoding="sync"
-              />
+      <BannerSection>
+        {image && (
+          <BannerImage
+            $withMobileBanner={useMobileBanner}
+            $expanded={expandedSubtitle}
+          >
+            <img
+              className="desktop-banner-img"
+              src={image}
+              alt="Book Cover Banner"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+              decoding="sync"
+            />
 
-              <DesktopBannerLayer $hideOnMobile={false}>
-                {showDesktopBanner && (
-                  <>
-                    <BannerContent
-                      alignCenter={isCenterAligned}
-                      alignTop={textAlignTop}
-                    >
-                      {bannerTextContent}
-                    </BannerContent>
-                    {displayBannerForm && (
-                      <BannerFormWrapper>
-                        <ServiceBannerForm serviceName={title} />
-                      </BannerFormWrapper>
-                    )}
-                  </>
-                )}
-              </DesktopBannerLayer>
+            <DesktopBannerLayer $hideOnMobile={false}>
+              {showDesktopBanner && (
+                <>
+                  <BannerContent
+                    alignCenter={isCenterAligned}
+                    alignTop={textAlignTop}
+                    expanded={expandedSubtitle}
+                  >
+                    {bannerTextContent}
+                  </BannerContent>
+                  {displayBannerForm && (
+                    <BannerFormWrapper>
+                      <ServiceBannerForm serviceName={title} />
+                    </BannerFormWrapper>
+                  )}
+                </>
+              )}
+            </DesktopBannerLayer>
 
               {showMobileBanner && (
                 <BannerMobileInner $bgImage={mobileBanner.background}>
