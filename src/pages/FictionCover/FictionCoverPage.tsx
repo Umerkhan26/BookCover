@@ -329,23 +329,20 @@ const FictionsCover = ({
               )}
             </DesktopBannerLayer>
 
-              {showMobileBanner && (
-                <BannerMobileInner $bgImage={mobileBanner.background}>
-                  <BannerMobileTitle>
-                    {mobileBannerTextContent}
-                  </BannerMobileTitle>
-                  <BannerMobileVisual>
-                    <img src={mobileBanner.visual} alt="" loading="lazy" />
-                  </BannerMobileVisual>
-                  <BannerMobileForm>
-                    <ServiceBannerForm serviceName={title} />
-                  </BannerMobileForm>
-                </BannerMobileInner>
-              )}
-            </BannerImage>
-          )}
-        </BannerSection>
-      )}
+            {showMobileBanner && (
+              <BannerMobileInner $bgImage={mobileBanner.background}>
+                <BannerMobileTitle>{mobileBannerTextContent}</BannerMobileTitle>
+                <BannerMobileVisual>
+                  <img src={mobileBanner.visual} alt="" loading="lazy" />
+                </BannerMobileVisual>
+                <BannerMobileForm>
+                  <ServiceBannerForm serviceName={title} />
+                </BannerMobileForm>
+              </BannerMobileInner>
+            )}
+          </BannerImage>
+        )}
+      </BannerSection>
 
       {benefitsComponent && (
         <BenifitsComponent>{benefitsComponent}</BenifitsComponent>
