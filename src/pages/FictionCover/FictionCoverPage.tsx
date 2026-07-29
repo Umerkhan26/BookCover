@@ -22,6 +22,9 @@ import {
   serviceMobileBanners,
   ServiceMobileBannerKey,
 } from "../../config/serviceMobileBanners";
+import ServiceModernHero from "./ServiceModernHero";
+import { ServiceModernHeroKey } from "../../config/serviceModernHeroContent";
+
 interface FictionCoverProps {
   title: string;
   subtitle: React.ReactNode;
@@ -32,6 +35,8 @@ interface FictionCoverProps {
   textAlignTop?: boolean;
   showBannerForm?: boolean;
   mobileBannerKey?: ServiceMobileBannerKey;
+  layoutVariant?: "default" | "modern";
+  modernHeroKey?: ServiceModernHeroKey;
   /** Use larger, wrapping subtitle styles (e.g. temporary CEO note on Contact Us) */
   expandedSubtitle?: boolean;
 
@@ -52,6 +57,8 @@ const FictionsCover = ({
   textAlignTop = false,
   showBannerForm,
   mobileBannerKey,
+  layoutVariant = "default",
+  modernHeroKey,
   expandedSubtitle = false,
   benefitsComponent,
   designProcessComponent,
@@ -289,56 +296,62 @@ const FictionsCover = ({
 
   return (
     <div>
-      <BannerSection>
-        {image && (
-          <BannerImage
-            $withMobileBanner={useMobileBanner}
-            $expanded={expandedSubtitle}
-          >
-            <img
-              className="desktop-banner-img"
-              src={image}
-              alt="Book Cover Banner"
-              width={1200}
-              height={500}
-              loading="eager"
-              fetchPriority="high"
-              decoding="sync"
-            />
+      {layoutVariant === "modern" && modernHeroKey ? (
+        <ServiceModernHero heroKey={modernHeroKey} serviceName={title} />
+      ) : (
+        <BannerSection>
+          {image && (
+            <BannerImage
+              $withMobileBanner={useMobileBanner}
+              $expanded={expandedSubtitle}
+            >
+              <img
+                className="desktop-banner-img"
+                src={image}
+                alt="Book Cover Banner"
+                width={1200}
+                height={500}
+                loading="eager"
+                fetchPriority="high"
+                decoding="sync"
+              />
 
-            <DesktopBannerLayer $hideOnMobile={false}>
-              {showDesktopBanner && (
-                <>
-                  <BannerContent
-                    alignCenter={isCenterAligned}
-                    alignTop={textAlignTop}
-                    expanded={expandedSubtitle}
-                  >
-                    {bannerTextContent}
-                  </BannerContent>
-                  {displayBannerForm && (
-                    <BannerFormWrapper>
-                      <ServiceBannerForm serviceName={title} />
-                    </BannerFormWrapper>
-                  )}
-                </>
+              <DesktopBannerLayer $hideOnMobile={false}>
+                {showDesktopBanner && (
+                  <>
+                    <BannerContent
+                      alignCenter={isCenterAligned}
+                      alignTop={textAlignTop}
+                      expanded={expandedSubtitle}
+                    >
+                      {bannerTextContent}
+                    </BannerContent>
+                    {displayBannerForm && (
+                      <BannerFormWrapper>
+                        <ServiceBannerForm serviceName={title} />
+                      </BannerFormWrapper>
+                    )}
+                  </>
+                )}
+              </DesktopBannerLayer>
+
+              {showMobileBanner && (
+                <BannerMobileInner $bgImage={mobileBanner.background}>
+                  <BannerMobileTitle>
+                    {mobileBannerTextContent}
+                  </BannerMobileTitle>
+                  <BannerMobileVisual>
+                    <img src={mobileBanner.visual} alt="" loading="lazy" />
+                  </BannerMobileVisual>
+                  <BannerMobileForm>
+                    <ServiceBannerForm serviceName={title} />
+                  </BannerMobileForm>
+                </BannerMobileInner>
               )}
-            </DesktopBannerLayer>
-
-            {showMobileBanner && (
-              <BannerMobileInner $bgImage={mobileBanner.background}>
-                <BannerMobileTitle>{mobileBannerTextContent}</BannerMobileTitle>
-                <BannerMobileVisual>
-                  <img src={mobileBanner.visual} alt="" loading="lazy" />
-                </BannerMobileVisual>
-                <BannerMobileForm>
-                  <ServiceBannerForm serviceName={title} />
-                </BannerMobileForm>
-              </BannerMobileInner>
-            )}
-          </BannerImage>
-        )}
-      </BannerSection>
+            </BannerImage>
+          )}
+        </BannerSection>
+      )}
 
       {benefitsComponent && (
         <BenifitsComponent>{benefitsComponent}</BenifitsComponent>
