@@ -273,7 +273,8 @@ const FictionsCover = ({
         )}
       </TitleComponent>
       {subtitle && (
-        <Subtitle singleLine={isSingleLineSubtitle} expanded={expandedSubtitle}>
+        //expanded={expandedSubtitle}
+        <Subtitle singleLine={isSingleLineSubtitle}>
           {typeof subtitle === "string"
             ? formatSubtitle
               ? `>> ${subtitle.toUpperCase()}`
