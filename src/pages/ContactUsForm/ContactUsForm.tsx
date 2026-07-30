@@ -24,7 +24,7 @@ import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
-  FaMapMarkerAlt,
+  // FaMapMarkerAlt,
   FaPhone,
 } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
