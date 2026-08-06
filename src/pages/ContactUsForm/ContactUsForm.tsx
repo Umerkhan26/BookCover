@@ -24,7 +24,7 @@ import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
-  FaMapMarkerAlt,
+  // FaMapMarkerAlt,
   FaPhone,
 } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
@@ -132,15 +132,25 @@ const ContactUsForm: React.FC = () => {
               www.lumeart.com
             </a>
           </ContactDetail> */}
-          <ContactDetail>
+          {/* <ContactDetail>
             <FaEnvelope className="icon" />
             <a href="mailto:wasimakram@lumeartstudio.com">
               wasimakram@lumeartstudio.com
             </a>
-          </ContactDetail>
-          <ContactDetail>
+          </ContactDetail> */}
+          {/* <ContactDetail>
             <FaEnvelope className="icon" />
             <a href="mailto:lefty.akram@gmail.com">lefty.akram@gmail.com</a>
+          </ContactDetail> */}
+
+          {/* <ContactDetail>
+            <FaPhone className="icon" />
+            <a href="tel:+923357771817">+92 (335)777-1817</a>
+          </ContactDetail> */}
+
+          <ContactDetail>
+            <FaPhone className="icon" />
+            <a href="tel:+13153332077">+1 (315) 333-2077</a>
           </ContactDetail>
           <ContactDetail>
             <FaEnvelope className="icon" />
@@ -148,23 +158,13 @@ const ContactUsForm: React.FC = () => {
               studioslumeart@gmail.com
             </a>
           </ContactDetail>
-          <ContactDetail>
-            <FaPhone className="icon" />
-            <a href="tel:+923357771817">+92 (335)777-1817</a>
-          </ContactDetail>
-          {/* Temporary: last phone commented out — replaced with address
-          <ContactDetail>
-            <FaPhone className="icon" />
-            <a href="tel:+13153332077">+1 (315) 333-2077</a>
-          </ContactDetail>
-          */}
-          <ContactDetail>
+          {/* <ContactDetail>
             <FaMapMarkerAlt className="icon" />
             <span>
               Address: H 1090, St 38, Ali Block, Phase 8, Bahria Town,
               Islamabad, 44000 Pakistan
             </span>
-          </ContactDetail>
+          </ContactDetail> */}
 
           <SocialIconsWrapper>
             <a
